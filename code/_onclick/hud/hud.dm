@@ -41,6 +41,7 @@
 	var/action_buttons_hidden = 0
 
 	var/obj/screen/healths
+	var/obj/screen/staminas
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 

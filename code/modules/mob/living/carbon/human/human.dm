@@ -962,7 +962,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(1)
@@ -998,6 +998,26 @@
 					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+		if(hud_used.staminas)
+			if(stat != DEAD)
+				var/shown_stamina_amount = 100 - staminaloss
+				if(shown_stamina_amount >= 100)
+					hud_used.staminas.icon_state = "stamina0"
+				else if(shown_stamina_amount > 100*0.8)
+					hud_used.staminas.icon_state = "stamina1"
+				else if(shown_stamina_amount > 100*0.6)
+					hud_used.staminas.icon_state = "stamina2"
+				else if(shown_stamina_amount > 100*0.4)
+					hud_used.staminas.icon_state = "stamina3"
+				else if(shown_stamina_amount > 100*0.2)
+					hud_used.staminas.icon_state = "stamina4"
+				else if(shown_stamina_amount > 0)
+					hud_used.staminas.icon_state = "stamina5"
+				else
+					hud_used.staminas.icon_state = "stamina5"
+			else
+				hud_used.staminas.icon_state = "stamina5"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	CHECK_DNA_AND_SPECIES(src)
