@@ -447,6 +447,9 @@ var/global/list/g_fancy_list_of_types = null
 				if(istype(worn,/obj/item/device/pda))
 					worn:id = id
 					id.loc = worn
+				if(istype(worn,/obj/item/device/tablet))
+					worn:id = id
+					id.loc = worn
 				else if(istype(worn,/obj/item/weapon/storage/wallet))
 					worn:front_id = id
 					id.loc = worn

@@ -189,7 +189,10 @@
 				var/obj/item/weapon/card/id/id_card
 				if(istype(W, /obj/item/weapon/card/id))
 					id_card = W
-				else
+				else if(istype(W, /obj/item/device/tablet))
+					var/obj/item/device/tablet/T = W
+					id_card = T.id
+				else if(istype(W, /obj/item/device/pda))
 					var/obj/item/device/pda/pda = W
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)

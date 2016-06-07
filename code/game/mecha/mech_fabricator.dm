@@ -86,6 +86,9 @@
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
+	if(istype(I, /obj/item/device/tablet))
+		var/obj/item/device/tablet/T = I
+		I = T.id
 	if(!istype(I) || !I.access) //not ID or no access
 		return 0
 	for(var/req in req_access)

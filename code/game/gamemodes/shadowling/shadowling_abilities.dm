@@ -76,6 +76,9 @@
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
 		P.fon = 0
+	else if(istype(I, /obj/item/device/tablet))
+		var/obj/item/device/tablet/T = I
+		T.fon = 0
 	I.SetLuminosity(0)
 	return I.luminosity
 

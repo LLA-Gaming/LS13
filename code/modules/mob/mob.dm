@@ -870,6 +870,7 @@ var/next_mob_id = 0
 	var/list/searching = GetAllContents()
 	var/search_id = 1
 	var/search_pda = 1
+	var/search_tablet = 1
 
 	for(var/A in searching)
 		if( search_id && istype(A,/obj/item/weapon/card/id) )
@@ -877,16 +878,25 @@ var/next_mob_id = 0
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
-				if(!search_pda)
+				if(!search_pda || !search_tablet)
 					break
 				search_id = 0
+
+		else if( search_pda && istype(A,/obj/item/device/tablet) )
+			var/obj/item/device/tablet/T = A
+			if(T.owner == oldname)
+				T.owner = newname
+				T.update_label()
+				if(!search_id || !search_pda)
+					break
+				search_tablet = 0
 
 		else if( search_pda && istype(A,/obj/item/device/pda) )
 			var/obj/item/device/pda/PDA = A
 			if(PDA.owner == oldname)
 				PDA.owner = newname
 				PDA.update_label()
-				if(!search_id)
+				if(!search_id || !search_tablet)
 					break
 				search_pda = 0
 

@@ -191,6 +191,10 @@
 			var/obj/item/device/pda/P = I
 			P.lock_code = ""
 
+		if(istype(I, /obj/item/device/tablet))
+			var/obj/item/device/tablet/T = I
+			T.lock_code = ""
+
 		else if(istype(I, /obj/item/device/radio))
 			var/obj/item/device/radio/R = I
 			R.traitor_frequency = 0

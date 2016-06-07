@@ -237,7 +237,7 @@
 			user << "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>"
 		else
 			user << "<span class='warning'>The maintenance panel is locked.</span>"
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda)||istype(W, /obj/item/device/tablet))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			user << "Controls are now [locked ? "locked." : "unlocked."]"

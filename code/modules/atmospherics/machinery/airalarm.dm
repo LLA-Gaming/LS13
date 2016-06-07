@@ -625,7 +625,7 @@
 				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 				update_icon()
 				return
-			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda) || istype(W, /obj/item/device/tablet))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					user << "<span class='warning'>It does nothing!</span>"
 				else

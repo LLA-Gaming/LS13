@@ -360,3 +360,14 @@
 	chameleon_action.chameleon_name = "PDA"
 	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
 	chameleon_action.initialize_disguises()
+
+/obj/item/device/tablet/chameleon
+	name = "chameleon tablet"
+
+/obj/item/device/tablet/chameleon/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/device/tablet
+	chameleon_action.chameleon_name = "Tablet"
+	chameleon_action.chameleon_blacklist = list(/obj/item/device/tablet/ai)
+	chameleon_action.initialize_disguises()

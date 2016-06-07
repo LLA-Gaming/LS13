@@ -47,7 +47,7 @@
 	//Job and mind data
 	var/obj/item/weapon/card/id/MYID
 	var/obj/item/weapon/card/id/RPID // the "real" idea they use
-	var/obj/item/device/pda/MYPDA
+	var/obj/item/device/tablet/MYTABLET
 	var/obj/item/main_hand
 	var/obj/item/other_hand
 	var/TRAITS = 0
@@ -249,11 +249,11 @@
 	RPID.access = myjob.get_access()
 
 	equip_to_slot_or_del(MYID, slot_wear_id)
-	MYPDA = new(src)
-	MYPDA.owner = real_name
-	MYPDA.ownjob = "Crew"
-	MYPDA.name = "PDA-[real_name] ([myjob.title])"
-	equip_to_slot_or_del(MYPDA, slot_belt)
+	MYTABLET = new(src)
+	MYTABLET.owner = real_name
+	MYTABLET.ownjob = "Crew"
+	MYTABLET.name = "Tablet-[real_name] ([myjob.title])"
+	equip_to_slot_or_del(MYTABLET, slot_belt)
 	zone_selected = "chest"
 	//arms
 	for(var/X in bodyparts)
@@ -643,9 +643,9 @@
 						spawn(5)
 							equip_to_appropriate_slot(C)
 				update_hands = 1
-				if(MYPDA in src.loc || MYID in src.loc)
-					if(MYPDA in src.loc)
-						equip_to_appropriate_slot(MYPDA)
+				if(MYTABLET in src.loc || MYID in src.loc)
+					if(MYTABLET in src.loc)
+						equip_to_appropriate_slot(MYTABLET)
 					if(MYID in src.loc)
 						equip_to_appropriate_slot(MYID)
 		//THIEVING SKILLS END

@@ -832,6 +832,12 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
+			if(istype(human_user.wear_id, /obj/item/device/tablet))
+				var/obj/item/device/tablet/T = human_user.wear_id
+				if(T.id)
+					scanned_user = "[T.id.registered_name] ([T.id.assignment])"
+				else
+					scanned_user = "Unknown"
 			if(istype(human_user.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/P = human_user.wear_id
 				if(P.id)

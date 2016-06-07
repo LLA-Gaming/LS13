@@ -68,6 +68,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
+			if (istype(I, /obj/item/device/tablet))
+				var/obj/item/device/tablet/T = I
+				I = T.id
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
@@ -86,6 +89,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
+			if (istype(I, /obj/item/device/tablet))
+				var/obj/item/device/tablet/T = I
+				I = T.id
 			if (I && istype(I))
 				if(access_captain in I.access)
 					var/old_level = security_level

@@ -16,11 +16,15 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/device/pda/pda = wear_id
-		if(istype(pda))
-			. = pda.ownjob
+		var/obj/item/device/tablet/T = wear_id
+		if(istype(T))
+			. = T.ownjob
 		else
-			return if_no_id
+			var/obj/item/device/pda/pda = wear_id
+			if(istype(pda))
+				. = pda.ownjob
+			else
+				return if_no_id
 	if(!.)
 		return if_no_job
 
@@ -30,6 +34,9 @@
 	var/obj/item/weapon/card/id/id = get_idcard()
 	if(id)
 		return id.registered_name
+	var/obj/item/device/tablet/T = wear_id
+	if(istype(T))
+		return T.owner
 	var/obj/item/device/pda/pda = wear_id
 	if(istype(pda))
 		return pda.owner
@@ -65,11 +72,14 @@
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
+	var/obj/item/device/tablet/T = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
+	else if(istype(T))
+		. = T.owner
 	else if(istype(pda))
 		. = pda.owner
 	if(!.)

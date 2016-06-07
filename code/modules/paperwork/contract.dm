@@ -236,7 +236,11 @@
 		id.assignment = "Captain"
 		id.update_label()
 		if(worn)
-			if(istype(worn,/obj/item/device/pda))
+			if(istype(worn,/obj/item/device/tablet))
+				var/obj/item/device/tablet/T = worn
+				T.id = id
+				id.loc = worn
+			else if(istype(worn,/obj/item/device/pda))
 				var/obj/item/device/pda/PDA = worn
 				PDA.id = id
 				id.loc = worn
