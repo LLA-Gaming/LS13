@@ -21,7 +21,7 @@ Chaplain
 /datum/outfit/job/chaplain
 	name = "Chaplain"
 
-	belt = /obj/item/device/pda/chaplain
+	belt = /obj/item/device/tablet/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
 	backpack = /obj/item/weapon/storage/backpack/cultpack

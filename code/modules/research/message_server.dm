@@ -75,6 +75,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
+	var/list/convos = list()
 	var/active = 1
 	var/decryptkey = "password"
 

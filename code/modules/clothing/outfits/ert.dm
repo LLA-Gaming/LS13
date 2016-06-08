@@ -174,7 +174,7 @@
 	belt = /obj/item/weapon/gun/energy/gun
 	l_pocket = /obj/item/weapon/pen
 	back = /obj/item/weapon/storage/backpack/satchel_norm
-	r_pocket = /obj/item/device/tablet/heads
+	r_pocket = /obj/item/device/tablet/clear
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id
 
@@ -182,7 +182,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/tablet/heads/tablet = H.r_store
+	var/obj/item/device/tablet/clear/tablet = H.r_store
 	tablet.owner = H.real_name
 	tablet.ownjob = "Centcom Official"
 	tablet.update_label()
