@@ -283,18 +283,12 @@ var/datum/subsystem/job/SSjob
 	// Hopefully this will add more randomness and fairness to job giving.
 
 	for(var/mob/new_player/player in unassigned)
-		world << "sup [player.key]"
 		if(player.ckey in assignPerseus)
-			world << "aye"
 			if(perseusList[player.ckey] == "Commander")
-				world << "aye 2"
 				if(AssignRole(player, "Perseus Security Commander"))
-					world << "aye 3"
 					continue
 			else if(perseusList[player.ckey] == "Enforcer")
-				world << "aye 4"
 				if(AssignRole(player, "Perseus Security Enforcer"))
-					world << "aye 5"
 					continue
 
 	// Loop through all levels from high to low
