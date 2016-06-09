@@ -43,42 +43,36 @@
 
 	//for tablets
 	var/usedup = 0
-	var/list/programs = list()
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
 	bot_access_flags = FLOOR_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
 	bot_access_flags = FLOOR_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
 	bot_access_flags = MED_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
 	bot_access_flags = MED_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
 	bot_access_flags = SEC_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
@@ -87,7 +81,6 @@
 	access_medical = 1
 	access_manifest = 1
 	bot_access_flags = SEC_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
@@ -95,34 +88,29 @@
 	icon_state = "cart-j"
 	access_janitor = 1
 	bot_access_flags = CLEAN_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
 	spam_enabled = 1
-	programs = list()
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
 	icon_state = "cart-clown"
 	access_clown = 1
 	var/honk_charges = 5
-	programs = list()
 
 /obj/item/weapon/cartridge/mime
 	name = "\improper Gestur-O 1000 cartridge"
 	icon_state = "cart-mi"
 	access_mime = 1
 	var/mime_charges = 5
-	programs = list()
 
 /obj/item/weapon/cartridge/librarian
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
 	access_newscaster = 1
-	programs = list()
 
 /*
 /obj/item/weapon/cartridge/botanist
@@ -135,12 +123,10 @@
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
 	desc = "A data cartridge with an integrated radio signaler module."
-	programs = list()
 
 /obj/item/weapon/cartridge/signal/toxins
 	name = "\improper Signal Ace 2 cartridge"
@@ -148,7 +134,6 @@
 	icon_state = "cart-tox"
 	access_reagent_scanner = 1
 	access_atmos = 1
-	programs = list()
 
 /obj/item/weapon/cartridge/signal/New()
 	..()
@@ -162,14 +147,12 @@
 	icon_state = "cart-q"
 	access_quartermaster = 1
 	bot_access_flags = MULE_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
 	access_manifest = 1
 	access_status_display = 1
-	programs = list()
 
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
@@ -181,7 +164,6 @@
 	access_security = 1
 	access_newscaster = 1
 	access_quartermaster = 1
-	programs = list()
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -190,8 +172,6 @@
 	access_status_display = 1
 	access_security = 1
 	bot_access_flags = SEC_BOT
-	programs = list()
-
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
@@ -201,7 +181,6 @@
 	access_engine = 1
 	access_atmos = 1
 	bot_access_flags = FLOOR_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
@@ -211,7 +190,6 @@
 	access_reagent_scanner = 1
 	access_medical = 1
 	bot_access_flags = MED_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
@@ -221,7 +199,6 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
-	programs = list()
 
 /obj/item/weapon/cartridge/rd/New()
 	..()
@@ -243,7 +220,6 @@
 	access_janitor = 1
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
-	programs = list()
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
@@ -255,7 +231,6 @@
 	access_remote_door = 1
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	var/shock_charges = 4
-	programs = list()
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))

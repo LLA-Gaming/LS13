@@ -28,7 +28,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
-	new /obj/item/device/tablet/syndicate(src)
+	new /obj/item/device/tablet/syndi(src)
 	return
 
 /obj/structure/closet/syndicate/resources

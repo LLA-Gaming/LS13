@@ -49,6 +49,8 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
+	var/obj/item/device/tablet/pai/tablet
+
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
@@ -65,12 +67,13 @@
 			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
 
-	//PDA
-	pda = new(src)
+	//Tablet
+	tablet = new(src)
 	spawn(5)
-		pda.ownjob = "Personal Assistant"
-		pda.owner = text("[]", src)
-		pda.name = pda.owner + " (" + pda.ownjob + ")"
+		tablet.core.ownjob = "Personal Assistant"
+		tablet.core.owner = text("[]", src)
+		tablet.core.name = pda.owner + " (" + pda.ownjob + ")"
+		tablet.update_label()
 
 	..()
 

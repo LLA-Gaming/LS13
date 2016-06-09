@@ -4,7 +4,6 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "mainboard"
 	w_class = 1
-	var/obj/item/device/tablet/tablet
 	var/owner = null // String name of owner
 	var/ownjob = null //related to above
 	var/cash = 20
@@ -16,4 +15,5 @@
 	var/volume = 1
 	var/ttone = "beep"
 
+	var/datum/program/loaded
 	var/list/programs = list()

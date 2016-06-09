@@ -362,10 +362,10 @@
 		if(H.wear_id)
 			if(istype(H.wear_id, /obj/item/weapon/card/id))
 				id = H.wear_id
-	//		else if(istype(H.wear_id, /obj/item/device/tablet))
-	//			var/obj/item/device/tablet/tablet = H.wear_id
-	//			if(tablet.id)
-	//				id = tablet.id
+			else if(istype(H.wear_id, /obj/item/device/tablet))
+				var/obj/item/device/tablet/tablet = H.wear_id
+				if(tablet.id)
+					id = tablet.id
 		else if(istype(H.get_active_hand(), /obj/item/weapon/card/id))
 			id = H.get_active_hand()
 
