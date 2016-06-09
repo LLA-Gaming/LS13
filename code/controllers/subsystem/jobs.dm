@@ -92,6 +92,9 @@ var/datum/subsystem/job/SSjob
 	Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 	var/list/candidates = list()
 	for(var/mob/new_player/player in unassigned)
+		if(assignPerseus.Find(player.ckey))
+			Debug("FOC player is playing as perseus, Player: [player]")
+			continue
 		if(jobban_isbanned(player, job.title))
 			Debug("FOC isbanned failed, Player: [player]")
 			continue
