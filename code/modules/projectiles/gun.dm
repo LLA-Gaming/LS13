@@ -185,6 +185,15 @@
 	if(!handle_pins(user) || !user.can_use_guns(src))
 		return 0
 
+	if(locked)
+		if(!user.check_contents_for(locked))
+			var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread(get_turf(src))
+			S.set_up(3, 0, get_turf(src))
+			S.start()
+			usr << "<div class='warning'>The [src] shocks you.</div>"
+			usr.AdjustWeakened(2)
+			return 0
+
 	return 1
 
 /obj/item/weapon/gun/proc/handle_pins(mob/living/user)
@@ -213,6 +222,12 @@ obj/item/weapon/gun/proc/newshot()
 		else
 			recoil = initial(recoil)
 
+	if(chambered)
+		if(chambered.burst_size != -1)
+			burst_size = chambered.burst_size
+		if(chambered.fire_delay != -1)
+			fire_delay = chambered.fire_delay
+
 	if(burst_size > 1)
 		firing_burst = 1
 		for(var/i = 1 to burst_size)
@@ -239,6 +254,7 @@ obj/item/weapon/gun/proc/newshot()
 				shoot_with_empty_chamber(user)
 				break
 			process_chamber()
+			newshot()
 			update_icon()
 			sleep(fire_delay)
 		firing_burst = 0

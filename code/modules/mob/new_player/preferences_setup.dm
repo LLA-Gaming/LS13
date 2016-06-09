@@ -21,7 +21,7 @@
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(var/client/C)
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -42,7 +42,12 @@
 	var/datum/job/previewJob
 	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
 
-	if(job_civilian_low & ASSISTANT)
+	if(assignPerseus.Find(C.ckey))
+		if(perseusList[C.ckey] == "Commander")
+			previewJob = SSjob.GetJob("Perseus Security Commander")
+		else
+			previewJob = SSjob.GetJob("Perseus Security Enforcer")
+	else if(job_civilian_low & ASSISTANT)
 		previewJob = SSjob.GetJob("Assistant")
 	else if(highRankFlag)
 		var/highDeptFlag

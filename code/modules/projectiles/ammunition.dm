@@ -17,6 +17,9 @@
 	var/delay = 0								//Delay for energy weapons
 	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
 
+	var/burst_size = -1					//how large a burst is								-1 means it is not applied to the gun
+	var/fire_delay = -1					//rate of fire for burst firing and semi auto		-1 means it is not applied to the gun
+
 /obj/item/ammo_casing/New()
 	..()
 	if(projectile_type)

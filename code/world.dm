@@ -34,6 +34,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
+	loadPerseusList()
 	if(config.usewhitelist)
 		load_whitelist()
 	appearance_loadbanfile()

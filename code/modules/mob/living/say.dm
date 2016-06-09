@@ -244,6 +244,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
 			return 1
+		if(src.check_contents_for(/obj/item/weapon/implant/enforcer))
+			perseusHivemindSay(message)
+			return 1
 	return 0
 
 /mob/living/proc/treat_message(message)

@@ -294,20 +294,23 @@
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
-	var/D = pick(latejoin)
-	if(!D)
-		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					D = T
-					continue
+	if(character.mind.assigned_role in list("Perseus Security Enforcer", "Perseus Security Commander"))
+		character.loc = pick(percSpawnTurfs)
+	else
+		var/D = pick(latejoin)
+		if(!D)
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						D = T
+						continue
 
-	character.loc = D
+		character.loc = D
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
@@ -368,6 +371,7 @@
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
+
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			job_count++;
@@ -377,12 +381,30 @@
 			if (job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+
+
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != "Assistant") continue
 			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break
-	dat += "</div></div>"
+
+	if(perseusList[ckey])
+		dat += "</div><br><hr>"
+		var/rank = perseusList[ckey]
+		var/list/iteratedJobs = list() //no idea why, but apparently it loops through the jobs twice each, so easy fix here.
+		for(var/datum/job/job in SSjob.persjobs)
+			if(job.title in iteratedJobs)	continue
+			iteratedJobs += job.title
+			if(job.title == "Perseus Security Enforcer" && (rank == "Enforcer" || rank == "Commander"))
+				dat += "<center><a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a></center><br>"
+				continue
+			if(job.title == "Perseus Security Commander" && rank == "Commander")
+				dat += "<center><a class='commandPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a></center><br>"
+				continue
+		dat += "</div>"
+	else
+		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
@@ -408,6 +430,10 @@
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+
+		if(mind.assigned_role == "Perseus Security Enforcer" || mind.assigned_role == "Perseus Security Commander")
+			if(mycenae_at_centcom)
+				move_mycenae()
 
 	new_character.name = real_name
 

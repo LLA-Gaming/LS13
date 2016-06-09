@@ -1968,7 +1968,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/mine/laborcamp/security)
@@ -1985,7 +1985,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 2
 	},
 /area/mine/laborcamp/security)
@@ -2009,7 +2009,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "fG" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
 /area/mine/laborcamp/security)
@@ -2177,7 +2177,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/mine/laborcamp/security)
@@ -4354,7 +4354,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/mine/production)
@@ -4379,7 +4379,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/mine/production)
@@ -4395,7 +4395,7 @@
 	dir = 4;
 	id = "mining_external"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
 /area/mine/production)
@@ -4899,7 +4899,7 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/mine/production)
@@ -4961,7 +4961,7 @@
 	dir = 2;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/mine/production)
@@ -5067,7 +5067,7 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/mine/production)
@@ -5246,7 +5246,7 @@
 	},
 /obj/structure/plasticflaps,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/mine/production)
@@ -5255,7 +5255,7 @@
 	dir = 1;
 	input_dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/mine/production)
@@ -5264,7 +5264,7 @@
 	dir = 8;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/mine/production)
@@ -5277,7 +5277,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate/corner{
+/turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
 /area/mine/production)
@@ -5310,7 +5310,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/mine/production)

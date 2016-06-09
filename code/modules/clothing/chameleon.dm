@@ -261,15 +261,17 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
 	var/vchange = 1
-
+	var/show_action = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action = null
 
 /obj/item/clothing/mask/chameleon/New()
 	..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/mask
-	chameleon_action.chameleon_name = "Mask"
-	chameleon_action.initialize_disguises()
+
+	if(show_action)
+		chameleon_action = new(src)
+		chameleon_action.chameleon_type = /obj/item/clothing/mask
+		chameleon_action.chameleon_name = "Mask"
+		chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	vchange = !vchange

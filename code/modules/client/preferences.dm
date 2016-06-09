@@ -117,7 +117,7 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	update_preview_icon(user.client)
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
 
@@ -551,6 +551,10 @@ var/list/preferences_datums = list()
 
 	HTML += "</center></table>"
 
+	if(perseusList[user.ckey])
+		HTML += "<center>Start as Perseus: <a href='?_src_=prefs;preference=job;task=perseus'>[(user.ckey in assignPerseus) ? "Yes" : "No"]</a></center>"
+
+
 	HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
 	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
@@ -733,6 +737,13 @@ var/list/preferences_datums = list()
 				SetChoices(user)
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
+			if("perseus")
+				if(perseusList[user.ckey])
+					if(user.ckey in assignPerseus)
+						assignPerseus -= user.ckey
+					else
+						assignPerseus += user.ckey
+				SetChoices(user)
 			else
 				SetChoices(user)
 		return 1

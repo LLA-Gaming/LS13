@@ -10,6 +10,7 @@
 	var/image_overlay = null
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
+	var/explosion_size = list(0,0,3,0)
 
 /obj/item/weapon/grenade/plastic/New()
 	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
@@ -83,7 +84,7 @@
 
 		target.overlays += image_overlay
 		if(!nadeassembly)
-			user << "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>"
+			user << "<span class='notice'>You plant the [src]. Timer counting down from [det_time].</span>"
 			addtimer(src, "prime", det_time*10)
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)
@@ -134,7 +135,7 @@
 		location = get_turf(src)
 	if(location)
 		location.ex_act(2, target)
-		explosion(location,0,0,3)
+		explosion(location, explosion_size[1], explosion_size[2], explosion_size[3], explosion_size[4])
 	if(istype(target, /mob))
 		var/mob/M = target
 		M.gib()

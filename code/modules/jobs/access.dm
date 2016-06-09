@@ -112,6 +112,11 @@
 		var/mob/living/simple_animal/A = M
 		if(check_access(A.access_card))
 			return 1
+
+	for(var/obj/item/weapon/implant/I in M)
+		if(src.check_access(I))
+			return 1
+
 	return 0
 
 /obj/item/proc/GetAccess()

@@ -39,6 +39,12 @@
 	var/const/waittime_h = 1800 // started at 1800
 
 
+	New()
+		..()
+
+		restricted_jobs += list("Perseus Security Enforcer", "Perseus Security Commander")
+		protected_jobs += list("Perseus Security Enforcer", "Perseus Security Commander")
+
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 

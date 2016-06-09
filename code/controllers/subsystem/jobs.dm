@@ -8,6 +8,7 @@ var/datum/subsystem/job/SSjob
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/persjobs = list()
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
@@ -33,6 +34,8 @@ var/datum/subsystem/job/SSjob
 		var/datum/job/job = new J()
 		if(!job)
 			continue
+		if(job.faction == "Perseus Military Corporation")
+			persjobs += job
 		if(job.faction != faction)
 			continue
 		if(!job.config_check())
@@ -57,6 +60,10 @@ var/datum/subsystem/job/SSjob
 			continue
 		if(J.title == rank)
 			return J
+	for(var/datum/job/J in persjobs)
+		if(J.title == rank)
+			return J
+
 	return null
 
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
@@ -274,6 +281,21 @@ var/datum/subsystem/job/SSjob
 	// New job giving system by Donkie
 	// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
 	// Hopefully this will add more randomness and fairness to job giving.
+
+	for(var/mob/new_player/player in unassigned)
+		world << "sup [player.key]"
+		if(player.ckey in assignPerseus)
+			world << "aye"
+			if(perseusList[player.ckey] == "Commander")
+				world << "aye 2"
+				if(AssignRole(player, "Perseus Security Commander"))
+					world << "aye 3"
+					continue
+			else if(perseusList[player.ckey] == "Enforcer")
+				world << "aye 4"
+				if(AssignRole(player, "Perseus Security Enforcer"))
+					world << "aye 5"
+					continue
 
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)

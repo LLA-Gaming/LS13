@@ -105,6 +105,9 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
+/datum/mind/proc/IsPerseus()
+	return assigned_job.faction == "Perseus Military Corporation"
+
 /datum/mind/proc/remove_objectives()
 	if(objectives.len)
 		for(var/datum/objective/O in objectives)
