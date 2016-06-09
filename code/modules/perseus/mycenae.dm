@@ -221,5 +221,3 @@ var/perseusShuttleMoving = 0
 
 		..(user)
 
-// TODO: MAKE THIS THING LOCK AND STUFF
-

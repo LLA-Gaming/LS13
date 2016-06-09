@@ -52,6 +52,7 @@
 	item_color = "pers_skinsuit"
 	desc = "Standard issue to Perseus Security personnel in space assignments. Maintains a safe internal atmosphere for the user."
 	w_class = 3
+	flags = STOPSPRESSUREDMAGE
 
 
 /*
