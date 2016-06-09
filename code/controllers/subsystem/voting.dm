@@ -124,7 +124,7 @@ var/datum/subsystem/vote/SSvote
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in admins)
-			if(!C.is_afk() && check_rights_for(C, R_SERVER))
+			if(!C.is_afk() && check_rights_for(C, R_PRIMARYADMIN))
 				active_admins = 1
 				break
 		if(!active_admins)
@@ -153,12 +153,12 @@ var/datum/subsystem/vote/SSvote
 			if(mode)
 				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
 				return 0
-	
+
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
-			
+
 			if(next_allowed_time > world.time && !admin)
 				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
 				return 0

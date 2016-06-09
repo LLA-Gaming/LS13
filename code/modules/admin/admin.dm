@@ -452,7 +452,7 @@ var/global/BSACooldown = 0
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
-		if(!check_rights(R_SERVER,0))
+		if(!check_rights(R_PRIMARYADMIN,0))
 			message = adminscrub(message,500)
 		world << "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
@@ -623,7 +623,7 @@ var/global/BSACooldown = 0
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/chosen = pick_closest_path(object)
@@ -780,7 +780,7 @@ var/global/BSACooldown = 0
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+	if (!check_rights(R_PRIMARYADMIN,0) || !check_rights(R_ADMIN|R_DEBUG,0))
 		return 0
 
 	if (!frommob.ckey)

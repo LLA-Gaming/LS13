@@ -5,7 +5,7 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 
 	if(A && A.type)
@@ -25,7 +25,7 @@
 
 
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 
 	for(var/p in forbidden_varedit_object_types)
@@ -59,7 +59,7 @@
 		if(!check_rights(R_DEBUG))
 			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG))
+		if(!check_rights(R_PRIMARYADMIN|R_DEBUG))
 			return
 
 	if(isnull(var_value))

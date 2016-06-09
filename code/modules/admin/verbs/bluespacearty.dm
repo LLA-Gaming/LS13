@@ -2,7 +2,7 @@
 	set name = "Bluespace Artillery"
 	set category = "Fun"
 
-	if(!holder || !check_rights(R_FUN))
+	if(!holder || !check_rights(R_PRIMARYADMIN))
 		return
 
 	var/mob/living/target = M

@@ -37,7 +37,7 @@
 			<BR>
 			"}
 
-	if(check_rights(R_FUN,0))
+	if(check_rights(R_PRIMARYADMIN,0))
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
@@ -239,7 +239,7 @@
 			usr << browse(dat, "window=fingerprints;size=440x410")
 
 		if("monkey")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
@@ -249,7 +249,7 @@
 			ok = 1
 
 		if("allspecies")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
 			if(result)
@@ -260,7 +260,7 @@
 					H.set_species(newtype)
 
 		if("corgi")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
@@ -270,14 +270,14 @@
 			ok = 1
 
 		if("tripleAI")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			usr.client.triple_ai()
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","TriAI")
 
 		if("power")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","P")
@@ -286,7 +286,7 @@
 			power_restore()
 
 		if("unpower")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","UP")
@@ -295,7 +295,7 @@
 			power_failure()
 
 		if("quickpower")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","QP")
@@ -304,7 +304,7 @@
 			power_restore_quick()
 
 		if("traitor_all")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
@@ -343,7 +343,7 @@
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
 		if("changebombcap")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
@@ -364,7 +364,7 @@
 
 
 		if("lightsout")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","LO")
@@ -372,7 +372,7 @@
 			E = new /datum/round_event/electrical_storm{lightsoutAmount = 2}()
 
 		if("blackout")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
@@ -381,7 +381,7 @@
 				L.broken()
 
 		if("anime")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","CC")
@@ -406,7 +406,7 @@
 					H << "You're not kawaii enough for this."
 
 		if("whiteout")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","WO")
@@ -419,7 +419,7 @@
 			storm.weather_start_up()
 
 		if("virus")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","V")
@@ -435,7 +435,7 @@
 					DO.virus_type = virus
 
 		if("retardify")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","RET")
@@ -445,7 +445,7 @@
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
 		if("eagles")//SCRAW
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","EgL")
@@ -456,7 +456,7 @@
 			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/AI/commandreport.ogg')
 
 		if("guns")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","SG")
@@ -470,7 +470,7 @@
 			rightandwrong(0, usr, survivor_probability)
 
 		if("magic")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","SM")
@@ -484,7 +484,7 @@
 			rightandwrong(1, usr, survivor_probability)
 
 		if("events")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			if(!SSevent.wizardmode)
 				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
@@ -503,7 +503,7 @@
 						SSevent.resetFrequency()
 
 		if("dorf")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
@@ -513,7 +513,7 @@
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 
 		if("onlyone")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
@@ -521,7 +521,7 @@
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 
 		if("onlyme")
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")

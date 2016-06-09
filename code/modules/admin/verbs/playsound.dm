@@ -4,7 +4,7 @@ var/sound/admin_sound
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_ADMIN))
 		return
 
 	log_admin("[key_name(src)] played sound [S]")
@@ -23,18 +23,18 @@ var/sound/admin_sound
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
-			
+
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_ADMIN))
 		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
@@ -45,7 +45,7 @@ var/sound/admin_sound
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
 	set name = "Set Round End Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_ADMIN))
 		return
 
 	if(ticker)

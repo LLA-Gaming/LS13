@@ -165,7 +165,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 	if(!istype(L,/list))
 		src << "Not a List."
@@ -212,10 +212,10 @@ var/list/VVckey_edit = list("key", "ckey")
 		if(!check_rights(R_DEBUG))
 			return
 	if(variable in VVckey_edit)
-		if(!check_rights(R_SPAWN|R_DEBUG))
+		if(!check_rights(R_ADMIN|R_DEBUG))
 			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG))
+		if(!check_rights(R_PRIMARYADMIN|R_DEBUG))
 			return
 
 	if(isnull(variable))
@@ -410,7 +410,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
@@ -434,10 +434,10 @@ var/list/VVckey_edit = list("key", "ckey")
 			if(!check_rights(R_DEBUG))
 				return
 		if(param_var_name in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG))
+			if(!check_rights(R_ADMIN|R_DEBUG))
 				return
 		if(param_var_name in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG))
+			if(!check_rights(R_PRIMARYADMIN|R_DEBUG))
 				return
 
 		variable = param_var_name
@@ -500,10 +500,10 @@ var/list/VVckey_edit = list("key", "ckey")
 			if(!check_rights(R_DEBUG))
 				return
 		if(variable in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG))
+			if(!check_rights(R_ADMIN|R_DEBUG))
 				return
 		if(variable in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG))
+			if(!check_rights(R_PRIMARYADMIN|R_DEBUG))
 				return
 
 	if(!autodetect_class)

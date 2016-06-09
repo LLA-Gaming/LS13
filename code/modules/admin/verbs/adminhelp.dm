@@ -120,7 +120,7 @@
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/get_admin_counts(requiredflags = R_BAN)
+/proc/get_admin_counts(requiredflags = R_SECONDARYADMIN)
 	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
 	for(var/client/X in admins)
 		.["total"]++
@@ -133,7 +133,7 @@
 		else
 			.["present"]++
 
-/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
+/proc/send2irc_adminless_only(source, msg, requiredflags = R_SECONDARYADMIN)
 	var/list/adm = get_admin_counts(requiredflags)
 	. = adm["present"]
 	if(. <= 0)

@@ -446,7 +446,7 @@ body
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["godmode"])
@@ -490,7 +490,7 @@ body
 
 //Needs +VAREDIT past this point
 
-	else if(check_rights(R_VAREDIT))
+	else if(check_rights(R_PRIMARYADMIN))
 
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
@@ -570,7 +570,7 @@ body
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/mob/M = locate(href_list["ninja"])
@@ -582,7 +582,7 @@ body
 			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/mob/M = locate(href_list["gib"])
@@ -593,7 +593,7 @@ body
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(R_BUILDMODE))
+			if(!check_rights(R_SENIORADMIN))
 				return
 
 			var/mob/M = locate(href_list["build_mode"])
@@ -639,7 +639,7 @@ body
 			offer_control(M)
 
 		else if(href_list["delall"])
-			if(!check_rights(R_DEBUG|R_SERVER))
+			if(!check_rights(R_DEBUG|R_PRIMARYADMIN))
 				return
 
 			var/obj/O = locate(href_list["delall"])
@@ -708,7 +708,7 @@ body
 			href_list["datumrefresh"] = href_list["addreagent"]
 
 		else if(href_list["explode"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/atom/A = locate(href_list["explode"])
@@ -720,7 +720,7 @@ body
 			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/atom/A = locate(href_list["emp"])
@@ -760,7 +760,7 @@ body
 			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["makehuman"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"])
@@ -776,7 +776,7 @@ body
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
 		else if(href_list["makemonkey"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
@@ -792,7 +792,7 @@ body
 			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
 		else if(href_list["makerobot"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makerobot"])
@@ -808,7 +808,7 @@ body
 			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
 		else if(href_list["makealien"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makealien"])
@@ -824,7 +824,7 @@ body
 			holder.Topic(href, list("makealien"=href_list["makealien"]))
 
 		else if(href_list["makeslime"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makeslime"])
@@ -840,7 +840,7 @@ body
 			holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 		else if(href_list["makeai"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/H = locate(href_list["makeai"])
@@ -856,7 +856,7 @@ body
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 
 		else if(href_list["setspecies"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["setspecies"])
@@ -877,7 +877,7 @@ body
 				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["removebodypart"])
@@ -897,7 +897,7 @@ body
 					BP.drop_limb()
 
 		else if(href_list["purrbation"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["purrbation"])

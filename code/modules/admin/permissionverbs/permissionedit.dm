@@ -2,12 +2,12 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_SENIORADMIN))
 		return
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_SENIORADMIN))
 		return
 
 	var/output = {"<!DOCTYPE html>
@@ -57,7 +57,7 @@
 	if(!usr.client)
 		return
 
-	if (!check_rights(R_PERMISSIONS))
+	if (!check_rights(R_SENIORADMIN))
 		return
 
 	establish_db_connection()
@@ -106,7 +106,7 @@
 		return
 	if(!usr.client)
 		return
-	if(check_rights(R_PERMISSIONS))
+	if(check_rights(R_SENIORADMIN))
 		return
 
 	establish_db_connection()

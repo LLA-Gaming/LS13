@@ -127,7 +127,7 @@ var/datum/subsystem/events/SSevent
 	set name = "Trigger Event"
 	set category = "Fun"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder ||!check_rights(R_PRIMARYADMIN))
 		return
 
 	holder.forceEvent()

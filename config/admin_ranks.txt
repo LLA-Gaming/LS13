@@ -18,24 +18,15 @@
 # +PRIMARYADMIN =  Call shuttle, cancel shuttle, world narrate, check cultist words, repair map, one click antag, add freeform law, add random law, make sound, immediate reboot, random apperance, toggle AI, admin delete, change view range, toggle random events, something to do with setting OOC, admin dress, possess + release.
 # +SENIORADMIN = object talk, delete all, toggle something, toggle admin spawning, toggle admin jumping, toggle admin banning, get ALL server logs (spans over a few days), drop bomb, cinematic, spawn spess ninja.
 
-# +FUN = Access to the fun secrets in the secrets panel + other small things from similar panels.
-# +BAN = the ability to ban, jobban and fullban
-# +POSSESS = the ability to possess objects
-# +BUILD (or +BUILDMODE) = the ability to use buildmode
-# +SERVER = Access to certain higher-risk abilities within menus, such as a delete-all and changing the bomb cap.
 # +DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
-# +VAREDIT = everyone may view viewvars/debugvars/whatever you call it. This keyword allows you to actually EDIT those variables.
-# +RIGHTS (or +PERMISSIONS) = allows you to promote and/or demote people.
-# +SOUND (or +SOUNDS) = allows you to upload and play sounds
-# +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 
 Admin Observer
 Trial Admin				= +TRIALADMIN
-Secondary Admin			= +@ +SECONDARYADMIN +BAN
-Administrator			= +@ +ADMIN +SPAWN
-Primary Administrator	= +@ +POSSESS +PRIMARYADMIN +VAREDIT +FUN +SERVER +SOUND
-Senior Admin			= +@ +SENIORADMIN +PERMISSIONS +SPAWN +BUILD
+Secondary Admin			= +@ +SECONDARYADMIN
+Administrator			= +@ +ADMIN
+Primary Administrator	= +@ +PRIMARYADMIN
+Senior Admin			= +@ +SENIORADMIN
 Head of Staff			= +@ +DEBUG
 
 Coder					= +EVERYTHING

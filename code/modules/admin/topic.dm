@@ -135,7 +135,7 @@
 					log_admin("[key_name(usr)] failed to create a shadowling.")
 
 	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
 		if(E)
@@ -275,7 +275,7 @@
 		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
-		if(!check_rights(R_SERVER))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num
@@ -344,7 +344,7 @@
 		check_antagonists()
 
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		ticker.delay_end = !ticker.delay_end
@@ -368,7 +368,7 @@
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
 
 	else if(href_list["simplemake"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["mob"])
@@ -439,7 +439,7 @@
 
 	/////////////////////////////////////new ban stuff
 	else if(href_list["unbanf"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/banfolder = href_list["unbanf"]
@@ -453,7 +453,7 @@
 				unbanpanel()
 
 	else if(href_list["unbane"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		UpdateTime()
@@ -507,7 +507,7 @@
 	/////////////////////////////////////new ban stuff
 
 	else if(href_list["appearanceban"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 		var/mob/M = locate(href_list["appearanceban"])
 		if(!ismob(M))
@@ -866,7 +866,7 @@
 
 	//JOBBAN'S INNARDS
 	else if(href_list["jobban3"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["jobban4"])
@@ -1100,7 +1100,7 @@
 			usr << browse(edit_log,"window=noteedits")
 
 	else if(href_list["newban"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["newban"])
@@ -1239,7 +1239,7 @@
 		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		if (ticker && ticker.mode)
@@ -1253,7 +1253,7 @@
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		if(ticker && ticker.mode)
@@ -1267,7 +1267,7 @@
 		.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
@@ -1280,7 +1280,7 @@
 		H.monkeyize()
 
 	else if(href_list["humanone"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
@@ -1293,7 +1293,7 @@
 		Mo.humanize()
 
 	else if(href_list["corgione"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["corgione"])
@@ -1307,7 +1307,7 @@
 
 
 	else if(href_list["forcespeech"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["forcespeech"])
@@ -1368,7 +1368,7 @@
 		qdel(M)
 
 	else if(href_list["tdome1"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1398,7 +1398,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)")
 
 	else if(href_list["tdome2"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1428,7 +1428,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)")
 
 	else if(href_list["tdomeadmin"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1451,7 +1451,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Admin.)")
 
 	else if(href_list["tdomeobserve"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1485,7 +1485,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)")
 
 	else if(href_list["revive"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/L = locate(href_list["revive"])
@@ -1498,7 +1498,7 @@
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
 	else if(href_list["makeai"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
@@ -1511,7 +1511,7 @@
 		H.AIize()
 
 	else if(href_list["makealien"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makealien"])
@@ -1522,7 +1522,7 @@
 		usr.client.cmd_admin_alienize(H)
 
 	else if(href_list["makeslime"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
@@ -1533,7 +1533,7 @@
 		usr.client.cmd_admin_slimeize(H)
 
 	else if(href_list["makeblob"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
@@ -1545,7 +1545,7 @@
 
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
@@ -1556,7 +1556,7 @@
 		usr.client.cmd_admin_robotize(H)
 
 	else if(href_list["makeanimal"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["makeanimal"])
@@ -1608,7 +1608,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 
@@ -1721,7 +1721,7 @@
 
 
 	else if(href_list["adminspawncookie"])
-		if(!check_rights(R_ADMIN|R_FUN))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
@@ -1838,32 +1838,32 @@
 		show_traitor_panel(M)
 
 	else if(href_list["create_object"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_object(usr)
 
 	else if(href_list["quick_create_object"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return quick_create_object(usr)
 
 	else if(href_list["create_turf"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_turf(usr)
 
 	else if(href_list["create_mob"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_mob(usr)
 
 	else if(href_list["dupe_marked_datum"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return DuplicateObject(marked_datum, perfectcopy=1, newloc=get_turf(usr))
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/atom/loc = usr.loc

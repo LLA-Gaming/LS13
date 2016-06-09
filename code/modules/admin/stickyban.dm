@@ -1,5 +1,5 @@
 /datum/admins/proc/stickyban(action,data)
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 	switch (action)
 		if ("show")
@@ -140,7 +140,7 @@
 	. += "</ol>\n"
 
 /datum/admins/proc/stickyban_show()
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 	var/list/bans = sortList(world.GetConfig("ban"))
 	var/banhtml = ""
