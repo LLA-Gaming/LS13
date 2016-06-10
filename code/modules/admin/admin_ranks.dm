@@ -37,7 +37,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		if("senioradmin")
 			flag = R_SENIORADMIN
 		if("everything","host","all")
-			flag = R_MAXPERMISSION
+			flag = 65535
 		if("@","prev")
 			flag = previous_rights
 	return flag
