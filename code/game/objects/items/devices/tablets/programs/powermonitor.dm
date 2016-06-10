@@ -38,4 +38,4 @@
 				var/pnum = text2num(href_list["target"])
 				powmonitor = powermonitors[pnum]
 
-		tablet.attack_self()
+		tablet.attack_self(usr)

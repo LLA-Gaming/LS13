@@ -47,8 +47,10 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 
 	var/banned = 0
 
-/obj/item/device/tablet/New()
+/obj/item/device/tablet/New(location,var/visualonly=0)
 	..()
+	if(visualonly)
+		return
 	new /obj/item/weapon/pen(src)
 	tablets_list.Add(src)
 	core = new /obj/item/device/tablet_core/(src)
@@ -851,27 +853,37 @@ obj/item/device/tablet/verb/verb_remove_pen()
 /obj/item/device/tablet/perseus
 	icon_state = "tablet-perc"
 	messengeron = 0
-	default_programs =  list(/datum/program/atmosscan,/datum/program/camera,/datum/program/notekeeper,/datum/program/percblastdoors,/datum/program/percimplants,/datum/program/percmissions,/datum/program/percshuttlelock)
-	default_cartridge = /obj/item/weapon/cartridge/hos
+	default_programs =  list(/datum/program/atmosscan,/datum/program/camera,/datum/program/notekeeper,/datum/program/percblastdoors,/datum/program/percimplants,/datum/program/percmissions,/datum/program/percshuttlelock,/datum/program/crewmanifest)
 
 /obj/item/device/tablet/ai
 	can_eject = 0
 	can_detonate = 0
+	default_programs = list(/datum/program/notekeeper)
+
 /obj/item/device/tablet/pai
 	can_eject = 0
+	messengeron = 0
 	can_detonate = 0
+	default_programs = list(/datum/program/notekeeper)
 
 //Some spare Tablets in a box
 /obj/item/weapon/storage/box/tablets
-	name = "spare Tablets"
-	desc = "A box of spare Tablets."
+	name = "spare tablets"
+	desc = "A box of spare tablets."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "pda"
-	New()
-		..()
-		new /obj/item/device/tablet(src)
-		new /obj/item/device/tablet(src)
-		new /obj/item/device/tablet(src)
-		new /obj/item/device/tablet_core(src)
-		new /obj/item/device/tablet_core(src)
-		new /obj/item/device/tablet_core(src)
+
+/obj/item/weapon/storage/box/tablets/New()
+	..()
+	new /obj/item/device/tablet(src)
+	new /obj/item/device/tablet(src)
+	new /obj/item/device/tablet(src)
+	new /obj/item/device/tablet(src)
+	new /obj/item/weapon/cartridge/head(src)
+
+	var/newcart = pick(	/obj/item/weapon/cartridge/engineering,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/medical,
+						/obj/item/weapon/cartridge/signal/toxins,
+						/obj/item/weapon/cartridge/quartermaster)
+	new newcart(src)

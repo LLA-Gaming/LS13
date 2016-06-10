@@ -20620,7 +20620,7 @@
 "aUi" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/secure/briefcase,
-/obj/item/weapon/storage/box/PDAs{
+/obj/item/weapon/storage/box/tablets{
 	pixel_x = 4;
 	pixel_y = 4
 	},

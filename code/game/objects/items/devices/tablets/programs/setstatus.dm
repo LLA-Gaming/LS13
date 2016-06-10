@@ -32,7 +32,7 @@
 						message2 = reject_bad_text(input("Line 2", "Enter Message Text", message2) as text|null, 40)
 					else
 						post_status(href_list["statdisp"])
-		tablet.attack_self()
+		tablet.attack_self(usr)
 
 
 	proc/post_status(command, data1, data2)

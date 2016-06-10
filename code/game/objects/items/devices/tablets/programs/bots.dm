@@ -2,7 +2,7 @@
 	name = "Bot Interlink"
 	app_id = "bot_control"
 	usesalerts = 1
-	utility = 0
+	utility = 1
 	drm = 1
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
@@ -12,7 +12,7 @@
 		var/mob/living/simple_animal/bot/Bot
 
 		if(active_bot)
-			dat += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;bot=\ref[active_bot]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
+			dat += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;bot=\ref[active_bot]'><i>refresh</i></A>)<BR>"
 			dat += "Model: [active_bot.model]<BR>"
 			dat += "Location: [get_area(active_bot)]<BR>"
 			dat += "Mode: [active_bot.get_mode()]"
@@ -48,10 +48,10 @@
 				dat += "\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>"		//summon
 				dat += "Keep an ID inserted to upload access codes upon summoning."
 
-			dat += "<HR><A href='byond://?src=\ref[src];op=botlist'><img src=pda_back.png>Return to bot list</A>"
+			dat += "<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>"
 		else
-			dat += "<BR><A href='byond://?src=\ref[src];op=botlist'><img src=pda_refresh.png>Scan for active bots</A><BR><BR>"
-			var/turf/current_turf = get_turf(src)
+			dat += "<BR><A href='byond://?src=\ref[src];op=botlist'>Scan for active bots</A><BR><BR>"
+			var/turf/current_turf = get_turf(tablet)
 			var/zlevel = current_turf.z
 			var/botcount = 0
 			for(Bot in living_mob_list) //Git da botz
@@ -82,4 +82,4 @@
 
 			active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
 
-		tablet.attack_self()
+		tablet.attack_self(usr)

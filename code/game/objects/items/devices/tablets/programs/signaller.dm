@@ -39,4 +39,4 @@
 				var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
 				S.set_frequency(new_frequency)
 
-		tablet.attack_self()
+		tablet.attack_self(usr)

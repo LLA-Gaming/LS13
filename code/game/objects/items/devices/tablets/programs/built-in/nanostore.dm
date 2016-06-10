@@ -14,7 +14,7 @@
 			dat = "<h3>NanoStore</h3>"
 
 			for(var/datum/program/P in sortNames(server.programs))
-				//if(!P.price) continue
+				if(!P.price) continue
 				dat += "<div class='statusDisplay'>"
 				dat += "[P.name]"
 				dat += " - $[P.price]"

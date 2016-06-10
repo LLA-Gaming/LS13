@@ -166,7 +166,7 @@
 	has_gravity = 1
 
 var/mycenae_at_centcom = 1
-var/perseus_shuttle_locked = 0
+var/perseus_shuttle_locked = 1
 
 /proc/move_mycenae()
 	if(mycenae_at_centcom)

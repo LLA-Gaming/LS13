@@ -1,11 +1,11 @@
 /obj/machinery/pdapainter
-	name = "\improper PDA painter"
-	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
+	name = "\improper tablet painter"
+	desc = "A tablet painting machine. To use, simply insert your tablet and choose the desired preset paint scheme."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
 	density = 1
 	anchored = 1
-	var/obj/item/device/pda/storedpda = null
+	var/obj/item/device/tablet/stored = null
 	var/list/colorlist = list()
 	var/health = 100
 
@@ -17,7 +17,7 @@
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
-	if(storedpda)
+	if(stored)
 		overlays += "[initial(icon_state)]-closed"
 
 	if(powered())
@@ -29,11 +29,22 @@
 
 /obj/machinery/pdapainter/New()
 	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
-						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+	var/blocked = list(/obj/item/device/tablet/pai,
+						 /obj/item/device/tablet/ai,
+						 /obj/item/device/tablet/captain,
+						 /obj/item/device/tablet/hop,
+						 /obj/item/device/tablet/hos,
+						 /obj/item/device/tablet/captain,
+						 /obj/item/device/tablet/cmo,
+						 /obj/item/device/tablet/ce,
+						 /obj/item/device/tablet/rd,
+						 /obj/item/device/tablet/clear,
+						 /obj/item/device/tablet/syndi,
+						 /obj/item/device/tablet/laptop,
+						 /obj/item/device/tablet/perseus)
 
-	for(var/P in typesof(/obj/item/device/pda)-blocked)
-		var/obj/item/device/pda/D = new P
+	for(var/P in typesof(/obj/item/device/tablet)-blocked)
+		var/obj/item/device/tablet/D = new P(src,1)
 
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
@@ -46,16 +57,16 @@
 		power_change()
 		return
 
-	else if(istype(O, /obj/item/device/pda))
-		if(storedpda)
-			user << "<span class='warning'>There is already a PDA inside!</span>"
+	else if(istype(O, /obj/item/device/tablet))
+		if(stored)
+			user << "<span class='warning'>There is already a tablet inside!</span>"
 			return
 		else
-			var/obj/item/device/pda/P = user.get_active_hand()
+			var/obj/item/device/tablet/P = user.get_active_hand()
 			if(istype(P))
 				if(!user.drop_item())
 					return
-				storedpda = P
+				stored = P
 				P.loc = src
 				P.add_fingerprint(user)
 				update_icon()
@@ -104,17 +115,17 @@
 	if(!..())
 		add_fingerprint(user)
 
-		if(storedpda)
-			var/obj/item/device/pda/P
-			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
+		if(stored)
+			var/obj/item/device/tablet/P
+			P = input(user, "Select your color!", "Tablet Painting") as null|anything in colorlist
 			if(!P)
 				return
 			if(!in_range(src, user))
 				return
-			if(!storedpda)//is the pda still there?
+			if(!stored)//is the pda still there?
 				return
-			storedpda.icon_state = P.icon_state
-			storedpda.desc = P.desc
+			stored.icon_state = P.icon_state
+			stored.desc = P.desc
 			ejectpda()
 
 		else
@@ -122,16 +133,16 @@
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
-	set name = "Eject PDA"
+	set name = "Eject Tablet"
 	set category = "Object"
 	set src in oview(1)
 
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
 
-	if(storedpda)
-		storedpda.loc = get_turf(src.loc)
-		storedpda = null
+	if(stored)
+		stored.loc = get_turf(src.loc)
+		stored = null
 		update_icon()
 	else
 		usr << "<span class='notice'>The [src] is empty.</span>"
