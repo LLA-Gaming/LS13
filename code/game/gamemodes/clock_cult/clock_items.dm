@@ -897,6 +897,7 @@
 	name = "component"
 	desc = "mysterious component"
 	clockwork_desc = null
+	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "you should not see this." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list() //Fluff, shown to servants of Ratvar on a low chance
@@ -1016,3 +1017,4 @@
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
+	burn_state = LAVA_PROOF
