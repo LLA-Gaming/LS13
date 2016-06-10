@@ -8,7 +8,7 @@
 //Not accessible from usual debug controller verb
 /datum/protected_configuration
 	var/autoadmin = 0
-	var/autoadmin_rank = "Game Admin"
+	var/autoadmin_rank = "Coder"
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
