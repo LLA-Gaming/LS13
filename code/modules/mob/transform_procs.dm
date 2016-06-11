@@ -301,6 +301,7 @@
 
 	O.rename_self("ai")
 	. = O
+	O.view_core()
 	qdel(src)
 	return
 

@@ -666,9 +666,9 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 		if(loc == user)
 			return 1
 
-/obj/item/device/tablet/MouseDrop(obj/over_object as obj, src_location, over_location)
+/obj/item/device/tablet/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && can_use(M))
+	if((!istype(over_object, /obj/screen)) && can_use(usr))
 		return attack_self(M)
 	return
 

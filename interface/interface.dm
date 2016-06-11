@@ -1,3 +1,12 @@
+//Procs for sending messages to output tabs.
+/client/proc/text2tab(text, tab_name="ic")
+	src << text //all tab
+	src << output(text, tab_name)
+
+/mob/proc/text2tab(text, tab_name="ic")
+	if(client)
+		client.text2tab(text, tab_name)
+
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
