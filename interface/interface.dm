@@ -1,7 +1,8 @@
 //Procs for sending messages to output tabs.
 /client/proc/text2tab(text, tab_name="ic")
 	src << text //all tab
-	src << output(text, tab_name)
+	if(tab_name)
+		src << output(text, tab_name)
 
 /mob/proc/text2tab(text, tab_name="ic")
 	if(client)
