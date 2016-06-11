@@ -28,11 +28,11 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
+					user.text2tab("<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			user << "\The [src] is full."
+			user.text2tab("\The [src] is full.")
 	else
 		return ..()
 

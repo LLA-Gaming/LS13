@@ -16,7 +16,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	var/hatch_or_no = alert(H,"Are you sure you want to hatch? You cannot undo this!",,"Yes","No")
 	switch(hatch_or_no)
 		if("No")
-			H << "<span class='warning'>You decide against hatching for now."
+			H.text2tab("<span class='warning'>You decide against hatching for now.")
 			charge_counter = charge_max
 			return
 		if("Yes")
@@ -52,13 +52,13 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(80)
 			playsound(H.loc, 'sound/weapons/slash.ogg', 25, 1)
-			H << "<i><b>You rip and slice.</b></i>"
+			H.text2tab("<i><b>You rip and slice.</b></i>")
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slashmiss.ogg', 25, 1)
-			H << "<i><b>The chrysalis falls like water before you.</b></i>"
+			H.text2tab("<i><b>The chrysalis falls like water before you.</b></i>")
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
-			H << "<i><b>You are free!</b></i>"
+			H.text2tab("<i><b>You are free!</b></i>")
 			H.status_flags = temp_flags
 			sleep(10)
 			playsound(H.loc, 'sound/effects/ghost.ogg', 100, 1)
@@ -67,7 +67,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.real_name = newNameId
 			H.name = user.real_name
 			H.stunned = 0 //Same as above. Due to hulks.
-			H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
+			H.text2tab("<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
@@ -92,7 +92,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.mind.RemoveSpell(src)
 
 			sleep(10)
-			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
+			H.text2tab("<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil(null))
@@ -119,7 +119,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	var/hatch_or_no = alert(H,"It is time to ascend. Are you sure about this?",,"Yes","No")
 	switch(hatch_or_no)
 		if("No")
-			H << "<span class='warning'>You decide against ascending for now."
+			H.text2tab("<span class='warning'>You decide against ascending for now.")
 			charge_counter = charge_max
 			return
 		if("Yes")
@@ -144,16 +144,16 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 								  "<span class='shadowling'>You begin to rend apart the final barriers to godhood.</span>")
 
 				sleep(40)
-				H << "<i><b>Yes!</b></i>"
+				H.text2tab("<i><b>Yes!</b></i>")
 				sleep(10)
-				H << "<i><b><span class='big'>YES!!</span></b></i>"
+				H.text2tab("<i><b><span class='big'>YES!!</span></b></i>")
 				sleep(10)
-				H << "<i><b><span class='reallybig'>YE--</span></b></i>"
+				H.text2tab("<i><b><span class='reallybig'>YE--</span></b></i>")
 				sleep(1)
 				for(var/mob/living/M in orange(7, H))
 					M.Weaken(10)
-					M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
-				world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
+					M.text2tab("<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
+				text2world("<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 				world << 'sound/hallucinations/veryfar_noise.ogg'
 				for(var/obj/machinery/power/apc/A in apcs_list)
 					A.overload_lighting()

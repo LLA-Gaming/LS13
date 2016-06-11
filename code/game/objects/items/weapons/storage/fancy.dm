@@ -34,9 +34,9 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len == 1)
-		user << "There is one [src.icon_type] left."
+		user.text2tab("There is one [src.icon_type] left.")
 	else
-		user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
+		user.text2tab("There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
 
 /*
  * Donut Box
@@ -132,11 +132,11 @@
 			remove_from_storage(W, M)
 			M.equip_to_slot_if_possible(W, slot_wear_mask)
 			contents -= W
-			user << "<span class='notice'>You take a [icon_type] out of the pack.</span>"
+			user.text2tab("<span class='notice'>You take a [icon_type] out of the pack.</span>")
 		else
 			..()
 	else
-		user << "<span class='notice'>There are no [icon_type]s left in the pack.</span>"
+		user.text2tab("<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
 	name = "DromedaryCo"

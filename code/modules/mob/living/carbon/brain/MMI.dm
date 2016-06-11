@@ -45,10 +45,10 @@
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
-			user << "<span class='warning'>There's already a brain in the MMI!</span>"
+			user.text2tab("<span class='warning'>There's already a brain in the MMI!</span>")
 			return
 		if(!newbrain.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
+			user.text2tab("<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>")
 			return
 
 		if(!user.unEquip(O))
@@ -88,9 +88,9 @@
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.on = !radio.on
-		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
+		user.text2tab("<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>")
 	else
-		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
+		user.text2tab("<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.loc = brain //Throw mob into brain.
@@ -142,13 +142,13 @@
 	set popup_menu = 0
 
 	if(brainmob.stat)
-		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
+		brainmob.text2tab("<span class='warning'>Can't do that while incapacitated or dead!</span>")
 	if(!radio.on)
-		brainmob << "<span class='warning'>Your radio is disabled!</span>"
+		brainmob.text2tab("<span class='warning'>Your radio is disabled!</span>")
 		return
 
 	radio.listening = radio.listening==1 ? 0 : 1
-	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
+	brainmob.text2tab("<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)
@@ -178,13 +178,13 @@
 	if(brainmob)
 		var/mob/living/carbon/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
+			user.text2tab("<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
 
 		else if(!B.client)
-			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+			user.text2tab("<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
 
 		else
-			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+			user.text2tab("<span class='notice'>The MMI indicates the brain is active.</span>")
 
 
 /obj/item/device/mmi/syndie

@@ -30,7 +30,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			removeOverlays()
-			user << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
+			user.text2tab("<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
 	else
 		return ..()
 

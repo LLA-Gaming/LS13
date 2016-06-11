@@ -91,11 +91,11 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>"
+	user.text2tab("<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	user.text2tab("The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
 
 //Health Tracker Implant
 
@@ -122,10 +122,10 @@
 	if (isnull(occupant) || !is_operational())
 		return
 	if ((!isnull(occupant)) && (occupant.stat != DEAD))
-		user << "Current clone cycle is [round(get_completion())]% complete."
+		user.text2tab("Current clone cycle is [round(get_completion())]% complete.")
 	else if(mess)
-		user << "It's filled with blood and vicerea. You swear you can see \
-			it moving..."
+		user.text2tab("It's filled with blood and vicerea. You swear you can see \
+			it moving...")
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -189,13 +189,13 @@
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
 		H.ckey = ckey
-		H << "<span class='notice'><b>Consciousness slowly creeps over you \
+		H.text2tab("<span class='notice'><b>Consciousness slowly creeps over you \
 			as your body regenerates.</b><br><i>So this is what cloning \
-			feels like?</i></span>"
+			feels like?</i></span>")
 	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.current << "<span class='notice'>Your body is \
+		clonemind.current.text2tab("<span class='notice'>Your body is \
 			beginning to regenerate in a cloning pod. You will \
-			become conscious when it is complete.</span>"
+			become conscious when it is complete.</span>")
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 	if(H)
@@ -271,23 +271,23 @@
 
 	if (W.GetID())
 		if (!check_access(W))
-			user << "<span class='danger'>Access Denied.</span>"
+			user.text2tab("<span class='danger'>Access Denied.</span>")
 			return
 		if (!locked || !occupant)
 			return
 		if (occupant.health < -20 && occupant.stat != DEAD)
-			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
+			user.text2tab("<span class='danger'>Access Refused. Patient status still unstable.</span>")
 			return
 		else
 			locked = FALSE
-			user << "System unlocked."
+			user.text2tab("System unlocked.")
 	else
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(occupant))
 		return
-	user << "<span class='notice'>You force an emergency ejection.</span>"
+	user.text2tab("<span class='notice'>You force an emergency ejection.</span>")
 	locked = FALSE
 	go_out()
 
@@ -332,10 +332,10 @@
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>The world is suddenly bright \
+		occupant.text2tab("<span class='notice'><b>The world is suddenly bright \
 			and sudden and loud!</b><br>\
 			<i>You feel your body weight suddenly, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
+			comprehends where you are and what is going on.</i></span>")
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
@@ -356,9 +356,9 @@
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
 		flash_color(occupant, flash_color="#960000", flash_time=100)
-		occupant << "<span class='warning'><b>Agony blazes across your \
+		occupant.text2tab("<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
-			<i>Is this what dying is like? Yes it is.</i></span>"
+			<i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		spawn(40)

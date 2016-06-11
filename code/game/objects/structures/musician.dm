@@ -211,12 +211,12 @@
 			else
 				tempo = sanitize_tempo(5) // default 120 BPM
 			if(lines.len > 50)
-				usr << "Too many lines!"
+				usr.text2tab("Too many lines!")
 				lines.Cut(51)
 			var/linenum = 1
 			for(var/l in lines)
 				if(lentext(l) > 50)
-					usr << "Line [linenum] too long!"
+					usr.text2tab("Line [linenum] too long!")
 					lines.Remove(l)
 				else
 					linenum++
@@ -330,7 +330,7 @@
 
 /obj/structure/piano/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		user.text2tab("<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	interact(user)
 
@@ -348,7 +348,7 @@
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
+			user.text2tab("<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, 20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
@@ -357,7 +357,7 @@
 				anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
+			user.text2tab("<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
 			if (do_after(user, 40/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \

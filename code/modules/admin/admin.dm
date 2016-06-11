@@ -4,11 +4,13 @@ var/global/BSACooldown = 0
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	admins << msg
+	for(var/C in admins)
+		C:text2tab(msg,"asay")
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	admins << msg
+	for(var/C in admins)
+		C:text2tab(msg,"asay")
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels

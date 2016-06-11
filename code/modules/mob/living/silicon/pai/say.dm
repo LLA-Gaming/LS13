@@ -1,6 +1,6 @@
 /mob/living/silicon/pai/say(msg)
 	if(silence_time)
-		src << "<span class='warning'>Communication circuits remain unitialized.</span>"
+		src.text2tab("<span class='warning'>Communication circuits remain unitialized.</span>")
 	else
 		..(msg)
 

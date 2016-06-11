@@ -30,7 +30,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				usr.text2tab("<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 
 	hand = !hand
@@ -107,7 +107,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			src.text2tab("<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 			return
 
 

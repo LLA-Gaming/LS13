@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return 0
-	user << "<span class='warning'>Our genes cry out!</span>"
+	user.text2tab("<span class='warning'>Our genes cry out!</span>")
 
 	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 

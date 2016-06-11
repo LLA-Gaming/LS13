@@ -19,13 +19,14 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
+		user.text2tab("<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
 	else
 		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
-		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
+		if(ismob(loc))
+			loc:text2tab("<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
 		invis_update()
 
 	if(ishuman(user))
@@ -122,10 +123,10 @@
 
 	if(on)
 		SSobj.processing |= src
-		user << "<span class='notice'>You turn the goggles on.</span>"
+		user.text2tab("<span class='notice'>You turn the goggles on.</span>")
 	else
 		SSobj.processing.Remove(src)
-		user << "<span class='notice'>You turn the goggles off.</span>"
+		user.text2tab("<span class='notice'>You turn the goggles off.</span>")
 		invis_update()
 
 	update_icon()

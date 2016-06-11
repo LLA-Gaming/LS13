@@ -25,7 +25,7 @@
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
-	user << "The wire panel is [open_panel ? "opened" : "closed"]."
+	user.text2tab("The wire panel is [open_panel ? "opened" : "closed"].")
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
@@ -34,13 +34,13 @@
 			return
 		I.loc = src
 		mytape = I
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		user.text2tab("<span class='notice'>You insert [I] into [src].</span>")
 		update_icon()
 
 
 /obj/item/device/taperecorder/proc/eject(mob/user)
 	if(mytape)
-		user << "<span class='notice'>You remove [mytape] from [src].</span>"
+		user.text2tab("<span class='notice'>You remove [mytape] from [src].</span>")
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
@@ -110,7 +110,7 @@
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
-		usr << "<span class='notice'>Recording started.</span>"
+		usr.text2tab("<span class='notice'>Recording started.</span>")
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
@@ -126,7 +126,7 @@
 		recording = 0
 		update_icon()
 	else
-		usr << "<span class='notice'>The tape is full.</span>"
+		usr.text2tab("<span class='notice'>The tape is full.</span>")
 
 
 /obj/item/device/taperecorder/verb/stop()
@@ -140,7 +140,7 @@
 		recording = 0
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
-		usr << "<span class='notice'>Recording stopped.</span>"
+		usr.text2tab("<span class='notice'>Recording stopped.</span>")
 		return
 	else if(playing)
 		playing = 0
@@ -164,7 +164,7 @@
 
 	playing = 1
 	update_icon()
-	usr << "<span class='notice'>Playing started.</span>"
+	usr.text2tab("<span class='notice'>Playing started.</span>")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
@@ -209,12 +209,12 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		usr << "<span class='notice'>The recorder can't print that fast!</span>"
+		usr.text2tab("<span class='notice'>The recorder can't print that fast!</span>")
 		return
 	if(recording || playing)
 		return
 
-	usr << "<span class='notice'>Transcript printed.</span>"
+	usr.text2tab("<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
@@ -252,7 +252,7 @@
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
-		user << "<span class='notice'>You pull out all the tape!</span>"
+		user.text2tab("<span class='notice'>You pull out all the tape!</span>")
 		ruin()
 
 
@@ -268,9 +268,9 @@
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in...</span>"
+		user.text2tab("<span class='notice'>You start winding the tape back in...</span>")
 		if(do_after(user, 120/I.toolspeed, target = src))
-			user << "<span class='notice'>You wound the tape back in.</span>"
+			user.text2tab("<span class='notice'>You wound the tape back in.</span>")
 			fix()
 
 

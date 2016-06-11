@@ -19,9 +19,9 @@
 	. = ..()
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
-	finder << "<span class='warning'>Inside the head is a disgusting black \
+	finder.text2tab("<span class='warning'>Inside the head is a disgusting black \
 		web of pus and vicera, bound tightly around the brain like some \
-		biological harness.</span>"
+		biological harness.</span>")
 
 /obj/item/organ/body_egg/zombie_infection/egg_process()
 	if(!ishuman(owner)) // We do not support monkey or xeno zombies. Yet.
@@ -54,7 +54,7 @@
 		if(DEAD, UNCONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] staggers to \
 				their feet!</span>")
-			owner << "<span class='danger'>You stagger to your feet!</span>"
+			owner.text2tab("<span class='danger'>You stagger to your feet!</span>")
 		// Conscious conversions will generally only happen for an event
 		// or for a converts_living=TRUE infection
 		if(CONSCIOUS)
@@ -65,6 +65,6 @@
 			playsound(owner.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			owner.do_jitter_animation(living_transformation_time)
 			owner.Stun(living_transformation_time)
-			owner << "<span class='alertalien'>You are now a zombie!</span>"
+			owner.text2tab("<span class='alertalien'>You are now a zombie!</span>")
 
 #undef START_TIMER

@@ -30,7 +30,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	if(..())
 		if(connected_device)
-			user << "<span class='warning'>You cannot unwrench this [src], detach [connected_device] first!</span>"
+			user.text2tab("<span class='warning'>You cannot unwrench this [src], detach [connected_device] first!</span>")
 		else
 			return 1
 

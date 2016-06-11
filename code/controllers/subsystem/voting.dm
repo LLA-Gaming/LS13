@@ -151,7 +151,7 @@ var/datum/subsystem/vote/SSvote
 		if(started_time)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(mode)
-				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
+				usr.text2tab("<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
 				return 0
 
 			var/admin = FALSE
@@ -160,7 +160,7 @@ var/datum/subsystem/vote/SSvote
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
-				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
+				usr.text2tab("<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
 				return 0
 
 		reset()

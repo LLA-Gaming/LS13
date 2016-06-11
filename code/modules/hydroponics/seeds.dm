@@ -229,10 +229,10 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/device/plant_analyzer))
-		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
+		user.text2tab("<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
 		var/text = get_analyzer_text()
 		if(text)
-			user << "<span class='notice'>[text]</span>"
+			user.text2tab("<span class='notice'>[text]</span>")
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up

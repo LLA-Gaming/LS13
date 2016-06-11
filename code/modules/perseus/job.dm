@@ -209,5 +209,4 @@ var/const/COMMANDER = (1<<1)
 	for (var/mob/living/S in world)
 		if(!S.stat)
 			if(S.check_contents_for(/obj/item/weapon/implant/enforcer))
-				S << rendered
-		//		S.send_text_to_tab(rendered, "ic")
+				S.text2tab(rendered)

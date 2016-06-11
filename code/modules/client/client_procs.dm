@@ -65,11 +65,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			src.text2tab("<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+			src.text2tab("<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message = message
@@ -154,7 +154,7 @@ var/next_external_rsc = 0
 	. = ..()	//calls mob.Login()
 
 	if (byond_version < config.client_error_version)		//Out of date client.
-		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
+		src.text2tab("<span class='danger'><b>Your version of byond is too old:</b></span>")
 		src << config.client_error_message
 		src << "Your version: [byond_version]"
 		src << "Required version: [config.client_error_version] or later"
@@ -165,7 +165,7 @@ var/next_external_rsc = 0
 			del(src)
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
-		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
+		src.text2tab("<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
 		src << config.client_warn_message
 		src << "Your version: [byond_version]"
 		src << "Required version to remove this message: [config.client_warn_version] or later"
@@ -190,7 +190,7 @@ var/next_external_rsc = 0
 		admin_memo_output("Show")
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
-			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
+			src.text2tab("<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -226,7 +226,7 @@ var/next_external_rsc = 0
 	screen += void
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		src << "<span class='info'>You have unread updates in the changelog.</span>"
+		src.text2tab("<span class='info'>You have unread updates in the changelog.</span>")
 		if(config.aggressive_changelog)
 			changelog()
 		else
@@ -241,7 +241,7 @@ var/next_external_rsc = 0
 		convert_notes_sql(ckey)
 
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
-		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
+		src.text2tab("<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 
 	//This is down here because of the browse() calls in tooltip/New()

@@ -414,11 +414,11 @@ var/list/VVckey_edit = list("key", "ckey")
 		return
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
-		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+		usr.text2tab("<span class='danger'>It is forbidden to edit this object's variables.</span>")
 		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
-		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
+		usr.text2tab("<span class='danger'>You cannot edit ckeys on client objects.</span>")
 		return
 
 	var/class

@@ -59,7 +59,7 @@
 
 	else if(istype(O, /obj/item/device/tablet))
 		if(stored)
-			user << "<span class='warning'>There is already a tablet inside!</span>"
+			user.text2tab("<span class='warning'>There is already a tablet inside!</span>")
 			return
 		else
 			var/obj/item/device/tablet/P = user.get_active_hand()
@@ -82,13 +82,13 @@
 				if(do_after(user,40/WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
-					user << "<span class='notice'>You repair [src].</span>"
+					user.text2tab("<span class='notice'>You repair [src].</span>")
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
 					health = initial(health)
 					update_icon()
 		else
-			user << "<span class='notice'>[src] does not need repairs.</span>"
+			user.text2tab("<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
 
@@ -129,7 +129,7 @@
 			ejectpda()
 
 		else
-			user << "<span class='notice'>\The [src] is empty.</span>"
+			user.text2tab("<span class='notice'>\The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -145,7 +145,7 @@
 		stored = null
 		update_icon()
 	else
-		usr << "<span class='notice'>The [src] is empty.</span>"
+		usr.text2tab("<span class='notice'>The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()

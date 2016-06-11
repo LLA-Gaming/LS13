@@ -39,7 +39,7 @@
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	user << "It contains [reagents.total_volume] units."
+	user.text2tab("It contains [reagents.total_volume] units.")
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
@@ -152,7 +152,7 @@
 	if((!istype(user)) || (user.stat))
 		return
 	if(cups <= 0)
-		user << "<span class='warning'>No cups left!</span>"
+		user.text2tab("<span class='warning'>No cups left!</span>")
 		return
 	cups--
 	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/SC = new(loc)

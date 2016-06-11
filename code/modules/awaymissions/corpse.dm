@@ -25,7 +25,7 @@
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
-		user << "<span class='warning'>This spawner is out of charges!</span>"
+		user.text2tab("<span class='warning'>This spawner is out of charges!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -78,7 +78,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		M << "[flavour_text]"
+		M.text2tab("[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
@@ -513,7 +513,7 @@
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	new_spawn << "You were convincted of: [crime]."
+	new_spawn.text2tab("You were convincted of: [crime].")
 
 //For ghost bar.
 /obj/effect/mob_spawn/human/alive/space_bar_patron

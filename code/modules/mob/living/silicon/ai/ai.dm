@@ -128,18 +128,18 @@ var/list/ai_list = list()
 				rename_self("ai")
 				if(mind.special_role)
 					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
-					src << "<span class='userdanger'>You have been installed as an AI! </span>"
-					src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"
+					src.text2tab("<span class='userdanger'>You have been installed as an AI! </span>")
+					src.text2tab("<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>")
 
-			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-			src << "To use something, simply click on it."
-			src << "Use say :b to speak to your cyborgs through binary."
-			src << "For department channels, use the following say commands:"
-			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
+			src.text2tab("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+			src.text2tab("<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+			src.text2tab("<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+			src.text2tab("To use something, simply click on it.")
+			src.text2tab("Use say :b to speak to your cyborgs through binary.")
+			src.text2tab("For department channels, use the following say commands:")
+			src.text2tab(":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science.")
 			show_laws()
-			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+			src.text2tab("<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 			job = "AI"
 	ai_list += src
@@ -232,7 +232,7 @@ var/list/ai_list = list()
 	else if(icontype == "Gentoo")
 		icon_state = "ai-gentoo"
 	//else
-			//usr <<"You can only change your display once!"
+			//usr << "You can only change your display once!"
 			//return
 
 /mob/living/silicon/ai/Stat()
@@ -305,7 +305,7 @@ var/list/ai_list = list()
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			usr << "Wireless control is disabled!"
+			usr.text2tab("Wireless control is disabled!")
 			return
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
@@ -333,7 +333,7 @@ var/list/ai_list = list()
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
 
-	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
+	src.text2tab("[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
@@ -346,7 +346,7 @@ var/list/ai_list = list()
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			src	 << "Wireless control is disabled!"
+			src.text2tab("Wireless control is disabled!")
 			return
 	SSshuttle.cancelEvac(src)
 	return
@@ -415,7 +415,7 @@ var/list/ai_list = list()
 			if(H)
 				H.attack_ai(src) //may as well recycle
 			else
-				src << "<span class='notice'>Unable to locate the holopad.</span>"
+				src.text2tab("<span class='notice'>Unable to locate the holopad.</span>")
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
@@ -431,14 +431,14 @@ var/list/ai_list = list()
 		if(target.len)
 			ai_actual_track(pick(target))
 		else
-			src << "Target is not on or near any active cameras on the station."
+			src.text2tab("Target is not on or near any active cameras on the station.")
 		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		Bot = locate(href_list["callbot"]) in living_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
-		src << "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>"
+		src.text2tab("<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in living_mob_list
@@ -452,7 +452,7 @@ var/list/ai_list = list()
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
-			src << "You are already loaded into an onboard computer!"
+			src.text2tab("You are already loaded into an onboard computer!")
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
@@ -496,7 +496,7 @@ var/list/ai_list = list()
 		return //won't work if dead
 
 	if(control_disabled)
-		src << "Wireless communication is disabled."
+		src.text2tab("Wireless communication is disabled.")
 		return
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
@@ -530,7 +530,7 @@ var/list/ai_list = list()
 	else if(cameranet && cameranet.checkTurfVis(turf_check))
 		call_bot(turf_check)
 	else
-		src << "<span class='danger'>Selected location is not visible.</span>"
+		src.text2tab("<span class='danger'>Selected location is not visible.</span>")
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
 
@@ -538,7 +538,7 @@ var/list/ai_list = list()
 		return
 
 	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
-		src << "<span class='danger'>Interface error. Unit is already in use.</span>"
+		src.text2tab("<span class='danger'>Interface error. Unit is already in use.</span>")
 		return
 
 	Bot.call_bot(src, waypoint)
@@ -639,7 +639,7 @@ var/list/ai_list = list()
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	src << "<span class='notice'>Switched to [network] camera network.</span>"
+	src.text2tab("<span class='notice'>Switched to [network] camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -723,7 +723,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		src << "<span class='notice'>You are already in your Main Core.</span>"
+		src.text2tab("<span class='notice'>You are already in your Main Core.</span>")
 		return
 	apc.malfvacate()
 
@@ -734,7 +734,7 @@ var/list/ai_list = list()
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
-		src << "Camera lights deactivated."
+		src.text2tab("Camera lights deactivated.")
 
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.SetLuminosity(0)
@@ -744,7 +744,7 @@ var/list/ai_list = list()
 
 	light_cameras()
 
-	src << "Camera lights activated."
+	src.text2tab("Camera lights activated.")
 	return
 
 //AI_CAMERA_LUMINOSITY
@@ -777,7 +777,7 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 
-	src << "Accessing Subspace Transceiver control..."
+	src.text2tab("Accessing Subspace Transceiver control...")
 	if (radio)
 		radio.interact(src)
 
@@ -802,7 +802,7 @@ var/list/ai_list = list()
 		return
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!mind)
-			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+			user.text2tab("<span class='warning'>No intelligence patterns detected.</span>")    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
@@ -810,8 +810,8 @@ var/list/ai_list = list()
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
 		card.AI = src
-		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
-		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		src.text2tab("You have been downloaded to a mobile storage device. Remote device connection severed.")
+		user.text2tab("<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
@@ -860,8 +860,8 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/proc/add_malf_picker()
-	src << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
-	src << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
+	src.text2tab("In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
+	src.text2tab("You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	verbs += /mob/living/silicon/ai/proc/choose_modules
 	malf_picker = new /datum/module_picker

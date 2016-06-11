@@ -31,7 +31,7 @@
 		A.master = src
 		A.loc = src
 		assemblyattacher = user.ckey
-		user << "<span class='notice'>You add [A] to the [name].</span>"
+		user.text2tab("<span class='notice'>You add [A] to the [name].</span>")
 		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
 		update_icon()
 		return
@@ -64,14 +64,14 @@
 	if(user.get_active_hand() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		det_time = newtime
-		user << "Timer set for [det_time] seconds."
+		user.text2tab("Timer set for [det_time] seconds.")
 
 /obj/item/weapon/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
 	if (istype(AM, /mob/living/carbon))
 		return
-	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
+	user.text2tab("<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
 
 	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
@@ -84,7 +84,7 @@
 
 		target.overlays += image_overlay
 		if(!nadeassembly)
-			user << "<span class='notice'>You plant the [src]. Timer counting down from [det_time].</span>"
+			user.text2tab("<span class='notice'>You plant the [src]. Timer counting down from [det_time].</span>")
 			addtimer(src, "prime", det_time*10)
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)

@@ -20,7 +20,7 @@
 	if(safety == "Abort" || !in_range(src, user) || !src || boss || user.incapacitated())
 		return
 	boss = TRUE
-	user << "You knock on the door."
+	user.text2tab("You knock on the door.")
 	playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 	visible_message("<span class='danger'>Legion emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion.")
@@ -107,7 +107,7 @@
 	if(in_use)
 		return
 	in_use = TRUE
-	user << "<span class='danger'><B>You feel your very life draining away as you pull the lever...it'll be worth it though, right?</B></span>"
+	user.text2tab("<span class='danger'><B>You feel your very life draining away as you pull the lever...it'll be worth it though, right?</B></span>")
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		user.gib()
@@ -118,11 +118,11 @@
 	if(prob(win_prob))
 		new /obj/item/weapon/dice/d20/fate/one_use(get_turf(src))
 		if(user)
-			user << "You hear laughter echoing around you as the machine fades away. In it's place...more gambling."
+			user.text2tab("You hear laughter echoing around you as the machine fades away. In it's place...more gambling.")
 			qdel(src)
 	else
 		if(user)
-			user << "<span class='danger'>Looks like you didn't win anything this time...next time though, right?</span>"
+			user.text2tab("<span class='danger'>Looks like you didn't win anything this time...next time though, right?</span>")
 //Gluttony
 
 /obj/effect/gluttony
@@ -141,7 +141,7 @@
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			return 1
 		else
-			H << "<span class='danger'><B>You're not gluttonous enough to pass this barrier!</B></span>"
+			H.text2tab("<span class='danger'><B>You're not gluttonous enough to pass this barrier!</B></span>")
 	else
 		return 0
 
@@ -187,7 +187,7 @@
 			H.dna.transfer_identity(user, transfer_SE=1)
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
-			user << "You assume the face of [H]. Are you satisfied?"
+			user.text2tab("You assume the face of [H]. Are you satisfied?")
 
 ///Ash Walkers
 
@@ -244,7 +244,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
+	new_spawn.text2tab("Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -273,13 +273,13 @@
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
-			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
+			new_spawn.text2tab("You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret.")
 		if(2)
-			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
+			new_spawn.text2tab("You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?")
 		if(3)
-			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
+			new_spawn.text2tab("You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse.")
 		if(4)
-			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
+			new_spawn.text2tab("You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt.")
 
 //Free Golems
 
@@ -335,14 +335,14 @@
 
 		if(species)
 			if(O.use(10))
-				user << "You finish up the golem shell with ten sheets of [O]."
+				user.text2tab("You finish up the golem shell with ten sheets of [O].")
 				var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
 				G.mob_species = species
 				qdel(src)
 			else
-				user << "You need at least ten sheets to finish a golem."
+				user.text2tab("You need at least ten sheets to finish a golem.")
 		else
-			user << "You can't build a golem out of this kind of material."
+			user.text2tab("You can't build a golem out of this kind of material.")
 
 /obj/effect/mob_spawn/human/golem
 	name = "completed golem shell"
@@ -383,7 +383,7 @@
 	// also a tiny chance of being called "Plasma Meme"
 	// which is clearly a feature
 
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	new_spawn.text2tab("Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()

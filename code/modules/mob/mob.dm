@@ -74,9 +74,9 @@ var/next_mob_id = 0
 	// voice muffling
 	if(stat == UNCONSCIOUS)
 		if(type & 2) //audio
-			src << "<I>... You can almost hear something ...</I>"
+			src.text2tab("<I>... You can almost hear something ...</I>")
 	else
-		src << msg
+		src.text2tab(msg)
 
 // Show a message the src mob and to all player mobs who sees the src mob
 // This would be for visible actions by the src mob
@@ -213,7 +213,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
+				src.text2tab("<span class='warning'>You are unable to equip that!</span>") //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -272,7 +272,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		src.text2tab("<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -431,12 +431,12 @@ var/next_mob_id = 0
 	if (!( abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
+		usr.text2tab("<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "<span class='boldnotice'>Please roleplay correctly!</span>"
+	usr.text2tab("<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -465,7 +465,7 @@ var/next_mob_id = 0
 	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
+		usr.text2tab("<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -551,7 +551,7 @@ var/next_mob_id = 0
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
-	src << message
+	src.text2tab(message)
 	return 1
 
 /mob/proc/show_viewers(message)

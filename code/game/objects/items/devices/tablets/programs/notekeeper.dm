@@ -69,9 +69,9 @@
 						tablet.core.toner -= 1
 					else
 						qdel(C)
-						usr << "<span class='notice'>You couldn't print because your hands are full.</span>"
+						usr.text2tab("<span class='notice'>You couldn't print because your hands are full.</span>")
 				else
-					usr << "ERROR: Replace printer toner"
+					usr.text2tab("ERROR: Replace printer toner")
 			if ("OpenDoc")
 				var/datum/tablet_data/document/D = locate(href_list["target"])
 				loadeddoc = D

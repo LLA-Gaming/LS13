@@ -20,8 +20,7 @@
 	examine()
 		..()
 		// just some fluff
-		#warn Tab
-		usr << "\blue These glasses have an access level of [glasses_type + 1]."
+		usr.text2tab("\blue These glasses have an access level of [glasses_type + 1].")
 
 	New()
 		..()
@@ -41,9 +40,8 @@
 					return 1
 
 				#warn Uncomment when borers are implemented
-				#warn Tab
 			//	for(var/mob/living/simple_animal/borer/B in H.contents)
-			//		H << "<span class='notice'>Something prevents you from entering VR.</span>"
+			//		H.text2tab("<span class='notice'>Something prevents you from entering VR.</span>")
 			//		return 1
 
 				if(!H.client)
@@ -53,8 +51,7 @@
 					return 1
 
 				if(H.client in SSvirtual_reality.contained_clients)
-					#warn Tab
-					L << "\red Looks like you're already in the VR. Contact the admins/coders."
+					L.text2tab("\red Looks like you're already in the VR. Contact the admins/coders.")
 					return 1
 
 				if(!is_in_use)
@@ -96,9 +93,8 @@
 
 		new_mob.verbs += /mob/proc/LeaveVRVerb
 
-		#warn Tab
-		new_mob << "\blue <font size=4>Welcome to the Virtual Reality!</font>"
-		new_mob << "\blue <b>To leave the Virtual Reality, press the 'Leave Virtual Reality' verb in the 'Virtual Reality' tab.</b>"
+		new_mob.text2tab("\blue <font size=4>Welcome to the Virtual Reality!</font>")
+		new_mob.text2tab("\blue <b>To leave the Virtual Reality, press the 'Leave Virtual Reality' verb in the 'Virtual Reality' tab.</b>")
 
 		return
 

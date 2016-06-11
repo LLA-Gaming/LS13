@@ -84,18 +84,18 @@ var/bomb_set
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
+				user.text2tab("<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(do_after(user, 60/I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
-					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
+					user.text2tab("<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
 		if(NUKESTATE_UNSCREWED)
 			if(istype(I, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
+				user.text2tab("<span class='notice'>You start removing [src]'s front panel...</span>")
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user,30/I.toolspeed,target=src))
-					user << "<span class='notice'>You remove [src]'s front panel.</span>"
+					user.text2tab("<span class='notice'>You remove [src]'s front panel.</span>")
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
 				return
@@ -103,19 +103,19 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
+				user.text2tab("<span class='notice'>You start cutting [src]'s inner plate...</span>")
 				if(welder.remove_fuel(1,user))
 					if(do_after(user,80/I.toolspeed,target=src))
-						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
+						user.text2tab("<span class='notice'>You cut [src]'s inner plate.</span>")
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
 				return
 		if(NUKESTATE_WELDED)
 			if(istype(I, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
+				user.text2tab("<span class='notice'>You start prying off [src]'s inner plate...</span>")
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user,50/I.toolspeed,target=src))
-					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
+					user.text2tab("<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
 					SSobj.processing += core
@@ -123,30 +123,30 @@ var/bomb_set
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
-				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
+				user.text2tab("<span class='notice'>You start loading the plutonium core into [core_box]...</span>")
 				if(do_after(user,50,target=src))
 					if(core_box.load(core, user))
-						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
+						user.text2tab("<span class='notice'>You load the plutonium core into [core_box].</span>")
 						deconstruction_state = NUKESTATE_CORE_REMOVED
 						update_icon()
 						core = null
 					else
-						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
+						user.text2tab("<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>")
 				return
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.amount >= 20)
-					user << "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>"
+					user.text2tab("<span class='notice'>You begin repairing [src]'s inner metal plate...</span>")
 					if(do_after(user, 100, target=src))
 						if(M.use(20))
-							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
+							user.text2tab("<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>")
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
 							SSobj.processing -= core
 							update_icon()
 						else
-							user << "<span class='warning'>You need more metal to do that!</span>"
+							user.text2tab("<span class='warning'>You need more metal to do that!</span>")
 				else
-					user << "<span class='warning'>You need more metal to do that!</span>"
+					user.text2tab("<span class='warning'>You need more metal to do that!</span>")
 				return
 	return ..()
 
@@ -311,7 +311,7 @@ var/bomb_set
 	if(!isinspace())
 		anchored = !anchored
 	else
-		usr << "<span class='warning'>There is nothing to anchor to!</span>"
+		usr.text2tab("<span class='warning'>There is nothing to anchor to!</span>")
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -324,7 +324,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/proc/set_active()
 	if(safety && !bomb_set)
-		usr << "<span class='danger'>The safety is still on.</span>"
+		usr.text2tab("<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
@@ -439,7 +439,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
 	if(!disk_loc || disk_loc.z > ZLEVEL_CENTCOM)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/mob/M = get(src, /mob)
+		M.text2tab("<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy(force)

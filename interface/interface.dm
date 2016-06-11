@@ -12,6 +12,13 @@
 	if(client)
 		client.text2tab(text, tab_name)
 
+
+/proc/text2world(text, tab_name="ic")
+	for(var/M in player_list)
+		var/mob/player = M
+		player.text2tab(text, tab_name)
+
+
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"

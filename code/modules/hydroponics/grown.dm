@@ -48,12 +48,12 @@
 		return 1
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/examine(user)
+/obj/item/weapon/reagent_containers/food/snacks/grown/examine(mob/user)
 	..()
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				user << T.examine_line
+				user.text2tab(T.examine_line)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -79,7 +79,7 @@
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
-		user << msg
+		user.text2tab(msg)
 		return
 	return
 
@@ -171,5 +171,5 @@
 		else
 			T = new trash(user.loc)
 		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
+		user.text2tab("<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")
 	qdel(src)

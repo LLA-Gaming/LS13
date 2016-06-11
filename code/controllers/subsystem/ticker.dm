@@ -355,7 +355,7 @@ var/datum/subsystem/ticker/ticker
 	var/num_survivors = 0
 	var/num_escapees = 0
 
-	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+	text2world("<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
 	for(var/mob/Player in mob_list)
@@ -455,7 +455,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
@@ -467,14 +467,14 @@ var/datum/subsystem/ticker/ticker
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
-					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
+					next_in_line.text2tab("<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
 					next_in_line << sound('sound/misc/notice1.ogg')
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
+			next_in_line.text2tab("<span class='danger'>No response recieved. You have been removed from the line.</span>")
 			queued_players -= next_in_line
 			queue_delay = 0
 

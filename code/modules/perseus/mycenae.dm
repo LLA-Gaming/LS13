@@ -212,11 +212,11 @@ var/perseusShuttleMoving = 0
 		src.add_fingerprint(user)
 
 		if(mycenae_at_centcom)
-			user << "<span class='warning'>The [src] failed to establish a connection to the prison shuttle.</span>"
+			user.text2tab("<span class='warning'>The [src] failed to establish a connection to the prison shuttle.</span>")
 			return 0
 
 		if(perseus_shuttle_locked && !emagged)
-			user << "<span class='warning'>The [src] is locked!</span>"
+			user.text2tab("<span class='warning'>The [src] is locked!</span>")
 			return 0
 
 		..(user)

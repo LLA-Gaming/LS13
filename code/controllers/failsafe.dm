@@ -41,10 +41,12 @@ var/datum/controller/failsafe/Failsafe
 							if(0 to 2)
 								++defcon
 							if(3)
-								admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
+								for(var/C in admins)
+									C:text2tab("<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>")
 								defcon = 4
 							if(4)
-								admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [defcon * processing_interval] ticks. Killing and restarting...</span>"
+								for(var/C in admins)
+									C:text2tab("<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [defcon * processing_interval] ticks. Killing and restarting...</span>")
 								// Replace the old master controller by creating a new one.
 								new/datum/controller/master()
 								// Get it rolling again.

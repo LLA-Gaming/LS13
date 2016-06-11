@@ -28,7 +28,7 @@
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
-		M << "<span class='info'>[message]</span>"
+		M.text2tab("<span class='info'>[message]</span>")
 		if(once)
 			qdel(src)
 

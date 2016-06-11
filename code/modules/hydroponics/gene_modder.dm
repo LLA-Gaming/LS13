@@ -71,23 +71,23 @@
 
 	if(istype(I, /obj/item/seeds))
 		if(seed)
-			user << "<span class='warning'>A sample is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A sample is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			insert_seed(I)
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			user.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 		return
 	else if(istype(I, /obj/item/weapon/disk/plantgene))
 		if(disk)
-			user << "<span class='warning'>A data disk is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A data disk is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			disk = I
 			disk.loc = src
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			user.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 	else
 		..()
@@ -239,7 +239,7 @@
 				if(!usr.drop_item())
 					return
 				insert_seed(I)
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				usr.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
@@ -254,7 +254,7 @@
 					return
 				disk = I
 				disk.loc = src
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				usr.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
 		if(!operation) // Wait for confirmation
 			operation = "insert"
@@ -413,11 +413,11 @@
 
 /obj/item/weapon/disk/plantgene/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+	user.text2tab("<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/plantgene/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	user.text2tab("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
 
 
 /*

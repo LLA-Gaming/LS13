@@ -244,11 +244,11 @@
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(density || operating)
-				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
+				user.text2tab("<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
+			user.text2tab("<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -278,11 +278,11 @@
 						WA.created_name = src.name
 
 						if(emagged)
-							user << "<span class='warning'>You discard the damaged electronics.</span>"
+							user.text2tab("<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
 
-						user << "<span class='notice'>You remove the airlock electronics.</span>"
+						user.text2tab("<span class='notice'>You remove the airlock electronics.</span>")
 
 						var/obj/item/weapon/electronics/airlock/ae
 						if(!electronics)
@@ -308,7 +308,7 @@
 		else
 			close(2)
 	else
-		user << "<span class='warning'>The door's motors resist your efforts to force it!</span>"
+		user.text2tab("<span class='warning'>The door's motors resist your efforts to force it!</span>")
 
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)

@@ -15,7 +15,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		user.text2tab("<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>") //To prevent some lighting anomalities.
 		return
 	on = !on
 	icon_state = "[basestate][on]-[item_color]"
@@ -212,11 +212,11 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		user.text2tab("<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>") //To prevent some lighting anomalities.
 		return
 	on = !on
 	if(on || force)
-		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
+		user.text2tab("<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
@@ -225,7 +225,7 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
+		user.text2tab("<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
@@ -398,7 +398,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
-		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
+		user.text2tab(("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>"))
 	else
 		onboard_hud_enabled = 1
 		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]

@@ -93,20 +93,20 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		user << "<span class='danger'>It's locked and running.</span>"
+		user.text2tab("<span class='danger'>It's locked and running.</span>")
 		return
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
+			user.text2tab("<span class='danger'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			user << "<span class='warning'>[C] is attached to something!</span>"
+			user.text2tab("<span class='warning'>[C] is attached to something!</span>")
 			return
 		if(C.abiotic(1) && !ignore_clothing)
-			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+			user.text2tab("<span class='danger'>Subject may not have abiotic items on.</span>")
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")

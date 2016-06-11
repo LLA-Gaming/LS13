@@ -97,7 +97,7 @@
 				5. During downtime or awaiting request to enter a Celestial Complex, Perseus Personnel should remain on the ship, OR may participate in live fire exercises in approved training areas.
 
 				<a name='6'><H4>Xenomorphs</H4>
-				6. Xenomorphs should always be hunted down and destroyed. This goes above the wishes of the client. “Xenomorph” is a proper noun that refers to a specific alien species, despite its root words being appropriately interpreted as 'Alien form.' The following species are not denoted by the term “Xenomorph”: Slimes, Carp, or Hivebots. In the event that Xenomorphs are discovered and not contained within the secure holding facility in Xenobiology, Perseus will board with the intent to destroy them.
+				6. Xenomorphs should always be hunted down and destroyed. This goes above the wishes of the client. ï¿½Xenomorphï¿½ is a proper noun that refers to a specific alien species, despite its root words being appropriately interpreted as 'Alien form.' The following species are not denoted by the term ï¿½Xenomorphï¿½: Slimes, Carp, or Hivebots. In the event that Xenomorphs are discovered and not contained within the secure holding facility in Xenobiology, Perseus will board with the intent to destroy them.
 
 				<a name='7'><H4>Interactions</H4>
 				7. All interactions between Perseus Personnel and other all personnel, even prisoners, should be calm, professional, and considerate. Directions from Heads of Staff loyal to Nanotrasen should be followed, except where there are grounds to believe the order is dangerous, inappropriate, would interfere with your assigned mission, or would otherwise conflict with the SOP.
@@ -235,7 +235,7 @@
 		if(istype(W, /obj/item/weapon/stimpack) && (!W.reagents.total_volume))
 			var/obj/item/weapon/stimpack/S = W
 			reagents.trans_to(S, 15)
-			user << "\blue You refill the stimpack!"
+			user.text2tab("\blue You refill the stimpack!")
 			playsound(src, 'sound/effects/refill.ogg', 50, 0, null)
 			W.icon_state = "stimpack_1"
 			W.desc = "A small disposable PercTech stimpack auto-injector, for all your basic emergency medical needs."
@@ -377,14 +377,14 @@
 					break
 
 			if(!implant_access)
-				H << "<span class='warning'>Access denied.</span>"
+				H.text2tab("<span class='warning'>Access denied.</span>")
 				return 0
 
 		on = !on
 		if(on)
 			starting = 1
 
-		H << "<div class='alert'>You turn the [src] [on ? "on" : "off"].</div>"
+		H.text2tab("<div class='alert'>You turn the [src] [on ? "on" : "off"].</div>")
 
 	emp_act(var/level = 0)
 		if(level <= 2)
@@ -402,7 +402,7 @@
 
 	examine()
 		..()
-		usr << "The [src] is [on ? "running" : "offline"]."
+		usr.text2tab("The [src] is [on ? "running" : "offline"].")
 
 	default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 		return 0

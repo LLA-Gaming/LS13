@@ -4,7 +4,7 @@
 	if(!check_rights(0))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		src.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
 	if(!memotask)
@@ -15,7 +15,7 @@
 	if(!task)
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		src.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)

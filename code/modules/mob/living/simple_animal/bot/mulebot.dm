@@ -107,7 +107,7 @@ var/global/mulebot_count = 0
 			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>"
+			user.text2tab("<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
 			..()
 	else
 		..()
@@ -119,7 +119,7 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if(!open)
 		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
+		user.text2tab("<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -209,7 +209,7 @@ var/global/mulebot_count = 0
 				turn_off()
 			else if(cell && !open)
 				if(!turn_on())
-					usr << "<span class='warning'>You can't switch on [src]!</span>"
+					usr.text2tab("<span class='warning'>You can't switch on [src]!</span>")
 					return
 			. = TRUE
 		else
@@ -596,7 +596,7 @@ var/global/mulebot_count = 0
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				calling_ai << "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>"
+				calling_ai.text2tab("<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.

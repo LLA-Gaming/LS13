@@ -55,7 +55,7 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(health < maxhealth)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				user.text2tab("<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user, 40/I.toolspeed, target = src))
 					health = Clamp(health + 20, 0, maxhealth)
@@ -172,7 +172,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	user << "[src] is now in [mode] mode."
+	user.text2tab("[src] is now in [mode] mode.")
 
 /obj/item/weapon/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))

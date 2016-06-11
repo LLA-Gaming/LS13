@@ -19,7 +19,7 @@
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
-		src << "<span class='danger'>Your radio transmitter is offline!</span>"
+		src.text2tab("<span class='danger'>Your radio transmitter is offline!</span>")
 		return 0
 	..()
 
@@ -50,9 +50,9 @@
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
 		send_speech(message, 7, T, "robot", get_spans())
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
+		src.text2tab("<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")//The AI can "hear" its own message.
 	else
-		src << "No holopad connected."
+		src.text2tab("No holopad connected.")
 	return
 
 
@@ -92,7 +92,7 @@ var/const/VOX_DELAY = 600
 
 /mob/living/silicon/ai/proc/announcement()
 	if(announcing_vox > world.time)
-		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+		src.text2tab("<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -106,7 +106,7 @@ var/const/VOX_DELAY = 600
 		return
 
 	if(control_disabled)
-		src << "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>"
+		src.text2tab("<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
 	var/list/words = splittext(trim(message), " ")
@@ -124,7 +124,7 @@ var/const/VOX_DELAY = 600
 			incorrect_words += word
 
 	if(incorrect_words.len)
-		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
+		src.text2tab("<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
 		return
 
 	announcing_vox = world.time + VOX_DELAY

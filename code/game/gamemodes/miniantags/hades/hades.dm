@@ -69,7 +69,7 @@
 	name = chosen
 	real_name = chosen
 
-	world << "<span class='warning'><font size=6>A [name] has entered your reality. Kneel before them.</font></span>"
+	text2world("<span class='warning'><font size=6>A [name] has entered your reality. Kneel before them.</font></span>")
 	world << 'sound/effects/pope_entry.ogg'
 
 	Appear()
@@ -248,12 +248,12 @@
 			if(H)
 				if(pride_direction == FALSE)
 					user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
-					user << "Your pride reflects on [H]."
-					H << "You feel insecure, taking on [user]'s burden."
+					user.text2tab("Your pride reflects on [H].")
+					H.text2tab("You feel insecure, taking on [user]'s burden.")
 				else if(pride_direction == 1)
 					H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
 					H << "Your pride reflects on [user]."
-					user << "You feel insecure, taking on [H]'s burden."
+					user.text2tab("You feel insecure, taking on [H]'s burden.")
 
 /obj/item/lovestone
 	name = "Stone of Lust"
@@ -281,7 +281,7 @@
 					cast.throw_at_fast(user,10,1)
 			else if(lust_direction == 1)
 				var/mob/living/carbon/human/H = user
-				H << "As you hold the stone, your heart feels heavy and you struggle to breath."
+				H.text2tab("As you hold the stone, your heart feels heavy and you struggle to breath.")
 				H.reagents.add_reagent("initropidril",50)
 	else
-		user << "The stone lays inert. It is still recharging."
+		user.text2tab("The stone lays inert. It is still recharging.")

@@ -312,7 +312,7 @@
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
-				src << "<span class='notice'>You feel your heart beating again!</span>"
+				src.text2tab("<span class='notice'>You feel your heart beating again!</span>")
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
@@ -345,7 +345,7 @@
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
-				usr << "<span class='warning'>You can't reach that! Something is covering it.</span>"
+				usr.text2tab("<span class='warning'>You can't reach that! Something is covering it.</span>")
 				return
 
 		if(href_list["pockets"])
@@ -357,10 +357,10 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
-				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
+					usr.text2tab("<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+				usr.text2tab("<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
 			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
-				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
+				usr.text2tab("<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
 				delay_denominator = 4
 			else
 				return
@@ -379,7 +379,7 @@
 					show_inv(usr)
 			else
 				// Display a warning if the user mocks up
-				src << "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>"
+				src.text2tab("<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
 		..()
 
@@ -429,12 +429,12 @@
 							return
 						if(href_list["evaluation"])
 							if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
-								usr << "<span class='notice'>No external injuries detected.</span><br>"
+								usr.text2tab("<span class='notice'>No external injuries detected.</span><br>")
 								return
 							var/span = "notice"
 							var/status = ""
 							if(getBruteLoss())
-								usr << "<b>Physical trauma analysis:</b>"
+								usr.text2tab("<b>Physical trauma analysis:</b>")
 								for(var/X in bodyparts)
 									var/obj/item/bodypart/BP = X
 									var/brutedamage = BP.brute_dam
@@ -448,9 +448,9 @@
 										status = "sustained major trauma!"
 										span = "userdanger"
 									if(brutedamage)
-										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
+										usr.text2tab("<span class='[span]'>[BP] appears to have [status]</span>")
 							if(getFireLoss())
-								usr << "<b>Analysis of skin burns:</b>"
+								usr.text2tab("<b>Analysis of skin burns:</b>")
 								for(var/X in bodyparts)
 									var/obj/item/bodypart/BP = X
 									var/burndamage = BP.burn_dam
@@ -464,11 +464,11 @@
 										status = "major burns!"
 										span = "userdanger"
 									if(burndamage)
-										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
+										usr.text2tab("<span class='[span]'>[BP] appears to have [status]</span>")
 							if(getOxyLoss())
-								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
+								usr.text2tab("<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>")
 							if(getToxLoss() > 20)
-								usr << "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>"
+								usr.text2tab("<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>")
 
 				if(href_list["hud"] == "s")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
@@ -487,7 +487,7 @@
 
 
 						if(!allowed_access)
-							H << "<span class='warning'>ERROR: Invalid Access</span>"
+							H.text2tab("<span class='warning'>ERROR: Invalid Access</span>")
 							return
 
 						if(perpname)
@@ -510,20 +510,20 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 											return
-										usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
-										usr << "<b>Minor Crimes:</b>"
+										usr.text2tab("<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
+										usr.text2tab("<b>Minor Crimes:</b>")
 										for(var/datum/data/crime/c in R.fields["mi_crim"])
-											usr << "<b>Crime:</b> [c.crimeName]"
-											usr << "<b>Details:</b> [c.crimeDetails]"
-											usr << "Added by [c.author] at [c.time]"
-											usr << "----------"
-										usr << "<b>Major Crimes:</b>"
+											usr.text2tab("<b>Crime:</b> [c.crimeName]")
+											usr.text2tab("<b>Details:</b> [c.crimeDetails]")
+											usr.text2tab("Added by [c.author] at [c.time]")
+											usr.text2tab("----------")
+										usr.text2tab("<b>Major Crimes:</b>")
 										for(var/datum/data/crime/c in R.fields["ma_crim"])
-											usr << "<b>Crime:</b> [c.crimeName]"
-											usr << "<b>Details:</b> [c.crimeDetails]"
-											usr << "Added by [c.author] at [c.time]"
-											usr << "----------"
-										usr << "<b>Notes:</b> [R.fields["notes"]]"
+											usr.text2tab("<b>Crime:</b> [c.crimeName]")
+											usr.text2tab("<b>Details:</b> [c.crimeDetails]")
+											usr.text2tab("Added by [c.author] at [c.time]")
+											usr.text2tab("----------")
+										usr.text2tab("<b>Notes:</b> [R.fields["notes"]]")
 									return
 
 								if(href_list["add_crime"])
@@ -541,7 +541,7 @@
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMinorCrime(R.fields["id"], crime)
-													usr << "<span class='notice'>Successfully added a minor crime.</span>"
+													usr.text2tab("<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
 											if(R)
@@ -556,7 +556,7 @@
 														return
 													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 													data_core.addMajorCrime(R.fields["id"], crime)
-													usr << "<span class='notice'>Successfully added a major crime.</span>"
+													usr.text2tab("<span class='notice'>Successfully added a major crime.</span>")
 									return
 
 								if(href_list["view_comment"])
@@ -565,11 +565,11 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security))
 											return
-										usr << "<b>Comments/Log:</b>"
+										usr.text2tab("<b>Comments/Log:</b>")
 										var/counter = 1
 										while(R.fields[text("com_[]", counter)])
-											usr << R.fields[text("com_[]", counter)]
-											usr << "----------"
+											usr.text2tab(R.fields[text("com_[]", counter)])
+											usr.text2tab("----------")
 											counter++
 										return
 
@@ -587,9 +587,9 @@
 											while(R.fields[text("com_[]", counter)])
 												counter++
 											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
-											usr << "<span class='notice'>Successfully added comment.</span>"
+											usr.text2tab("<span class='notice'>Successfully added comment.</span>")
 											return
-							usr << "<span class='warning'>Unable to locate a data core entry for this person.</span>"
+							usr.text2tab("<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
@@ -610,7 +610,7 @@
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
+		user.text2tab("<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>")
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -741,7 +741,7 @@
 		for(var/obj/item/hand in handlist)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
-				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
+				src.text2tab("<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
 	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
@@ -788,21 +788,21 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
+				src.text2tab("\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
+					src.text2tab("\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
-				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
+				src.text2tab("<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
 
 			if(bleed_rate)
-				src << "<span class='danger'>You are bleeding!</span>"
+				src.text2tab("<span class='danger'>You are bleeding!</span>")
 			if(staminaloss)
 				if(staminaloss > 30)
-					src << "<span class='info'>You're completely exhausted.</span>"
+					src.text2tab("<span class='info'>You're completely exhausted.</span>")
 				else
-					src << "<span class='info'>You feel fatigued.</span>"
+					src.text2tab("<span class='info'>You feel fatigued.</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)
@@ -816,20 +816,20 @@
 	CHECK_DNA_AND_SPECIES(C)
 
 	if(C.stat == DEAD)
-		src << "<span class='warning'>[C.name] is dead!</span>"
+		src.text2tab("<span class='warning'>[C.name] is dead!</span>")
 		return
 	if(is_mouth_covered())
-		src << "<span class='warning'>Remove your mask first!</span>"
+		src.text2tab("<span class='warning'>Remove your mask first!</span>")
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='warning'>Remove their mask first!</span>"
+		src.text2tab("<span class='warning'>Remove their mask first!</span>")
 		return 0
 
 	if(C.cpr_time < world.time + 30)
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
 						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
-			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
+			src.text2tab("<span class='warning'>You fail to perform CPR on [C]!</span>")
 			return 0
 
 		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
@@ -846,13 +846,13 @@
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
+			C.text2tab("<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 		else if(they_breathe && !they_lung)
-			C << "<span class='unconscious'>You feel a breath of fresh air... \
-				but you don't feel any better...</span>"
+			C.text2tab("<span class='unconscious'>You feel a breath of fresh air... \
+				but you don't feel any better...</span>")
 		else
-			C << "<span class='unconscious'>You feel a breath of fresh air... \
-				which is a sensation you don't recognise...</span>"
+			C.text2tab("<span class='unconscious'>You feel a breath of fresh air... \
+				which is a sensation you don't recognise...</span>")
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
@@ -1081,10 +1081,10 @@
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
 	var/obj_count = 1
-	src << "<span class='notice'>Your current objectives:</span>"
+	src.text2tab("<span class='notice'>Your current objectives:</span>")
 	for(O in src.mind.objectives)
 		var/datum/objective/objective = O
-		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		src.text2tab("<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)

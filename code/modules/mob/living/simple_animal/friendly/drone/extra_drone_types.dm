@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	src.text2tab("<span class='notice'>You can kill and eat other drones to increase your health!</span>") //Inform the evil lil guy
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"

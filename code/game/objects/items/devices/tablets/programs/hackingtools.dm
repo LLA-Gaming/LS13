@@ -43,7 +43,7 @@
 							usr.show_message("\blue Success!", 1)
 							T.explode()
 				else
-					usr << "Tablet not found."
+					usr.text2tab("Tablet not found.")
 		use_app()
 		tablet.attack_self(usr)
 

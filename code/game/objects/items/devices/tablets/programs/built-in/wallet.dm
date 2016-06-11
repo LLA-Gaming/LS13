@@ -33,7 +33,7 @@
 					tablet.core.cash -= cash
 					dosh.value = cash
 				else
-					usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+					usr.text2tab("<span class='notice'>You couldn't withdraw because your hands are full.</span>")
 					qdel(dosh)
 		use_app()
 		tablet.attack_self(usr)

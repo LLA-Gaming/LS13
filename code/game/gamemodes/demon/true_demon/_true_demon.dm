@@ -84,7 +84,7 @@
 	else if(health < (maxHealth/2))
 		msg += "<span class='warning'>You can see hellfire inside of it's wounds.</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	user.text2tab(msg)
 
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
@@ -143,8 +143,8 @@
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
-		S << S.playstyle_string
-		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
+		S.text2tab(S.playstyle_string)
+		S.text2tab("<B>Objective #[1]</B>: [newobjective.explanation_text]")
 		return
 	else
 		return ..()

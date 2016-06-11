@@ -277,22 +277,22 @@
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
-				usr << "<span class='notice'>[TR.name] constructed.</span>"
+				usr.text2tab("<span class='notice'>[TR.name] constructed.</span>")
 			else
-				usr << "<span class='warning'>Construction failed[fail_msg]</span>"
+				usr.text2tab("<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			usr.text2tab("<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("backwardCat")
 			viewing_category = prev_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			usr.text2tab("<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
+			usr.text2tab("<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>")
 			. = TRUE
 
 

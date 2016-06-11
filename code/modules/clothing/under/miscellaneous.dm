@@ -531,7 +531,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	user.text2tab("<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -552,11 +552,11 @@
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
-			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			user.text2tab("<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			user.text2tab("<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>")
 			qdel(E)
 			return
 		return

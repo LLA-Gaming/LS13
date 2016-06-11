@@ -67,16 +67,16 @@ This file's folder contains:
 		return 0
 	if(iscarbon(M))
 		if(!silent)
-			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
-			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+			M.text2tab("<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
+			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 	else if(issilicon(M))
 		if(!silent)
-			M << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
-			exile, derelict and forgotten in an unseen realm.</span>"
+			M.text2tab("<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
+			exile, derelict and forgotten in an unseen realm.</span>")
 		if(!is_eligible_servant(M))
 			if(!M.stat)
 				M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>")
-			M << "<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>" //silicons have a custom fail message
+			M.text2tab("<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>") //silicons have a custom fail message
 			return 0
 	else if(istype(M, /mob/living/simple_animal/drone))
 		if(!silent)
@@ -86,12 +86,12 @@ This file's folder contains:
 		D.update_drone_hack(TRUE, TRUE)
 		D.languages |= HUMAN
 	else if(!silent)
-		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+		M.text2tab("<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 
 	if(!is_eligible_servant(M))
 		if(!silent && !M.stat)
 			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>")
-		M << "<span class='warning'><b>And yet, you somehow push it all away.</b></span>"
+		M.text2tab("<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 		return 0
 
 	if(!silent)
@@ -108,7 +108,7 @@ This file's folder contains:
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
-			R << "<span class='warning'><b>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</b></span>"
+			R.text2tab("<span class='warning'><b>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</b></span>")
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
@@ -136,7 +136,7 @@ This file's folder contains:
 		if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
 			R.emagged = initial(R.emagged)
-			R << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
+			R.text2tab("<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
@@ -149,9 +149,9 @@ This file's folder contains:
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
+			M:text2tab("[link] [parsed_message]")
 		else if(is_servant_of_ratvar(M))
-			M << parsed_message
+			M:text2tab(parsed_message)
 	return 1
 
 ///////////////
@@ -236,7 +236,7 @@ This file's folder contains:
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You do not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
-	M << greeting_text
+	M.text2tab(greeting_text)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
@@ -251,16 +251,16 @@ This file's folder contains:
 			slot = "In your [B.name]"
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
-	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
+	L.text2tab("<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using Report in your slab's interface, and you can find a \
-	concise tutorial in Recollection."
+	concise tutorial in Recollection.")
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
 	if(!L || !istype(L) || !L.mind)
 		return 0
 	var/datum/mind/M = L.mind
-	M.current << "<b>This is Ratvar's will:</b> [clockwork_explanation]"
+	M.current.text2tab("<b>This is Ratvar's will:</b> [clockwork_explanation]")
 	M.memory += "<b>Ratvar's will:</b> [clockwork_explanation]<br>"
 	return 1
 

@@ -103,8 +103,8 @@ Made by Xhuis
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
 		sleep(10)
-		shadow.current << "<br>"
-		shadow.current << "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>"
+		shadow.current.text2tab("<br>")
+		shadow.current.text2tab("<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
@@ -113,10 +113,10 @@ Made by Xhuis
 	return
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
-	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
-	shadow.current << "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>"
-	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
+	shadow.current.text2tab("<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
+	shadow.current.text2tab("<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
+	shadow.current.text2tab("<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
+	shadow.current.text2tab("<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>")
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
@@ -126,7 +126,7 @@ Made by Xhuis
 		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		shadow_objectives += "enthrall"
 		shadow_mind.memory += "<b>Objective #1</b>: [objective_explanation]"
-		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
+		shadow_mind.current.text2tab("<b>Objective #1</b>: [objective_explanation]<br>")
 
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
@@ -136,7 +136,7 @@ Made by Xhuis
 	spawn(0)
 		update_shadow_icons_added(shadow_mind)
 		if(shadow_mind.assigned_role == "Clown")
-			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
+			S.text2tab("<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
@@ -151,12 +151,12 @@ Made by Xhuis
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_vision(null))
-		new_thrall_mind.current << "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
-		new_thrall_mind.current << "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>"
+		new_thrall_mind.current.text2tab("<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
+		new_thrall_mind.current.text2tab("<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
+		new_thrall_mind.current.text2tab("<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
+		new_thrall_mind.current.text2tab("<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>")
+		new_thrall_mind.current.text2tab("<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>")
+		new_thrall_mind.current.text2tab("<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>")
 		if(jobban_isbanned(new_thrall_mind.current, ROLE_SHADOWLING))
 			replace_jobbaned_player(new_thrall_mind.current, ROLE_SHADOWLING, ROLE_SHADOWLING)
 		return 1
@@ -269,7 +269,7 @@ Made by Xhuis
 		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move) //Can survive in very small light levels. Also doesn't take damage while incorporeal, for shadow walk purposes
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			if(H.stat != DEAD)
-				H << "<span class='userdanger'>The light burns you!</span>" //Message spam to say "GET THE FUCK OUT"
+				H.text2tab("<span class='userdanger'>The light burns you!</span>") //Message spam to say "GET THE FUCK OUT"
 				H << 'sound/weapons/sear.ogg'
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)

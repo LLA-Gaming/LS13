@@ -33,7 +33,7 @@
 
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
+		H.text2tab("<span class='danger'>Your flesh rapidly mutates!</span>")
 		H.set_species(/datum/species/jelly/slime)
 		H.reagents.del_reagent(chem.type)
 		return 1
@@ -147,7 +147,7 @@
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
-	
+
 
 /*
  SHADOWPEOPLE
@@ -198,7 +198,7 @@
 	if(!H.blood_volume)
 		H.blood_volume += 5
 		H.adjustBruteLoss(5)
-		H << "<span class='danger'>You feel empty!</span>"
+		H.text2tab("<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
@@ -206,7 +206,7 @@
 			H.nutrition -= 2.5
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
-			H << "<span class='danger'>You feel drained!</span>"
+			H.text2tab("<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		H.losebreath++
 
@@ -254,7 +254,7 @@
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
-			H << "<span class='notice'>You feel very bloated!</span>"
+			H.text2tab("<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
 		H.nutrition -= 2.5
@@ -269,7 +269,7 @@
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
-	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
+	H.text2tab("<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>")
 	H.notransform = 1
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
@@ -291,10 +291,10 @@
 		SS.callback.body = H
 		SS.callback.Grant(spare)
 		H.mind.transfer_to(spare)
-		spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+		spare.text2tab("<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>")
 		return
 
-	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
+	H.text2tab("<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>")
 	H.notransform = 0
 
 /datum/action/innate/swap_body
@@ -306,11 +306,11 @@
 
 /datum/action/innate/swap_body/Activate()
 	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
-		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
+		owner.text2tab("<span class='warning'>Something is wrong, you cannot sense your other body!</span>")
 		Remove(owner)
 		return
 	if(body.stat == UNCONSCIOUS)
-		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+		owner.text2tab("<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>")
 		return
 
 	owner.mind.transfer_to(body)
@@ -763,7 +763,7 @@ SYNDICATE BLACK OPS
 	if(H.stat || H.stunned || H.weakened)
 		return 0
 	if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-		H << "Your suit blocks your wings from extending!"
+		H.text2tab("Your suit blocks your wings from extending!")
 		return 0
 	var/turf/T = get_turf(H)
 	if(!T)
@@ -771,7 +771,7 @@ SYNDICATE BLACK OPS
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
-		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
+		H.text2tab("<span class='warning'>The atmosphere is too thin for you to fly!</span>")
 		return 0
 	else
 		return 1
@@ -787,11 +787,11 @@ SYNDICATE BLACK OPS
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
-			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			H.text2tab("<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			H.text2tab("<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -801,7 +801,7 @@ SYNDICATE BLACK OPS
 	if(H.buckled)
 		buckled_obj = H.buckled
 
-	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+	H.text2tab("<span class='notice'>Your wings spazz out and launch you!</span>")
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 

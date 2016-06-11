@@ -153,7 +153,7 @@
 				if(istype(locate(href_list["target"]),/datum/tablet_data/))
 					var/datum/tablet_data/data = locate(href_list["target"])
 					tablet.core.files.Add(new data.type)
-					usr << "<span class='notice'>[data.name] downloaded!</span>"
+					usr.text2tab("<span class='notice'>[data.name] downloaded!</span>")
 				if(istype(locate(href_list["target"]),/datum/program/))
 					var/datum/program/P = locate(href_list["target"])
 					var/duplicate = 0
@@ -162,9 +162,9 @@
 							duplicate = 1
 					if(!duplicate)
 						tablet.core.programs.Add(new P.type)
-						usr << "<span class='notice'>[P.name] downloaded and installed!</span>"
+						usr.text2tab("<span class='notice'>[P.name] downloaded and installed!</span>")
 					else
-						usr << "ERROR: You already own [P.name]"
+						usr.text2tab("ERROR: You already own [P.name]")
 
 			if("Leave Chat")
 				active_chat.users.Remove(tablet)

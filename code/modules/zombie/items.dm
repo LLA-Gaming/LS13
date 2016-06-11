@@ -67,8 +67,8 @@
 
 /obj/item/zombie_hand/proc/tear_airlock(obj/machinery/door/airlock/A, mob/user)
 	removing_airlock = TRUE
-	user << "<span class='notice'>You start tearing apart the airlock...\
-		</span>"
+	user.text2tab("<span class='notice'>You start tearing apart the airlock...\
+		</span>")
 
 	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 	A.audible_message("<span class='italics'>You hear a loud metallic \

@@ -42,7 +42,7 @@
 			if(!user.drop_item())
 				return
 			contents += I
-			user << "<span class='notice'>You place [I] in [src].</span>"
+			user.text2tab("<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 			return
 

@@ -14,7 +14,7 @@
 
 
 	if(!usr.client || !usr.client.holder)
-		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
+		usr.text2tab("<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
 
@@ -909,15 +909,15 @@ body
 
 			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
+					usr.text2tab("Put [H] on purrbation.",null)
+					H.text2tab("Something is nya~t right.")
 					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 					H.dna.features["tail_human"] = "Cat"
 					H.dna.features["ears"] = "Cat"
 				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
+					usr.text2tab("Removed [H] from purrbation.",null)
+					H.text2tab("You are no longer a cat.")
 					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 					H.dna.features["tail_human"] = "None"
@@ -925,7 +925,7 @@ body
 				H.regenerate_icons()
 				return
 
-			usr << "You can only put humans on purrbation."
+			usr.text2tab("You can only put humans on purrbation.",null)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))

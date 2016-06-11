@@ -125,8 +125,8 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
+	M.text2tab("<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	user.text2tab("<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>")
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
@@ -182,7 +182,7 @@
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
+		M.text2tab("<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
 			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
@@ -193,12 +193,12 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else
-		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
+		usr.text2tab("<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
 		usr.unEquip(src)
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
 	if(!user.gloves)
-		user << "<span class='danger'>The [name] burns your bare hand!</span>"
+		user.text2tab("<span class='danger'>The [name] burns your bare hand!</span>")
 		user.adjustFireLoss(rand(1, 5))

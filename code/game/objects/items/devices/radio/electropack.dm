@@ -30,7 +30,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			user.text2tab("<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -40,7 +40,7 @@
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.unEquip(W))
-			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			user.text2tab("<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>")
 			return
 		W.loc = A
 		W.master = A
@@ -111,7 +111,7 @@
 		var/mob/M = loc
 		step(M, pick(cardinal))
 
-		M << "<span class='danger'>You feel a sharp shock!</span>"
+		M.text2tab("<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()

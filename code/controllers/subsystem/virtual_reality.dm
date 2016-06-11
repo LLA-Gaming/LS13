@@ -43,8 +43,7 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 
 					var/obj/item/clothing/glasses/virtual/V = GetGogglesFromClient(L.client)
 					if(V)
-						#warn Tab
-						L << "\red You were kicked from the VR. (Reason: Admin turned entering off)"
+						L.text2tab("\red You were kicked from the VR. (Reason: Admin turned entering off)")
 						V.LeaveVR()
 
 					copies_amt++
@@ -57,8 +56,7 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 		for(var/area in typesof(/area/virtual_reality))
 			for(var/mob/living/carbon/human/H in get_area(locate(area)))
 				if(!(H.client in contained_clients) && !(H in copies))
-					#warn Tab
-					H << "\red <b>You're not supposed to be in here.</b>"
+					H.text2tab("\red <b>You're not supposed to be in here.</b>")
 					H.loc = get_turf(safepick(latejoin))
 					message_admins("\red VR: [key_name(H, 1)] entered the VR area without being a clone. (Teleported Back)")
 					log_game("VR: [key_name(H)] entered the VR area without being a clone. (Teleported Back)")
@@ -176,8 +174,7 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 			if(H.client && H.client.holder && H.client.holder.rank.rights & R_PRIMARYADMIN)
 				if(alert(H, "Entering the VR is currently admin blocked. Do you want to enter anyway?", "Confirmation", "Yes", "No") == "Yes")	return 1
 				else	return 0
-			#warn Tab
-			H << "\red <b>Entering the VR is currently disabled.</b>"
+			H.text2tab("\red <b>Entering the VR is currently disabled.</b>")
 			return 0
 
 		// Unset any changeling stings they might have.

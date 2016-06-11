@@ -46,24 +46,24 @@
 	devil_mind.devilinfo.give_base_spells(1)
 	spawn(10)
 		if(devil_mind.assigned_role == "Clown")
-			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
+			S.text2tab("<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/mind/proc/announceDevilLaws()
 	if(!devilinfo)
 		return
-	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
-	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
-	current << lawlorify[LAW][src.devilinfo.bane]
-	current << lawlorify[LAW][src.devilinfo.ban]
-	current << lawlorify[LAW][src.devilinfo.obligation]
-	current << lawlorify[LAW][src.devilinfo.banish]
-	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
+	current.text2tab("<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
+	current.text2tab("<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
+	current.text2tab(lawlorify[LAW][src.devilinfo.bane])
+	current.text2tab(lawlorify[LAW][src.devilinfo.ban])
+	current.text2tab(lawlorify[LAW][src.devilinfo.obligation])
+	current.text2tab(lawlorify[LAW][src.devilinfo.banish])
+	current.text2tab("<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
 	var/obj_count = 1
-	current << "<span class='notice'>Your current objectives:</span>"
+	current.text2tab("<span class='notice'>Your current objectives:</span>")
 	for(var/O in objectives)
 		var/datum/objective/objective = O
-		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		current.text2tab("<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
 /datum/game_mode/proc/printdevilinfo(datum/mind/ply)

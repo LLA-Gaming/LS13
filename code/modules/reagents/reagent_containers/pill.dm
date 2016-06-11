@@ -32,7 +32,7 @@
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
 				return 0
-		M << "<span class='notice'>You [apply_method] [src].</span>"
+		M.text2tab("<span class='notice'>You [apply_method] [src].</span>")
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
@@ -62,11 +62,11 @@
 	if(!proximity) return
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>"
+			user.text2tab("<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
 			return
-		user << "<span class='notice'>You dissolve [src] in [target].</span>"
+		user.text2tab("<span class='notice'>You dissolve [src] in [target].</span>")
 		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			O << "<span class='warning'>[user] slips something into [target]!</span>"
+			O.text2tab("<span class='warning'>[user] slips something into [target]!</span>")
 		reagents.trans_to(target, reagents.total_volume)
 		spawn(5)
 			qdel(src)

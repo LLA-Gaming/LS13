@@ -28,7 +28,7 @@
 		switch(href_list["choice"])
 			if("EjectCore")
 				if(!tablet.can_eject)
-					usr << "<span class='notice'>You cannot remove the Core</span>"
+					usr.text2tab("<span class='notice'>You cannot remove the Core</span>")
 				else
 					tablet.popup.close()
 					usr.unset_machine()
@@ -37,7 +37,7 @@
 					if(tablet.id)
 						tablet.id.loc = get_turf(tablet.loc)
 						tablet.id = null
-					usr << "<span class='notice'>You remove the Core from the [name].</span>"
+					usr.text2tab("<span class='notice'>You remove the Core from the [name].</span>")
 					tablet.core = null
 					tablet.attack_self(usr)
 					return

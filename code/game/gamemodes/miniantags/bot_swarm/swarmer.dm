@@ -31,17 +31,17 @@
 
 /obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
 	if(crit_fail)
-		user << "This swarmer shell is completely depowered. You cannot activate it."
+		user.text2tab("This swarmer shell is completely depowered. You cannot activate it.")
 		return
 
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
 		return
 	if(crit_fail)
-		user << "Swarmer has been depowered."
+		user.text2tab("Swarmer has been depowered.")
 		return
 	if(qdeleted(src))
-		user << "Swarmer has been occupied by someone else."
+		user.text2tab("Swarmer has been occupied by someone else.")
 		return
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
 	S.key = user.key
@@ -103,13 +103,13 @@
 
 /mob/living/simple_animal/hostile/swarmer/Login()
 	..()
-	src << "<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>"
-	src << "<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>"
-	src << "<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>"
-	src << "<b>Objectives:</b>"
-	src << "1. Consume resources and replicate until there are no more resources left."
-	src << "2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable."
-	src << "3. Biological resources will be harvested at a later date; do not harm them."
+	src.text2tab("<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>")
+	src.text2tab("<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>")
+	src.text2tab("<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>")
+	src.text2tab("<b>Objectives:</b>")
+	src.text2tab("1. Consume resources and replicate until there are no more resources left.")
+	src.text2tab("2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable.")
+	src.text2tab("3. Biological resources will be harvested at a later date; do not harm them.")
 
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
@@ -208,90 +208,90 @@
 	S.DisIntegrate(src)
 
 /obj/machinery/chem_dispenser/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>The volatile chemicals in this machine would destroy us. Aborting.</span>"
+	S.text2tab("<span class='warning'>The volatile chemicals in this machine would destroy us. Aborting.</span>")
 
 /obj/machinery/nuclearbomb/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>"
+	S.text2tab("<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>")
 
 /obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>"
+	S.text2tab("<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
 
 /obj/effect/decal/cleanable/crayon/gang/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>"
+	S.text2tab("<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>"
+	S.text2tab("<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 
 /obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>"
+	S.text2tab("<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>")
 
 /obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+	S.text2tab("<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 
 /obj/machinery/portable_atmospherics/canister/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>"
+	S.text2tab("<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>")
 
 /obj/machinery/telecomms/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>"
+	S.text2tab("<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 
 /obj/machinery/message_server/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>"
+	S.text2tab("<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 
 /obj/machinery/blackbox_recorder/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This machine has recorded large amounts of data on this structure and its inhabitants, it will be a useful resource to our masters in the future. Aborting. </span>"
+	S.text2tab("<span class='warning'>This machine has recorded large amounts of data on this structure and its inhabitants, it will be a useful resource to our masters in the future. Aborting. </span>")
 
 /obj/machinery/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+	S.text2tab("<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 
 /obj/machinery/gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>"
+	S.text2tab("<span class='warning'>This bluespace source will be important to us later. Aborting.</span>")
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
 		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
-			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+			S.text2tab("<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			return
 	..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
 		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
-			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+			S.text2tab("<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			return
 	..()
 
 /obj/item/stack/cable_coil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//Wiring would be too effective as a resource
-	S << "<span class='warning'>This object does not contain enough materials to work with.</span>"
+	S.text2tab("<span class='warning'>This object does not contain enough materials to work with.</span>")
 
 /obj/machinery/porta_turret/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>"
+	S.text2tab("<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
 
 /mob/living/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisperseTarget(src)
 
 /mob/living/simple_animal/slime/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This biological resource is somehow resisting our bluespace transceiver. Aborting.</span>"
+	S.text2tab("<span class='warning'>This biological resource is somehow resisting our bluespace transceiver. Aborting.</span>")
 
 /obj/machinery/droneDispenser/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
+	S.text2tab("<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>")
 
 
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(var/atom/fabrication_object,var/fabrication_cost = 0)
 	if(!isturf(loc))
-		src << "<span class='warning'>This is not a suitable location for fabrication. We need more space.</span>"
+		src.text2tab("<span class='warning'>This is not a suitable location for fabrication. We need more space.</span>")
 	if(resources >= fabrication_cost)
 		resources -= fabrication_cost
 	else
-		src << "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>"
+		src.text2tab("<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
 		return 0
 	new fabrication_object(loc)
 	return 1
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(var/obj/item/target)
 	if(resources >= 100)
-		src << "<span class='warning'>We cannot hold more materials!</span>"
+		src.text2tab("<span class='warning'>We cannot hold more materials!</span>")
 		return
 	if((target.materials[MAT_METAL]) || (target.materials[MAT_GLASS]))
 		resources++
@@ -308,7 +308,7 @@
 				return
 		qdel(target)
 	else
-		src << "<span class='warning'>\the [target] is incompatible with our internal matter recycler.</span>"
+		src.text2tab("<span class='warning'>\the [target] is incompatible with our internal matter recycler.</span>")
 		return
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(var/atom/movable/target)
@@ -323,13 +323,13 @@
 		return
 
 	if(src.z != ZLEVEL_STATION)
-		src << "<span class='warning'>Our bluespace transceiver cannot \
+		src.text2tab("<span class='warning'>Our bluespace transceiver cannot \
 			locate a viable bluespace link, our teleportation abilities \
-			are useless in this area.</span>"
+			are useless in this area.</span>")
 		return
 
-	src << "<span class='info'>Attempting to remove this being from \
-		our presence.</span>"
+	src.text2tab("<span class='info'>Attempting to remove this being from \
+		our presence.</span>")
 
 	if(!do_mob(src, target, 30))
 		return
@@ -354,13 +354,13 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(var/obj/machinery/target)
 	do_attack_animation(target)
-	src << "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>"
+	src.text2tab("<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>")
 	var/obj/effect/overlay/temp/swarmer/dismantle/D = PoolOrNew(/obj/effect/overlay/temp/swarmer/dismantle, get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
 	if(do_mob(src, target, 100))
-		src << "<span class='info'>Dismantling complete.</span>"
+		src.text2tab("<span class='info'>Dismantling complete.</span>")
 		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(target.loc)
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
@@ -459,7 +459,7 @@
 	set category = "Swarmer"
 	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
 	if(/obj/effect/swarmer/destructible/trap in loc)
-		src << "<span class='warning'>There is already a trap here. Aborting.</span>"
+		src.text2tab("<span class='warning'>There is already a trap here. Aborting.</span>")
 		return
 	Fabricate(/obj/effect/swarmer/destructible/trap, 5)
 
@@ -486,10 +486,10 @@
 	set category = "Swarmer"
 	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through."
 	if(/obj/effect/swarmer/destructible/blockade in loc)
-		src << "<span class='warning'>There is already a blockade here. Aborting.</span>"
+		src.text2tab("<span class='warning'>There is already a blockade here. Aborting.</span>")
 		return
 	if(resources < 5)
-		src << "<span class='warning'>We do not have the resources for this!</span>"
+		src.text2tab("<span class='warning'>We do not have the resources for this!</span>")
 		return
 	if(do_mob(src, src, 10))
 		Fabricate(/obj/effect/swarmer/destructible/blockade, 5)
@@ -514,12 +514,12 @@
 	set name = "Replicate"
 	set category = "Swarmer"
 	set desc = "Creates a shell for a new swarmer. Swarmers will self activate."
-	src << "<span class='info'>We are attempting to replicate ourselves. We will need to stand still until the process is complete.</span>"
+	src.text2tab("<span class='info'>We are attempting to replicate ourselves. We will need to stand still until the process is complete.</span>")
 	if(resources < 50)
-		src << "<span class='warning'>We do not have the resources for this!</span>"
+		src.text2tab("<span class='warning'>We do not have the resources for this!</span>")
 		return
 	if(!isturf(loc))
-		src << "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>"
+		src.text2tab("<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>")
 		return
 	if(do_mob(src, src, 100))
 		if(Fabricate(/obj/item/device/unactivated_swarmer, 50))
@@ -531,10 +531,10 @@
 	set desc = "Attempts to repair damage to our body. You will have to remain motionless until repairs are complete."
 	if(!isturf(loc))
 		return
-	src << "<span class='info'>Attempting to repair damage to our body, stand by...</span>"
+	src.text2tab("<span class='info'>Attempting to repair damage to our body, stand by...</span>")
 	if(do_mob(src, src, 100))
 		adjustHealth(-100)
-		src << "<span class='info'>We successfully repaired ourselves.</span>"
+		src.text2tab("<span class='info'>We successfully repaired ourselves.</span>")
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
 	if(!luminosity)
@@ -549,7 +549,7 @@
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))
-				M << rendered
+				M.text2tab(rendered)
 			if(isobserver(M))
 				var/link = FOLLOW_LINK(M, src)
-				M << "[link] [rendered]"
+				M.text2tab("[link] [rendered]")

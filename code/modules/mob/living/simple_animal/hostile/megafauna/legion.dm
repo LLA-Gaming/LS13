@@ -123,7 +123,7 @@
 
 /obj/item/weapon/staff_of_storms/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "The staff is still recharging."
+		user.text2tab("The staff is still recharging.")
 		return
 
 	if(!linked_machine || linked_machine.z != user.z)
@@ -134,18 +134,18 @@
 
 	if(linked_machine && linked_machine.ongoing_weather)
 		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "The storm is already ending. It would be a waste to use the staff now."
+			user.text2tab("The storm is already ending. It would be a waste to use the staff now.")
 			return
 		linked_machine.ongoing_weather.duration = 0
-		user << "<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>"
+		user.text2tab("<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>")
 		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
 		storm_cooldown = world.time + 600
 
 	else if (linked_machine && !linked_machine.ongoing_weather)
-		user << "<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>"
+		user.text2tab("<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>")
 		linked_machine.weather_cooldown = 0
 		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
 		storm_cooldown = world.time + 600
 
 	else
-		user << "You can't seem to control the weather here."
+		user.text2tab("You can't seem to control the weather here.")

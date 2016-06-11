@@ -164,7 +164,7 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
+			MM.text2tab("<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return 1
 
 // Safe location finder

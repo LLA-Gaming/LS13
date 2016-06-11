@@ -22,13 +22,13 @@
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
-				user << "<span class='warning'>Unwield the [F.name] first.</span>"
+				user.text2tab("<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.drop_item())
 				return
 			fireaxe = F
 			src.contents += F
-			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
+			user.text2tab("<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
 		else if(health > 0)
@@ -92,12 +92,12 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			user << "<span class='caution'>You take the fire axe from the [name].</span>"
+			user.text2tab("<span class='caution'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)
-		user <<"<span class='warning'> The [name] won't budge!</span>"
+		user.text2tab("<span class='warning'> The [name] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -146,10 +146,10 @@
 		overlays += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	user << "<span class = 'caution'> Resetting circuitry...</span>"
+	user.text2tab("<span class = 'caution'> Resetting circuitry...</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
 	if(do_after(user, 20, target = src))
-		user << "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>"
+		user.text2tab("<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
 		update_icon()
 
@@ -159,7 +159,7 @@
 	set src in oview(1)
 
 	if(locked)
-		usr <<"<span class='warning'> The [name] won't budge!</span>"
+		usr.text2tab("<span class='warning'> The [name] won't budge!</span>")
 		return
 	else
 		open = !open

@@ -74,10 +74,10 @@
 		if(candy_cooldown < world.time)
 			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
 			M.put_in_hands(CC)
-			M << "You slip a candy corn from your hat."
+			M.text2tab("You slip a candy corn from your hat.")
 			candy_cooldown = world.time+1200
 		else
-			M << "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."
+			M.text2tab("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
 
 
 //Mime

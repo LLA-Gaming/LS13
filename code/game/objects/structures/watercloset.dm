@@ -28,7 +28,7 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				user << "<span class='warning'>[GM] needs to be on [src]!</span>"
+				user.text2tab("<span class='warning'>[GM] needs to be on [src]!</span>")
 				return
 			if(!swirlie)
 				if(open)
@@ -48,18 +48,18 @@
 					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
 					GM.adjustBruteLoss(5)
 		else
-			user << "<span class='warning'>You need a tighter grip!</span>"
+			user.text2tab("<span class='warning'>You need a tighter grip!</span>")
 
 	else if(cistern && !open)
 		if(!contents.len)
-			user << "<span class='notice'>The cistern is empty.</span>"
+			user.text2tab("<span class='notice'>The cistern is empty.</span>")
 		else
 			var/obj/item/I = pick(contents)
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
 				I.loc = get_turf(src)
-			user << "<span class='notice'>You find [I] in the cistern.</span>"
+			user.text2tab("<span class='notice'>You find [I] in the cistern.</span>")
 			w_items -= I.w_class
 	else
 		open = !open
@@ -72,7 +72,7 @@
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
+		user.text2tab("<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
@@ -82,24 +82,24 @@
 	else if(cistern)
 		if(user.a_intent != "harm")
 			if(I.w_class > 3)
-				user << "<span class='warning'>[I] does not fit!</span>"
+				user.text2tab("<span class='warning'>[I] does not fit!</span>")
 				return
 			if(w_items + I.w_class > 5)
-				user << "<span class='warning'>The cistern is full!</span>"
+				user.text2tab("<span class='warning'>The cistern is full!</span>")
 				return
 			if(!user.drop_item())
-				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+				user.text2tab("<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>")
 				return
 			I.loc = src
 			w_items += I.w_class
-			user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
+			user.text2tab("<span class='notice'>You carefully place [I] into the cistern.</span>")
 
 	else if(istype(I, /obj/item/weapon/reagent_containers))
 		if (!open)
 			return
 		var/obj/item/weapon/reagent_containers/RG = I
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
+		user.text2tab("<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
 
@@ -119,13 +119,13 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
+				user.text2tab("<span class='notice'>[GM.name] needs to be on [src].</span>")
 				return
 			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
 			GM.adjustBruteLoss(8)
 		else
-			user << "<span class='warning'>You need a tighter grip!</span>"
+			user.text2tab("<span class='warning'>You need a tighter grip!</span>")
 	else
 		..()
 
@@ -172,9 +172,9 @@
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
-		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
+		user.text2tab("<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
+		user.text2tab("<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 		if(do_after(user, 50/I.toolspeed, target = src))
 			switch(watertemp)
 				if("normal")
@@ -334,11 +334,11 @@
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
 		C.bodytemperature = max(80, C.bodytemperature - 80)
-		C << "<span class='warning'>The water is freezing!</span>"
+		C.text2tab("<span class='warning'>The water is freezing!</span>")
 	else if(watertemp == "boiling")
 		C.bodytemperature = min(500, C.bodytemperature + 35)
 		C.adjustFireLoss(5)
-		C << "<span class='danger'>The water is searing!</span>"
+		C.text2tab("<span class='danger'>The water is searing!</span>")
 
 
 
@@ -370,7 +370,7 @@
 		return
 
 	if(busy)
-		user << "<span class='notice'>Someone's already washing here.</span>"
+		user.text2tab("<span class='notice'>Someone's already washing here.</span>")
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
@@ -402,14 +402,14 @@
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)
 	if(busy)
-		user << "<span class='warning'>Someone's already washing here!</span>"
+		user.text2tab("<span class='warning'>Someone's already washing here!</span>")
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.flags & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-			user << "<span class='notice'>You fill [RG] from [src].</span>"
+			user.text2tab("<span class='notice'>You fill [RG] from [src].</span>")
 			return 1
 
 	if(istype(O, /obj/item/weapon/melee/baton))
@@ -429,12 +429,12 @@
 
 	if(istype(O, /obj/item/weapon/mop))
 		O.reagents.add_reagent("water", 5)
-		user << "<span class='notice'>You wet [O] in [src].</span>"
+		user.text2tab("<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
+		user.text2tab("<span class='notice'>You place [src] under a stream of water...</span>")
 		user.drop_item()
 		M.loc = get_turf(src)
 		M.Expand()
@@ -446,7 +446,7 @@
 		return
 
 	if(user.a_intent != "harm")
-		user << "<span class='notice'>You start washing [O]...</span>"
+		user.text2tab("<span class='notice'>You start washing [O]...</span>")
 		busy = 1
 		if(!do_after(user, 40, target = src))
 			busy = 0

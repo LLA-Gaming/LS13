@@ -80,7 +80,7 @@
 				return
 			W.loc = src
 			src.diskette = W
-			user << "<span class='notice'>You insert [W].</span>"
+			user.text2tab("<span class='notice'>You insert [W].</span>")
 			src.updateUsrDialog()
 			return
 	else

@@ -148,7 +148,7 @@
 				for(var/mob/living/L in J)
 					if(L != src)
 						L.adjustFireLoss(20)
-						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
+						L.text2tab("<span class='danger'>You're hit by the drake's fire breath!</span>")
 				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
@@ -207,7 +207,7 @@
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "You need to wait 20 seconds between swoop attacks!"
+		src.text2tab("You need to wait 20 seconds between swoop attacks!")
 		return
 	swoop_attack(1, A)
 

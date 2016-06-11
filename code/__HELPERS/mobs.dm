@@ -357,6 +357,6 @@ Proc for attack log creation, because really why not
 
 		if(istype(M, /mob/dead/observer) && follow_target)
 			var/link = FOLLOW_LINK(M, follow_target)
-			M << "[link] [message]"
+			M.text2tab("[link] [message]","ooc")
 		else
-			M << "[message]"
+			M.text2tab("[message]","ooc")

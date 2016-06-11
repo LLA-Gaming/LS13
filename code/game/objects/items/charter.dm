@@ -7,11 +7,11 @@
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	if(used)
-		user << "The station has already been named."
+		user.text2tab("The station has already been named.")
 		return
 	used = TRUE
 	if(world.time > CHALLENGE_TIME_LIMIT) //5 minutes
-		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
+		user.text2tab("The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
 		return
 
 	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.","Rename Station",new_station_name())  as text|null

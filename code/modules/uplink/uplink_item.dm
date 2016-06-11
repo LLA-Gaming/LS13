@@ -79,9 +79,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			H << "[A] materializes into your hands!"
+			H.text2tab("[A] materializes into your hands!")
 		else
-			H << "\The [A] materializes onto the floor."
+			H.text2tab("\The [A] materializes onto the floor.")
 	return 1
 
 // Nuclear Operative (Special Offers)

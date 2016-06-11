@@ -122,11 +122,11 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			src.text2tab("<span class='notice'>Now teleporting.</span>")
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				src.text2tab("<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>")
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -142,7 +142,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			usr.text2tab("<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(href_list["late_join"] == "override")
@@ -150,16 +150,16 @@
 			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+			usr.text2tab("<span class='danger'>[config.hard_popcap_message]</span>")
 
 			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
+				usr.text2tab("<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
-				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
+				usr.text2tab("<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
 				ticker.queued_players += usr
-				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
+				usr.text2tab("<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -169,12 +169,12 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			usr.text2tab("<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				usr << "<span class='warning'>Server is full.</span>"
+				usr.text2tab("<span class='warning'>Server is full.</span>")
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -205,15 +205,15 @@
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				if(vote_on_poll(pollid, optionid))
-					usr << "<span class='notice'>Vote successful.</span>"
+					usr.text2tab("<span class='notice'>Vote successful.</span>")
 				else
-					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				if(log_text_poll_reply(pollid, replytext))
-					usr << "<span class='notice'>Feedback logging successful.</span>"
+					usr.text2tab("<span class='notice'>Feedback logging successful.</span>")
 				else
-					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
+					usr.text2tab("<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
@@ -233,9 +233,9 @@
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
-							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 							return
-				usr << "<span class='notice'>Vote successful.</span>"
+				usr.text2tab("<span class='notice'>Vote successful.</span>")
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
@@ -251,12 +251,12 @@
 							if(0)
 								continue
 							if(1)
-								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 								return
 							if(2)
-								usr << "<span class='danger'>Maximum replies reached.</span>"
+								usr.text2tab("<span class='danger'>Maximum replies reached.</span>")
 								break
-				usr << "<span class='notice'>Vote successful.</span>"
+				usr.text2tab("<span class='notice'>Vote successful.</span>")
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

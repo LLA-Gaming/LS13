@@ -237,7 +237,7 @@
 /obj/effect/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
-		user << "<b>The analyzer beeps once, then reports:</b><br>"
+		user.text2tab("<b>The analyzer beeps once, then reports:</b><br>")
 		user << 'sound/machines/ping.ogg'
 		chemeffectreport(user)
 		typereport(user)
@@ -246,16 +246,16 @@
 
 /obj/effect/blob/proc/chemeffectreport(mob/user)
 	if(overmind)
-		user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
-		user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
-		user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
+		user.text2tab("<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>")
+		user.text2tab("<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>")
+		user.text2tab("<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>")
 	else
-		user << "<b>No Material Detected!</b><br>"
+		user.text2tab("<b>No Material Detected!</b><br>")
 
 /obj/effect/blob/proc/typereport(mob/user)
-	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
-	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
-	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
+	user.text2tab("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
+	user.text2tab("<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>")
+	user.text2tab("<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 /obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -318,11 +318,11 @@
 	..()
 	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || (user in hud_to_check.hudusers))
-		user << "<b>Your HUD displays an extensive report...</b><br>"
+		user.text2tab("<b>Your HUD displays an extensive report...</b><br>")
 		chemeffectreport(user)
 		typereport(user)
 	else
-		user << "It seems to be made of [get_chem_name()]."
+		user.text2tab("It seems to be made of [get_chem_name()].")
 
 /obj/effect/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."

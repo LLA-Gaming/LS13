@@ -163,7 +163,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//world<< "\icon[I] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -288,7 +288,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//world<< "\icon[I] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 

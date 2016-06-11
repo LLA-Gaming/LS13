@@ -181,22 +181,22 @@
 /obj/machinery/power/apc/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "Looks broken."
+		user.text2tab("Looks broken.")
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			user.text2tab("The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
 		else
-			user << "It's [!terminal?" not":""]wired up."
-			user << "The electronics are[!has_electronics?"n't":""] installed."
+			user.text2tab("It's [!terminal?" not":""]wired up.")
+			user.text2tab("The electronics are[!has_electronics?"n't":""] installed.")
 
 	else
 		if (stat & MAINT)
-			user << "The cover is closed. Something is wrong with it. It doesn't work."
+			user.text2tab("The cover is closed. Something is wrong with it. It doesn't work.")
 		else if (malfhack)
-			user << "The cover is broken. It may be hard to force it open."
+			user.text2tab("The cover is broken. It may be hard to force it open.")
 		else
-			user << "The cover is closed."
+			user.text2tab("The cover is closed.")
 
 
 // update the APC icon to show the three base states
@@ -371,10 +371,10 @@
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
 			if (terminal)
-				user << "<span class='warning'>Disconnect the wires first!</span>"
+				user.text2tab("<span class='warning'>Disconnect the wires first!</span>")
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
+			user.text2tab("<span class='notice'>You are trying to remove the power control board...</span>") //lpeters - fixed grammar issues
 			if(do_after(user, 50/W.toolspeed, target = src))
 				if (has_electronics==1)
 					has_electronics = 0
@@ -394,18 +394,18 @@
 			update_icon()
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
-			user << "<span class='warning'>The cover is locked and cannot be opened!</span>"
+			user.text2tab("<span class='warning'>The cover is locked and cannot be opened!</span>")
 			return
 		else
 			opened = 1
 			update_icon()
 	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			user << "<span class='warning'>There is a power cell already installed!</span>"
+			user.text2tab("<span class='warning'>There is a power cell already installed!</span>")
 			return
 		else
 			if (stat & MAINT)
-				user << "<span class='warning'>There is no connector for your power cell!</span>"
+				user.text2tab("<span class='warning'>There is no connector for your power cell!</span>")
 				return
 			if(!user.drop_item())
 				return
@@ -419,53 +419,53 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				user << "<span class='warning'>Close the APC first!</span>" //Less hints more mystery!
+				user.text2tab("<span class='warning'>Close the APC first!</span>") //Less hints more mystery!
 				return
 			else
 				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-					user << "<span class='notice'>You screw the circuit electronics into place.</span>"
+					user.text2tab("<span class='notice'>You screw the circuit electronics into place.</span>")
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-					user << "<span class='notice'>You unfasten the electronics.</span>"
+					user.text2tab("<span class='notice'>You unfasten the electronics.</span>")
 				else /* has_electronics==0 */
-					user << "<span class='warning'>There is nothing to secure!</span>"
+					user.text2tab("<span class='warning'>There is nothing to secure!</span>")
 					return
 				update_icon()
 		else if(emagged)
-			user << "<span class='warning'>The interface is broken!</span>"
+			user.text2tab("<span class='warning'>The interface is broken!</span>")
 		else
 			panel_open = !panel_open
-			user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
+			user.text2tab("The wires have been [panel_open ? "exposed" : "unexposed"]")
 			update_icon()
 
 	else if (W.GetID())			// trying to unlock the interface with an ID card
 		if(emagged)
-			user << "<span class='warning'>The interface is broken!</span>"
+			user.text2tab("<span class='warning'>The interface is broken!</span>")
 		else if(opened)
-			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
+			user.text2tab("<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else if(panel_open)
-			user << "<span class='warning'>You must close the panel!</span>"
+			user.text2tab("<span class='warning'>You must close the panel!</span>")
 		else if(stat & (BROKEN|MAINT))
-			user << "<span class='warning'>Nothing happens!</span>"
+			user.text2tab("<span class='warning'>Nothing happens!</span>")
 		else
 			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
-				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
+				user.text2tab("<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
 				update_icon()
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				user.text2tab("<span class='warning'>Access denied.</span>")
 	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "<span class='warning'>You must remove the floor plating in front of the APC first!</span>"
+			user.text2tab("<span class='warning'>You must remove the floor plating in front of the APC first!</span>")
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if(C.get_amount() < 10)
-			user << "<span class='warning'>You need ten lengths of cable for APC!</span>"
+			user.text2tab("<span class='warning'>You need ten lengths of cable for APC!</span>")
 			return
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
@@ -480,7 +480,7 @@
 					s.start()
 					return
 				C.use(10)
-				user << "<span class='notice'>You add cables to the APC frame.</span>"
+				user.text2tab("<span class='notice'>You add cables to the APC frame.</span>")
 				make_terminal()
 				terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
@@ -493,15 +493,15 @@
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				user << "<span class='notice'>You place the power control board inside the frame.</span>"
+				user.text2tab("<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 	else if (istype(W, /obj/item/weapon/electronics/apc) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
-		user << "<span class='warning'>You cannot put the board inside, the frame is damaged!</span>"
+		user.text2tab("<span class='warning'>You cannot put the board inside, the frame is damaged!</span>")
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
-			user << "<span class='warning'>You need more welding fuel to complete this task!</span>"
+			user.text2tab("<span class='warning'>You need more welding fuel to complete this task!</span>")
 			return
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
@@ -532,12 +532,12 @@
 		update_icon()
 	else if (istype(W, /obj/item/wallframe/apc) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
-			user << "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>"
+			user.text2tab("<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>")
 			return
 		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
 		if(do_after(user, 50, target = src))
-			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
+			user.text2tab("<span class='notice'>You replace the damaged APC frame with a new one.</span>")
 			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
@@ -565,16 +565,16 @@
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)
 		if(opened)
-			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
+			user.text2tab("<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else if(panel_open)
-			user << "<span class='warning'>You must close the panel first!</span>"
+			user.text2tab("<span class='warning'>You must close the panel first!</span>")
 		else if(stat & (BROKEN|MAINT))
-			user << "<span class='warning'>Nothing happens!</span>"
+			user.text2tab("<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
 			emagged = 1
 			locked = 0
-			user << "<span class='notice'>You emag the APC interface.</span>"
+			user.text2tab("<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
@@ -725,7 +725,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				user << "<span class='danger'>\The [src] has eee disabled!</span>"
+				user.text2tab("<span class='danger'>\The [src] has eee disabled!</span>")
 			return FALSE
 	return TRUE
 
@@ -736,7 +736,7 @@
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				if(emagged || (stat & (BROKEN|MAINT)))
-					usr << "The APC does not respond to the command."
+					usr.text2tab("The APC does not respond to the command.")
 				else
 					locked = !locked
 					update_icon()
@@ -792,9 +792,9 @@
 	if(get_malf_status(malf) != 1)
 		return
 	if(malf.malfhacking)
-		malf << "You are already hacking an APC."
+		malf.text2tab("You are already hacking an APC.")
 		return
-	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+	malf.text2tab("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	malf.malfhack = src
 	malf.malfhacking = TRUE
 	addtimer(src, "malfhacked", 600, FALSE, malf)
@@ -811,19 +811,19 @@
 		malfhack = TRUE
 		locked = TRUE
 
-		malf << "Hack complete. The APC is now under your exclusive control."
+		malf.text2tab("Hack complete. The APC is now under your exclusive control.")
 		update_icon()
 	else
-		malf << "Hack aborted. The designated APC has stopped responding and no longer exists on the power network."
+		malf.text2tab("Hack aborted. The designated APC has stopped responding and no longer exists on the power network.")
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		malf << "<span class='warning'>You must evacuate your current APC first!</span>"
+		malf.text2tab("<span class='warning'>You must evacuate your current APC first!</span>")
 		return
 	if(!malf.can_shunt)
-		malf << "<span class='warning'>You cannot shunt!</span>"
+		malf.text2tab("<span class='warning'>You cannot shunt!</span>")
 		return
 	if(src.z != 1)
 		return
@@ -863,7 +863,7 @@
 						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
-		src.occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
+		src.occupier.text2tab("<span class='danger'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
 			src.occupier.loc = src.loc
 			src.occupier.death()

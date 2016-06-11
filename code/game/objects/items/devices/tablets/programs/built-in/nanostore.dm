@@ -34,8 +34,8 @@
 					if(program.price <= tablet.core.cash)
 						tablet.core.cash -= program.price
 						tablet.core.programs.Add(new program.type)
-						usr << "Application Purchased, downloaded and installed"
+						usr.text2tab("Application Purchased, downloaded and installed")
 					else
-						usr << "ERROR: Insufficient Funds"
+						usr.text2tab("ERROR: Insufficient Funds")
 				else
-					usr << "ERROR: You already own [program.name]"
+					usr.text2tab("ERROR: You already own [program.name]")

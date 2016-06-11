@@ -46,4 +46,4 @@
 			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
-	user << msg
+	user.text2tab(msg)

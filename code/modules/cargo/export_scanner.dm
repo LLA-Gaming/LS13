@@ -8,10 +8,10 @@
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
 
-/obj/item/device/export_scanner/examine(user)
+/obj/item/device/export_scanner/examine(mob/user)
 	..()
 	if(!cargo_console)
-		user << "<span class='notice'>The [src] is currently not linked to a cargo console.</span>"
+		user.text2tab("<span class='notice'>The [src] is currently not linked to a cargo console.</span>")
 
 /obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)
@@ -21,16 +21,16 @@
 		var/obj/machinery/computer/cargo/C = O
 		if(!C.requestonly)
 			cargo_console = C
-			user << "<span class='notice'>Scanner linked to [C].</span>"
+			user.text2tab("<span class='notice'>Scanner linked to [C].</span>")
 	else if(!istype(cargo_console))
-		user << "<span class='warning'>You must link [src] to a cargo console first!</span>"
+		user.text2tab("<span class='warning'>You must link [src] to a cargo console first!</span>")
 	else
 		var/obj/docking_port/mobile/supply/supply = SSshuttle.supply
 		if(!supply)
-			user << "<span class='warning'>Falied to connect to exports database!</span>"
+			user.text2tab("<span class='warning'>Falied to connect to exports database!</span>")
 			return
 
-		user << "<span class='notice'>Scanned [O].</span>"
+		user.text2tab("<span class='notice'>Scanned [O].</span>")
 
 		// Before you fix it: yes, checking manifests is a part of intended functionality.
 		var/exported = FALSE
@@ -38,10 +38,10 @@
 			var/datum/export/E = a
 			if(E.applies_to(O, cargo_console.contraband, cargo_console.emagged))
 				var/cost = E.get_cost(O, cargo_console.contraband, cargo_console.emagged)
-				user << "<span class='notice'>Export cost: [cost] credits.</span>"
+				user.text2tab("<span class='notice'>Export cost: [cost] credits.</span>")
 				if(is_type_in_list(O, supply.storage_objects) && O.contents.len)
-					user << "<span class='notice'>(contents not included)</span>"
+					user.text2tab("<span class='notice'>(contents not included)</span>")
 				exported = TRUE
 				break
 		if(!exported)
-			user << "<span class='notice'>The object is unexportable.</span>"
+			user.text2tab("<span class='notice'>The object is unexportable.</span>")

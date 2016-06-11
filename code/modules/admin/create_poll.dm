@@ -4,7 +4,7 @@
 	if(!check_rights(R_SENIORADMIN))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		src.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/returned = create_poll_function()
 	if(returned)

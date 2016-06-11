@@ -15,17 +15,17 @@
 		qdel(src)
 		return
 	if(!istype(C))
-		user << "<span class='warning'>This kit can only modify kinetic \
-			accelerators!</span>"
+		user.text2tab("<span class='warning'>This kit can only modify kinetic \
+			accelerators!</span>")
 		return ..()
 	// RIP the 'improved improved improved improved kinetic accelerator
 	if(C.holds_charge && C.unique_frequency)
-		user << "<span class='warning'>This kinetic accelerator already has \
-			these upgrades.</span>"
+		user.text2tab("<span class='warning'>This kinetic accelerator already has \
+			these upgrades.</span>")
 		return ..()
 
-	user <<"<span class='notice'>You modify the [C], adjusting the trigger \
-		guard and internal capacitor.</span>"
+	user.text2tab("<span class='notice'>You modify the [C], adjusting the trigger \
+		guard and internal capacitor.</span>")
 	C.name = "improved [C.name]"
 	C.holds_charge = TRUE
 	C.unique_frequency = TRUE

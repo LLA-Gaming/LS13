@@ -38,9 +38,9 @@
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		user.text2tab("<span class='info'>It looks healthy.</span>")
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		user.text2tab("<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -132,7 +132,7 @@
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='warning'>[src] won't eat it!</span>"
+			user.text2tab("<span class='warning'>[src] won't eat it!</span>")
 		return
 	if(I.force)
 		Bruise()

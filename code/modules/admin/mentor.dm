@@ -1,12 +1,6 @@
 var/list/mentors = list()
 var/mentor_salt = 0
 
-#warn Just replace all of the uses of this proc with the new one
-
-/client/proc/send_text_to_tab()
-	return 0
-
-
 /proc/LoadMentors(var/override = 0)
 	if(!config.sql_enabled || override)
 		var/list/lines = file2list("config/mentors.txt")
@@ -24,13 +18,11 @@ var/mentor_salt = 0
 	set category = "Admin"
 
 	if(say_disabled)
-		#warn Tab
-		usr << "\red Speech is currently admin-disabled."
+		usr.text2tab("\red Speech is currently admin-disabled.")
 		return 0
 
 	if(prefs.muted & MUTE_MENTORHELP)
-		#warn Tab
-		src << "<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>"
+		src.text2tab("<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>")
 		return 0
 
 	if(src.handle_spam_prevention(msg, MUTE_MENTORHELP))
@@ -57,20 +49,17 @@ var/mentor_salt = 0
 	var/admin_formatted = "<font color='#91219E'><b>MENTORHELP by [key_name(src)]:</b> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a><font>"
 	for(var/client/C in clients)
 		if(C.ckey in mentors)
-			C << mentor_formatted
-			C.send_text_to_tab(mentor_formatted, "mhelp")
+			C.text2tab(mentor_formatted, "mhelp")
 			C << 'sound/effects/mentorhelp.ogg'
 			//if(C.prefs.toggles & SOUND_MENTORHELP)
 			//	C << 'sound/effects/-mentorhelp.ogg'
 	for(var/client/C in admins)
-		C << admin_formatted
-		C.send_text_to_tab(admin_formatted, "mhelp")
+		C.text2tab(admin_formatted, "mhelp")
 
 	//admins << admin_formatted
 
 	var/player_formatted = "<font color='#91219E'><i>To-</i><b>MENTOR:</b> [msg]"
-	src << player_formatted
-	src.send_text_to_tab(player_formatted, "mhelp")
+	src.text2tab(player_formatted, "mhelp")
 
 	diary << "\[[time_stamp()]\]MENTORHELP: Created by '[key_name(src)]', message: '[msg]'"
 
@@ -83,11 +72,8 @@ var/mentor_salt = 0
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
 				num++
-		#warn Tab
-		usr << "<span class='info'>There [num == 1 ? "is" : "are"] currently [num] mentor[num == 1 ? "" : "s"] online.</span>"
+		usr.text2tab("<span class='info'>There [num == 1 ? "is" : "are"] currently [num] mentor[num == 1 ? "" : "s"] online.</span>")
 	else
-		#warn Tab
-		usr << "<b>Current Mentors:</b>"
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
 				usr << "\t [C]"
@@ -110,13 +96,11 @@ var/mentor_salt = 0
 		id = copytext(md5(target.ckey + mentor_salt), 1, 5)
 
 	if(say_disabled)
-		#warn Tab
-		usr << "\red Speech is currently admin-disabled."
+		usr.text2tab("\red Speech is currently admin-disabled.")
 		return 0
 
 	if(prefs.muted & MUTE_MENTORHELP)
-		#warn Tab
-		src << "<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>"
+		src.text2tab("<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>")
 		return 0
 
 	var/msg = input("Enter message", "Input") as text
@@ -132,33 +116,26 @@ var/mentor_salt = 0
 		return 0
 
 	if(as_player)
-		target << "<font color='#91219E'><b>MENTOR</b><i>-Reply from '[id]':</i> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>"
-		target.send_text_to_tab("<font color='#91219E'><b>MENTOR</b><i>-Reply from '[id]':</i> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>", "mhelp")
+		target.text2tab("<font color='#91219E'><b>MENTOR</b><i>-Reply from '[id]':</i> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>", "mhelp")
 		target << 'sound/effects/mentorhelp.ogg'
 		var/admin_string = "<font color='#91219E'><b>MENTOR:</b><i> [key_name(src)] (player, id: '[id]') replied to [key_name(target, 1)] (mentor):</i> [msg]</font>"
 		var/shown_to_mentors = "<font color='#91219E'><b>MENTOR</b><i>-'[id]' replied to [target.key]:</i> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>"
 		for(var/client/C in (clients - target))
 			if(C.ckey in mentors)
-				C << shown_to_mentors
-				C.send_text_to_tab(shown_to_mentors, "mhelp")
+				C.text2tab(shown_to_mentors, "mhelp")
 		for(var/client/C in admins)
-			C << admin_string
-			C.send_text_to_tab(admin_string, "mhelp")
+			C.text2tab(admin_string, "mhelp")
 	else
-		target << "<font color='#91219E'><b>Reply from MENTOR:</b> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>"
-		target.send_text_to_tab("<font color='#91219E'><b>Reply from MENTOR:</b> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>", "mhelp")
+		target.text2tab("<font color='#91219E'><b>Reply from MENTOR:</b> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[src]'>Reply</a></font>", "mhelp")
 		var/admin_string = "<font color='#91219E'><b>MENTOR:</b><i> [key_name(src, 1)] (mentor) replied to [key_name(target)] (player, id: '[id]'):</i> [msg]</font>"
 		var/shown_to_other_mentors = "<font color='#91219E'><b>[key] replied to '[id]':</b> [msg] - <a href='?src=\ref[src];mentor_reply=\ref[target]'>Reply</a></font>"
 		for(var/client/C in (clients - src))
 			if(C.ckey in mentors)
-				C << shown_to_other_mentors
-				C.send_text_to_tab(shown_to_other_mentors, "mhelp")
+				C.text2tab(shown_to_other_mentors, "mhelp")
 		for(var/client/C in admins)
-			C << admin_string
-			C.send_text_to_tab(admin_string, "mhelp")
+			C.text2tab(admin_string, "mhelp")
 
-	src << "<font color='#91219E'><i>To-</i><b>[as_player ? "MENTOR" : id]:</b> [msg]"
-	src.send_text_to_tab("<font color='#91219E'><i>To-</i><b>[as_player ? "MENTOR" : id]:</b> [msg]", "mhelp")
+	src.text2tab("<font color='#91219E'><i>To-</i><b>[as_player ? "MENTOR" : id]:</b> [msg]", "mhelp")
 
 	diary << "\[[time_stamp()]\]MENTORHELP: Reply to [key_name(target)] from [key_name(src)], message: '[msg]', id: '[id]'"
 
@@ -171,13 +148,11 @@ var/mentor_salt = 0
 		return 0
 
 	if(say_disabled)
-		#warn Tab
-		usr << "\red Speech is currently admin-disabled."
+		usr.text2tab("\red Speech is currently admin-disabled.")
 		return 0
 
 	if(prefs.muted & MUTE_MENTORHELP)
-		#warn Tab
-		src << "<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>"
+		src.text2tab("<font color='red'>Error: Admin-PM: You cannot send mentorhelps. (Muted).</font>")
 		return 0
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -188,10 +163,8 @@ var/mentor_salt = 0
 
 	for(var/client/C in clients)
 		if(C.ckey in mentors)
-			C << mentor_formatted
-			C.send_text_to_tab(mentor_formatted, "mhelp")
+			C.text2tab(mentor_formatted, "mhelp")
 	for(var/client/C in admins)
-		C << admin_formatted
-		C.send_text_to_tab(admin_formatted, "mhelp")
+		C.text2tab(admin_formatted, "mhelp")
 
 	diary << "\[[time_stamp()]\]MENTORSAY: [key_name(src)] : [msg]"

@@ -36,7 +36,7 @@
 	SSobj.processing += src
 	for(var/mob/M in mob_list)
 		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [get_area(src)]!</b></span>"
+			M.text2tab("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [get_area(src)]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSshuttle.emergencyNoEscape = FALSE
@@ -49,7 +49,7 @@
 	if(!purpose_fulfilled)
 		for(var/mob/M in mob_list)
 			if(is_servant_of_ratvar(M) || isobserver(M))
-				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [get_area(src)]!</b></span>"
+				M.text2tab("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [get_area(src)]!</b></span>")
 		world << sound(null, 0, channel = 8)
 	..()
 
@@ -69,7 +69,7 @@
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(prob(5))
 		for(var/mob/M in mob_list)
-			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+			M.text2tab("<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!health)
 		return 0
 	progress_in_seconds += GATEWAY_SUMMON_RATE
@@ -107,22 +107,22 @@
 		var/arrival_text = "IMMINENT"
 		if(300 - progress_in_seconds > 0)
 			arrival_text = "[max((300 - progress_in_seconds) / GATEWAY_SUMMON_RATE, 0)]"
-		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]s</span>"
+		user.text2tab("<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]s</span>")
 		switch(progress_in_seconds)
 			if(-INFINITY to 100)
-				user << "<span class='heavy_brass'>It's still opening.</span>"
+				user.text2tab("<span class='heavy_brass'>It's still opening.</span>")
 			if(100 to 250)
-				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
+				user.text2tab("<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
 			if(250 to INFINITY)
-				user << "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>"
+				user.text2tab("<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to 100)
-				user << "<span class='warning'>It's a swirling mass of blackness.</span>"
+				user.text2tab("<span class='warning'>It's a swirling mass of blackness.</span>")
 			if(100 to 250)
-				user << "<span class='warning'>It seems to be leading somewhere.</span>"
+				user.text2tab("<span class='warning'>It seems to be leading somewhere.</span>")
 			if(250 to INFINITY)
-				user << "<span class='warning'><b>Something is coming through!</b></span>"
+				user.text2tab("<span class='warning'><b>Something is coming through!</b></span>")
 
 /obj/structure/clockwork/massive/ratvar
 	name = "Ratvar, the Clockwork Justiciar"
@@ -144,7 +144,7 @@
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	SSobj.processing += src
-	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	text2world("<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>")
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
@@ -158,7 +158,7 @@
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	SSobj.processing -= src
-	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
+	text2world("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
 	return ..()
 
 
@@ -197,13 +197,17 @@
 					meals += L
 			if(meals.len)
 				prey = pick(meals)
-				prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
-				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
-				prey << 'sound/effects/ratvar_reveal.ogg'
+				var/mob/M = prey
+				if(ismob(M))
+					M.text2tab("<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
+					<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>")
+					M << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
-			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
-			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
+			var/mob/M = prey
+			if(ismob(M))
+				M.text2tab("<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
+				<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>")
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
@@ -213,8 +217,8 @@
 	if(clashing)
 		return 0
 	clashing = TRUE
-	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
-	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
+	text2world("<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>")
+	text2world("<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>")
 	for(var/obj/singularity/narsie/N in range(15, src))
 		if(N.clashing)
 			continue
@@ -255,15 +259,15 @@
 		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>"
-			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
+			text2world("<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>")
+			text2world("<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>")
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'
 			clashing = FALSE
 			qdel(narsie)
 			return 1
 		if("Nar-Sie")
-			world << "<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>" //Broken English
+			text2world("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
 			world << 'sound/magic/demon_attack1.ogg'
 			world << 'sound/magic/clockwork/anima_fragment_death.ogg'
 			narsie.clashing = FALSE

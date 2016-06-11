@@ -11,7 +11,7 @@
 	var/inview = 1
 
 	if(!energyKatana)
-		H << "<span class='warning'>Could not locate Energy Katana!</span>"
+		H.text2tab("<span class='warning'>Could not locate Energy Katana!</span>")
 		return
 
 	if(energyKatana in H)

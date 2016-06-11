@@ -4,7 +4,7 @@
 	A.examine(src)
 	if(ishuman(A))
 		if(A in drained_mobs)
-			src << "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" //feedback at any range
+			src.text2tab("<span class='revenwarning'>[A]'s soul is dead and empty.</span>") //feedback at any range
 		else if(in_range(src, A))
 			Harvest(A)
 
@@ -12,45 +12,45 @@
 	if(!castcheck(0))
 		return
 	if(draining)
-		src << "<span class='revenwarning'>You are already siphoning the essence of a soul!</span>"
+		src.text2tab("<span class='revenwarning'>You are already siphoning the essence of a soul!</span>")
 		return
 	if(!target.stat)
-		src << "<span class='revennotice'>This being's soul is too strong to harvest.</span>"
+		src.text2tab("<span class='revennotice'>This being's soul is too strong to harvest.</span>")
 		if(prob(10))
-			target << "You feel as if you are being watched."
+			target.text2tab("You feel as if you are being watched.")
 		return
 	draining = 1
 	essence_drained += rand(15, 20)
-	src << "<span class='revennotice'>You search for the soul of [target].</span>"
+	src.text2tab("<span class='revennotice'>You search for the soul of [target].</span>")
 	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
-			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
+			src.text2tab("<span class='revennotice'>Their soul burns with intelligence.</span>")
 			essence_drained += rand(20, 30)
 		if(target.stat != DEAD)
-			src << "<span class='revennotice'>Their soul blazes with life!</span>"
+			src.text2tab("<span class='revennotice'>Their soul blazes with life!</span>")
 			essence_drained += rand(40, 50)
 		else
-			src << "<span class='revennotice'>Their soul is weak and faltering.</span>"
+			src.text2tab("<span class='revennotice'>Their soul is weak and faltering.</span>")
 		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
-					src << "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>"
+					src.text2tab("<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>")
 				if(30 to 70)
-					src << "<span class='revennotice'>[target] will yield an average amount of essence.</span>"
+					src.text2tab("<span class='revennotice'>[target] will yield an average amount of essence.</span>")
 				if(70 to 90)
-					src << "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>"
+					src.text2tab("<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>")
 				if(90 to INFINITY)
-					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
+					src.text2tab("<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
-					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
-					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
+					src.text2tab("<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>")
+					target.text2tab("<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>")
 					draining = 0
 					essence_drained = 0
 					return //hey, wait a minute...
-				src << "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>"
+				src.text2tab("<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>")
 				if(target.stat != DEAD)
-					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
+					target.text2tab("<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
@@ -60,19 +60,19 @@
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
-						src << "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
+						src.text2tab("<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
 					if(essence_drained > 90)
 						essence_regen_cap += 15
 						perfectsouls += 1
-						src << "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
-					src << "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
+						src.text2tab("<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
+					src.text2tab("<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>")
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 										   "<span class='revenwarning'>Violets lights, dancing in your vision, getting clo--</span>")
 					drained_mobs.Add(target)
 					target.death(0)
 				else
 					qdel(B)
-					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
+					src.text2tab("<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>")
 					draining = 0
 					essence_drained = 0
 					if(target) //Wait, target is WHERE NOW?
@@ -80,7 +80,7 @@
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
 					return
 			else
-				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
+				src.text2tab("<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>")
 				draining = 0
 				essence_drained = 0
 				return
@@ -116,19 +116,19 @@
 				charge_counter = charge_max
 				return
 			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
-			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
-			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
-			for(var/ded in dead_mob_list)
+			user.text2tab("<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
+			M.text2tab("<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>")
+			for(var/mob/ded in dead_mob_list)
 				if(!isobserver(ded))
 					continue
 				var/follow_rev = FOLLOW_LINK(ded, user)
 				var/follow_whispee = FOLLOW_LINK(ded, M)
-				ded << "[follow_rev] \
+				ded.text2tab("[follow_rev] \
 					<span class='name'>[user]</span> \
 					<span class='revenboldnotice'>Revenant Transmit --></span> \
 					[follow_whispee] \
 					<span class='name'>[M]</span> \
-					<span class='revennotice'>[msg]</span>"
+					<span class='revennotice'>[msg]</span>")
 
 
 
@@ -178,7 +178,7 @@
 			charge_counter = charge_max
 			return 0
 		name = "[initial(name)] ([cast_amount]E)"
-		user << "<span class='revennotice'>You have unlocked [initial(name)]!</span>"
+		user.text2tab("<span class='revennotice'>You have unlocked [initial(name)]!</span>")
 		panel = "Revenant Abilities"
 		locked = 0
 		charge_counter = charge_max
@@ -302,7 +302,7 @@
 				for(var/mob/living/carbon/human/human in T.contents)
 					if(human == user)
 						continue
-					human << "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>"
+					human.text2tab("<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 					PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
 					human.emp_act(1)
 				for(var/obj/thing in T.contents)
@@ -360,7 +360,7 @@
 									blight.stage++
 							if(!blightfound)
 								H.AddDisease(new /datum/disease/revblight)
-								H << "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <span class='italics'>wrong</span>")].</span>"
+								H.text2tab("<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <span class='italics'>wrong</span>")].</span>")
 						else
 							if(mob.reagents)
 								mob.reagents.add_reagent("plasma", 5)

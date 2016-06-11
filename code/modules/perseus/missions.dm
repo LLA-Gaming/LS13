@@ -25,7 +25,7 @@ var/list/perseusMissions = list()
 			for(var/mob/living/carbon/human/H in world)
 				if(H.job in list("Perseus Security Enforcer", "Perseus Security Commander"))
 					if(H.client)
-						H << "<i><span class='game say'>Hivemind: <b><font color='black'>New Mission</font></b></span></i>"
+						H.text2tab("<i><span class='game say'>Hivemind: <b><font color='black'>New Mission</font></b></span></i>")
 						associatedUnits += H
 
 			if(addToList)
@@ -185,11 +185,11 @@ var/list/perseusMissions = list()
 				target = L
 				break
 		if(!names.len)
-			usr << "\red Error: No data core entries found."
+			usr.text2tab("\red Error: No data core entries found.")
 			return
 		if(!target)	return
 
 		new missionType(usr, 1, "[selectedMission] [target.real_name], the [target.job]", 1, target)
 	else
 		new missionType(usr, 1, "[selectedMission]", 1)
- 	usr << "\blue Mission created."
+ 	usr.text2tab("\blue Mission created.")

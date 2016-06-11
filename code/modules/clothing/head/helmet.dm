@@ -62,7 +62,7 @@
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
+			user.text2tab("[up ? alt_toggle_message : toggle_message] \the [src]")
 
 			user.update_inv_head()
 			if(iscarbon(user))
@@ -245,7 +245,7 @@
 			if(!F)
 				if(!user.unEquip(S))
 					return
-				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				user.text2tab("<span class='notice'>You click [S] into place on [src].</span>")
 				if(S.on)
 					SetLuminosity(0)
 				F = S
@@ -261,7 +261,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(F)
 			for(var/obj/item/device/flashlight/seclite/S in src)
-				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				user.text2tab("<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
 				S.loc = get_turf(user)
 				update_helmlight(user)
@@ -287,9 +287,9 @@
 	if(user.incapacitated())
 		return
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
+		user.text2tab("<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>")
 	F.on = !F.on
-	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
+	user.text2tab("<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_helmlight(user)

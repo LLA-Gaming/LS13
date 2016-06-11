@@ -53,6 +53,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+	user.text2tab("Landing zone set.")
 
 	qdel(src)

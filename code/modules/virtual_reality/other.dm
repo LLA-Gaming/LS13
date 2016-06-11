@@ -145,8 +145,7 @@
 					W.dorm = F.dorm
 					P.id = W
 				if(P.pai)
-					#warn Tab
-					target << "\red Sorry, but we can't transfer pAI's."
+					target.text2tab("\red Sorry, but we can't transfer pAI's.")
 				target.equip_to_slot_or_del(P, slot_wear_id)
 			else if(istype(from.wear_id, /obj/item/weapon/card/id) || (istype(from.wear_id, /obj/item/device/tablet) && copyid))
 				if(!istype(from.wear_id, /obj/item/device/tablet))

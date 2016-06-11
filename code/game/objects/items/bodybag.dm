@@ -58,7 +58,7 @@
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off [src].</span>"
+		user.text2tab("<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
 		tagged = 0
 		update_icon()

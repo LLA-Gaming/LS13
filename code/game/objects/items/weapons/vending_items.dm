@@ -25,9 +25,9 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		user << "It can restock [charges[1]] item(s)."
+		user.text2tab("It can restock [charges[1]] item(s).")
 	else
-		user << "It's empty!"
+		user.text2tab("It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 

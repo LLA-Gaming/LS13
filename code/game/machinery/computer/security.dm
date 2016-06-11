@@ -31,9 +31,9 @@
 				return
 			O.loc = src
 			scan = O
-			user << "<span class='notice'>You insert [O].</span>"
+			user.text2tab("<span class='notice'>You insert [O].</span>")
 		else
-			user << "<span class='warning'>There's already an ID card in the console.</span>"
+			user.text2tab("<span class='warning'>There's already an ID card in the console.</span>")
 	else
 		return ..()
 
@@ -42,7 +42,7 @@
 	if(..())
 		return
 	if(src.z > 6)
-		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		user.text2tab("<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	var/dat
 

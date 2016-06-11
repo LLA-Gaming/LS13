@@ -43,7 +43,7 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && !notified)
 		//Start the process of requesting a new ghost.
-		user << begin_activation_message
+		user.text2tab(begin_activation_message)
 		ping_ghosts("requested")
 		notified = 1
 		used = 0
@@ -95,12 +95,12 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possesion again later!"
+		candidate.text2tab("This brain has already been taken! Please try your possesion again later!")
 		return
 	notified = 0
 	brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
-	brainmob << welcome_message
+	brainmob.text2tab(welcome_message)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
@@ -120,7 +120,7 @@ var/global/posibrain_notif_cooldown = 0
 	if(!usr || !src)
 		return
 	if( (usr.disabilities & BLIND || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		usr.text2tab("<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
@@ -136,7 +136,7 @@ var/global/posibrain_notif_cooldown = 0
 	else
 		msg += "[dead_message]\n"
 	msg += "<span class='info'>*---------*</span>"
-	usr << msg
+	usr.text2tab(msg)
 	return
 
 /obj/item/device/mmi/posibrain/New()

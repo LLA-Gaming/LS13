@@ -20,7 +20,7 @@
 		if(knife)
 			knife.loc = get_turf(src)
 			if(M.put_in_active_hand(knife))
-				M << "<div class='notice'>You slide the [knife] out of the [src].</div>"
+				M.text2tab("<div class='notice'>You slide the [knife] out of the [src].</div>")
 				knife = 0
 				update_icon()
 			return
@@ -32,7 +32,7 @@
 			M.drop_item()
 			knife = I
 			I.loc = src
-			M << "<div class='notice'>You slide the [I] into the [src].</div>"
+			M.text2tab("<div class='notice'>You slide the [I] into the [src].</div>")
 			update_icon()
 
 	update_icon()

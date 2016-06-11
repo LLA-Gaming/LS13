@@ -60,12 +60,12 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 
 	if(!ID)
-		user << "<span class='warning'>You don't have an ID.</span>"
+		user.text2tab("<span class='warning'>You don't have an ID.</span>")
 		return
 
 	if(!(access_heads in ID.access))
-		user << "<span class='warning'>The access level of \
-			your card is not high enough.</span>"
+		user.text2tab("<span class='warning'>The access level of \
+			your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -157,8 +157,8 @@
 
 	if(ENGINES_STARTED)
 		// Give them a message anyway
-		user << "<span class='warning'>The shuttle is already \
-			about to launch!</span>"
+		user.text2tab("<span class='warning'>The shuttle is already \
+			about to launch!</span>")
 	else
 		process()
 
@@ -435,7 +435,7 @@
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
 		return ..()
 	else
-		usr << "The storage unit will only unlock during a Red or Delta security alert."
+		usr.text2tab("The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return

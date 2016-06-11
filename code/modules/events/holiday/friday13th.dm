@@ -15,4 +15,4 @@
 
 /datum/round_event/fridaythethirteen/announce()
 	for(var/mob/living/L in player_list)
-		L << "<span class='warning'>You are feeling unlucky today.</span>"
+		L.text2tab("<span class='warning'>You are feeling unlucky today.</span>")

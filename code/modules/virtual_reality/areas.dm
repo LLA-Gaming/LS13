@@ -77,8 +77,7 @@
 				var/mob/living/L = A
 				if(!istype(get_area(new_loc), src))
 					if(!locate(/obj/item/weapon/implant/enforcer) in A)
-						#warn Tab
-						L << "\blue Removing certain perseus items..."
+						L.text2tab("\blue Removing certain perseus items...")
 						for(var/obj/item/I in L.get_contents())
 							for(var/_type in forbidden_perseus_items)
 								if(istype(I, _type))
@@ -101,8 +100,7 @@
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!istype(get_area(new_loc), src))
-					#warn Tab
-					L << "\blue Removing thunderdome items..."
+					L.text2tab("\blue Removing thunderdome items...")
 					for(var/obj/item/I in L.get_contents())
 						for(var/_type in thunderdome_items)
 							if(istype(I, _type))
@@ -121,8 +119,7 @@
 				var/mob/living/L = A
 				if(!locate(/obj/item/weapon/implant/enforcer) in A)
 					if(!istype(get_area(new_loc), src))
-						#warn Tab
-						L << "\blue Removing firing range items..."
+						L.text2tab("\blue Removing firing range items...")
 						for(var/obj/item/I in L.get_contents())
 							for(var/_type in forbidden_range_items)
 								if(istype(I, _type))

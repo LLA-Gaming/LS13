@@ -157,7 +157,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser))
-		crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
+		crosser.text2tab("<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
@@ -293,13 +293,13 @@
 	if(prob(severity) && istype(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		M.text2tab("<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter)
 	if(prob(severity) && istype(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		M.text2tab("<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -542,7 +542,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
+		V.text2tab("<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V)
 
 /obj/effect/spacevine/proc/spread()

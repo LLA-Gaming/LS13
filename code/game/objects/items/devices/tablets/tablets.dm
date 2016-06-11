@@ -106,7 +106,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				var/datum/effect_system/spark_spread/sparks = new /obj/effect/particle_effect/sparks()
 				sparks.set_up(1, 1, get_turf(src))
 				sparks.start()
-				user << "<div class='warning'>The [src] shocks you.</div>"
+				user.text2tab("<div class='warning'>The [src] shocks you.</div>")
 				user.AdjustWeakened(2)
 				return
 		//if(active_uplink_check(user))
@@ -351,19 +351,19 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 		if(istype(C, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/idcard = C
 			if(!idcard.registered_name)
-				user << "<span class='notice'>\The [src] rejects the ID.</span>"
+				user.text2tab("<span class='notice'>\The [src] rejects the ID.</span>")
 				return
 			if(!core.owner)
 				core.owner = idcard.registered_name
 				core.ownjob = idcard.assignment
 				update_label()
-				user << "<span class='notice'>Card scanned.</span>"
+				user.text2tab("<span class='notice'>Card scanned.</span>")
 			else
 				//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 				if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 					if( can_use(user) )//If they can still act.
 						id_check(user, 2)
-						user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+						user.text2tab("<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 						updateSelfDialog()//Update self dialog on success.
 				return	//Return in case of failed check or when successful.
 			updateSelfDialog()//For the non-input related code.
@@ -374,9 +374,9 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				var/list/programs = expand.get_programs()
 				for(var/P in programs)
 					core.programs.Add(new P)
-				user << "<span class='notice'>You load the cartridge's data into the tablet.</span>"
+				user.text2tab("<span class='notice'>You load the cartridge's data into the tablet.</span>")
 			else
-				user << "<span class='notice'>The cartridge's data is already used up.</span>"
+				user.text2tab("<span class='notice'>The cartridge's data is already used up.</span>")
 				expand.usedup = 1
 
 		if(istype(C, /obj/item/stack/spacecash))
@@ -385,36 +385,36 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 			qdel(C)
 			updateSelfDialog()//For the non-input related code.
 			if(S.value)
-				user << "<span class='notice'>You convert the Space Cash into digital currency in your E-Wallet</span>"
+				user.text2tab("<span class='notice'>You convert the Space Cash into digital currency in your E-Wallet</span>")
 			else
-				user << "<span class='notice'>ERROR: Counterfeit Space Cash detected. Currency declined</span>"
+				user.text2tab("<span class='notice'>ERROR: Counterfeit Space Cash detected. Currency declined</span>")
 		if(istype(C, /obj/item/device/toner))
 			core.toner = 30
-			user << "<span class='notice'>You replace the toner cartridge.</span>"
+			user.text2tab("<span class='notice'>You replace the toner cartridge.</span>")
 			qdel(C)
 		if(istype(C, /obj/item/weapon/pen))
 			var/obj/item/weapon/pen/O = locate() in src
 			if(O)
-				user << "<span class='notice'>There is already a pen in \the [src].</span>"
+				user.text2tab("<span class='notice'>There is already a pen in \the [src].</span>")
 			else
 				user.drop_item()
 				C.loc = src
-				user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+				user.text2tab("<span class='notice'>You slide \the [C] into \the [src].</span>")
 		if(istype(C, /obj/item/device/paicard))
 			if(pai)
-				user << "<span class='notice'>There is already a pai in [src].</span>"
+				user.text2tab("<span class='notice'>There is already a pai in [src].</span>")
 			else
 				user.drop_item()
 				C.loc = src
 				src.pai = C
-				user << "<span class='notice'>You put [C] in [src].</span>"
+				user.text2tab("<span class='notice'>You put [C] in [src].</span>")
 	else
 		if(istype(C, /obj/item/device/tablet_core))
 			var/obj/item/device/tablet_core/D = C
 			core = D
 			user.drop_item()
 			D.loc = src
-			user << "<span class='notice'>You put the core into \the [src]'s slot.</span>"
+			user.text2tab("<span class='notice'>You put the core into \the [src]'s slot.</span>")
 			update_label()
 			updateSelfDialog()//For the non-input related code.
 
@@ -455,13 +455,13 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."
+					user.text2tab("\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.")
 					for (var/re in A.reagents.reagent_list)
-						user << "\blue \t [re]"
+						user.text2tab("\blue \t [re]")
 				else
-					user << "\blue No active chemical agents found in [A]."
+					user.text2tab("\blue No active chemical agents found in [A].")
 			else
-				user << "\blue No significant chemical agents found in [A]."
+				user.text2tab("\blue No significant chemical agents found in [A].")
 
 		if("Gas")
 			if (istype(A, /obj/item/weapon/tank))
@@ -491,14 +491,14 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				exists = 1
 				break
 		if(exists)
-			user << "\blue Document already exists, aborting scan."
+			user.text2tab("\blue Document already exists, aborting scan.")
 		else
 			var/datum/tablet_data/document/doc = new /datum/tablet_data/document/
 			doc.fields = P:fields
 			doc.doc = P.info
 			doc.doc_links = P.info_links
 			doc.name = P:name
-			user << "\blue Paper scanned."
+			user.text2tab("\blue Paper scanned.")
 			core.files.Add(doc)
 	if(istype(A, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = A
@@ -508,11 +508,11 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				exists = 1
 				break
 		if(exists)
-			user << "\blue Photo already exists, aborting scan."
+			user.text2tab("\blue Photo already exists, aborting scan.")
 		else
 			var/datum/tablet_data/photo/pic = new /datum/tablet_data/photo/
 			pic.photoinfo = P.img
-			user << "\blue Photo scanned."
+			user.text2tab("\blue Photo scanned.")
 			core.files.Add(pic)
 
 //camera stuff
@@ -629,7 +629,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+			usr.text2tab("<span class='notice'>You remove the ID from the [name].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null
@@ -684,9 +684,9 @@ obj/item/device/tablet/verb/verb_remove_id()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This tablet does not have an ID in it.</span>"
+			usr.text2tab("<span class='notice'>This tablet does not have an ID in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr.text2tab("<span class='notice'>You cannot do this while restrained.</span>")
 
 
 obj/item/device/tablet/verb/verb_remove_pen()
@@ -704,13 +704,13 @@ obj/item/device/tablet/verb/verb_remove_pen()
 				var/mob/M = loc
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
-					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
+					usr.text2tab("<span class='notice'>You remove \the [O] from \the [src].</span>")
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This tablet does not have a pen in it.</span>"
+			usr.text2tab("<span class='notice'>This tablet does not have a pen in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr.text2tab("<span class='notice'>You cannot do this while restrained.</span>")
 
 /obj/item/device/tablet/verb/use_tablet()
 	set category = "Object"
@@ -719,7 +719,7 @@ obj/item/device/tablet/verb/verb_remove_pen()
 	if ( can_use(usr) )
 		attack_self(usr)
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr.text2tab("<span class='notice'>You cannot do this while restrained.</span>")
 
 /obj/item/device/tablet/ai/verb/use_messenger()
 	set category = "AI Commands"

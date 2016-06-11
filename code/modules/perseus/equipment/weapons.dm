@@ -192,7 +192,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	attack_hand(var/mob/living/M)
 		if(power_supply && (M.l_hand == src || M.r_hand == src))
 			power_supply.loc = get_turf(src)
-			M << "<div class='notice'>You remove the [power_supply] from the [src].</div>"
+			M.text2tab("<div class='notice'>You remove the [power_supply] from the [src].</div>")
 			var/obj/item/I = power_supply
 			power_supply.update_icon()
 			power_supply = 0
@@ -204,17 +204,17 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	attackby(var/obj/item/I, var/mob/living/M)
 		if(istype(I, /obj/item/weapon/stock_parts/cell/magazine/ep90))
 			if(power_supply)
-				M << "<div class='warning'>There is already a power supply installed.</div>"
+				M.text2tab("<div class='warning'>There is already a power supply installed.</div>")
 				return
 			M.drop_item()
 			I.loc = src
 			power_supply = I
-			M << "<div class='notice'>You insert the [I] into the [src].</div>"
+			M.text2tab("<div class='notice'>You insert the [I] into the [src].</div>")
 			update_icon()
 		if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 			locked = null
 			emagged = 1
-			M << "<div class='notice'>You emag the [src].</div>"
+			M.text2tab("<div class='notice'>You emag the [src].</div>")
 			var/datum/effect_system/spark_spread/system = new()
 			system.set_up(3, 0, get_turf(src))
 			system.start()
@@ -223,7 +223,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	examine()
 		..()
 		if(emagged)
-			usr << "\blue It's locking mechanism looks fried."
+			usr.text2tab("\blue It's locking mechanism looks fried.")
 
 /*
 * Five Seven
@@ -264,13 +264,13 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	examine()
 		..()
 		if(emagged)
-			usr << "\blue It's locking mechanism looks fried."
+			usr.text2tab("\blue It's locking mechanism looks fried.")
 
 	attackby(var/obj/item/I, var/mob/living/M)
 		if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 			locked = null
 			emagged = 1
-			M << "<div class='notice'>You emag the [src].</div>"
+			M.text2tab("<div class='notice'>You emag the [src].</div>")
 			var/datum/effect_system/spark_spread/system = new()
 			system.set_up(3, 0, get_turf(src))
 			system.start()
@@ -309,7 +309,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 
 	examine()
 		..()
-		usr << "<div class='notice'>The charge indicator reads: [power_supply.percent()]% charge left.</div>"
+		usr.text2tab("<div class='notice'>The charge indicator reads: [power_supply.percent()]% charge left.</div>")
 
 	process()
 		if((SKNIFE_CHARGE_INTERVAL < world.time - lastCharge) && SKNIFE_IS_AUTO_RECHARGING)
@@ -320,14 +320,14 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 		if(USE_SKNIFE_CHARGES)
 			if(mode == 1 || SKNIFE_LETHAL_USE_CHARGE)
 				if(power_supply.charge - SKNIFE_CHARGE_COST < 0)
-					user << "<div class='warning'>Out of charge.</div>"
+					user.text2tab("<div class='warning'>Out of charge.</div>")
 					return
 		if(locked)
 			if(!user.check_contents_for(locked))
 				var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread()
 				S.set_up(3, 0, get_turf(src))
 				S.start()
-				user << "<div class='warning'>The [src] shocks you.</div>"
+				user.text2tab("<div class='warning'>The [src] shocks you.</div>")
 				user.AdjustWeakened(2)
 				return
 		add_fingerprint(user)
@@ -356,7 +356,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	attack_self(var/mob/user)
 		..()
 		mode = !mode
-		user << "<div class='notice'>The [src] is now set to [mode ? "stun" : "lethal"].</div>"
+		user.text2tab("<div class='notice'>The [src] is now set to [mode ? "stun" : "lethal"].</div>")
 		force = mode == 0 ? 17 : 1
 		update_icon()
 

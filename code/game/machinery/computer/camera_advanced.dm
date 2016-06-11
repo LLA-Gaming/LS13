@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
-		user << "The console is already in use!"
+		user.text2tab("The console is already in use!")
 		return
 	if(!iscarbon(user))
 		return

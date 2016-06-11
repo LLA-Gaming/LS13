@@ -62,9 +62,9 @@
 
 	if(isnum(drained)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(drained)
-			H << "<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>"
+			H.text2tab("<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>")
 		else
-			H << "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>"
+			H.text2tab("<span class='danger'>\The [A] has run dry of power, you must find another source!</span>")
 	else
 		drained = 0 //as to not cancel attack_hand()
 
@@ -77,11 +77,11 @@
 	set category = "Ninja Equip"
 
 	var/mob/living/carbon/human/U = loc
-	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
+	U.text2tab("You <b>[candrain?"disable":"enable"]</b> special interaction.")
 	candrain=!candrain
 
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(flags & NODROP)
-		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		user.text2tab("The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>.")

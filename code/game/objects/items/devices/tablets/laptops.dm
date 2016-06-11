@@ -28,12 +28,12 @@
 				bolted = 0
 				anchored = 0
 				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-				user << "<span class='notice'>You unbolt [src] from the ground</span>"
+				user.text2tab("<span class='notice'>You unbolt [src] from the ground</span>")
 			else
 				bolted = 1
 				anchored = 1
 				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-				user << "<span class='notice'>You bolt [src] to the ground</span>"
+				user.text2tab("<span class='notice'>You bolt [src] to the ground</span>")
 		if(core)
 			if(istype(C, /obj/item/weapon/paper))
 				var/obj/item/weapon/paper/A = C
@@ -43,14 +43,14 @@
 						exists = 1
 						break
 				if(exists)
-					user << "\blue Document already exists, aborting scan."
+					user.text2tab("\blue Document already exists, aborting scan.")
 				else
 					var/datum/tablet_data/document/doc = new /datum/tablet_data/document/
 					doc.fields = A:fields
 					doc.doc = A.info
 					doc.doc_links = A.info_links
 					doc.name = A:name
-					user << "\blue Paper scanned."
+					user.text2tab("\blue Paper scanned.")
 					core.files.Add(doc)
 			if(istype(C, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/A = C
@@ -60,11 +60,11 @@
 						exists = 1
 						break
 				if(exists)
-					user << "\blue Photo already exists, aborting scan."
+					user.text2tab("\blue Photo already exists, aborting scan.")
 				else
 					var/datum/tablet_data/photo/pic = new /datum/tablet_data/photo/
 					pic.photoinfo = A.img
-					user << "\blue Photo scanned."
+					user.text2tab("\blue Photo scanned.")
 					core.files.Add(pic)
 
 	proc/toggle_mount()
@@ -99,7 +99,7 @@
 		if(!mounted && !bolted)
 			..()
 		if(bolted && !mounted)
-			usr << "It's bolted to the ground!"
+			usr.text2tab("It's bolted to the ground!")
 		if(mounted)
 			attack_self(usr)
 
@@ -108,7 +108,7 @@
 			toggle_mount()
 			..()
 		if(bolted)
-			usr << "It's bolted to the ground!"
+			usr.text2tab("It's bolted to the ground!")
 
 	attack_self(mob/living/user)
 		if(loc == user) return

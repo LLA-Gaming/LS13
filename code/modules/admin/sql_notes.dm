@@ -1,6 +1,6 @@
 /proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server)
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!target_ckey)
 		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text)
@@ -48,7 +48,7 @@
 	var/notetext
 	var/adminckey
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!note_id)
 		return
@@ -73,7 +73,7 @@
 
 /proc/edit_note(note_id)
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!note_id)
 		return

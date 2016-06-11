@@ -345,9 +345,9 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
 	prefs.save_preferences()
 	if(prefs.inquisitive_ghost)
-		src << "<span class='notice'>You will now examine everything you click on.</span>"
+		src.text2tab("<span class='notice'>You will now examine everything you click on.</span>")
 	else
-		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+		src.text2tab("<span class='notice'>You will no longer examine things you click on.</span>")
 
 /client/verb/toggle_announcement_sound()
 	set name = "Hear/Silence Announcements"

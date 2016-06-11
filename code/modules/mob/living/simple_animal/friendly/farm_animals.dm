@@ -130,7 +130,7 @@
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
-		src << "<span class='userdanger'>You are tipped over by [M]!</span>"
+		src.text2tab("<span class='userdanger'>You are tipped over by [M]!</span>")
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
@@ -260,7 +260,7 @@ var/global/chicken_count = 0
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
-			user << "<span class='warning'>[name] doesn't seem hungry!</span>"
+			user.text2tab("<span class='warning'>[name] doesn't seem hungry!</span>")
 	else
 		..()
 
@@ -306,13 +306,13 @@ var/global/chicken_count = 0
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/weapon/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
-		user << "<span class='danger'>[O] is full.</span>"
+		user.text2tab("<span class='danger'>[O] is full.</span>")
 		return
 	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
-		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
+		user.text2tab("<span class='danger'>The udder is dry. Wait a bit longer...</span>")
 
 /obj/item/udder/Destroy()
 	qdel(reagents)
