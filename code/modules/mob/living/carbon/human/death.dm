@@ -18,6 +18,10 @@
 	jitteriness = 0
 	heart_attack = 0
 
+	if(client in SSvirtual_reality.contained_clients)
+		var/obj/item/clothing/glasses/virtual/V = SSvirtual_reality.GetGogglesFromClient(client)
+		V.LeaveVR()
+
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc
 		if(M.occupant == src)

@@ -140,6 +140,8 @@
 			mute_string = "deadchat and DSAY"
 		if(MUTE_ALL)
 			mute_string = "everything"
+		if(MUTE_MENTORHELP)
+			mute_string = "mentorhelp"
 		else
 			return
 
@@ -441,7 +443,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
 	ion.start()
-	
+
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)

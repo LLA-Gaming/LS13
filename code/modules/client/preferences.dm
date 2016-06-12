@@ -359,6 +359,10 @@ var/list/preferences_datums = list()
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
+				if(mentors && user.client.ckey in mentors)
+					dat += "<b>Mentorhelp Sound:</b> "
+					dat += "<a href='?_src_=prefs;preference=hear_mentorhelps'>[(toggles & SOUND_MENTORHELP) ? "On" : "Off"]</a><br>"
+
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
@@ -1098,6 +1102,10 @@ var/list/preferences_datums = list()
 
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP
+
+				if("hear_mentorhelps")
+					toggles ^= SOUND_MENTORHELP
+
 				if("announce_login")
 					toggles ^= ANNOUNCE_LOGIN
 

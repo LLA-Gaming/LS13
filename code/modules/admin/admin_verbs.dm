@@ -48,7 +48,8 @@ var/list/admin_verbs_secondary = list(
 	//ban
 	/client/proc/unban_panel,
 	/client/proc/DB_ban_panel,
-	/client/proc/stickybanpanel
+	/client/proc/stickybanpanel,
+	/client/proc/cmd_mentor_say
 	)
 
 var/list/admin_verbs_admin = list(
@@ -122,7 +123,8 @@ var/list/admin_verbs_primary = list(
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
-	/client/proc/polymorph_all
+	/client/proc/polymorph_all,
+	/datum/admins/proc/toggle_vr
 	)
 
 var/list/admin_verbs_senior = list(
