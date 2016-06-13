@@ -892,10 +892,77 @@ window "statwindow"
 		allow-html = true
 		multi-line = true
 
+		
+window "AHELPtab"
+	elem "AHELPtab"
+		type = MAIN
+		pos = 281,0
+		size = 638x494
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Adminhelp"
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "ahelp"
+		type = OUTPUT
+		pos = 0,0
+		size = 638x494
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+
 window "ALLtab"
 	elem "ALLtab"
 		type = MAIN
-		title = "All"
 		pos = 281,0
 		size = 640x480
 		anchor1 = none
@@ -914,6 +981,7 @@ window "ALLtab"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
+		title = "All"
 		titlebar = false
 		statusbar = false
 		can-close = false
@@ -954,72 +1022,7 @@ window "ALLtab"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
-		enable-http-images = false
-		max-lines = 1000
-		image = ""
-		
-window "AHELPtab"
-	elem "AHELPtab"
-		type = MAIN
-		title = "Adminhelp"
-		pos = 281,0
-		size = 640x480
-		anchor1 = none
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = ""
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
-		is-pane = true
-		is-minimized = false
-		is-maximized = false
-		can-scroll = none
-		icon = ""
-		image = ""
-		image-mode = stretch
-		keep-aspect = false
-		transparent-color = none
-		alpha = 255
-		macro = ""
-		menu = ""
-		on-close = ""
-	elem "ahelp"
-		type = OUTPUT
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = #ffffff
-		is-visible = true
-		is-disabled = false
-		is-transparent = false
-		is-default = true
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "max-lines"
-		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
 		enable-http-images = false
 		max-lines = 1000
 		image = ""
@@ -1027,7 +1030,6 @@ window "AHELPtab"
 window "ASAYtab"
 	elem "ASAYtab"
 		type = MAIN
-		title = "Asay"
 		pos = 281,0
 		size = 640x480
 		anchor1 = none
@@ -1046,6 +1048,7 @@ window "ASAYtab"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
+		title = "Asay"
 		titlebar = false
 		statusbar = false
 		can-close = false
@@ -1078,7 +1081,7 @@ window "ASAYtab"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
@@ -1086,6 +1089,7 @@ window "ASAYtab"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
 		enable-http-images = false
 		max-lines = 1000
 		image = ""
@@ -1093,7 +1097,6 @@ window "ASAYtab"
 window "ICtab"
 	elem "ICtab"
 		type = MAIN
-		title = "IC"
 		pos = 281,0
 		size = 640x480
 		anchor1 = none
@@ -1112,6 +1115,7 @@ window "ICtab"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
+		title = "IC"
 		titlebar = false
 		statusbar = false
 		can-close = false
@@ -1144,7 +1148,7 @@ window "ICtab"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
@@ -1152,6 +1156,7 @@ window "ICtab"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
 		enable-http-images = false
 		max-lines = 1000
 		image = ""
@@ -1159,9 +1164,8 @@ window "ICtab"
 window "Mentortab"
 	elem "Mentortab"
 		type = MAIN
-		title = "Mentorhelp"
 		pos = 281,0
-		size = 640x480
+		size = 638x494
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1178,6 +1182,7 @@ window "Mentortab"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
+		title = "Mentorhelp"
 		titlebar = false
 		statusbar = false
 		can-close = false
@@ -1199,7 +1204,7 @@ window "Mentortab"
 	elem "mhelp"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x480
+		size = 638x494
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -1210,7 +1215,7 @@ window "Mentortab"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
@@ -1218,6 +1223,7 @@ window "Mentortab"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
 		enable-http-images = false
 		max-lines = 1000
 		image = ""
@@ -1225,7 +1231,6 @@ window "Mentortab"
 window "OOCtab"
 	elem "OOCtab"
 		type = MAIN
-		title = "OOC"
 		pos = 281,0
 		size = 640x480
 		anchor1 = none
@@ -1244,6 +1249,7 @@ window "OOCtab"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
+		title = "OOC"
 		titlebar = false
 		statusbar = false
 		can-close = false
@@ -1276,7 +1282,7 @@ window "OOCtab"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
@@ -1284,6 +1290,7 @@ window "OOCtab"
 		on-size = ""
 		link-color = #0000ff
 		visited-color = #ff00ff
+		style = "body { font-family: Verdana, sans-serif; } h1, h2, h3, h4, h5, h6 { color: #0000ff; font-family: Georgia, Verdana, sans-serif; } em { font-style: normal; font-weight: bold; } .motd { color: #638500; font-family: Verdana, sans-serif; } .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 { color: #638500; text-decoration: underline; } .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover { color: #638500; } .italics { font-style: italic; } .prefix { font-weight: bold; } .ooc { font-weight: bold; } .adminobserverooc { color: #0099cc; font-weight: bold; } .adminooc { color: #700038; font-weight: bold; } .adminobserver { color: #996600; font-weight: bold; } .admin { color: #386aff; font-weight: bold; } .name { font-weight: bold; } .say {} .deadsay { color: #5c00e6; } .radio { color: #008000; } .sciradio { color: #993399; } .comradio { color: #aca82d; } .secradio { color: #b22222; } .medradio { color: #337296; } .engradio { color: #fb5613; } .suppradio { color: #a8732b; } .servradio { color: #6eaa2c; } .syndradio { color: #6d3f40; } .centcomradio { color: #686868; } .aiprivradio { color: #ff00ff; } .yell { font-weight: bold; } .alert { color: #ff0000; } h1.alert, h2.alert { color: #000000; } .emote { font-style: italic; } .selecteddna { color: #ffffff; background-color: #001B1B } .attack { color: #ff0000; } .disarm { color: #990000; } .passive { color: #660000; } .userdanger { color: #ff0000; font-weight: bold; font-size: 3; } .danger { color: #ff0000; } .warning { color: #ff0000; font-style: italic; } .announce { color: #228b22; font-weight: bold; } .boldannounce { color: #ff0000; font-weight: bold; } .greenannounce { color: #00ff00; font-weight: bold; } .rose { color: #ff5050; } .info { color: #0000CC; } .notice { color: #000099; } .boldnotice { color: #000099; font-weight: bold; } .adminnotice { color: #0000ff; } .unconscious { color: #0000ff; font-weight: bold; } .suicide { color: #ff5050; font-style: italic; } .green { color: #03ff39; } .shadowling { color: #3b2769; } .cult { color: #960000; } .cultitalic { color: #960000; font-style: italic; } .cultlarge { color: #960000; font-weight: bold; font-size: 3; } .narsie { color: #960000; font-weight: bold; font-size: 15; } .purple { color: #5e2d79; } .holoparasite { color: #35333a; } .holoparasitebold { color: #35333a; font-weight: bold; } .brass { color: #BE8700; } .heavy_brass { color: #BE8700; font-weight: bold; font-style: italic; } .large_brass { color: #BE8700; font-size: 3; } .big_brass { color: #BE8700; font-size: 3; font-weight: bold; font-style: italic; } .alloy { color: #42474D; } .heavy_alloy { color: #42474D; font-weight: bold; font-style: italic; } .large_alloy { color: #42474D; font-size: 3; } .nezbere { color: #42474D; font-weight: bold; font-style: italic; } .nezbere_small { color: #42474D; } .sevtug { color: #AF0AAF; font-weight: bold; font-style: italic; } .sevtug_small { color: #AF0AAF; } .inathneq { color: #1E8CE1; font-weight: bold; font-style: italic; } .inathneq_small { color: #1E8CE1; } .nzcrentr { color: #BE8700; font-weight: bold; font-style: italic; } .nzcrentr_small { color: #BE8700; } .neovgre { color: #13143F; font-weight: bold; font-style: italic; } .neovgre_small { color: #13143F; } .revennotice { color: #1d2953; } .revenboldnotice { color: #1d2953; font-weight: bold; } .revenbignotice { color: #1d2953; font-weight: bold; font-size: 3; } .revenminor { color: #823abb } .revenwarning { color: #760fbb; font-style: italic; } .revendanger { color: #760fbb; font-weight: bold; font-size: 3; } .newscaster { color: #800000; } .ghostalert { color: #5c00e6; font-style: italic; font-weight: bold; } .alien { color: #543354; } .noticealien { color: #00c000; } .alertalien { color: #00c000; font-weight: bold; } .interface { color: #330033; } .sans { font-family: "Comic Sans MS", cursive, sans-serif; } .papyrus { font-family: "Papyrus", cursive, sans-serif; } .robot { font-family: "Courier New", cursive, sans-serif; } .command_headset { font-weight: bold; font-size: 3; } .big { font-size: 3; } .reallybig { font-size: 4; } .greentext { color: #00FF00; font-size: 3; } .redtext { color: #FF0000; font-size: 3; } .clown { color: #FF69Bf; font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold; } BIG IMG.icon { width: 32px; height: 32px; } .memo { color: #638500; text-align: center; } .memoedit { text-align: center; font-size: 2; } .abductor { color: #800080; font-style: italic; }"
 		enable-http-images = false
 		max-lines = 1000
 		image = ""

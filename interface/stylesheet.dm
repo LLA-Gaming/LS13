@@ -1,3 +1,4 @@
+//If you update this, keep it up to date in tabs ~flavo
 /client/script = {"<style>
 body					{font-family: Verdana, sans-serif;}
 
