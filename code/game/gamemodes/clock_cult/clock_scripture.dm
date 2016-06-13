@@ -345,14 +345,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
 	name = "Sigil of Submission"
-	desc = "Places a subtle sigil that will enslave any valid beings standing on it after a time."
+	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
+	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
 	usage_tip = "This should not be your primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
@@ -572,21 +572,21 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	whispered = TRUE
-	usage_tip = "The spear will snap in two when thrown but do massive damage."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage. Both of these will break the spear, however."
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
-	if(invoker.verbs.Find(/mob/living/carbon/human/proc/function_call))
+	for(var/datum/action/innate/function_call/F in invoker.actions)
 		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
 		return 0
 	return ishuman(invoker)
 
 /datum/clockwork_scripture/function_call/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" verb in your Clockwork tab to call it forth.</span>")
-	invoker.verbs += /mob/living/carbon/human/proc/function_call
+	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	var/datum/action/innate/function_call/F = new()
+	F.Grant(invoker)
 	return 1
-
 
 
 /datum/clockwork_scripture/spatial_gateway
@@ -1072,8 +1072,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.health += 500
 		L.color = "#1E8CE1"
 		L.stun_absorption = TRUE
-		spawn(0)
-			animate(invoker, color = initial(invoker.color), time = 100)
+		animate(invoker, color = initial(invoker.color), time = 100)
 		affected_servants += L
 	for(var/i in 1 to 10)
 		sleep(10)
