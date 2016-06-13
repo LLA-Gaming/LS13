@@ -1102,6 +1102,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_JUDGEMENT
 
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/check_special_requirements()
+	if(!slab.no_cost && ratvar_awakens)
+		invoker << "<span class='big_brass'>\"I am already here, idiot.\"</span>"
+		return 0
+	for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		var/area/gate_area = get_area(G)
+		invoker << "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>"
+		return 0
 	var/area/A = get_area(invoker)
 	if(!slab.no_cost && (invoker.z != ZLEVEL_STATION || istype(A, /area/shuttle)))
 		invoker.text2tab("<span class='warning'>You must be on the station to activate the Ark!</span>")
