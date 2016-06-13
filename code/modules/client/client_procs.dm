@@ -226,7 +226,7 @@ var/next_external_rsc = 0
 	screen += void
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		src.text2tab("<span class='info'>You have unread updates in the changelog.</span>",null)
+		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
 			changelog()
 		else

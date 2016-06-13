@@ -341,7 +341,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"

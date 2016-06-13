@@ -4,7 +4,7 @@
 
 /mob/new_player/proc/handle_player_polling()
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 	var/DBQuery/query_get_poll = dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE [(client.holder ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime")
 	if(!query_get_poll.Execute())
@@ -25,7 +25,7 @@
 	if(!pollid)
 		return
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!select_query.Execute())
@@ -228,7 +228,7 @@
 
 /mob/new_player/proc/poll_check_voted(pollid, table)
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name(table)] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.Execute())
@@ -282,7 +282,7 @@
 	if(!pollid || !optionid || !rating)
 		return
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.Execute())
@@ -307,7 +307,7 @@
 	if(!pollid || !optionid)
 		return 1
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return 1
 	var/DBQuery/query_get_choicelen = dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_get_choicelen.Execute())
