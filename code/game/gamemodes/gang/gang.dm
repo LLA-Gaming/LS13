@@ -277,7 +277,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		for(var/datum/mind/gangster in G.gangsters)
 			text += printplayer(gangster, 1)
 		text += "<br>"
-		world << text
+		text2world(text)
 
 //////////////////////////////////////////////////////////
 //Handles influence, territories, and the victory checks//

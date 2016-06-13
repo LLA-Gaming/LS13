@@ -231,7 +231,7 @@
 					i++
 			text += "<br>"
 
-		world << text
+		text2world(text)
 	return 1
 
 //OTHER PROCS

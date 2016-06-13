@@ -241,7 +241,7 @@ Made by Xhuis
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
 	text += "<br>"
-	world << text
+	text2world(text)
 
 
 /*

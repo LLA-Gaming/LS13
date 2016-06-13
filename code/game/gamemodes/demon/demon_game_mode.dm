@@ -14,7 +14,7 @@
 			text += printobjectives(sintouched_mind)
 		text += "<br>"
 	text += "<br>"
-	world << text
+	text2world(text)
 
 /datum/game_mode/proc/auto_declare_completion_devils()
 	/var/text = ""
@@ -26,7 +26,7 @@
 			text += printdevilinfo(devil)
 			text += printobjectives(devil)
 		text += "<br>"
-	world << text
+	text2world(text)
 
 /datum/game_mode/devil
 

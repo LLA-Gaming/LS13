@@ -301,4 +301,4 @@
 
 		text += "<br>"
 
-		world << text
+		text2world(text)

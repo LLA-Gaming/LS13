@@ -295,7 +295,7 @@
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
 	text += "<br>"
-	world << text
+	text2world(text)
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships

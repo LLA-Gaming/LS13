@@ -270,7 +270,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 
-		world << text
+		text2world(text)
 
 
 	return 1

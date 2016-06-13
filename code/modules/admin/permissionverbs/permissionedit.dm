@@ -63,7 +63,7 @@
 	establish_db_connection()
 
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>")
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -111,7 +111,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>")
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>",null)
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))

@@ -359,14 +359,14 @@
 		for(var/datum/mind/headrev in head_revolutionaries)
 			text += printplayer(headrev, 1)
 		text += "<br>"
-		world << text
+		text2world(text)
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
-		world << text
+		text2world(text)
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
@@ -377,4 +377,4 @@
 				text += "<span class='boldannounce'>Target</span>"
 			text += printplayer(head, 1)
 		text += "<br>"
-		world << text
+		text2world(text)

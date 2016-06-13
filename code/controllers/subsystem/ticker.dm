@@ -183,14 +183,14 @@ var/datum/subsystem/ticker/ticker
 
 	Master.RoundStart()
 
-	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
+	text2world("<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
 
 	if(SSevent.holidays)
-		world << "<font color='blue'>and...</font>"
+		text2world("<font color='blue'>and...</font>")
 		for(var/holidayname in SSevent.holidays)
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
-			world << "<h4>[holiday.greet()]</h4>"
+			text2world("<h4>[holiday.greet()]</h4>")
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
@@ -346,7 +346,7 @@ var/datum/subsystem/ticker/ticker
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))
-				M << "Captainship not forced on anyone."
+				M.text2tab("Captainship not forced on anyone.")
 
 
 
@@ -378,38 +378,38 @@ var/datum/subsystem/ticker/ticker
 	end_state.count()
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
-	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	text2world("<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	text2world("<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+		text2world("<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
 		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
-	world << "<BR>"
+			text2world("<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
+		text2world("<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+	text2world("<BR>")
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
+			text2world("<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
+			text2world("<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
 			aiPlayer.show_laws(1)
 
-		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
+		text2world("<b>Total law changes: [aiPlayer.law_change_counter]</b>")
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-			world << "[robolist]"
+			text2world("[robolist]")
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
+				text2world("<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
-				world << "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				text2world("<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
@@ -452,9 +452,9 @@ var/datum/subsystem/ticker/ticker
 	var/list/randomtips = file2list("config/tips.txt")
 	var/list/memetips = file2list("config/sillytips.txt")
 	if(randomtips.len && prob(95))
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
+		text2world("<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>")
 	else if(memetips.len)
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
+		text2world("<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>")
 
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
