@@ -480,7 +480,7 @@
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M.text2tab(msg)
+			M.text2tab(msg,"ooc")
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
