@@ -224,30 +224,34 @@
 		var/obj/item/clothing/mask/M = H.wear_mask
 		if(M.flags_inv & HIDEHAIR)
 			hair_hidden = 1
-	if(!hair_hidden)
-		if(!H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
+
+	if(!H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
+		if(!hair_hidden)
 			standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
-		else if(H.hair_style && (HAIR in specflags))
-			S = hair_styles_list[H.hair_style]
-			if(S)
-				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+	else if(H.hair_style && (HAIR in specflags))
+		S = hair_styles_list[H.hair_style]
+		if(S)
+			var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
+			if(hair_hidden)
+				img_hair_s = H.hide_hair(S.icon_state, S.icon, HAIR_LAYER)
+			else
 				img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-				if(!forced_colour)
-					if(hair_color)
-						if(hair_color == "mutcolor")
-							img_hair_s.color = "#" + H.dna.features["mcolor"]
-						else
-							img_hair_s.color = "#" + hair_color
+			if(!forced_colour)
+				if(hair_color)
+					if(hair_color == "mutcolor")
+						img_hair_s.color = "#" + H.dna.features["mcolor"]
 					else
-						img_hair_s.color = "#" + H.hair_color
+						img_hair_s.color = "#" + hair_color
 				else
-					img_hair_s.color = forced_colour
-				img_hair_s.alpha = hair_alpha
+					img_hair_s.color = "#" + H.hair_color
+			else
+				img_hair_s.color = forced_colour
+			img_hair_s.alpha = hair_alpha
 
-				standing += img_hair_s
+			standing += img_hair_s
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER]	= standing

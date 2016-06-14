@@ -48,6 +48,8 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
+	//hairbang cache
+var/global/list/hairbang_icons = list()
 
 	//radical shit
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")

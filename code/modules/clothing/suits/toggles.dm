@@ -17,6 +17,7 @@
 	if(!hood)
 		var/obj/item/clothing/head/W = new hoodtype(src)
 		hood = W
+		hood.color = src.color //Spess Hoodies!
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()

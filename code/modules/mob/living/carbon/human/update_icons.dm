@@ -384,6 +384,8 @@ There are several things that need to be remembered:
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
+		if(wear_suit.color)
+			standing.color = wear_suit.color
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -604,3 +606,22 @@ var/global/list/limb_icon_cache = list()
 		remove_overlay(BODYPARTS_LAYER)
 		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
 		apply_overlay(BODYPARTS_LAYER)
+
+
+//Hair bangs for hoodies
+/mob/living/carbon/human/proc/hide_hair(t_color, icon, layer)
+	var/index = "[t_color]_s"
+	var/icon/hairbang_icon = hairbang_icons[index]
+	if(!hairbang_icon) 	//Create standing/laying icons if they don't exist
+		generate_bangs(index,t_color,icon)
+	var/image/standing	= image("icon"=hairbang_icons["[t_color]_s"], "layer"=-layer)
+	var/new_color = "#" + hair_color
+	standing.color = new_color
+	return(standing)
+
+atom/proc/generate_bangs(index,t_color,icon)
+	var/icon/hairbang_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
+	var/icon/bangalpha_s				= icon("icon"='icons/mob/human_face.dmi', "icon_state"="bangalpha_s")
+	hairbang_icon.Blend(bangalpha_s, ICON_MULTIPLY)
+	hairbang_icon 			= fcopy_rsc(hairbang_icon)
+	hairbang_icons[index] = hairbang_icon

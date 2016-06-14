@@ -35,6 +35,7 @@ Contents:
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
 	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
+	var/obj/item/clothing/mask/gas/space_ninja/n_mask
 
 		//Main function variables.
 	var/s_initialized = 0//Suit starts off.
@@ -96,6 +97,7 @@ Contents:
 	qdel(n_hood)
 	qdel(n_gloves)
 	qdel(n_shoes)
+	qdel(n_mask)
 	qdel(src)
 
 
@@ -115,7 +117,8 @@ Contents:
 	if(checkIcons)
 		icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		H.gloves.icon_state = "s-ninjan"
-		H.gloves.item_state = "s-ninjan"
+		if(istype(H.wear_mask,/obj/item/clothing/mask/gas/space_ninja))
+			H.wear_mask.icon_state = "s-ninjan"
 	else
 		if(H.mind.special_role!="Space Ninja")
 			H.text2tab("\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
@@ -141,6 +144,7 @@ Contents:
 		n_shoes.slowdown--
 		n_gloves = H.gloves
 		n_gloves.flags |= NODROP
+		n_mask = H.wear_mask
 
 	return 1
 
@@ -162,6 +166,8 @@ Contents:
 		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
+	if(n_mask)
+		n_mask.icon_state = "s-ninja"
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
