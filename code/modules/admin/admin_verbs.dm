@@ -165,76 +165,27 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_upload
 	)
 
-//verbs which can be hidden - needs work
-var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
-	/client/proc/deadmin,
-	/client/proc/deadchat,
-	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_radio,
-	/datum/admins/proc/show_traitor_panel,
-	/datum/admins/proc/toggleenter,
-	/datum/admins/proc/toggleguests,
-	/datum/admins/proc/announce,
-	/datum/admins/proc/set_admin_notice,
-	/client/proc/admin_ghost,
-	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
-	/client/proc/cmd_admin_subtle_message,
-	/client/proc/cmd_admin_check_contents,
-	/datum/admins/proc/access_news_network,
-	/client/proc/admin_call_shuttle,
-	/client/proc/admin_cancel_shuttle,
-	/client/proc/cmd_admin_direct_narrate,
-	/client/proc/cmd_admin_world_narrate,
-	/client/proc/cmd_admin_local_narrate,
-	/client/proc/play_local_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-	/client/proc/cmd_admin_dress,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/cinematic,
-	/client/proc/send_space_ninja,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
-	/client/proc/cmd_admin_add_random_ai_law,
-	/datum/admins/proc/startnow,
-	/datum/admins/proc/restart,
-	/datum/admins/proc/delay,
-	/datum/admins/proc/toggleaban,
-	/client/proc/toggle_log_hrefs,
-	/client/proc/everyone_random,
-	/datum/admins/proc/toggleAI,
-	/client/proc/restart_controller,
-	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/Debug2,
+//verbs which can be kept when hiding most verbs
+var/list/admin_verbs_minimum = list(
+	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
+	/client/proc/deadchat,				/*toggles deadchat on/off*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleprayers,			/*toggles prayers on/off*/
+	/client/verb/toggleprayersounds,	/*Toggles prayer sounds (HALLELUJAH!)*/
+	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
+	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/secrets,
 	/client/proc/reload_admins,
-	/client/proc/cmd_debug_make_powernets,
-	/client/proc/startSinglo,
-	/client/proc/cmd_debug_mob_lists,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/enable_debug_verbs,
-	/proc/possess,
-	/proc/release,
-	/client/proc/reload_admins,
-	/client/proc/panicbunker,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/cmd_display_del_log,
-	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
-	/client/proc/toggleSNPC
+	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
+	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
+	/client/proc/stealth,
+	/client/proc/unban_panel,
+	/client/proc/DB_ban_panel,
+	/client/proc/stickybanpanel,
+	/client/proc/cmd_mentor_say,
+	/client/proc/admin_ghost			/*allows us to ghost/reenter body at will*/
 	)
 
 /client/proc/add_admin_verbs()
@@ -295,8 +246,16 @@ var/list/admin_verbs_hideable = list(
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
-	verbs += /client/proc/show_verbs
+	for(var/X in verbs)
+		if(!(X in admin_verbs_default) && !(X in admin_verbs_trial) && !(X in admin_verbs_secondary) && !(X in admin_verbs_admin) && !(X in admin_verbs_primary)  && !(X in admin_verbs_senior)  && !(X in admin_verbs_debug))
+			continue //skip non-admin verbs
+		if(X in admin_verbs_minimum)
+			continue //skip minimum verbs
+		verbs.Remove(X)
+			//finally remove those verbs
+
+	verbs.Remove(/client/proc/hide_most_verbs) // then remove the hide most verbs command
+	verbs += /client/proc/show_verbs //then give them the return verbs command
 
 	src.text2tab("<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
