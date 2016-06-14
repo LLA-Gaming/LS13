@@ -17,7 +17,7 @@
 	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.","Rename Station",new_station_name())  as text|null
 	if(new_name)
 		station_name = new_name
-		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+		world.name = station_name
 		minor_announce("[user.real_name] has designated your station as [station_name]", "Captain's Charter", 0)
 
 	else
