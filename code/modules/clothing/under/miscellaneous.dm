@@ -581,6 +581,7 @@
 	icon_state = "exploring"
 	item_state = "exploring"
 	item_color = "exploring"
+	can_adjust = 0
 
 /obj/item/clothing/under/fembuisness
 	name = "female business skirt"
@@ -588,3 +589,4 @@
 	icon_state = "femalebusiness"
 	item_state = "femalebusiness"
 	item_color = "femalebusiness"
+	can_adjust = 0
