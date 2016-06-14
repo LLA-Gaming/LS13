@@ -13,6 +13,7 @@
 		dat += {"<a href='byond://?src=\ref[src];choice=System Alerts'>[tablet.system_alerts ? "System Alerts: On" : "System Alerts: Off"]</a><br>"}
 		dat += "<h2>Application Settings:</h2>"
 		for(var/datum/program/PRG in tablet.core.programs)
+			if(qdeleted(PRG))continue
 			if(PRG.utility) continue
 			if(PRG.drm && PRG.built_in && !PRG.usesalerts) continue
 			if(!PRG.drm)

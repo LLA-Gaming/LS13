@@ -57,7 +57,7 @@
 			for(Bot in living_mob_list) //Git da botz
 				if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(tablet.bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 					continue //Also, the PDA must have access to the bot type.
-				dat += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"
+				dat += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])</a><BR>"
 				botcount++
 			if(!botcount) //No bots at all? Lame.
 				dat += "No bots found.<BR>"

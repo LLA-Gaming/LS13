@@ -259,6 +259,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 	var/N = 0
 	if(core)
 		for(var/datum/program/P in core.programs)
+			if(qdeleted(P))continue
 			if(!P.notifications)
 				continue
 			N = 1
@@ -283,6 +284,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 	var/datum/program/program = null
 	if(app_id)
 		for(var/datum/program/P in core.programs)
+			if(qdeleted(P))continue
 			if(P.app_id == app_id)
 				if(P.alertsoff)
 					return
@@ -332,6 +334,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 	apps_utilities = list()
 
 	for(var/datum/program/P in core.programs)
+		if(qdeleted(P))continue
 		if(P.utility)
 			apps_utilities.Add(P)
 			continue
@@ -373,11 +376,12 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				bot_access_flags |= expand.bot_access_flags
 				var/list/programs = expand.get_programs()
 				for(var/P in programs)
+					if(locate(P) in core.programs) continue
 					core.programs.Add(new P)
 				user.text2tab("<span class='notice'>You load the cartridge's data into the tablet.</span>")
+				expand.usedup = 1
 			else
 				user.text2tab("<span class='notice'>The cartridge's data is already used up.</span>")
-				expand.usedup = 1
 
 		if(istype(C, /obj/item/stack/spacecash))
 			var/obj/item/stack/spacecash/S = C

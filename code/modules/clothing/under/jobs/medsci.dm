@@ -119,3 +119,12 @@
 	icon_state = "scrubspurple"
 	item_color = "scrubspurple"
 	can_adjust = 0
+
+/obj/item/clothing/under/rank/therapist
+	desc = "a therapist's uniform."
+	name = "therapist's uniform"
+	icon_state = "teal_suit"
+	item_state = "w_suit"
+	item_color = "teal_suit"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)

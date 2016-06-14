@@ -880,6 +880,12 @@
 	contains = list(/mob/living/simple_animal/cow)
 	crate_name = "cow crate"
 
+/datum/supply_pack/organic/critter/alpaca
+	name = "Alpaca Crate"
+	cost = 2500
+	contains = list(/mob/living/simple_animal/alpaca)
+	crate_name = "alpaca crate"
+
 /datum/supply_pack/organic/critter/goat
 	name = "Goat Crate"
 	cost = 2500

@@ -23,6 +23,7 @@ var/const/CMO				=(1<<3)
 var/const/DOCTOR			=(1<<4)
 var/const/GENETICIST		=(1<<5)
 var/const/VIROLOGIST		=(1<<6)
+var/const/THERAPIST			=(1<<7)
 
 
 var/const/CIVILIAN			=(1<<2)

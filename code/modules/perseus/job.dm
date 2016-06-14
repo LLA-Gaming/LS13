@@ -1,8 +1,5 @@
 /datum/configuration/var/perseus_legacy_system = 0
 
-/var/const/access_pcommander = 67
-/var/const/access_penforcer = 66
-
 var/list/
 	perseusList = list() //ckey - rank
 	pnumbers = list() //ckey - number

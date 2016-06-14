@@ -26,6 +26,7 @@
 			dat += "<h4>Downloads:</h4>"
 			dat += "<div class = 'statusDisplay'>"
 			for(var/datum/tablet_data/data in tablet.core.downloads)
+				if(qdeleted(data))continue
 				dat += {"<A href='?src=\ref[src];choice=Delete;target=\ref[data]'> <b>X</b> </a>"}
 				dat += {"File: [data.name]"}
 				dat += {"<br>"}
@@ -38,6 +39,7 @@
 			dat = "<h4>Files:</h4>"
 			dat += "<div class = 'statusDisplay'>"
 			for(var/datum/tablet_data/data in tablet.core.files)
+				if(qdeleted(data))continue
 				if(istype(data,/datum/tablet_data/conversation)) continue
 				dat += {"<A href='?src=\ref[src];choice=Delete;target=\ref[data]'> <b>X</b> </a>"}
 				dat += {"[data.name]"}
