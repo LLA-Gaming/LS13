@@ -25,6 +25,7 @@
 		else
 			dat += {"<a href='byond://?src=\ref[src];choice=NewDoc'>New</a><hr>"}
 			for(var/datum/tablet_data/document/DATA in tablet.core.files)
+				if(qdeleted(DATA)) continue
 				dat += {"<a href='byond://?src=\ref[src];choice=DeleteDoc;target=\ref[DATA]'><b>X</b> </a>"}
 				dat += {"<a href='byond://?src=\ref[src];choice=OpenDoc;target=\ref[DATA]'>[DATA.name]</a><br>"}
 

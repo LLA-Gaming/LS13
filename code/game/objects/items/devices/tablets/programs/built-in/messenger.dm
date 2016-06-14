@@ -35,6 +35,7 @@
 				return
 			dat += "<h3>Active Conversations</h3>"
 			for(var/datum/tablet_data/conversation/C in server.convos)
+				if(qdeleted(C)) continue
 				if(C.users.Find(tablet))
 					dat += "<div class='statusDisplay'>"
 					dat += "[C.name]<br>"
@@ -42,6 +43,7 @@
 					dat += "<a href='byond://?src=\ref[src];choice=Open Chat;target=\ref[C]'>Open</a><br>"
 					dat += "</div>"
 			for(var/obj/item/device/tablet/T in sortNames(tablets_list))
+				if(qdeleted(T)) continue
 				if(T == tablet) continue
 				if(T.network() && T.core && T.core.owner && T.messengeron)
 					users_online.Add(T)

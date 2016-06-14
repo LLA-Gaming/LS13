@@ -383,8 +383,8 @@
 	new /obj/item/weapon/card/id/prisoner/seven(src)
 
 /obj/item/weapon/storage/box/seccarts
-	name = "box of PDA security cartridges"
-	desc = "A box full of PDA cartridges used by Security."
+	name = "box of tablet security cartridges"
+	desc = "A box full of tablet cartridges used by Security."
 	icon_state = "pda"
 
 /obj/item/weapon/storage/box/seccarts/New()
