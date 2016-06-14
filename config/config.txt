@@ -131,7 +131,7 @@ GUEST_JOBBAN
 FORUMURL http://www.llagaming.net/forums/
 
 ## Wiki address
-WIKIURL http://www.tgstation13.org/wiki
+WIKIURL http://wiki.llagaming.net/index.php
 
 ##Rules address
 RULESURL http://www.llagaming.net/forums/threads/liberty-station-13-rules.3701/

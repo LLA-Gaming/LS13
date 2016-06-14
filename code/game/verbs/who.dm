@@ -80,6 +80,6 @@
 		for(var/client/C in admins)
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+		msg += "<span class='info'>Adminhelps are also sent to Discord. If no admins are available in game adminhelp anyways and an admin on Discord will see it and respond.</span>"
 	src.text2tab(msg,"ooc")
 
