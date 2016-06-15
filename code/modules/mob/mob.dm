@@ -885,8 +885,8 @@ var/next_mob_id = 0
 
 		else if( search_pda && istype(A,/obj/item/device/tablet) )
 			var/obj/item/device/tablet/T = A
-			if(T.owner == oldname)
-				T.owner = newname
+			if(T.core.owner == oldname)
+				T.core.owner = newname
 				T.update_label()
 				if(!search_id || !search_pda)
 					break

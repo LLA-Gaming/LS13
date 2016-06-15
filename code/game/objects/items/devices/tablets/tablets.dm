@@ -109,8 +109,9 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 				user.text2tab("<div class='warning'>The [src] shocks you.</div>")
 				user.AdjustWeakened(2)
 				return
-		//if(active_uplink_check(user))
-		//	return
+		if(hidden_uplink && hidden_uplink.active)
+			hidden_uplink.interact(user)
+			return
 		if (!core)
 			dat += "ERROR: No Hard Drive found.  Please insert Hard Drive.<br><br>"
 		if (core)

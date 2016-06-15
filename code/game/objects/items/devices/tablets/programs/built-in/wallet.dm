@@ -28,13 +28,55 @@
 		switch(href_list["choice"])
 			if("Withdraw")
 				var/cash = href_list["amount"]
-				var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash(usr.loc)
-				if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
-					tablet.core.cash -= cash
-					dosh.value = cash
-				else
-					usr.text2tab("<span class='notice'>You couldn't withdraw because your hands are full.</span>")
-					qdel(dosh)
+				if (cash == "10")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c10(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=10
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "20")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c20(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=20
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "50")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c50(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=50
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "100")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c100(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=100
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "200")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c200(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=200
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "500")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c500(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=500
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
+				if (cash == "1000")
+					var/obj/item/stack/spacecash/dosh = new /obj/item/stack/spacecash/c1000(usr.loc)
+					if(usr.put_in_hands(dosh) && tablet.core.cash >= dosh.value)
+						tablet.core.cash -=1000
+					else
+						usr << "<span class='notice'>You couldn't withdraw because your hands are full.</span>"
+						qdel(dosh)
 		use_app()
 		tablet.attack_self(usr)
 

@@ -45,9 +45,8 @@
 			if("Ringtone")
 				var/t = stripped_input(usr, "Please enter message", name, null) as text
 				if (t)
-					return
-					/*
-					if(tablet.hidden_uplink && tablet.hidden_uplink.check_trigger(usr, trim(lowertext(t)), trim(lowertext(tablet.lock_code))))
+					if(tablet.hidden_uplink && (trim(lowertext(t)) == trim(lowertext(tablet.lock_code))))
+						tablet.hidden_uplink.interact(usr)
 						usr << "The tablet flashes red."
 						tablet.core.loaded = null
 						tablet.popup.close()
@@ -55,7 +54,6 @@
 					else
 						t = copytext(sanitize(t), 1, 20)
 						tablet.core.ttone = t
-					*/
 			if("Sound")
 				tablet.core.volume = !tablet.core.volume
 			if("Delete")
