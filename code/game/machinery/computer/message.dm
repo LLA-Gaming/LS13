@@ -260,6 +260,8 @@
 					if(href_list["target"])
 						var/datum/tablet_data/conversation/C = locate(href_list["target"])
 						viewing_convo = C
+					else
+						viewing_convo = null
 
 		//Clears the request console logs - KEY REQUIRED
 		if (href_list["clearr"])
