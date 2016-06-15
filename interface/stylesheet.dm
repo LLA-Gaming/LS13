@@ -1,4 +1,5 @@
 //If you update this, keep it up to date in tabs ~flavo
+//Additionally if you add any new " " in use \" escapes or otherwise youl have a bad time ~flavo
 /client/script = {"<style>
 body					{font-family: Verdana, sans-serif;}
 
