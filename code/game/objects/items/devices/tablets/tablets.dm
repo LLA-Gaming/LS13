@@ -303,7 +303,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 		for (var/mob/O in hearers(1, loc))
 			O.show_message(text("\icon[src] <b>[alert]</b> - [details]"))
 	if(L)
-		L << "\icon[src] <b>[alert]</b> - [details]"
+		L.text2tab("\icon[src] <b>[alert]</b> - [details]")
 	if(program && core)
 		program.notifications++
 		if(core.loaded && core.loaded == program)

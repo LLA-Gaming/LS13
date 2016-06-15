@@ -47,7 +47,7 @@
 				if (t)
 					if(tablet.hidden_uplink && (trim(lowertext(t)) == trim(lowertext(tablet.lock_code))))
 						tablet.hidden_uplink.interact(usr)
-						usr << "The tablet flashes red."
+						usr.text2tab("The tablet flashes red.")
 						tablet.core.loaded = null
 						tablet.popup.close()
 						usr.unset_machine()
