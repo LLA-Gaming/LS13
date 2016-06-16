@@ -9,6 +9,7 @@
 /obj/machinery/vending/percchef
 	name = "PercTech Automated Chef"
 	desc = "A grumpy automated food processor machine courtesy of Perctech."
+	density = 0
 	icon_state = "percchef"
 
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/enchiladas = 3, /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato = 3,
@@ -32,6 +33,7 @@
 /obj/machinery/vending/percmed
 	name = "PercMed Plus"
 	desc = "Perseus Medical drug dispenser."
+	density = 0
 	icon_state = "percmed"
 	icon_deny = "percmed-deny"
 	req_access_txt = "69"
@@ -52,6 +54,7 @@
 	desc = "A Perseus equipment vendor"
 	icon_state = "perseus"
 	icon_deny = "perseus-deny"
+	density = 0
 	req_access_txt = "69"
 	products = list(/obj/item/weapon/restraints/handcuffs = 10,/obj/item/weapon/grenade/flashbang = 2, /obj/item/device/assembly/flash/handheld = 5,
 	/obj/item/weapon/tank/internals/perseus = 8, /obj/item/weapon/tank/internals/oxygen = 4,/obj/item/weapon/storage/fancy/cigarettes/perc = 5,

@@ -38,25 +38,18 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
-
-	New()
-		..()
-
-		restricted_jobs += list("Perseus Security Enforcer", "Perseus Security Commander")
-		protected_jobs += list("Perseus Security Enforcer", "Perseus Security Commander")
-
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 
 
 ///can_start()
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
-/datum/game_mode/proc/can_start()
+/datum/game_mode/proc/can_start(var/forced = 0)
 	var/playerC = 0
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(!Debug2)
+	if(!Debug2 && !forced)
 		if(playerC < required_players)
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
@@ -323,6 +316,11 @@
 			for(var/job in restricted_jobs)					// Remove people who want to be antagonist but have a job already that precludes it
 				if(player.assigned_role == job)
 					candidates -= player
+
+	for(var/datum/mind/player in candidates) //remove perc
+		for(var/job in list("Perseus Security Enforcer", "Perseus Security Commander"))
+			if(player.assigned_role == job)
+				candidates -= player
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)

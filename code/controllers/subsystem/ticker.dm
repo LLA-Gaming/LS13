@@ -125,7 +125,7 @@ var/datum/subsystem/ticker/ticker
 			hide_mode = 1
 			if(secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-				if(!smode.can_start())
+				if(!smode.can_start(1))
 					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
 				else
 					mode = smode

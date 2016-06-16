@@ -16,6 +16,14 @@
 		..()
 		spawn(5)
 			power_equip = 1
+
+/*
+* Ship
+*/
+/turf/closed/indestructible/percshuttle
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "percwall"
+
 /*
 * Decal Nameplate
 */
@@ -123,12 +131,26 @@
 * Barrier
 */
 
-/obj/structure/barricade/security/perseus
+/obj/structure/barricade/perseus
 	name = "PercTech Deployable Barrier"
 	desc = "A PercTech deployable barrier. Swipe your Dogtags to lock/unlock it."
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
+	density = 1
+	anchored = 0
+	var/locked = 0
 
 	req_access = list(access_penforcer)
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/weapon/card/id/))
+			if (src.allowed(user))
+				src.locked = !src.locked
+				src.anchored = !src.anchored
+				src.icon_state = "barrier[src.locked]"
+				user.text2tab("Barrier lock toggled [src.locked ? "on" : "off"]")
+		else
+			..()
 
 /*
 * Evidence Locker
