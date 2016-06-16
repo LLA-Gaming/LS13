@@ -158,7 +158,7 @@
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	materials.use_amount(res_coef)
-	overlays += "fab-active"
+	add_overlay("fab-active")
 	use_power = 2
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
@@ -456,7 +456,7 @@
 			user.text2tab("<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
 			if(W && W.materials.len)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
-				overlays += mat_overlay
+				add_overlay(mat_overlay)
 				sleep(10)
 				overlays -= mat_overlay //No matter what the overlay shall still be deleted
 
