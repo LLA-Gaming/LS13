@@ -72,11 +72,12 @@ var/mentor_salt = 0
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
 				num++
-		usr.text2tab("<span class='info'>There [num == 1 ? "is" : "are"] currently [num] mentor[num == 1 ? "" : "s"] online.</span>")
+		usr.text2tab("<span class='info'>There [num == 1 ? "is" : "are"] currently [num] mentor[num == 1 ? "" : "s"] online.</span>","ooc")
 	else
+		usr.text2tab("<b>Current Mentors:</b>\n","ooc")
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
-				usr << "\t [C]"
+				usr.text2tab("\t [C]","ooc")
 
 // The player identification is the result of md5 + random salt for one conversation, reduced to the first 4 chars of the hash.
 /client/proc/cmd_mentor_reply(var/target_pointer)

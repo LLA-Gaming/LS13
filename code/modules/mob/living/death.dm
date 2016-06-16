@@ -48,7 +48,7 @@
 	if(mind && mind.name && mind.active && (T.z != ZLEVEL_CENTCOM))
 		var/area/A = get_area(T)
 		var/rendered = "<span class='game deadsay'><span class='name'>\
-			[mind.name]</span> has died at <span class='name'>[A.name]\
+			[mind.IsPerseus() ? mind.GetPerseusName() : mind.name]</span> has died at <span class='name'>[A.name]\
 			</span>.</span>"
 		deadchat_broadcast(rendered, follow_target = src,
 			message_type=DEADCHAT_DEATHRATTLE)

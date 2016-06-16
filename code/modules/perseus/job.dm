@@ -124,7 +124,7 @@ var/const/COMMANDER = (1<<1)
 		id.assignment = title
 		id.access = get_access(title)
 
-		var/name = "Perseus Security Enforcer #[pnumbers[H.ckey] ? pnumbers[H.ckey] : rand(100, 999)]-[pmeta[H.ckey] ? pmeta[H.ckey] : ""]"
+		var/name = H.mind.GetPerseusName()
 
 		id.registered_name = name
 		id.name = name
@@ -179,7 +179,7 @@ var/const/COMMANDER = (1<<1)
 		var/obj/item/weapon/card/id/perseus/id = new /obj/item/weapon/card/id/perseus(P)
 		id.assignment = title
 		id.access = get_access(title)
-		id.registered_name ="Perseus Security Commander #[pnumbers[H.ckey] ? pnumbers[H.ckey] : "00[rand(0,9)]"]-[pmeta[H.ckey] ? pmeta[H.ckey] : ""]"
+		id.registered_name = H.mind.GetPerseusName()
 		id.name = id.registered_name
 
 		P.id = id
@@ -207,3 +207,6 @@ var/const/COMMANDER = (1<<1)
 		if(!S.stat)
 			if(S.check_contents_for(/obj/item/weapon/implant/enforcer))
 				S.text2tab(rendered)
+
+/datum/mind/proc/GetPerseusName()
+	return "Perseus Security [perseusList[current.ckey]] #[pnumbers[current.ckey] ? pnumbers[current.ckey] : "00[rand(0,9)]"]-[pmeta[current.ckey] ? pmeta[current.ckey] : ""]"

@@ -24,8 +24,7 @@
 
 	product_ads = "Oui Oui!;Bon appetit!;Oh putain! Qu'est-ce que c'est ça? Ça c’est dégueulasse!;Profitez de votre crasse cochon!"
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/soup/wish = 1)
-	req_access_txt = "66"
-
+	req_access_txt = "69"
 /*
 * Perseus Medical
 */
@@ -35,7 +34,7 @@
 	desc = "Perseus Medical drug dispenser."
 	icon_state = "percmed"
 	icon_deny = "percmed-deny"
-	req_access_txt = "66"
+	req_access_txt = "69"
 
 	products = list(/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/weapon/reagent_containers/dropper = 3,/obj/item/stack/medical/gauze = 8,/obj/item/weapon/reagent_containers/pill/patch/styptic = 5, /obj/item/weapon/reagent_containers/pill/insulin = 10,
 				/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
@@ -53,7 +52,7 @@
 	desc = "A Perseus equipment vendor"
 	icon_state = "perseus"
 	icon_deny = "perseus-deny"
-	req_access_txt = "66"
+	req_access_txt = "69"
 	products = list(/obj/item/weapon/restraints/handcuffs = 10,/obj/item/weapon/grenade/flashbang = 2, /obj/item/device/assembly/flash/handheld = 5,
 	/obj/item/weapon/tank/internals/perseus = 8, /obj/item/weapon/tank/internals/oxygen = 4,/obj/item/weapon/storage/fancy/cigarettes/perc = 5,
 	/obj/item/weapon/storage/box/matches = 5, /obj/item/weapon/grenade/plastic/c4/breach = 5, /obj/item/clothing/mask/cigarette/cigar/victory = 6)
@@ -76,7 +75,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 9,
 					/obj/item/weapon/reagent_containers/food/drinks/purpledrank = 6, /obj/item/weapon/reagent_containers/food/drinks/xenoschlag = 6)
-	req_access_txt = "66"
+	req_access_txt = "69"
 
 /*
 *

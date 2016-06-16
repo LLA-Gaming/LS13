@@ -42,8 +42,6 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/datum/job/assigned_job
-
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 
@@ -106,7 +104,8 @@
 */
 
 /datum/mind/proc/IsPerseus()
-	return assigned_job.faction == "Perseus Military Corporation"
+	if(assigned_role == "Perseus Security Enforcer" || assigned_role == "Perseus Security Commander")
+		return 1
 
 /datum/mind/proc/remove_objectives()
 	if(objectives.len)
