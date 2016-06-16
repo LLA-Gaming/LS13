@@ -1,8 +1,9 @@
 /obj/item/clockwork
-	name = "clockwork"
-	desc = "you should never see this thing"
-	var/clockwork_desc = "you should never see this mystical thing" //Shown to clockwork cultists instead of the normal description
+	name = "meme blaster"
+	desc = "What the fuck is this? It looks kinda like a frog."
+	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "rare_pepe"
 	w_class = 2
 
 /obj/item/clockwork/New()
@@ -68,7 +69,7 @@
 			if(L == src)
 				continue
 			S.production_time = world.time + SLAB_PRODUCTION_TIME
-		L.text2tab("<span class='warning'>Your slab clunks as it produces a new component.</span>")
+		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
@@ -85,7 +86,7 @@
 
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
-		user.text2tab("<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
+		user << "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>"
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.drop_item()
@@ -94,12 +95,12 @@
 		user.apply_damage(5, BURN, "r_arm")
 		return 0
 	if(!is_servant_of_ratvar(user))
-		user.text2tab("<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
+		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
 		user.confused += 5
 		user.dizziness += 5
 		return 0
 	if(busy)
-		user.text2tab("<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
+		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	access_display(user)
 
@@ -153,12 +154,12 @@
 		if("Judgement")
 			tier_to_browse = SCRIPTURE_JUDGEMENT
 	if(!tier_to_browse)
-		user.text2tab("<span class='warning'>That section of scripture is too powerful right now!</span>")
+		user << "<span class='warning'>That section of scripture is too powerful right now!</span>"
 		return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
 		if(initial(C.tier) == tier_to_browse)
-			available_scriptures += initial(C.name)
+			available_scriptures += "[initial(C.name)] ([initial(C.descname)])"
 	if(!available_scriptures.len)
 		return 0
 	var/chosen_scripture = input(user, "Choose a piece of scripture to recite.", "[src]") as null|anything in available_scriptures
@@ -166,7 +167,7 @@
 		return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
-		if(initial(C.name) == chosen_scripture)
+		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
 	if(!scripture_to_recite)
 		return 0
@@ -180,15 +181,15 @@
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	user.text2tab("<b>State of the Enlightened</b>")
-	user.text2tab("<i>Total servants: </i>[servants]")
-	user.text2tab("<i>Total construction value: </i>[clockwork_construction_value]")
-	user.text2tab("<i>Total tinkerer's caches: </i>[clockwork_caches]")
-	user.text2tab("<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])")
-	user.text2tab("<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]")
-	user.text2tab("<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]")
-	user.text2tab("<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]")
-	user.text2tab("<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]")
+	user << "<b>State of the Enlightened</b>"
+	user << "<i>Total servants: </i>[servants]"
+	user << "<i>Total construction value: </i>[clockwork_construction_value]"
+	user << "<i>Total tinkerer's caches: </i>[clockwork_caches]"
+	user << "<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])"
+	user << "<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
 	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
@@ -332,13 +333,13 @@
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.")
-		user.text2tab("<b>Stored components (with global cache):</b>")
-		user.text2tab("<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>")
-		user.text2tab("<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]] ([stored_components["vanguard_cogwheel"] + clockwork_component_cache["vanguard_cogwheel"]])</span>")
-		user.text2tab("<span class='sevtug_small'><i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]] ([stored_components["guvax_capacitor"] + clockwork_component_cache["guvax_capacitor"]])</span>")
-		user.text2tab("<span class='nezbere_small'><i>Replicant Alloys:</i> [stored_components["replicant_alloy"]] ([stored_components["replicant_alloy"] + clockwork_component_cache["replicant_alloy"]])</span>")
-		user.text2tab("<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]] ([stored_components["hierophant_ansible"] + clockwork_component_cache["hierophant_ansible"]])</span>")
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
+		user << "<b>Stored components (with global cache):</b>"
+		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
+		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]] ([stored_components["vanguard_cogwheel"] + clockwork_component_cache["vanguard_cogwheel"]])</span>"
+		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]] ([stored_components["guvax_capacitor"] + clockwork_component_cache["guvax_capacitor"]])</span>"
+		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [stored_components["replicant_alloy"]] ([stored_components["replicant_alloy"] + clockwork_component_cache["replicant_alloy"]])</span>"
+		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]] ([stored_components["hierophant_ansible"] + clockwork_component_cache["hierophant_ansible"]])</span>"
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -364,18 +365,18 @@
 	if(slot != slot_glasses)
 		return
 	if(user.disabilities & BLIND)
-		user.text2tab("<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>") //Ratvar with the sick burns yo
+		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
 		return
 	if(iscultist(user)) //Cultists instantly go blind
-		user.text2tab("<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>")
-		user.text2tab("<span class='userdanger'>Your eyes explode with horrific pain!</span>")
+		user << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
+		user << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
 		user.emote("scream")
 		user.become_blind()
 		user.adjust_blurriness(30)
 		user.adjust_blindness(30)
 		return
 	if(is_servant_of_ratvar(user))
-		user.text2tab("<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
+		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
 		. = 1
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
@@ -397,13 +398,13 @@
 		H.adjust_blurriness(2)
 	if(H.eye_damage >= 20)
 		if(H.become_nearsighted())
-			H.text2tab("<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>")
+			H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
 			H.become_nearsighted()
 	if(H.eye_damage >= 30)
 		if(H.become_blind())
-			H.text2tab("<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
+			H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
 	if(prob(15) && !H.disabilities & BLIND)
-		H.text2tab("<span class='warning'>Your eyes continue to burn.</span>")
+		H << "<span class='warning'>Your eyes continue to burn.</span>"
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
@@ -427,8 +428,8 @@
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
 	else if(iscultist(user)) //Cultists spontaneously combust
-		user.text2tab("<span class='heavy_brass'>Consider yourself judged, whelp.</span>")
-		user.text2tab("<span class='userdanger'>You suddenly catch fire!</span>")
+		user << "<span class='heavy_brass'>Consider yourself judged, whelp.</span>"
+		user << "<span class='userdanger'>You suddenly catch fire!</span>"
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
 	return 1
@@ -441,11 +442,11 @@
 			flame = null
 		else if(iscarbon(user) && active)
 			if(recharging)
-				user.text2tab("<span class='warning'>[src] is still gathering power!</span>")
+				user << "<span class='warning'>[src] is still gathering power!</span>"
 				return 0
 			var/mob/living/carbon/C = user
 			if(C.l_hand && C.r_hand)
-				C.text2tab("<span class='warning'>You require a free hand to utilize [src]'s power!</span>")
+				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
 			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. Direct it at a tile <b>on harm intent</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
@@ -470,10 +471,10 @@
 	L.update_action_buttons_icon()
 	switch(active)
 		if(TRUE)
-			L.text2tab("<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
-			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
+			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
 		if(FALSE)
-			L.text2tab("<span class='notice'>As you take off [src], its lens darkens once more.</span>")
+			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
 	return 1
 
 /obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
@@ -483,7 +484,7 @@
 	icon_state = "judicial_visor_[active]"
 	user.update_action_buttons_icon()
 	if(loc == user)
-		user.text2tab("<span class='brass'>Your [name] hums. It is ready.</span>")
+		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
 
 /obj/item/weapon/ratvars_flame //Used by the judicial visor
 	name = "Ratvar's flame"
@@ -501,9 +502,9 @@
 
 /obj/item/weapon/ratvars_flame/examine(mob/user)
 	..()
-	user.text2tab("<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>")
+	user << "<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>"
 	if(prob(10) && examined)
-		user.text2tab("<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>")
+		user << "<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>"
 		examined = FALSE
 	else
 		examined = TRUE
@@ -582,7 +583,8 @@
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
-	var/impale_cooldown = 30 //brief delay, in deciseconds, where you can't impale again if you're really fast
+	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
+	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
@@ -591,7 +593,7 @@
 	spawn(1)
 		if(isliving(loc))
 			var/mob/living/L = loc
-			L.text2tab("<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
+			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
 		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
 
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
@@ -605,23 +607,23 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and breaking the spear if they remain conscious.</span>")
-		user.text2tab("<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>")
+		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
+		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
+	if(attack_cooldown > world.time)
+		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
-			user.text2tab("<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
-			return
-		impaling = TRUE
-		attack_verb = list("impaled")
-		force += 23 //40 damage if ratvar isn't alive, 53 if he is
-		user.stop_pulling()
+			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		else
+			impaling = TRUE
+			attack_verb = list("impaled")
+			force += 23 //40 damage if ratvar isn't alive, 53 if he is
+			user.stop_pulling()
 
-	if(impale_cooldown > world.time)
-		user.text2tab("<span class='warning'>You can't attack right now, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
-		return
 	if(impaling)
 		if(hitsound)
 			playsound(loc, hitsound, get_clamped_volume(), 1, -1)
@@ -642,29 +644,29 @@
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
 		if(M.stat != DEAD)
-			M.text2tab("<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
+			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
 			M.adjustFireLoss(10)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
 		impale_cooldown = world.time + initial(impale_cooldown)
+		attack_cooldown = world.time + initial(attack_cooldown)
 		if(target)
 			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 			target.Stun(2)
-			user.text2tab("<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
-			if(do_after(user, 7, 1, target))
+			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
+			var/remove_verb = pick("pull", "yank", "drag")
+			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
 				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
-					var/remove_verb = pick("pull", "yank", "drag")
-					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear out of [target]!</span>")
+					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				else
-					user.visible_message("<span class='warning'>[user] kicks [target] off of [src], breaking it!</span>", "<span class='warning'>You kick [target] off of [src], breaking it!</span>")
-					target.text2tab("<span class='userdanger'>You scream in pain as [src] breaks within you!</span>")
+					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
+					target << "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>"
 					target.emote("scream")
-					break_spear(get_turf(T))
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
@@ -672,11 +674,10 @@
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
-				user.text2tab("<span class='warning'>Your ratvarian spear breaks!</span>")
+				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				if(target.stat == CONSCIOUS)
-					target.text2tab("<span class='userdanger'>You scream in pain as [src] breaks within you!</span>")
+					target << "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>"
 					target.emote("scream")
-				break_spear(get_turf(target))
 				flash_color(target, flash_color="#911414", flash_time=4)
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
@@ -729,14 +730,14 @@
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user.text2tab("<span class='warning'>You fiddle around with [src], to no avail.</span>")
+		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
 		return 0
 	..()
 
 /obj/item/clockwork/daemon_shell
 	name = "daemon shell"
 	desc = "A vaguely arachnoid brass shell with a single empty socket in its body."
-	clockwork_desc = "An unpowered daemon. It needs to be attached to a cache."
+	clockwork_desc = "An unpowered daemon. It needs to be attached to a Tinkerer's Cache."
 	icon_state = "daemon_shell"
 	w_class = 3
 
@@ -762,7 +763,7 @@
 	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache)
+	if(!cache || !istype(loc, /obj/structure/clockwork/cache))
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
@@ -786,21 +787,26 @@
 //////////////////////////
 
 /obj/item/clockwork/component //Components: Used in scripture among other things.
-	name = "component"
-	desc = "mysterious component"
+	name = "meme component"
+	desc = "A piece of a famous meme."
 	clockwork_desc = null
 	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
-	var/cultist_message = "you should not see this." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
-	var/list/servant_of_ratvar_messages = list() //Fluff, shown to servants of Ratvar on a low chance
+	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
+	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
 	var/message_span = "heavy_brass"
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
 	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
-		user.text2tab("<span class='[message_span]'>[cultist_message]</span>")
+		user << "<span class='[message_span]'>[cultist_message]</span>"
 	if(is_servant_of_ratvar(user) && prob(20))
-		user.text2tab("<span class='[message_span]'>[pick(servant_of_ratvar_messages)]</span>")
+		user << "<span class='[message_span]'>[pick(servant_of_ratvar_messages)]</span>"
+
+/obj/item/clockwork/component/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>"
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -863,6 +869,11 @@
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
 	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
 	message_span = "nezbere"
+
+/obj/item/clockwork/component/replicant_alloy/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>"
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"

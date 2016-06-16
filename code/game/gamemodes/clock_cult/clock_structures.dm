@@ -67,20 +67,36 @@
 	var/damage = 0
 	switch(severity)
 		if(1)
-			damage = max_health * 0.7 //70% max health lost
+			damage = max_health //100% max health lost
 		if(2)
-			damage = max_health * 0.4 //40% max health lost
+			damage = max_health * rand(0.5, 0.7) //50-70% max health lost
 		if(3)
-			if(prob(50))
-				damage = max_health * 0.1 //10% max health lost
+			damage = max_health * rand(0.1, 0.3) //10-30% max health lost
 	if(damage)
 		take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/examine(mob/user)
-	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
+	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
+	if(can_see_clockwork && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
+	if(takes_damage)
+		var/servant_message = "It is at [health]/[max_health] integrity"
+		var/other_message = "It seems pristine and undamaged"
+		var/heavily_damaged = FALSE
+		switch(health/max_health)
+			if(100)
+				other_message = "It seems pristine and undamaged"
+			if(100 to 60)
+				other_message = "It looks slightly dented"
+			if(60 to 25)
+				other_message = "It appears heavily damaged"
+				heavily_damaged = TRUE
+			if(25 to 0)
+				other_message = "It's falling apart"
+				heavily_damaged = TRUE
+		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork  ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -118,7 +134,8 @@
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
 	desc = "A large brass spire with a flaming hole in its center."
-	clockwork_desc = "A brass container capable of storing a large amount of components. Shares components with all other caches."
+	clockwork_desc = "A brass container capable of storing a large amount of components.\n\
+	Shares components with all other caches and will gradually generate components if near a Clockwork Wall."
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
@@ -162,9 +179,28 @@
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
 		clockwork_component_cache[C.component_id]++
-		user.text2tab("<span class='notice'>You add [C] to [src].</span>")
+		user << "<span class='notice'>You add [C] to [src].</span>"
 		user.drop_item()
 		qdel(C)
+		return 1
+	else if(istype(I, /obj/item/clockwork/clockwork_proselytizer))
+		var/obj/item/clockwork/clockwork_proselytizer/P = I
+		if(P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy)
+			if(clockwork_component_cache["replicant_alloy"])
+				user.visible_message("<span class='notice'>[user] places the end of [P] in the hole in [src]...</span>", \
+				"<span class='notice'>You start filling [P] with liquified alloy...</span>")
+				while(P && P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"] && do_after(user, 10, target = src) \
+				&& P && P.uses_alloy &&  P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"]) //hugeass check because we need to re-check after the do_after
+					P.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
+					clockwork_component_cache["replicant_alloy"]--
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(P && user)
+					user.visible_message("<span class='notice'>[user] removes [P] from the hole in [src], apparently satisfied.</span>", \
+					"<span class='brass'>You finish filling [P] with liquified alloy. It now contains [P.stored_alloy]/[P.max_alloy] units of liquified alloy.</span>")
+			else
+				user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
+		else
+			user << "<span class='warning'>[P]'s containers of liquified alloy are full!</span>"
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -223,7 +259,7 @@
 	if(clockwork_component_cache["hierophant_ansible"])
 		possible_components += "Hierophant Ansible"
 	if(!possible_components.len)
-		user.text2tab("<span class='warning'>[src] is empty!</span>")
+		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 	var/component_to_withdraw = input(user, "Choose a component to withdraw.", name) as null|anything in possible_components
 	if(!user || !user.canUseTopic(src) || !component_to_withdraw)
@@ -258,12 +294,12 @@
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("<b>Stored components:</b>")
-		user.text2tab("<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>")
-		user.text2tab("<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>")
-		user.text2tab("<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>")
-		user.text2tab("<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>")
-		user.text2tab("<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>")
+		user << "<b>Stored components:</b>"
+		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
+		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
+		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>"
+		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>"
+		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>"
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -292,7 +328,7 @@
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
 	..()
-	user.text2tab("[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"].")
+	user << "[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"]."
 
 /obj/structure/clockwork/ocular_warden/process()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
@@ -324,7 +360,7 @@
 		return 0
 	target = pick(possible_targets)
 	visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-	target.text2tab("<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
+	target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
 	return 1
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
@@ -352,16 +388,16 @@
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
 		if(!S.brainmob)
-			user.text2tab("<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>")
+			user << "<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>"
 			return 0
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
-			user.text2tab("<span class='warning'>[S]'s trapped spirit appears inactive!</span>")
+			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] clicks [S] into place on [src].</span>", "<span class='brass'>You insert [S] into [src]. It whirs and begins to rise.</span>")
 		var/mob/living/simple_animal/hostile/anima_fragment/A = new(get_turf(src))
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
-		A.text2tab(A.playstyle_string)
+		A << A.playstyle_string
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -375,8 +411,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	desc = "A massive brass gear."
-	clockwork_desc = "A massive brass gear that could possibly be proselytized into replicant alloy."
+	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
+	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards)
 
@@ -385,6 +421,10 @@
 		default_unfasten_wrench(user, I, 10)
 		return 1
 	return ..()
+
+/obj/structure/clockwork/wall_gear/examine(mob/user)
+	..()
+	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -427,10 +467,10 @@
 /obj/effect/clockwork/judicial_marker/New()
 	..()
 	flick("judicial_marker", src)
-	spawn(25) //Utilizes spawns due to how it works with Ratvar's flame
+	spawn(16) //Utilizes spawns due to how it works with Ratvar's flame
 		layer = ABOVE_ALL_MOB_LAYER
 		flick("judicial_explosion", src)
-		spawn(15)
+		spawn(14)
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
@@ -498,7 +538,7 @@
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("<span class='brass'>It has [uses] uses remaining.</span>")
+		user << "<span class='brass'>It has [uses] uses remaining.</span>"
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
@@ -542,7 +582,7 @@
 		return 0
 	if(isliving(A))
 		var/mob/living/user = A
-		user.text2tab("<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
+		user << "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>"
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
 	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
 	playsound(linked_gateway, 'sound/effects/EMPulse.ogg', 50, 1)
@@ -660,7 +700,7 @@
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
 	if(iscultist(L))
-		L.text2tab("<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
+		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
 		L.Weaken(4)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
@@ -675,46 +715,86 @@
 	desc = "A luminous golden sigil. Something about it really bothers you."
 	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
 	icon_state = "sigilsubmission"
-	luminosity = 2
 	color = "#FAE48C"
 	alpha = 125
 	var/convert_time = 50
+	var/glow_light = 2 //soft light
+	var/glow_falloff = 1
+	var/delete_on_finish = TRUE
+	var/sigil_name = "Sigil of Submission"
+	var/glow_type
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	SetLuminosity(2,1) //soft light
+	SetLuminosity(glow_light,glow_falloff)
+
+/obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
 	animate(src, color = "#AF0AAF", time = convert_time)
+	var/obj/effect/overlay/temp/ratvar/sigil/glow
+	if(glow_type)
+		glow = PoolOrNew(glow_type, get_turf(src))
+		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
 	if(get_turf(L) != get_turf(src))
+		if(glow)
+			qdel(glow)
 		animate(src, color = initial(color), time = 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
+	post_channel(L)
 	if(is_eligible_servant(L))
-		L.text2tab("<span class='heavy_brass'>\"You belong to me now.\"</span>")
+		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
 	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(3)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	var/message = "Sigil of Submission in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
-	for(var/mob/M in mob_list)
+	var/message = "[sigil_name] in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
+	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M.text2tab( "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>")
+			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
-				M.text2tab("<span class='heavy_brass'>[message] you!</span>")
+				M << "<span class='heavy_brass'>[message] you!</span>"
 			else
-				M.text2tab("<span class='heavy_brass'>[message] [L.real_name]!</span>")
-	qdel(src)
+				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
+	if(delete_on_finish)
+		qdel(src)
+	else
+		animate(src, color = initial(color), time = 20)
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	return 1
+
+/obj/effect/clockwork/sigil/submission/accession //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
+	name = "terrifying sigil"
+	desc = "A luminous brassy sigil. Something about it makes you want to flee."
+	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for five seconds. \n\
+	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
+	icon_state = "sigiltransgression"
+	color = "#A97F1B"
+	alpha = 200
+	glow_light = 4 //bright light
+	glow_falloff = 3
+	delete_on_finish = FALSE
+	sigil_name = "Sigil of Accession"
+	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
+
+/obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
+	if(isloyal(L))
+		delete_on_finish = TRUE
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
+		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guvf chal gevaxrg jvyy abg fgbc zr.</span>")
+		for(var/obj/item/weapon/implant/mindshield/M in L)
+			if(M.implanted)
+				qdel(M)
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
@@ -728,11 +808,11 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>")
+		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
-		L.text2tab("<span class='brass'>You feel a slight, static shock.</span>")
+		L << "<span class='brass'>You feel a slight, static shock.</span>"
 	return 1
 
 /obj/effect/clockwork/sigil/transmission/New()
@@ -762,8 +842,8 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user.text2tab("<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>")
-		user.text2tab("<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>")
+		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>"
+		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if(L.suiciding || sigil_active || !is_servant_of_ratvar(L) && L.stat == DEAD)

@@ -1,4 +1,6 @@
-#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
+#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
+#define TRUE_THRESHOLD 7
+#define ARCH_THRESHOLD 12
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -37,9 +39,9 @@ var/global/list/lawlorify = list (
 			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
 			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
 			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
-			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
+			BANISH_CANDLES = "A large number of nearby lit candles will prevent it from resurrecting.",
 			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
-			BANISH_FUNERAL_GARB = "Funeral garments will prevent the devil from resurrecting."
+			BANISH_FUNERAL_GARB = "If clad in funeral garments, this devil will be unable to resurrect.  Should the clothes not fit, lay them gently on top of the devil's corpse."
 		),
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
@@ -141,13 +143,13 @@ var/global/list/lawlorify = list (
 	soulsOwned += soul
 	switch(SOULVALUE)
 		if(0)
-			owner.current.text2tab("<span class='warning'>Your hellish powers have been restored.")
+			owner.current << "<span class='warning'>Your hellish powers have been restored."
 			give_base_spells()
-		if(POWERUPTHRESHOLD)
+		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
-		if(POWERUPTHRESHOLD*2)
+		if(TRUE_THRESHOLD)
 			increase_true_devil()
-		if(POWERUPTHRESHOLD*3)
+		if(ARCH_THRESHOLD)
 			increase_arch_devil()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
@@ -160,10 +162,10 @@ var/global/list/lawlorify = list (
 	switch(SOULVALUE)
 		if(-1)
 			remove_spells()
-			owner.current.text2tab("<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.")
-		if(POWERUPTHRESHOLD-1)
+			owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
+		if(BLOOD_THRESHOLD-1)
 			regress_humanoid()
-		if(POWERUPTHRESHOLD*2-1)
+		if(TRUE_THRESHOLD-1)
 			regress_blood_lizard()
 
 /datum/devilinfo/proc/increase_form()
@@ -176,7 +178,7 @@ var/global/list/lawlorify = list (
 			increase_arch_devil()
 
 /datum/devilinfo/proc/regress_humanoid()
-	owner.current.text2tab("<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
+	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/human, 1)
@@ -188,7 +190,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/regress_blood_lizard()
 	var/mob/living/carbon/true_devil/D = owner.current
-	D.text2tab("<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
+	D << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
 	give_lizard_spells()
@@ -197,7 +199,7 @@ var/global/list/lawlorify = list (
 
 
 /datum/devilinfo/proc/increase_blood_lizard()
-	owner.current.text2tab("<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.")
+	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
 	sleep(50)
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
@@ -215,7 +217,7 @@ var/global/list/lawlorify = list (
 
 
 /datum/devilinfo/proc/increase_true_devil()
-	owner.current.text2tab("<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.")
+	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil."
 	sleep(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
@@ -229,7 +231,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/increase_arch_devil()
 	var/mob/living/carbon/true_devil/D = owner.current
-	D.text2tab("<span class='warning'>You feel as though your form is about to ascend.")
+	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
 	if(!D)
 		return
@@ -248,19 +250,19 @@ var/global/list/lawlorify = list (
 	sleep(40)
 	if(!D)
 		return
-	D.text2tab("<i><b>Yes!</b></i>")
+	D << "<i><b>Yes!</b></i>"
 	sleep(10)
 	if(!D)
 		return
-	D.text2tab("<i><b><span class='big'>YES!!</span></b></i>")
+	D << "<i><b><span class='big'>YES!!</span></b></i>"
 	sleep(10)
 	if(!D)
 		return
-	D.text2tab("<i><b><span class='reallybig'>YE--</span></b></i>")
+	D << "<i><b><span class='reallybig'>YE--</span></b></i>"
 	sleep(1)
 	if(!D)
 		return
-	text2world("<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>")
+	world << "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>"
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
 	D.convert_to_archdevil()
@@ -312,23 +314,23 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
-		owner.current.text2tab("<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>")
+		owner.current<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
 		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
 				if(check_banishment(body))
-					owner.current.text2tab("<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>")
+					owner.current<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
 					return -1
 				else
-					owner.current.text2tab("<span class='userdanger'>WE LIVE AGAIN!</span>")
+					owner.current<< "<span class='userdanger'>WE LIVE AGAIN!</span>"
 					return hellish_resurrection(body)
 			else
-				owner.current.text2tab("<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>")
+				owner.current<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
 				return -1
 		else
-			owner.current.text2tab("<span class='danger'> You seem to have resurrected without your hellish powers.</span>")
+			owner.current << "<span class='danger'> You seem to have resurrected without your hellish powers.</span>"
 	else
-		owner.current.text2tab("<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>")
+		owner.current << "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>"
 
 /datum/devilinfo/proc/check_banishment(mob/living/body)
 	switch(banish)
@@ -367,11 +369,16 @@ var/global/list/lawlorify = list (
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
 					return 1
-			return 0
+				return 0
+			else
+				for(var/obj/item/clothing/under/burial/B in range(0,body))
+					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
+						return 1
+				return 0
 
 /datum/devilinfo/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
-	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch devils do not go down in power by any means.
+	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
@@ -396,23 +403,22 @@ var/global/list/lawlorify = list (
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
 			give_summon_contract()
-			if(SOULVALUE >= POWERUPTHRESHOLD)
+			if(SOULVALUE >= BLOOD_THRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
 				H.underwear = "Nude"
 				H.undershirt = "Nude"
 				H.socks = "Nude"
 				H.dna.features["mcolor"] = "511"
 				H.regenerate_icons()
-			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
-				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
-				A.faction |= "hell"
-				H.forceMove(A)
-				A.oldform = H
-				A.set_name()
-				owner.transfer_to(A)
-				if(SOULVALUE >= POWERUPTHRESHOLD * 3)
-					A.convert_to_archdevil()
-
+				if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+					var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
+					A.faction |= "hell"
+					H.forceMove(A)
+					A.oldform = H
+					A.set_name()
+					owner.transfer_to(A)
+					if(SOULVALUE >= ARCH_THRESHOLD)
+						A.convert_to_archdevil()
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()

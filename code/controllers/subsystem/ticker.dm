@@ -4,9 +4,10 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	priority = 0
+	init_order = 0
 
-	can_fire = 1 // This needs to fire before round start.
+	priority = 200
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -56,9 +57,7 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -125,7 +124,7 @@ var/datum/subsystem/ticker/ticker
 			hide_mode = 1
 			if(secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-				if(!smode.can_start(1))
+				if(!smode.can_start())
 					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
 				else
 					mode = smode
@@ -183,14 +182,14 @@ var/datum/subsystem/ticker/ticker
 
 	Master.RoundStart()
 
-	text2world("<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
+	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
 
 	if(SSevent.holidays)
-		text2world("<font color='blue'>and...</font>")
+		world << "<font color='blue'>and...</font>"
 		for(var/holidayname in SSevent.holidays)
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
-			text2world("<h4>[holiday.greet()]</h4>")
+			world << "<h4>[holiday.greet()]</h4>"
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
@@ -346,7 +345,7 @@ var/datum/subsystem/ticker/ticker
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!istype(M,/mob/new_player))
-				M.text2tab("Captainship not forced on anyone.")
+				M << "Captainship not forced on anyone."
 
 
 
@@ -355,7 +354,7 @@ var/datum/subsystem/ticker/ticker
 	var/num_survivors = 0
 	var/num_escapees = 0
 
-	text2world("<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
 
 	//Player status report
 	for(var/mob/Player in mob_list)
@@ -378,38 +377,38 @@ var/datum/subsystem/ticker/ticker
 	end_state.count()
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
-	text2world("<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
-	text2world("<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
 	if(joined_player_list.len)
-		text2world("<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
+		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
 		if(station_evacuated)
-			text2world("<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
-		text2world("<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
-	text2world("<BR>")
+			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+	world << "<BR>"
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
-			text2world("<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
-			text2world("<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
 
-		text2world("<b>Total law changes: [aiPlayer.law_change_counter]</b>")
+		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-			text2world("[robolist]")
+			world << "[robolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
-				text2world("<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
+				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
 			else
-				text2world("<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
+				world << "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
@@ -452,9 +451,9 @@ var/datum/subsystem/ticker/ticker
 	var/list/randomtips = file2list("config/tips.txt")
 	var/list/memetips = file2list("config/sillytips.txt")
 	if(randomtips.len && prob(95))
-		text2world("<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>")
+		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
-		text2world("<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>")
+		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
 
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
@@ -467,14 +466,14 @@ var/datum/subsystem/ticker/ticker
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
-					next_in_line.text2tab("<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
+					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
 					next_in_line << sound('sound/misc/notice1.ogg')
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			next_in_line.text2tab("<span class='danger'>No response recieved. You have been removed from the line.</span>")
+			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
 			queued_players -= next_in_line
 			queue_delay = 0
 
@@ -493,3 +492,46 @@ var/datum/subsystem/ticker/ticker
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
 		maprotate()
+
+
+/world/proc/has_round_started()
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE
+
+/datum/subsystem/ticker/Recover()
+	current_state = ticker.current_state
+	force_ending = ticker.force_ending
+	hide_mode = ticker.hide_mode
+	mode = ticker.mode
+	event_time = ticker.event_time
+	event = ticker.event
+
+	login_music = ticker.login_music
+	round_end_sound = ticker.round_end_sound
+
+	minds = ticker.minds
+
+	Bible_icon_state = ticker.Bible_icon_state
+	Bible_item_state = ticker.Bible_item_state
+	Bible_name = ticker.Bible_name
+	Bible_deity_name = ticker.Bible_deity_name
+
+	syndicate_coalition = ticker.syndicate_coalition
+	factions = ticker.factions
+	availablefactions = ticker.availablefactions
+
+	delay_end = ticker.delay_end
+
+	triai = ticker.triai
+	tipped = ticker.tipped
+
+	timeLeft = ticker.timeLeft
+
+	totalPlayers = ticker.totalPlayers
+	totalPlayersReady = ticker.totalPlayersReady
+
+	queue_delay = ticker.queue_delay
+	queued_players = ticker.queued_players
+	cinematic = ticker.cinematic
+	maprotatechecked = ticker.maprotatechecked

@@ -394,7 +394,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			O.text2tab("<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
+			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(source)
@@ -414,28 +414,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						alert_overlay.layer = FLOAT_LAYER
 						A.overlays += alert_overlay
 
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-
-	var/dam //changes repair text based on how much brute/burn was supplied
-
-	if(brute > burn)
-		dam = 1
-	else
-		dam = 0
-
 	if(affecting && affecting.status == ORGAN_ROBOTIC)
-		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0))
-			affecting.heal_damage(brute,burn,1)
-			H.update_damage_overlays(0)
-			H.updatehealth()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
-			return
+		var/dam //changes repair text based on how much brute/burn was supplied
+		if(brute_heal > burn_heal)
+			dam = 1
 		else
-			user.text2tab("<span class='warning'>[H]'s [affecting] is already in good condition!</span>")
-			return
-	else
-		return
+			dam = 0
+		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
+			affecting.heal_damage(brute_heal,burn_heal,1)
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			return 1 //successful heal
+		else
+			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+
 
 /proc/IsAdminGhost(var/mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
@@ -451,7 +444,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return TRUE
 
 /proc/offer_control(mob/M)
-	M.text2tab("Control of your mob has been offered to dead players.")
+	M << "Control of your mob has been offered to dead players."
 	log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 	message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
@@ -464,12 +457,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(candidates.len)
 		theghost = pick(candidates)
-		M.text2tab("Your mob has been taken over by a ghost!")
+		M << "Your mob has been taken over by a ghost!"
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE
 	else
-		M.text2tab("There were no ghosts willing to take control.")
+		M << "There were no ghosts willing to take control."
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE

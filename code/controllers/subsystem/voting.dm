@@ -2,9 +2,9 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote
 	name = "Vote"
-	can_fire = 1
 	wait = 10
-	priority = -1
+
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
 
 	var/initiator = null
 	var/started_time = null

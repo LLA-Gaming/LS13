@@ -14,7 +14,7 @@
 			text += printobjectives(sintouched_mind)
 		text += "<br>"
 	text += "<br>"
-	text2world(text)
+	world << text
 
 /datum/game_mode/proc/auto_declare_completion_devils()
 	/var/text = ""
@@ -26,7 +26,7 @@
 			text += printdevilinfo(devil)
 			text += printobjectives(devil)
 		text += "<br>"
-	text2world(text)
+	world << text
 
 /datum/game_mode/devil
 
@@ -41,29 +41,31 @@
 	devil_mind.objectives += obj_2
 	devil_mind.objectives += soulquant
 	devil_mind.devilinfo = devilInfo(trueName, 1)
-	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
+	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br><br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
 	devil_mind.devilinfo.give_base_spells(1)
 	spawn(10)
 		if(devil_mind.assigned_role == "Clown")
-			S.text2tab("<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
+			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/mind/proc/announceDevilLaws()
 	if(!devilinfo)
 		return
-	current.text2tab("<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
-	current.text2tab("<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
-	current.text2tab(lawlorify[LAW][src.devilinfo.bane])
-	current.text2tab(lawlorify[LAW][src.devilinfo.ban])
-	current.text2tab(lawlorify[LAW][src.devilinfo.obligation])
-	current.text2tab(lawlorify[LAW][src.devilinfo.banish])
-	current.text2tab("<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
+	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
+	current << "You may not use violence to coerce someone into selling their soul."
+	current << "You may not directly and knowingly physically harm a devil, other than yourself."
+	current << lawlorify[LAW][src.devilinfo.bane]
+	current << lawlorify[LAW][src.devilinfo.ban]
+	current << lawlorify[LAW][src.devilinfo.obligation]
+	current << lawlorify[LAW][src.devilinfo.banish]
+	current << "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
 	var/obj_count = 1
-	current.text2tab("<span class='notice'>Your current objectives:</span>")
+	current << "<span class='notice'>Your current objectives:</span>"
 	for(var/O in objectives)
 		var/datum/objective/objective = O
-		current.text2tab("<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
 /datum/game_mode/proc/printdevilinfo(datum/mind/ply)
