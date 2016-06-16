@@ -62,10 +62,10 @@
 			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
-			target << "<span class='notice'>You rise with a start, \
-				you're alive!!!</span>"
+			target.text2tab("<span class='notice'>You rise with a start, \
+				you're alive!!!</span>")
 		else if(target.stat != DEAD)
-			target << "<span class='notice'>You feel great!</span>"
+			target.text2tab("<span class='notice'>You feel great!</span>")
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -285,8 +285,8 @@
 
 	M.wabbajack_act(new_mob)
 
-	new_mob << "<span class='warning'>Your form morphs into that of \
-		a [randomize].</span>"
+	new_mob.text2tab("<span class='warning'>Your form morphs into that of \
+		a [randomize].</span>")
 
 	qdel(M)
 	return new_mob
@@ -312,7 +312,7 @@
 				S.color = change.color
 				if(H.mind)
 					H.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					S.text2tab("<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>")
 				H = change
 				H.loc = S
 				qdel(src)
