@@ -20755,10 +20755,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aUD" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aUE" = (
@@ -20774,8 +20771,8 @@
 	c_tag = "Kitchen";
 	dir = 2
 	},
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aUG" = (
@@ -23817,6 +23814,9 @@
 /area/crew_quarters/kitchen)
 "bbW" = (
 /obj/machinery/light,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -29
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bbX" = (
@@ -60561,22 +60561,6 @@
 	},
 /turf/open/space,
 /area/space)
-"cCv" = (
-/obj/structure/chair/comfy/teal,
-/turf/open/floor/carpet,
-/area/medical/medbay)
-"cCu" = (
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/turf/open/floor/carpet,
-/area/medical/medbay)
-"cCt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/medical/medbay)
 "cCs" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
@@ -60585,6 +60569,22 @@
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
+/area/medical/medbay)
+"cCt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/medical/medbay)
+"cCu" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/carpet,
+/area/medical/medbay)
+"cCv" = (
+/obj/structure/chair/comfy/teal,
+/turf/open/floor/carpet,
 /area/medical/medbay)
 
 (1,1,1) = {"
