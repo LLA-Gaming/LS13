@@ -14,7 +14,7 @@
 		user.text2tab("The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
 		return
 
-	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.","Rename Station",new_station_name())  as text|null
+	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.","Rename Station",new_station_name(), max_length=30)  as text|null
 	if(new_name)
 		station_name = new_name
 		world.name = station_name
