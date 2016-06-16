@@ -35,7 +35,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && has_requirements() && check_special_requirements())
 		if(slab.busy)
-			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
+			invoker.text2tab("<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return 0
 		slab.busy = "Invocation ([name]) in progress"
 		if(!ratvar_awakens && !slab.no_cost)
@@ -65,7 +65,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!ticker || !ticker.mode || !slab || !invoker)
 		return 0
 	if(!invoker.can_speak_vocal())
-		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
+		invoker.text2tab("<span class='warning'>You are unable to speak the words of the scripture!</span>")
 		return 0
 	return 1
 
@@ -73,7 +73,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!ratvar_awakens && !slab.no_cost)
 		for(var/i in required_components)
 			if(slab.stored_components[i] + clockwork_component_cache[i] < required_components[i])
-				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
+				invoker.text2tab("<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>")
 				return 0
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
@@ -81,7 +81,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 				nearby_servants++
 		if(nearby_servants < invokers_required)
-			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
+			invoker.text2tab("<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>")
 			return 0
 	return 1
 
@@ -104,7 +104,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 					invoker.say(invocation)
 				else
 					invoker.whisper(invocation)
-	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
+	invoker.text2tab("<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>")
 	if(!channel_time)
 		return 1
 	for(var/invocation in invocations)
@@ -138,7 +138,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			invoker.whisper(pick(chant_invocations))
 		chant_effects()
 	if(invoker && slab)
-		invoker << "<span class='brass'>You cease your chant.</span>"
+		invoker.text2tab("<span class='brass'>You cease your chant.</span>")
 		chant_end_effects()
 	return 1
 
@@ -161,7 +161,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/check_special_requirements()
 	if(one_per_tile && (locate(prevent_path) in get_turf(invoker)))
-		invoker << "<span class='warning'>You can only place one of this object on each tile!</span>"
+		invoker.text2tab("<span class='warning'>You can only place one of this object on each tile!</span>")
 		return 0
 	return 1
 
@@ -169,7 +169,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(creator_message && observer_message)
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
-		invoker << creator_message
+		invoker.text2tab(creator_message)
 	new object_path (get_turf(invoker))
 	return 1
 
@@ -194,16 +194,16 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(!target)
 				return 0
 			if(!target.mind)
-				invoker << "<span class='warning'>[target] has no mind!</span>"
+				invoker.text2tab("<span class='warning'>[target] has no mind!</span>")
 				target = null
 			if(target.stat)
-				invoker << "<span class='warning'>[target] is dead or unconscious!</span>"
+				invoker.text2tab("<span class='warning'>[target] is dead or unconscious!</span>")
 				target = null
 			if(is_servant_of_ratvar(target) && !affects_servants)
-				invoker << "<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>"
+				invoker.text2tab("<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>")
 				target = null
 		else
-			invoker << "<span class='warning'>There are no targets with that name!</span>"
+			invoker.text2tab("<span class='warning'>There are no targets with that name!</span>")
 			return 0
 	return 1
 
@@ -235,9 +235,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
-				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
+				L.text2tab("<span class='warning'>Your legs feel heavy and weak!</span>")
 			else //Cultists take extra burn damage
-				L << "<span class='warning'>Your legs burn with pain!</span>"
+				L.text2tab("<span class='warning'>Your legs burn with pain!</span>")
 				L.apply_damage(5, BURN, "l_leg")
 				L.apply_damage(5, BURN, "r_leg")
 			L.m_intent = "walk"
@@ -284,9 +284,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(invoker.stun_absorption_count && invoker.stat != DEAD)
 		invoker.Stun(invoker.stun_absorption_count)
 		invoker.Weaken(invoker.stun_absorption_count)
-		invoker << "<span class='warning'><b>The weight of the vanguard's protection crashes down upon you!</b></span>"
+		invoker.text2tab("<span class='warning'><b>The weight of the vanguard's protection crashes down upon you!</b></span>")
 		if(invoker.stun_absorption_count >= 25)
-			invoker << "<span class='userdanger'>You faint from the exertion!</span>"
+			invoker.text2tab("<span class='userdanger'>You faint from the exertion!</span>")
 			invoker.Paralyse(invoker.stun_absorption_count * 1.5)
 	invoker.stun_absorption_count = 0
 	for(var/obj/item/clockwork/slab/S in invoker.GetAllContents())
@@ -314,19 +314,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(C.stat != DEAD && is_servant_of_ratvar(C))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
-		invoker << "<span class='warning'>There are no eligible cultists nearby!</span>"
+		invoker.text2tab("<span class='warning'>There are no eligible cultists nearby!</span>")
 		return 0
 	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
 	if(!L || !invoker || !invoker.canUseTopic(slab))
 		return 0
 	if(!L.getBruteLoss() && !L.getFireLoss())
-		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
+		invoker.text2tab("<span class='warning'>[L] is not burned or bruised!</span>")
 		return 0
 	L.adjustToxLoss(L.getBruteLoss() / 2)
 	L.adjustToxLoss(L.getFireLoss() / 2)
 	L.adjustBruteLoss(-L.getBruteLoss())
 	L.adjustFireLoss(-L.getFireLoss())
-	invoker << "<span class='brass'>You bathe [L] in the light of Ratvar!</span>"
+	invoker.text2tab("<span class='brass'>You bathe [L] in the light of Ratvar!</span>")
 	L.visible_message("<span class='warning'>A white light washes over [L], mending their bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Ratvar's energy healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(get_turf(L), 'sound/magic/Staff_Healing.ogg', 50, 1)
@@ -352,7 +352,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		else
 			if(L.reagents && L.reagents.has_reagent("holywater"))
 				L.reagents.remove_reagent("holywater", 1000)
-				L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
+				L.text2tab("<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>")
 	for(var/mob/living/silicon/ai/A in range(1, get_turf(invoker))) //Seems necessary because AIs don't count as hearers for some reason
 		if(A.stat != DEAD)
 			add_servant_of_ratvar(A)
@@ -412,7 +412,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/replicant/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
+	invoker.text2tab( "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>") //No visible message, for stealth purposes
 	var/obj/item/clockwork/slab/S = new(get_turf(invoker))
 	invoker.put_in_hands(S) //Put it in your hands if possible
 	return 1
@@ -540,7 +540,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!is_servant_of_ratvar(R) && R.cell.charge)
 			power_drained += min(R.cell.charge, 500)
 			R.cell.charge = max(0, R.cell.charge - 500)
-			R << "<span class='userdanger'>ERROR: Power loss detected!</span>"
+			R.text2tab("<span class='userdanger'>ERROR: Power loss detected!</span>")
 			var/datum/effect_system/spark_spread/spks = new(get_turf(R))
 			spks.set_up(3, 0, get_turf(R))
 			spks.start()
@@ -627,7 +627,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
 	for(var/datum/action/innate/function_call/F in invoker.actions)
-		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
+		invoker.text2tab("<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
 		return 0
 	return ishuman(invoker)
 
@@ -661,7 +661,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
 	if(!other_servants)
-		invoker << "<span class='warning'>There are no other servants or clockwork obelisks!</span>"
+		invoker.text2tab("<span class='warning'>There are no other servants or clockwork obelisks!</span>")
 		return 0
 	return 1
 
@@ -802,7 +802,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
 		if(M.host == invoker)
-			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"
+			invoker.text2tab("<span class='warning'>You can only house one marauder at a time!</span>")
 			return 0
 	return 1
 
@@ -825,7 +825,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	invoker.notransform = FALSE
 	slab.busy = null
-	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
+	invoker.text2tab("<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>")
 	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 100)
 	if(!marauder_candidates.len)
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
@@ -835,8 +835,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
 	M.host = invoker
-	M << M.playstyle_string
-	M << "<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>"
+	M.text2tab(M.playstyle_string)
+	M.text2tab("<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>")
 	add_servant_of_ratvar(M, TRUE)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 	"<span class='heavy_brass'>The procedure was successful! [M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" ability in the \
@@ -994,12 +994,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
-		invoker << "<span class='nezbere'>\"Abg whfg lrg, sevraq. Cngvrapr vf n iveghr.\"</span>\n\
-		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
+		invoker.text2tab("<span class='nezbere'>\"Abg whfg lrg, sevraq. Cngvrapr vf n iveghr.\"</span>\n\
+		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>")
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='nezbere'>\"Bhe znfgre vf urer nyernql. Lbh qb abg erdhver zl uryc, sevraq.\"</span>\n\
-		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
+		invoker.text2tab("<span class='nezbere'>\"Bhe znfgre vf urer nyernql. Lbh qb abg erdhver zl uryc, sevraq.\"</span>\n\
+		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>")
 		return 0
 	return 1
 
@@ -1044,12 +1044,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb tenfc gur pbaprcg bs jnvgvat?\"</span>\n\
-		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
+		invoker.text2tab("<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb tenfc gur pbaprcg bs jnvgvat?\"</span>\n\
+		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>")
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guvax nalguvat v pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
-		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
+		invoker.text2tab("<span class='sevtug'>\"Qb lbh ernyyl guvax nalguvat v pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
+		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>")
 		return 0
 	return ..()
 
@@ -1076,8 +1076,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		invoker << "<span class='nzcrentr'><b><i>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs v xvyyrq lbh? ...Ur jbhyq? Bx.\"</b></i></span>\n\
-		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
+		invoker.text2tab("<span class='nzcrentr'><b><i>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs v xvyyrq lbh? ...Ur jbhyq? Bx.\"</b></i></span>\n\
+		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>")
 		return 0
 	return 1
 
@@ -1131,8 +1131,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
-		invoker << "<span class='inathneq'>\"V pnaabg yraq lbh zl nvq lrg, punzcvba. Cyrnfr or pnershy.\"</span>\n\
-		<span class='warning'>Inath-Neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>"
+		invoker.text2tab("<span class='inathneq'>\"V pnaabg yraq lbh zl nvq lrg, punzcvba. Cyrnfr or pnershy.\"</span>\n\
+		<span class='warning'>Inath-Neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>")
 		return 0
 	return 1
 
@@ -1145,8 +1145,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
 			continue
-		L << "<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</span>\n\
-		<span class='notice'>Inath-Neq's power flows through you!</span>"
+		L.text2tab("<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</span>\n\
+		<span class='notice'>Inath-Neq's power flows through you!</span>")
 		L.color = "#1E8CE1"
 		L.fully_heal()
 		L.stun_absorption = TRUE
@@ -1155,7 +1155,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		affected_servants += L
 	sleep(150)
 	for(var/mob/living/L in affected_servants)
-		L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
+		L.text2tab("<span class='notice'>You feel Inath-Neq's power fade from your body.</span>")
 		L.status_flags &= ~GODMODE
 		L.stun_absorption = FALSE
 	return 1
@@ -1181,18 +1181,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='big_brass'>\"I am already here, idiot.\"</span>"
+		invoker.text2tab("<span class='big_brass'>\"I am already here, idiot.\"</span>")
 		return 0
 	for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 		var/area/gate_area = get_area(G)
-		invoker << "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>"
+		invoker.text2tab("<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>")
 		return 0
 	var/area/A = get_area(invoker)
 	if(!slab.no_cost && (invoker.z != ZLEVEL_STATION || istype(A, /area/shuttle)))
-		invoker << "<span class='warning'>You must be on the station to activate the Ark!</span>"
+		invoker.text2tab("<span class='warning'>You must be on the station to activate the Ark!</span>")
 		return 0
 	if(!slab.no_cost && ticker.mode.clockwork_objective != "gateway")
-		invoker << "<span class='warning'>As painful as it is, Ratvar's will is not to be freed!</span>"
+		invoker.text2tab("<span class='warning'>As painful as it is, Ratvar's will is not to be freed!</span>")
 		return 0
 	return 1
 

@@ -3,11 +3,10 @@
 //////////////////////////
 
 /obj/structure/clockwork
-	name = "meme structure"
-	desc = "Some frog or something, the fuck?"
+	name = "clockwork structure"
+	desc = "you shouldn't be seeing this"
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "rare_pepe"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -15,7 +14,7 @@
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/takes_damage = TRUE //If the structure can be damaged
-	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
+	var/break_message = "<span class='warning'>this is a bug!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	var/list/debris = list(/obj/item/clockwork/alloy_shards) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
@@ -96,7 +95,7 @@
 		else if(healthpercent >= 0)
 			other_message = "It's falling apart"
 			heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		user.text2tab("<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>")
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -180,7 +179,7 @@
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
 		clockwork_component_cache[C.component_id]++
-		user << "<span class='notice'>You add [C] to [src].</span>"
+		user.text2tab("<span class='notice'>You add [C] to [src].</span>")
 		user.drop_item()
 		qdel(C)
 		return 1
@@ -199,9 +198,9 @@
 					user.visible_message("<span class='notice'>[user] removes [P] from the hole in [src], apparently satisfied.</span>", \
 					"<span class='brass'>You finish filling [P] with liquified alloy. It now contains [P.stored_alloy]/[P.max_alloy] units of liquified alloy.</span>")
 			else
-				user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
+				user.text2tab("<span class='warning'>There is no Replicant Alloy in the global component cache!</span>")
 		else
-			user << "<span class='warning'>[P]'s containers of liquified alloy are full!</span>"
+			user.text2tab("<span class='warning'>[P]'s containers of liquified alloy are full!</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -260,7 +259,7 @@
 	if(clockwork_component_cache["hierophant_ansible"])
 		possible_components += "Hierophant Ansible"
 	if(!possible_components.len)
-		user << "<span class='warning'>[src] is empty!</span>"
+		user.text2tab("<span class='warning'>[src] is empty!</span>")
 		return 0
 	var/component_to_withdraw = input(user, "Choose a component to withdraw.", name) as null|anything in possible_components
 	if(!user || !user.canUseTopic(src) || !component_to_withdraw)
@@ -295,12 +294,12 @@
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<b>Stored components:</b>"
-		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
-		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
-		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>"
-		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>"
-		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>"
+		user.text2tab("<b>Stored components:</b>")
+		user.text2tab("<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>")
+		user.text2tab("<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>")
+		user.text2tab("<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>")
+		user.text2tab("<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>")
+		user.text2tab("<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>")
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -330,7 +329,7 @@
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
 	..()
-	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
+	user.text2tab("<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
 
 /obj/structure/clockwork/ocular_warden/process()
 	var/list/validtargets = acquire_nearby_targets()
@@ -350,7 +349,7 @@
 		if(validtargets.len)
 			target = pick(validtargets)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+			target.text2tab("<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
@@ -388,17 +387,17 @@
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
 		if(!S.brainmob)
-			user << "<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>"
+			user.text2tab("<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>")
 			return 0
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
-			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
+			user.text2tab("<span class='warning'>[S]'s trapped spirit appears inactive!</span>")
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/hostile/clockwork/fragment/A = new(get_turf(src))
 		A.visible_message("[src] whirs and rises from the ground on a flickering jet of reddish fire.")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
-		A << A.playstyle_string
+		A.text2tab(A.playstyle_string)
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -425,7 +424,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
+	user.text2tab("<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>")
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -539,7 +538,7 @@
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>It has [uses] uses remaining.</span>"
+		user.text2tab("<span class='brass'>It has [uses] uses remaining.</span>")
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
@@ -583,7 +582,7 @@
 		return 0
 	if(isliving(A))
 		var/mob/living/user = A
-		user << "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>"
+		user.text2tab("<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
 	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
 	playsound(linked_gateway, 'sound/effects/EMPulse.ogg', 50, 1)
@@ -701,7 +700,7 @@
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
 	if(iscultist(L))
-		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
+		L.text2tab("<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
 		L.Weaken(4)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
@@ -750,7 +749,7 @@
 		return 0
 	post_channel(L)
 	if(is_eligible_servant(L))
-		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
+		L.text2tab("<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	add_servant_of_ratvar(L)
 	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(3)
@@ -758,15 +757,15 @@
 		var/mob/living/carbon/C = L
 		C.silent += 5
 	var/message = "[sigil_name] in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
-	for(var/M in mob_list)
+	for(var/mob/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
+			M.text2tab( "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>")
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
-				M << "<span class='heavy_brass'>[message] you!</span>"
+				M.text2tab("<span class='heavy_brass'>[message] you!</span>")
 			else
-				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
+				M.text2tab("<span class='heavy_brass'>[message] [L.real_name]!</span>")
 	if(delete_on_finish)
 		qdel(src)
 	else
@@ -809,11 +808,11 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>"
+		user.text2tab("<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>")
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
-		L << "<span class='brass'>You feel a slight, static shock.</span>"
+		L.text2tab("<span class='brass'>You feel a slight, static shock.</span>")
 	return 1
 
 /obj/effect/clockwork/sigil/transmission/New()
@@ -843,8 +842,8 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>"
-		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+		user.text2tab("<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>")
+		user.text2tab("<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>")
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if(L.suiciding || sigil_active || !is_servant_of_ratvar(L) && L.stat == DEAD)

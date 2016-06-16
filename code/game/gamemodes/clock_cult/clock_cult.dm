@@ -80,8 +80,8 @@ This file's folder contains:
 			return 0
 	else if(istype(M, /mob/living/simple_animal/drone))
 		if(!silent)
-			M << "<span class='heavy_brass'>You must not involve yourself in other affairs, but... this one... you see it all. Your world glows a brilliant yellow, and all it once it comes to you. \
-			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>"
+			M.text2tab("<span class='heavy_brass'>You must not involve yourself in other affairs, but... this one... you see it all. Your world glows a brilliant yellow, and all it once it comes to you. \
+			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>")
 		var/mob/living/simple_animal/drone/D = M
 		D.update_drone_hack(TRUE, TRUE)
 		D.languages |= HUMAN
@@ -178,10 +178,10 @@ This file's folder contains:
 	var/servants_to_serve = list()
 
 /datum/game_mode/clockwork_cult/announce()
-	world << "<b>The game mode is: Clockwork Cult!</b>"
-	world << "<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>"
-	world << "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>"
-	world << "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>"
+	text2world("<b>The game mode is: Clockwork Cult!</b>")
+	text2world("<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>")
+	text2world("<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>")
+	text2world("<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>")
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)

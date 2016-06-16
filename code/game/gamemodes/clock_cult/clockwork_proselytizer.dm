@@ -17,19 +17,19 @@
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
-		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
+		user.text2tab("<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>")
+		user.text2tab("<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>")
 		if(uses_alloy)
-			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
-			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
+			user.text2tab("<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>")
+			user.text2tab("<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>")
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
 		if(stored_alloy + REPLICANT_ALLOY_UNIT >= max_alloy)
-			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
+			user.text2tab("<span class='warning'>[src]'s replicant alloy compartments are full!</span>")
 			return 0
 		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
+		user.text2tab("<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>")
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -55,17 +55,17 @@
 	var/target_type = target.type
 	var/list/proselytize_values = target.proselytize_vals(user) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
-		user << "<span class='warning'>[target] cannot be proselytized!</span>"
+		user.text2tab("<span class='warning'>[target] cannot be proselytized!</span>")
 		return 0
 
 	if(!uses_alloy)
 		proselytize_values["alloy_cost"] = 0
 
 	if(stored_alloy - proselytize_values["alloy_cost"] < 0)
-		user << "<span class='warning'>You need [proselytize_values["alloy_cost"]] liquified alloy to proselytize [target]!</span>"
+		user.text2tab("<span class='warning'>You need [proselytize_values["alloy_cost"]] liquified alloy to proselytize [target]!</span>")
 		return 0
 	if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
-		user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
+		user.text2tab("<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>")
 		return 0
 
 	if(ratvar_awakens) //Ratvar makes it faster
@@ -120,7 +120,7 @@
 /turf/open/floor/clockwork/proselytize_vals(mob/living/proselytizer)
 	for(var/obj/O in src)
 		if(O.density && !O.CanPass(proselytizer, src, 5))
-			proselytizer << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
+			proselytizer.text2tab("<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 			return FALSE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 

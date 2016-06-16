@@ -120,8 +120,8 @@
 			return
 		adjust_fatigue(-2)
 		if(!fatigue && recovering)
-			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
-			host << "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>"
+			src.text2tab("<span class='userdanger'>Your strength has returned. You can once again come forward!</span>")
+			host.text2tab("<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>")
 			recovering = FALSE
 	else
 		if(ratvar_awakens) //If Ratvar is alive, marauders both don't take fatigue loss and move at sanic speeds
@@ -138,7 +138,7 @@
 						adjust_fatigue(3)
 					if(6 to INFINITY)
 						adjust_fatigue(10)
-						src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
+						src.text2tab("<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>")
 					else //right next to or on top of host
 						adjust_fatigue(-1)
 
@@ -178,10 +178,10 @@
 				melee_damage_upper = 5
 				attacktext = "weakly slashes"
 			if(99 to fatigue_recall_threshold)
-				src << "<span class='userdanger'>The fatigue becomes too much!</span>"
+				src.text2tab("<span class='userdanger'>The fatigue becomes too much!</span>")
 				if(host)
-					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
-					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
+					src.text2tab("<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>")
+					host.text2tab("<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>")
 					recovering = TRUE
 					return_to_host()
 				else
@@ -216,21 +216,21 @@
 		if(speaker == host)
 			emerge_from_host(1)
 		else
-			src << "<span class='warning'><b>You hear your true name and partially emerge before you can stop yourself!</b></span>"
+			src.text2tab("<span class='warning'><b>You hear your true name and partially emerge before you can stop yourself!</b></span>")
 			host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='warning'><b>Your marauder instinctively reacts to its true name!</b></span>")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/say(message)
 	if(is_in_host())
 		message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Automatic linked minds
-		src << message
-		host << message
+		src.text2tab(message)
+		host.text2tab(message)
 		return 1
 	..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
 	for(var/mob/living/L in range(1, src))
 		if(L.null_rod_check()) //Null rods allow direct damage
-			src << "<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>"
+			src.text2tab("<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>")
 			return ..()
 	return adjust_fatigue(amount)
 
@@ -253,17 +253,17 @@
 	set category = "Marauder"
 
 	if(!host) //Verb isn't removed because they might gain one... somehow
-		usr << "<span class='warning'>You don't have a host!</span>"
+		usr.text2tab("<span class='warning'>You don't have a host!</span>")
 		return 0
 	var/message = stripped_input(usr, "Enter a message to tell your host.", "Telepathy")// as null|anything
 	if(!usr || !message)
 		return 0
 	if(!host)
-		usr << "<span class='warning'>Your host seems to have vanished!</span>"
+		usr.text2tab("<span class='warning'>Your host seems to have vanished!</span>")
 		return 0
 	message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
-	usr << message
-	host << message
+	usr.text2tab(message)
+	host.text2tab(message)
 	return 1
 
 /mob/living/proc/talk_with_marauder() //See above - this is the host version
@@ -277,18 +277,18 @@
 			if(C.host == src)
 				marauder = C
 		if(!marauder) //Double-check afterwards
-			src << "<span class='warning'>You aren't hosting any marauders!</span>"
+			src.text2tab("<span class='warning'>You aren't hosting any marauders!</span>")
 			verbs -= src
 			return 0
 	var/message = stripped_input(src, "Enter a message to tell your marauder.", "Telepathy")// as null|anything
 	if(!src || !message)
 		return 0
 	if(!marauder)
-		usr << "<span class='warning'>Your marauder seems to have vanished!</span>"
+		usr.text2tab("<span class='warning'>Your marauder seems to have vanished!</span>")
 		return 0
 	message = "<span class='heavy_brass'>Servant [name == real_name ? name : "[real_name] (as [name])"]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
-	src << message
-	marauder << message
+	src.text2tab(message)
+	marauder.text2tab(message)
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name()
@@ -301,14 +301,14 @@
 	if(!usr)
 		return 0
 	if(!new_name)
-		usr << "<span class='notice'>You decide against changing your true name for now.</span>"
+		usr.text2tab("<span class='notice'>You decide against changing your true name for now.</span>")
 		verbs += /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name //If they decide against it, let them have another opportunity
 		return 0
 	new_name = dd_limittext(new_name, 20)
 	true_name = new_name
-	usr << "<span class='userdanger'>You have changed your true name to \"[new_name]\"!</span>"
+	usr.text2tab("<span class='userdanger'>You have changed your true name to \"[new_name]\"!</span>")
 	if(host)
-		host << "<span class='userdanger'>Your clockwork marauder has changed their true name to \"[new_name]\"!</span>"
+		host.text2tab("<span class='userdanger'>Your clockwork marauder has changed their true name to \"[new_name]\"!</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host()
@@ -319,10 +319,10 @@
 	if(is_in_host())
 		return 0
 	if(!host)
-		src << "<span class='warning'>You don't have a host!</span>"
+		src.text2tab("<span class='warning'>You don't have a host!</span>")
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host
 		return 0
-	host << "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>"
+	host.text2tab("<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>")
 	visible_message("<span class='warning'>[src] is yanked into [host]'s body!</span>", "<span class='brass'>You return to [host].</span>")
 	forceMove(host)
 	return 1
@@ -333,13 +333,13 @@
 	set category = "Marauder"
 
 	if(!host)
-		src << "<span class='warning'>You don't have a host!</span>"
+		src.text2tab("<span class='warning'>You don't have a host!</span>")
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/try_emerge
 		return 0
 	var/resulthealth
 	resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
-		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
+		src.text2tab("<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>")
 		return
 	return emerge_from_host(0)
 
@@ -348,15 +348,15 @@
 		return 0
 	if(!force && recovering)
 		if(hostchosen)
-			host << "<span class='heavy_brass'>[true_name] is too weak to come forth!</span>"
+			host.text2tab("<span class='heavy_brass'>[true_name] is too weak to come forth!</span>")
 		else
-			host << "<span class='heavy_brass'>[true_name] tries to emerge to protect you, but it's too weak!</span>"
-		src << "<span class='userdanger'>You try to come forth, but you're too weak!</span>"
+			host.text2tab("<span class='heavy_brass'>[true_name] tries to emerge to protect you, but it's too weak!</span>")
+		src.text2tab("<span class='userdanger'>You try to come forth, but you're too weak!</span>")
 		return 0
 	if(hostchosen) //marauder approved
-		host << "<span class='heavy_brass'>Your words echo with power as [true_name] emerges from your body!</span>"
+		host.text2tab("<span class='heavy_brass'>Your words echo with power as [true_name] emerges from your body!</span>")
 	else
-		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
+		host.text2tab("<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>")
 	forceMove(get_turf(host))
 	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
@@ -389,7 +389,7 @@
 		if(mind)
 			mind.special_role = null
 		add_servant_of_ratvar(src, TRUE)
-		src << playstyle_string
+		src.text2tab(playstyle_string)
 
 /mob/living/simple_animal/hostile/clockwork/reclaimer/Life()
 	..()
@@ -410,10 +410,10 @@
 		return ..()
 	var/mob/living/carbon/human/H = A
 	if(is_servant_of_ratvar(H) || H.stat || (H.mind && !H.client))
-		src << "<span class='warning'>[H] isn't a valid target! Valid targets are conscious non-servants.</span>"
+		src.text2tab("<span class='warning'>[H] isn't a valid target! Valid targets are conscious non-servants.</span>")
 		return 0
 	if(get_dist(src, H) > 3)
-		src << "<span class='warning'>You need to be closer to dominate [H]!</span>"
+		src.text2tab("<span class='warning'>You need to be closer to dominate [H]!</span>")
 		return 0
 	visible_message("<span class='warning'>[src] rockets with blinding speed towards [H]!</span>", "<span class='heavy_brass'>You leap with blinding speed towards [H]'s head!</span>")
 	for(var/i = 9, i > 0, i -= 3)
@@ -436,8 +436,8 @@
 	loc = H
 	icon_state = initial(icon_state)
 	status_flags += GODMODE
-	src << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
-	H << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
+	src.text2tab("<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>")
+	H.text2tab("<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>")
 	H.say("ASSIMILATION SUCCESSFUL.")
 	if(!H.mind)
 		mind.transfer_to(H)
@@ -449,7 +449,7 @@
 	set category = "Clockwork"
 
 	if(!ishuman(usr.loc))
-		usr << "<span class='warning'>You have no host! Alt-click on a non-servant to enslave them.</span>"
+		usr.text2tab("<span class='warning'>You have no host! Alt-click on a non-servant to enslave them.</span>")
 		return
 	var/mob/living/carbon/human/L = usr.loc
 	usr.loc = get_turf(L)

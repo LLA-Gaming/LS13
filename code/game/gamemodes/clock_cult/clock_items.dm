@@ -1,9 +1,8 @@
 /obj/item/clockwork
-	name = "meme blaster"
-	desc = "What the fuck is this? It looks kinda like a frog."
-	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
+	name = "clockwork item"
+	desc = "you shouldn't be seeing this"
+	var/clockwork_desc = "you shouldn't be seeing this. Contains concentrated essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "rare_pepe"
 	w_class = 2
 
 /obj/item/clockwork/New()
@@ -796,12 +795,12 @@
 //////////////////////////
 
 /obj/item/clockwork/component //Components: Used in scripture among other things.
-	name = "meme component"
-	desc = "A piece of a famous meme."
+	name = "component"
+	desc = "a bug, please report this"
 	clockwork_desc = null
 	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
-	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
+	var/cultist_message = "You are not worthy of this bug." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
 	var/message_span = "heavy_brass"
 
