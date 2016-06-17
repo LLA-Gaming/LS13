@@ -590,3 +590,9 @@
 	item_state = "femalebusiness"
 	item_color = "femalebusiness"
 	can_adjust = 0
+
+/obj/item/clothing/under/batman
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	item_color = "bmuniform"

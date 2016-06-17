@@ -179,3 +179,11 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+/obj/item/clothing/head/batman
+	name = "bathelmet"
+	desc = "No one cares who you are until you put on the mask."
+	icon_state = "bmhead"
+	item_state = "xenos_helm"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = HEAD
