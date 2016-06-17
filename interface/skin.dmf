@@ -94,7 +94,7 @@ macro "default"
 		command = ".northeast"
 	elem
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "me"
 	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
@@ -282,10 +282,10 @@ macro "hotkeys"
 		command = ".northeast"
 	elem
 		name = "Y"
-		command = "Activate-Held-Object"
+		command = "me"
 	elem
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "me"
 	elem
 		name = "Z"
 		command = "Activate-Held-Object"
@@ -411,7 +411,7 @@ macro "robot-default"
 		command = ".northeast"
 	elem
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "me"
 	elem
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
@@ -581,7 +581,7 @@ macro "robot-hotkeys"
 		command = "Activate-Held-Object"
 	elem
 		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		command = "me"
 	elem
 		name = "Z"
 		command = "Activate-Held-Object"
