@@ -38,7 +38,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "<span class='warning'><B>[start_up_message]</B></span>"
+			M.text2tab("<span class='warning'><B>[start_up_message]</B></span>")
 			if(start_up_sound)
 				M << start_up_sound
 	sleep(start_up_time)
@@ -51,7 +51,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "<span class='userdanger'><i>[duration_message]</i></span>"
+			M.text2tab("<span class='userdanger'><i>[duration_message]</i></span>")
 			if(duration_sound)
 				M << duration_sound
 	if(purely_aesthetic)
@@ -73,7 +73,7 @@
 	update_areas()
 	for(var/mob/M in player_list)
 		if(M.z == target_z)
-			M << "<span class='danger'><B>[wind_down_message]</B></span>"
+			M.text2tab("<span class='danger'><B>[wind_down_message]</B></span>")
 			if(wind_down_sound)
 				M << wind_down_sound
 	sleep(wind_down)
