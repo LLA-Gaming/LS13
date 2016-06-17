@@ -491,7 +491,7 @@
 			continue
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
-		new childspawn(loc)
+		new childspawn(get_turf(src))
 		return 1
 	return 0
 
