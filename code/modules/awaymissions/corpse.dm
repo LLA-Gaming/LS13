@@ -25,7 +25,7 @@
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
-		user.text2tab("<span class='warning'>This spawner is out of charges!</span>")
+		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -78,7 +78,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		M.text2tab("[flavour_text]")
+		M << "[flavour_text]"
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
@@ -203,7 +203,7 @@
 	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aitablet.core.neton = 0
+	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 
@@ -496,24 +496,6 @@
 	mob_species = /datum/species/abductor
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
-
-///Prisoner
-
-/obj/effect/mob_spawn/human/prisoner_transport
-	name = "prisoner sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	roundstart = FALSE
-	death = FALSE
-	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
-
-/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	new_spawn.text2tab("You were convincted of: [crime].")
 
 //For ghost bar.
 /obj/effect/mob_spawn/human/alive/space_bar_patron
