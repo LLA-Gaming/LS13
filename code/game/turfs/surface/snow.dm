@@ -16,6 +16,12 @@ var/global/list/Z1_SNOW_TURFS = list()
 	proc/update_icon()
 		return
 
+	New()
+		..()
+
+		if(z == ZLEVEL_STATION)
+			Z1_SURFACE_TURFS += src
+
 /*
 * Snow
 */
@@ -25,7 +31,7 @@ var/global/list/Z1_SNOW_TURFS = list()
 	New()
 		..()
 
-		if(z == 1)
+		if(z == ZLEVEL_STATION)
 			Z1_SNOW_TURFS += src
 
 	var/depth = 1

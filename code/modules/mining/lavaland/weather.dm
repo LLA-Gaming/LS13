@@ -1,110 +1,43 @@
-#define STARTUP_STAGE 1
-#define MAIN_STAGE 2
-#define WIND_DOWN_STAGE 3
-#define END_STAGE 4
+//Ash storms
 
-/datum/weather
-	var/name = "storm"
-	var/start_up_time = 300 //30 seconds
-	var/start_up_message = "The wind begins to pick up."
-	var/start_up_sound
-	var/duration = 120 //2 minutes
-	var/duration_lower = 120
-	var/duration_upper = 120
-	var/duration_sound
-	var/duration_message = "A storm has started!"
-	var/wind_down = 300 // 30 seconds
-	var/wind_down_message = "The storm is passing."
-	var/wind_down_sound
+/datum/weather/ash_storm
+	name = "ash storm"
+	start_up_time = 300 //30 seconds
+	start_up_message = "An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter."
+	start_up_sound = 'sound/lavaland/ash_storm_windup.ogg'
+	duration_lower = 60 //1 minute
+	duration_upper = 150 //2.5 minutes
+	duration_message = "Smoldering clouds of scorching ash billow down around you! Get inside!"
+	duration_sound = 'sound/lavaland/ash_storm_start.ogg'
+	wind_down = 300 // 30 seconds
+	wind_down_message = "The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now."
+	wind_down_sound = 'sound/lavaland/ash_storm_end.ogg'
 
-	var/target_z = 1
-	var/exclude_walls = TRUE
-	var/area_type = /area/space
-	var/stage = STARTUP_STAGE
+	target_z = ZLEVEL_LAVALAND
+	area_type = /area/lavaland/surface/outdoors
 
+	start_up_overlay = "light_ash"
+	duration_overlay = "ash_storm"
+	overlay_layer = AREA_LAYER
 
-	var/start_up_overlay = "lava"
-	var/duration_overlay = "lava"
-	var/overlay_layer = AREA_LAYER //This is the default area layer, and above everything else. TURF_LAYER is floors/below walls and mobs.
-	var/purely_aesthetic = FALSE //If we just want gentle rain that doesn't hurt people
-	var/list/impacted_areas = list()
-	var/immunity_type = "storm"
-
-/datum/weather/proc/weather_start_up()
-	for(var/area/N in get_areas(area_type))
-		if(N.z == target_z)
-			impacted_areas += N
-	duration = rand(duration_lower,duration_upper)
-	update_areas()
-	for(var/mob/M in player_list)
-		if(M.z == target_z)
-			M.text2tab("<span class='warning'><B>[start_up_message]</B></span>")
-			if(start_up_sound)
-				M << start_up_sound
-	sleep(start_up_time)
-	if(src && stage != MAIN_STAGE)
-		stage = MAIN_STAGE
-		weather_main()
+	immunity_type = "ash"
 
 
-/datum/weather/proc/weather_main()
-	update_areas()
-	for(var/mob/M in player_list)
-		if(M.z == target_z)
-			M.text2tab("<span class='userdanger'><i>[duration_message]</i></span>")
-			if(duration_sound)
-				M << duration_sound
-	if(purely_aesthetic)
-		sleep(duration*10)
-	else  //Storm effects
-		for(var/i in 1 to duration-1)
-			for(var/mob/living/L in living_mob_list)
-				var/area/storm_area = get_area(L)
-				if(storm_area in impacted_areas)
-					storm_act(L)
-			sleep(10)
+/datum/weather/ash_storm/false_alarm //No storm, just light ember fall
+	purely_aesthetic = TRUE
+	duration_overlay = "light_ash"
+	duration_message = "<span class='notice'>Gentle ashfall surrounds you like grotesque snow. The storm seems to have passed you by.</span>"
+	wind_down_message = "The ashfall quietly slows, then stops. Another layer of hardened soot to the volcanic rock beneath you."
 
-	if(src && stage != WIND_DOWN_STAGE)
-		stage = WIND_DOWN_STAGE
-		weather_wind_down()
-
-
-/datum/weather/proc/weather_wind_down()
-	update_areas()
-	for(var/mob/M in player_list)
-		if(M.z == target_z)
-			M.text2tab("<span class='danger'><B>[wind_down_message]</B></span>")
-			if(wind_down_sound)
-				M << wind_down_sound
-	sleep(wind_down)
-
-	if(src && stage != END_STAGE)
-		stage = END_STAGE
-		update_areas()
-
-
-/datum/weather/proc/storm_act(mob/living/L)
+/datum/weather/ash_storm/storm_act(mob/living/L)
 	if(immunity_type in L.weather_immunities)
 		return
 
-/datum/weather/proc/update_areas()
-	for(var/area/N in impacted_areas)
-		N.layer = overlay_layer
-		N.icon = 'icons/effects/weather_effects.dmi'
-		N.invisibility = 0
-		switch(stage)
-			if(STARTUP_STAGE)
-				N.icon_state = start_up_overlay
-
-			if(MAIN_STAGE)
-				N.icon_state = duration_overlay
-
-			if(WIND_DOWN_STAGE)
-				N.icon_state = start_up_overlay
-
-			if(END_STAGE)
-				N.icon_state = initial(N.icon_state)
-				N.icon = 'icons/turf/areas.dmi'
-				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
-				N.invisibility = INVISIBILITY_MAXIMUM
-				N.opacity = 0
+	if(istype(L.loc, /obj/mecha))
+		return
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		var/thermal_protection = H.get_thermal_protection()
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return
+	L.adjustFireLoss(4)

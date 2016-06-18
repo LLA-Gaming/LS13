@@ -23,10 +23,10 @@ z3 = space
         #define MAP_FILE "planet.dmm"
         #define MAP_NAME "Ice Planet"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = SELFLOOPING, CENTCOMM = SELFLOOPING, SPACE_AREA = SELFLOOPING)
 
 #elif !defined(MAP_OVERRIDE)
 
-	#warn a map has already been included, ignoring /tg/station 2.
+	#warn a map has already been included, ignoring ice planet.
 
 #endif

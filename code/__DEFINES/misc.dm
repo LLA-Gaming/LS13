@@ -180,14 +180,15 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 9
-#define ZLEVEL_MINING 5
+#define ZLEVEL_SPACEMAX 3
 #define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_ABANDONNEDTSAT 3
+#define ZLEVEL_SPACE 3
 #define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+
+//these are unused, but deprecated.
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_UNDERGROUND 6
+#define ZLEVEL_MINING 5
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -458,3 +459,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+//Weather
+#define STARTUP_STAGE 1
+#define MAIN_STAGE 2
+#define WIND_DOWN_STAGE 3
+#define END_STAGE 4
