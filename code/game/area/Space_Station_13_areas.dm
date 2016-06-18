@@ -111,6 +111,27 @@ var/list/teleportlocs = list()
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+//Icestation
+
+/area/planet
+	name = "Surface"
+	icon_state = "space"
+	has_gravity = 1
+	requires_power = 1
+	always_unpowered = 1
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
+	valid_territory = 0
+	blob_allowed = 0 //Eating up the surface doesn't count for victory as a blob.
+	ambientsounds = list('sound/ambience/ambimine.ogg')
+	music = null
+
+/area/planet/outdoors
+	name = "Surface"
+	outdoors = 1
+
+
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle
