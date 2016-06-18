@@ -148,8 +148,7 @@ var/last_irc_status = 0
 		else
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C.text2tab("<span class='announce'>PR: [input["announce"]]</span>")
+				C.text2tab("<span class='announce'>Announcement: [input["announce"]]</span>")
 #undef CHAT_PULLR
 
 	else if("crossmessage" in input)
@@ -158,6 +157,50 @@ var/last_irc_status = 0
 		else
 			if(input["crossmessage"] == "Ahelp")
 				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
+
+	else if("playerinfo" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				if(input["amt"])
+					return "[length(clients)]"
+				if(input["index"])
+					if(!length(clients))
+						return "No players."
+
+					var/num = text2num(input["index"]) + 1
+					var/client/C = clients[num]
+					if(!C)
+						return "Client not found."
+					return "[C.ckey] - [C.address] - [C.computer_id]"
+
+		return "Error."
+
+	else if("currpercs" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				var/returnstring = ""
+				for(var/mob/living/carbon/human/H in world)
+					if(H.job in list("Perseus Security Enforcer", "Perseus Security Commander"))
+						returnstring += "#[pnumbers[H.ckey] ? pnumbers[H.ckey] : "UKN"] "
+				if(returnstring == "")
+					returnstring = "None."
+				return returnstring
+
+	else if("currpmissions" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				if(input["amt"])
+					return "[perseusMissions.len]"
+				if(input["index"])
+					var/num = text2num(input["index"]) + 1
+					var/datum/perseus_mission/mission = perseusMissions[num]
+					return "[mission.mission] - [mission.status]"
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
