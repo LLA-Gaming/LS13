@@ -39,7 +39,6 @@
 				if(slot != slot_glasses)
 					return 1
 
-				#warn Uncomment when borers are implemented
 			//	for(var/mob/living/simple_animal/borer/B in H.contents)
 			//		H.text2tab("<span class='notice'>Something prevents you from entering VR.</span>")
 			//		return 1
