@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab-idle"
+	icon_state = "fab"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = 1
@@ -20,7 +20,22 @@
 	var/processing_queue = 0
 	var/screen = "main"
 	var/temp
-	var/list/part_sets = list(
+	var/list/part_sets = list()
+
+	var/production_type = MECHFAB
+	var/board_type = /obj/item/weapon/circuitboard/machine/mechfab
+
+/obj/machinery/mecha_part_fabricator/New()
+	..()
+	files = new /datum/research(src) //Setup the research data holder.
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
+	B.apply_default_parts(src)
+	icon_state = "[initial(icon_state)]-idle"
+	part_sets = GetPartSets()
+
+/obj/machinery/mecha_part_fabricator/proc/GetPartSets()
+	return list(
 								"Cyborg",
 								"Ripley",
 								"Firefighter",
@@ -33,13 +48,6 @@
 								"Cyborg Upgrade Modules",
 								"Misc"
 								)
-
-/obj/machinery/mecha_part_fabricator/New()
-	..()
-	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
-	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mechfab
 	name = "circuit board (Exosuit Fabricator)"
@@ -105,7 +113,7 @@
 	var/output = ""
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
-		if(D.build_type & MECHFAB)
+		if(D.build_type & production_type)
 			if(!(set_name in D.category))
 				continue
 			output += "<div class='part'>[output_part_info(D)]<br>\["
@@ -158,12 +166,12 @@
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	materials.use_amount(res_coef)
-	add_overlay("fab-active")
+	add_overlay("[initial(icon_state)]-active")
 	use_power = 2
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
 	use_power = 1
-	overlays -= "fab-active"
+	overlays -= "[initial(icon_state)]-active"
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
@@ -423,7 +431,7 @@
 	..()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", "[initial(icon_state)]-idle", W))
 		return 1
 
 	if(exchange_parts(user, W))
@@ -455,7 +463,7 @@
 		if(inserted)
 			user.text2tab("<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
 			if(W && W.materials.len)
-				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
+				var/mat_overlay = "[initial(icon_state)]-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)
 				overlays -= mat_overlay //No matter what the overlay shall still be deleted

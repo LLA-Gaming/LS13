@@ -1,0 +1,79 @@
+[Pod]
+
+damage_overlay_threshold 40
+ex_act_damage 50
+blob_act_damage 25
+emp_act_attachment_toggle_chance 60
+emp_act_power_absorb_percent 30
+emp_act_duration 300
+emp_sparkchance 5
+fire_damage_cooldown 20
+fire_damage 5
+fire_damage_oygen_cutoff 0.9
+fire_oxygen_consumption_percent 0.10
+damage_notice_cooldown 10
+pod_pullout_delay 80
+metal_repair_threshold_percent 75
+welding_repair_amount 5
+metal_repair_amount 15
+movement_cost 2
+alien_damage_lower 10
+alien_damage_upper 20
+paw_damage_lower 2
+paw_damage_upper 8
+handcuffed_exit_delay 1200
+
+
+drivable /turf/open/space
+drivable /turf/open/floor/engine
+drivable /turf/open/floor/plating
+drivable /turf/open/floor/engine
+drivable /turf/open/floor/plating
+drivable /turf/open/floor/airless
+
+#####################################
+
+[Mining]
+
+high_chance_create_mineral 25
+high_uranium_chance 35
+high_diamond_chance 10
+high_gold_chance 35
+high_silver_chance 35
+high_plasma_chance 35
+high_iron_chance 50
+	
+low_chance_create_mineral 5
+low_uranium_chance 1
+low_diamond_chance 1
+low_gold_chance 1
+low_silver_chance 1
+low_plasma_chance 1
+low_iron_chance 50
+low_gibtonite_chance 4
+
+#####################################
+
+[Template]
+
+place_amount_min 0
+place_amount_max 0
+
+zs 3
+zs 4
+zs 6
+
+# These objects will be placed last
+place_last /obj/machinery/power/apc
+place_last /obj/machinery/light_switch
+place_last /obj/machinery/disposal
+place_last /obj/machinery/atmospherics/unary/vent_pump
+place_last /obj/machinery/atmospherics/unary/vent_scrubber
+place_last /obj/machinery/disposalpipe/segment
+place_last /obj/effect/spawner/space/set_spawner/master
+place_last /obj/structure/lattice
+place_last /obj/structure/closet
+
+tries 10
+
+directory data/templates

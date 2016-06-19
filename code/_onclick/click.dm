@@ -58,6 +58,11 @@
 			return
 
 	var/list/modifiers = params2list(params)
+
+	if(istype(loc, /obj/pod))
+		var/obj/pod/pod = loc
+		return pod.OnClick(A, src, modifiers)
+
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
 		return
