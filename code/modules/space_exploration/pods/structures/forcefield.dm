@@ -13,18 +13,17 @@
 	layer = 3.3
 
 	New()
-		var/turf/S = get_turf(src)
-		if(S)
-			S.blocks_air = 1
-		air_update_turf(1)
 		..()
+		air_update_turf(1)
+
 
 	Destroy()
-		var/turf/S = get_turf(src)
-		if(S)
-			S.blocks_air = 0
+		density = 0
 		air_update_turf(1)
-		..()
+		return ..()
+
+	CanAtmosPass()
+		return 0
 
 	var/obj/machinery/hangar_forcefield_generator/generator
 
@@ -38,6 +37,9 @@
 			qdel(src)
 			return 0
 		generator.DestroyShields()
+		..()
+		var/turf/T = get_turf(src)
+		move_update_air(T)
 
 /*
 * Forcefield generator

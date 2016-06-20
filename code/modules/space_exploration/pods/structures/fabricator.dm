@@ -25,12 +25,10 @@
 
 	GetPartSets()
 		var/list/categories = list()
+
 		for(var/datum/design/D in files.possible_designs)
 			if(D.build_type & PODFAB)
-				for(var/category in D.category)
-					if(category in categories)
-						continue
-					categories += category
+				categories |= D.category
 
 		return categories
 
