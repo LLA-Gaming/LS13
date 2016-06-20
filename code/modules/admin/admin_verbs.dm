@@ -124,8 +124,7 @@ var/list/admin_verbs_primary = list(
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
-	/client/proc/polymorph_all,
-	/datum/admins/proc/toggle_vr
+	/client/proc/polymorph_all
 	)
 
 var/list/admin_verbs_senior = list(
