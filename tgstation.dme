@@ -1760,7 +1760,6 @@
 #include "code\modules\space_exploration\content\triggers\trigger.dm"
 #include "code\modules\space_exploration\content\weapons\beam.dm"
 #include "code\modules\space_exploration\content\weapons\blackhole_grenade.dm"
-#include "code\modules\space_exploration\mining\config.dm"
 #include "code\modules\space_exploration\mining\crate_teleporter.dm"
 #include "code\modules\space_exploration\pods\_defines.dm"
 #include "code\modules\space_exploration\pods\admin.dm"
