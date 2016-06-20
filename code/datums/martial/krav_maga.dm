@@ -60,14 +60,17 @@
 		if("neck_chop")
 			streak = ""
 			neck_chop(A,D)
+			add_logs(A, D, "neck chopped")
 			return 1
 		if("leg_sweep")
 			streak = ""
 			leg_sweep(A,D)
+			add_logs(A, D, "leg sweeped")
 			return 1
 		if("quick_choke")//is actually lung punch
 			streak = ""
 			quick_choke(A,D)
+			add_logs(A, D, "lung punched")
 			return 1
 	return 0
 

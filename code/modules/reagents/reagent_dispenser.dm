@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
+	var/volume = 1000
 
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
@@ -34,7 +35,7 @@
 		return ..()
 
 /obj/structure/reagent_dispensers/New()
-	create_reagents(1000)
+	create_reagents(volume)
 	..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -80,10 +81,11 @@
 	desc = "A specialised high-pressure water tank for holding large amounts of water."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "hightank"
+	volume = 100000
 
 /obj/structure/reagent_dispensers/watertank/high/New()
 	..()
-	reagents.add_reagent("water",100000)
+	reagents.add_reagent("water",volume)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
