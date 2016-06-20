@@ -26,7 +26,9 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 		LoadForbiddenTypes()
 
 	fire()
-
+		if(!contained_clients)
+			can_fire = 0
+			return
 		// Remove all bullet casings for clean-up.
 		for(var/obj/item/ammo_casing/A in get_area(locate(/area/virtual_reality)))
 			qdel(A)
@@ -89,6 +91,8 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 		if(!goggles.len)
 			for(var/obj/item/clothing/glasses/virtual/V in world)
 				goggles += V
+
+		CHECK_TICK
 
 	proc/UpdateClients()
 		for(var/obj/item/clothing/glasses/virtual/V in goggles)
@@ -176,6 +180,8 @@ var/datum/subsystem/virtual_reality/SSvirtual_reality
 				else	return 0
 			H.text2tab("\red <b>Entering the VR is currently disabled.</b>")
 			return 0
+
+		can_fire = 1
 
 		// Unset any changeling stings they might have.
 		if(H.mind && H.mind.changeling)
