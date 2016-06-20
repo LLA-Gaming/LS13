@@ -19,7 +19,7 @@
 
 	fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
 		if((last_fired + cooldown) > world.time)
-			user << "<span class='warning'>\The [src] is still cooling down.</span>"
+			user.text2tab("<span class='warning'>\The [src] is still cooling down.</span>")
 			return 0
 
 		BB = null

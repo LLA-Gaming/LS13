@@ -169,11 +169,11 @@
 
 	proc/PrintSystemNotice(var/message = "")
 		if(pilot)
-			pilot << "\icon[src] <font color='green'><b>\[[src.name]\]</b> states, \"[message]\"</font>"
+			pilot.text2tab("\icon[src] <font color='green'><b>\[[src.name]\]</b> states, \"[message]\"</font>")
 
 	proc/PrintSystemAlert(var/message = "")
 		if(pilot)
-			pilot << "\icon[src] <font color='red'><b>\[[src.name]\]</b> states, \"[message]\"</font>"
+			pilot.text2tab("\icon[src] <font color='red'><b>\[[src.name]\]</b> states, \"[message]\"</font>")
 
 	proc/GetAttachments()
 		var/list/attachments = list()
@@ -216,7 +216,7 @@
 		else
 			var/code = input(H, "Please enter the code.", "Security") as num
 			if(!(code in locks))
-				H << "<span class='warning'>Invalid code.</span>"
+				H.text2tab("<span class='warning'>Invalid code.</span>")
 				H << sound('sound/machines/buzz-two.ogg', volume = 100)
 				return 0
 

@@ -63,7 +63,8 @@ var/list/admin_verbs_admin = list(
 	//spawn
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
 	/client/proc/respawn_character,
-	/client/proc/stealth
+	/client/proc/stealth,
+	/client/proc/view_pod_logs
 	)
 
 var/list/admin_verbs_primary = list(

@@ -115,7 +115,7 @@
 							mag = M
 
 				if(!mag)
-					user << "<span class='warning'>No magazine found.</span>"
+					user.text2tab("<span class='warning'>No magazine found.</span>")
 				else
 					var/list/directional = attached_to.GetDirectionalTurfs(attached_to.dir)
 					var/list/additions[length(directional)]
@@ -124,7 +124,7 @@
 					for(var/turf/T in directional)
 						var/obj/item/ammo_casing/ammo = mag.get_round()
 						if(!ammo)
-							user << "<span class='warning'>Magazine empty.</span>"
+							user.text2tab("<span class='warning'>Magazine empty.</span>")
 							break
 						else
 							var/list/under = attached_to.GetDirectionalTurfsUnderPod(attached_to.dir)
@@ -201,11 +201,11 @@
 			if(istype(I, missile_type))
 				if((missile_amount + 1) <= max_missile_amount)
 					missile_amount++
-					user << "<span class='info'>You place the [I] into the [attached_to].</span>"
+					user.text2tab("<span class='info'>You place the [I] into the [attached_to].</span>")
 					qdel(I)
 					return 1
 				else
-					user << "<span class='warning'>\The missile pylon is full.</span>"
+					user.text2tab("<span class='warning'>\The missile pylon is full.</span>")
 					return 0
 
 			return 0

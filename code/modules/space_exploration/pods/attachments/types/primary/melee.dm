@@ -27,7 +27,7 @@
 			var/needs_logging = 0
 
 			if(locate(/turf/closed/mineral) in turfs)
-				user << "<span class='info'>You start [predicate]...</span>"
+				user.text2tab("<span class='info'>You start [predicate]...</span>")
 				if(do_after(user, speed))
 					if(!length((turfs & attached_to.GetDirectionalTurfs(attached_to.dir))))
 						return 0
@@ -42,7 +42,7 @@
 						L.take_overall_damage(damage, 0)
 					else if(damage_type == BURN)
 						L.take_overall_damage(0, damage)
-					user << "<span class='warning'>You [damage_predicate] [L].</span>"
+					user.text2tab("<span class='warning'>You [damage_predicate] [L].</span>")
 					add_logs(user, L, damage_predicate, 1, src, " with a space pod ([attached_to]) ([attached_to.type])")
 					additions[turfs.Find(T)] = "harmed [key_name(L)] (damage: [damage], damage type: [damage_type])"
 					needs_logging = 1
@@ -72,7 +72,7 @@
 
 			if(href_list["action"] == "toggle_automine")
 				automine = !automine
-				usr << "<span class='info'>You turn auto-mining [automine ? "on" : "off"].</span>"
+				usr.text2tab("<span class='info'>You turn auto-mining [automine ? "on" : "off"].</span>")
 
 		plasma/
 			name = "mining plasma cutter"

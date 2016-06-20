@@ -117,7 +117,7 @@
 						if(check_access(id, 1))
 							return 1
 
-				pod.pilot << "<span class='warning'>You bounce back on the forcefield.</span>"
+				pod.pilot.text2tab("<span class='warning'>You bounce back on the forcefield.</span>")
 				return 0
 
 		return 1
@@ -272,10 +272,10 @@
 					OpenMenu(user)
 					return 1
 
-			user << "<span class='warning'>Access denied.</span>"
+			user.text2tab("<span class='warning'>Access denied.</span>")
 
 		else
-			user << "<span class='warning'>You don't have the dexterity to use this.</span>"
+			user.text2tab("<span class='warning'>You don't have the dexterity to use this.</span>")
 
 	attackby(var/obj/item/I, var/mob/living/user)
 		if(istype(I, /obj/item/weapon/card/emag))
@@ -284,7 +284,7 @@
 			sparks.set_up(5, 0, src)
 			sparks.attach(src)
 			sparks.start()
-			user << "<span class='info'>You emag the [src].</span>"
+			user.text2tab("<span class='info'>You emag the [src].</span>")
 
 		if(istype(I, /obj/item/weapon/card/id))
 			return attack_hand(user)

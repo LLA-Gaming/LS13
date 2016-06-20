@@ -11,7 +11,7 @@
 				HandleExit(usr)
 			else if(H.handcuffed)
 				var/turf/location = get_turf(src)
-				H << "<span class='notice'>You attempt to remove your restraints. (This will take around [pod_config.handcuffed_exit_delay/600] minutes and the pod has to stand still)</span>"
+				H.text2tab("<span class='notice'>You attempt to remove your restraints. (This will take around [pod_config.handcuffed_exit_delay/600] minutes and the pod has to stand still)</span>")
 				spawn(pod_config.handcuffed_exit_delay)
 					if(get_turf(src) == location)
 						if(!H.handcuffed)
@@ -23,7 +23,7 @@
 						if(cargo)
 							cargo.PlaceInto(cuffs, 1)
 
-						H << "<span class='notice'>You break free of your restraints.</span>"
+						H.text2tab("<span class='notice'>You break free of your restraints.</span>")
 						H.handcuffed = 0
 						H.update_inv_handcuffed(0)
 

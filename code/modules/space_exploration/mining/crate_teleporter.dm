@@ -15,7 +15,7 @@
 
 	examine()
 		..()
-		usr << "<span class='info'>Charges: [charges]</span>"
+		usr.text2tab("<span class='info'>Charges: [charges]</span>")
 
 	New()
 		..()
@@ -64,27 +64,27 @@
 			var/obj/structure/closet/crate/crate = A
 
 			if(teleporting)
-				user << "<span class='warning'>The [src] is already teleporting a crate.</span>"
+				user.text2tab("<span class='warning'>The [src] is already teleporting a crate.</span>")
 				return 0
 
 			if(world.time < (last_teleport + teleport_cooldown))
-				user << "<span class='warning'>The [src] is still cooling down..</span>"
+				user.text2tab("<span class='warning'>The [src] is still cooling down..</span>")
 				return 0
 
 			if(!destination)
-				user << "<span class='warning'>No destinaton is set.</span>"
+				user.text2tab("<span class='warning'>No destinaton is set.</span>")
 				return 0
 
 			if(destination.IsOccupied())
-				user << "<span class='warning'>The destination is occupied.</span>"
+				user.text2tab("<span class='warning'>The destination is occupied.</span>")
 				return 0
 
 			if(locate(/mob) in crate)
-				user << "<span class='warning'>The [src] can't teleport mobs.</span>"
+				user.text2tab("<span class='warning'>The [src] can't teleport mobs.</span>")
 				return 0
 
 			teleporting = 1
-			user << "<span class='info'>Initiating teleport...</span>"
+			user.text2tab("<span class='info'>Initiating teleport...</span>")
 			if(do_after(user, 50))
 				if(get_dist(user, crate) > 1)
 					teleporting = 0
@@ -94,9 +94,9 @@
 
 				var/result = Teleport(crate)
 				if(!result)
-					user << "<span class='warning'>Teleport failed.</span>"
+					user.text2tab("<span class='warning'>Teleport failed.</span>")
 				else
-					user << "<span class='info'>Teleport succesful.</span>"
+					user.text2tab("<span class='info'>Teleport succesful.</span>")
 					charges--
 					last_teleport = world.time
 			else
@@ -127,9 +127,9 @@
 
 		if(pad)
 			destination = pad
-			user << "<span class='info'>New destination set to '[pad.id]'</span>"
+			user.text2tab("<span class='info'>New destination set to '[pad.id]'</span>")
 		else
-			user << "<span class='warning'>Unable to locate pad.</span>"
+			user.text2tab("<span class='warning'>Unable to locate pad.</span>")
 
 /*
 * Teleport Pad
@@ -146,7 +146,7 @@ var/list/crate_teleporter_pads = list()
 
 	examine()
 		..()
-		usr << "<span class='info'>Current ID is '[id ? id : "undefined"]'</span>"
+		usr.text2tab("<span class='info'>Current ID is '[id ? id : "undefined"]'</span>")
 
 	proc/IsAvailable()
 		return (id && anchored && istype(loc, /turf))
@@ -165,10 +165,10 @@ var/list/crate_teleporter_pads = list()
 			return 0
 
 		if(istype(I, /obj/item/weapon/wrench) && istype(loc, /turf))
-			user << "<span class='info'>You start to [anchored ? "detach" : "attach"] the [src] to the [get_turf(src)].</span>"
+			user.text2tab("<span class='info'>You start to [anchored ? "detach" : "attach"] the [src] to the [get_turf(src)].</span>")
 			if(do_after(user, 20))
 				anchored = !anchored
-				user << "<span class='info'>You [anchored ? "attach" : "detach"] the [src] from the [get_turf(src)].</span>"
+				user.text2tab("<span class='info'>You [anchored ? "attach" : "detach"] the [src] from the [get_turf(src)].</span>")
 
 	proc/CheckDuplication(var/id)
 		for(var/obj/item/device/crate_tp_pad/pad in crate_teleporter_pads)
@@ -184,13 +184,13 @@ var/list/crate_teleporter_pads = list()
 		new_id = copytext(sanitize(trim(new_id)), 1, max_length)
 
 		if(!CheckDuplication(new_id))
-			user << "<span class='warning'>That ID is already being used.</span>"
+			user.text2tab("<span class='warning'>That ID is already being used.</span>")
 			return 0
 		if(!new_id)
 			return 0
 
 		id = new_id
-		user << "<span class='info'>You change the ID to '[new_id]'.</span>"
+		user.text2tab("<span class='info'>You change the ID to '[new_id]'.</span>")
 
 	New()
 		..()

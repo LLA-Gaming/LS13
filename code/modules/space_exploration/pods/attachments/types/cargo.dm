@@ -31,12 +31,12 @@
 
 			if(href_list["action"] == "unload")
 				var/obj/item/I = locate(href_list["item"])
-				usr << "<span class='info'>You unload the [I]</span>"
+				usr.text2tab("<span class='info'>You unload the [I]</span>")
 				I.loc = get_turf(usr)
 
 			else if(href_list["action"] == "toggle_accept")
 				accept_items = !accept_items
-				usr << "<span class='info'>[accept_items ? "Now" : "No longer"] accepting items.</span>"
+				usr.text2tab("<span class='info'>[accept_items ? "Now" : "No longer"] accepting items.</span>")
 
 			else if(href_list["action"] == "unload_everything")
 				for(var/obj/O in contents)
@@ -48,10 +48,10 @@
 					user.unEquip(I)
 					var/result = PlaceInto(I)
 					if(result == P_CARGOERROR_CLEAR)
-						user << "<span class='info'>You place the [I] into the [src] of the [attached_to].</span>"
+						user.text2tab("<span class='info'>You place the [I] into the [src] of the [attached_to].</span>")
 					else
 						user.put_in_active_hand(I)
-						user << "<span class='warning'>[TranslateError(result)].</span>"
+						user.text2tab("<span class='warning'>[TranslateError(result)].</span>")
 
 					return 1
 

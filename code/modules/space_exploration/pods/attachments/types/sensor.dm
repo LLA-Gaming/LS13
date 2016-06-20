@@ -101,9 +101,9 @@
 				data[direction] = strengths
 
 			for(var/direction in data)
-				user << "<span class='notice'>----------[uppertext(direction)]----------</span>"
+				user.text2tab("<span class='notice'>----------[uppertext(direction)]----------</span>")
 				var/list/strengths = data[direction]
 				for(var/strength in strengths)
 					var/amount = strengths[strength]
 					if(amount > 0)
-						user << "<span class='notice'>[amount] [strength] signal[(amount > 1) ? "s" : ""] detected.</span>"
+						user.text2tab("<span class='notice'>[amount] [strength] signal[(amount > 1) ? "s" : ""] detected.</span>")

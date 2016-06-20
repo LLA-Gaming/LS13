@@ -38,7 +38,7 @@
 
 	examine()
 		..()
-		usr << "\blue The label says it requires a [minimum_pod_size[1]] by [minimum_pod_size[2]] pod, and attaches to the [GetHardpointDisplayName()]."
+		usr.text2tab("\blue The label says it requires a [minimum_pod_size[1]] by [minimum_pod_size[2]] pod, and attaches to the [GetHardpointDisplayName()].")
 
 	proc/GetOverlay(var/list/size = minimum_pod_size)
 		var/icon/I = icon(file("icons/obj/pod-[size[1]]-[size[2]].dmi"))
@@ -49,20 +49,20 @@
 		return image(icon = "icons/obj/pod-[size[1]]-[size[2]].dmi", icon_state = src.overlay_icon_state)
 
 	proc/StartAttach(var/obj/pod/pod, var/mob/user)
-		user << "<span class='info'>You start attaching the [src] to the [GetHardpointDisplayName()] of the [pod].</span>"
+		user.text2tab("<span class='info'>You start attaching the [src] to the [GetHardpointDisplayName()] of the [pod].</span>")
 		if(do_after(user, attachment_delay))
 			user.unEquip(src, 1)
-			user << "<span class='info'>You finished attaching the [src].</span>"
+			user.text2tab("<span class='info'>You finished attaching the [src].</span>")
 			OnAttach(pod, user)
 
 	proc/StartDetach(var/obj/pod/pod, var/mob/user)
 		if(!can_detach)
-			user << "<span class='info'>The [src] can't be removed.</span>"
+			user.text2tab("<span class='info'>The [src] can't be removed.</span>")
 			return 0
 
-		user << "<span class='info'>You start detaching the [src] from the [GetHardpointDisplayName()] of the [pod].</span>"
+		user.text2tab("<span class='info'>You start detaching the [src] from the [GetHardpointDisplayName()] of the [pod].</span>")
 		if(do_after(user, detachment_delay))
-			user << "<span class='info'>You finish detaching the [src].</span>"
+			user.text2tab("<span class='info'>You finish detaching the [src].</span>")
 			OnDetach(pod, user)
 
 	proc/OnAttach(var/obj/pod/pod, var/mob/user)
@@ -108,7 +108,7 @@
 			return 0
 
 		if((!(flags & P_ATTACHMENT_IGNORE_EMPED)) && attached_to.HasDamageFlag(P_DAMAGE_EMPED))
-			user << "<span class='warning'>Equipment malfunctioning...</span>"
+			user.text2tab("<span class='warning'>Equipment malfunctioning...</span>")
 			return 0
 
 		if(!(flags & P_ATTACHMENT_IGNORE_POWER))

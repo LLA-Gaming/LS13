@@ -17,7 +17,7 @@
 			return 0
 
 		if((toggles & P_TOGGLE_HUDLOCK) && L != pilot)
-			L << "<span class='warning'>The operator has forbidden outside menu access.</span>"
+			L.text2tab("<span class='warning'>The operator has forbidden outside menu access.</span>")
 			return 0
 
 		dat += "<div class='statusDisplay'>"
@@ -100,12 +100,12 @@
 					return 0
 
 				if(!istype(usr.get_active_hand(), /obj/item/weapon/wrench) && !istype(usr.get_inactive_hand(), /obj/item/weapon/wrench))
-					usr << "<span class='warning'>You need to hold a wrench to detach the internal canister.</span>"
+					usr.text2tab("<span class='warning'>You need to hold a wrench to detach the internal canister.</span>")
 					return 0
 
-				usr << "<span class='info'>You start to detach the [internal_canister].</span>"
+				usr.text2tab("<span class='info'>You start to detach the [internal_canister].</span>")
 				if(do_after(usr, 20))
-					usr << "<span class='info'>You detach the [internal_canister].</span>"
+					usr.text2tab("<span class='info'>You detach the [internal_canister].</span>")
 					internal_canister.loc = get_turf(usr)
 					internal_canister = 0
 
@@ -124,12 +124,12 @@
 					return 0
 
 				if(!istype(usr.get_active_hand(), /obj/item/weapon/wrench) && !istype(usr.get_inactive_hand(), /obj/item/weapon/wrench))
-					usr << "<span class='warning'>You need to hold a wrench to detach the power source.</span>"
+					usr.text2tab("<span class='warning'>You need to hold a wrench to detach the power source.</span>")
 					return 0
 
-				usr << "<span class='info'>You start to detach the [power_source].</span>"
+				usr.text2tab("<span class='info'>You start to detach the [power_source].</span>")
 				if(do_after(usr, 10))
-					usr << "<span class='info'>You detach the [power_source].</span>"
+					usr.text2tab("<span class='info'>You detach the [power_source].</span>")
 					power_source.loc = get_turf(usr)
 					power_source = 0
 
@@ -143,7 +143,7 @@
 
 				if(!(usr in GetOccupants()))
 					if(!istype(usr.get_active_hand(), /obj/item/weapon/wrench) && !istype(usr.get_inactive_hand(), /obj/item/weapon/wrench))
-						usr << "<span class='warning'>You need to hold a wrench to detach the [attachment].</span>"
+						usr.text2tab("<span class='warning'>You need to hold a wrench to detach the [attachment].</span>")
 						return 0
 
 				attachment.StartDetach(src, usr)
@@ -155,22 +155,22 @@
 
 			if("toggle_sor")
 				Toggle(P_TOGGLE_SOR)
-				usr << "<span class='info'>You toggle Stop on Reverse [toggles & P_TOGGLE_SOR ? "on" : "off"].</span>"
+				usr.text2tab("<span class='info'>You toggle Stop on Reverse [toggles & P_TOGGLE_SOR ? "on" : "off"].</span>")
 				pod_log.LogToggle(usr, P_TOGGLE_SOR)
 
 			if("toggle_lights")
 				Toggle(P_TOGGLE_LIGHTS)
-				usr << "<span class='info'>You toggle the lights [toggles & P_TOGGLE_LIGHTS ? "on" : "off"].</span>"
+				usr.text2tab("<span class='info'>You toggle the lights [toggles & P_TOGGLE_LIGHTS ? "on" : "off"].</span>")
 				pod_log.LogToggle(usr, P_TOGGLE_LIGHTS)
 
 			if("toggle_outside_hud_access")
 				Toggle(P_TOGGLE_HUDLOCK)
-				usr << "<span class='info'>Outside menu access is now [toggles & P_TOGGLE_HUDLOCK ? "forbidden" : "allowed"].</span>"
+				usr.text2tab("<span class='info'>Outside menu access is now [toggles & P_TOGGLE_HUDLOCK ? "forbidden" : "allowed"].</span>")
 				pod_log.LogToggle(usr, P_TOGGLE_HUDLOCK)
 
 			if("toggle_env_air")
 				Toggle(P_TOGGLE_ENVAIR)
-				usr << "<span class='info'>[toggles & P_TOGGLE_ENVAIR ? "Now" : "No longer"] using air from the environment.</span>"
+				usr.text2tab("<span class='info'>[toggles & P_TOGGLE_ENVAIR ? "Now" : "No longer"] using air from the environment.</span>")
 				pod_log.LogToggle(usr, P_TOGGLE_ENVAIR)
 
 			if("open_security_menu")
@@ -183,14 +183,14 @@
 						while(length(num2text(code)) > 6 || length(num2text(code)) < 4)
 						if(code)
 							locks += code
-							usr << "<span class='info'>You enter '[code]' as a lock.</span>"
+							usr.text2tab("<span class='info'>You enter '[code]' as a lock.</span>")
 							pod_log.LogSecurity(usr, P_LOCKTYPE_CODE, code)
 
 					else if(lock_type == "DNA")
 						if(ishuman(usr))
 							var/mob/living/carbon/human/H = usr
 							locks += H.dna.unique_enzymes
-							H << "<span class='info'>DNA added.</span>"
+							H.text2tab("<span class='info'>DNA added.</span>")
 							pod_log.LogSecurity(H, P_LOCKTYPE_DNA, H.dna.unique_enzymes)
 
 					return 1
@@ -201,7 +201,7 @@
 						if(length(locks) >= locks_index && locks[locks_index])
 							var/data = locks[locks_index]
 							locks.Cut(locks_index, locks_index + 1)
-							usr << "<span class='info'>Removed lock.</span>"
+							usr.text2tab("<span class='info'>Removed lock.</span>")
 							pod_log.LogSecurity(usr, GetLockType(data), data)
 							return 1
 

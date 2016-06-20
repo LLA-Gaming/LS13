@@ -31,7 +31,7 @@
 					triggered = 1
 
 				if(_trigger_message)
-					user << _trigger_message
+					user.text2tab(_trigger_message)
 
 		contains_object/
 			icon_state = "trigger_object"

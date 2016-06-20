@@ -42,15 +42,15 @@
 
 	attackby(var/obj/item/I, var/mob/living/L)
 		if(completed)
-			L << "<span class='info'>\The [src] is already activated.</span>"
+			L.text2tab("<span class='info'>\The [src] is already activated.</span>")
 			return 0
 
 		if(!istype(I, _accepts))
-			L << "<span class='warning'>\The [src] refuses \the [I].</span>"
+			L.text2tab("<span class='warning'>\The [src] refuses \the [I].</span>")
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50)
 			return 0
 
-		L << "<span class='info'>You swipe \the [I].</span>"
+		L.text2tab("<span class='info'>You swipe \the [I].</span>")
 		playsound(get_turf(src), 'sound/machines/chime.ogg', 50)
 
 		var/obj/effect/trigger_modules/conditional/keycard_trigger/trigger = locate() in get_turf(src)

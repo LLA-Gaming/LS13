@@ -66,7 +66,7 @@
 					return 0
 
 				keybind = TextToKeybind(selected_keybind)
-				usr << "<span class='info'>The [src] is now used with [lowertext(selected_keybind)].</span>"
+				usr.text2tab("<span class='info'>The [src] is now used with [lowertext(selected_keybind)].</span>")
 
 			if("toggle_active")
 				ToggleActive(usr)

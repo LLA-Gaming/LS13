@@ -219,7 +219,7 @@
 
 		examine()
 			..()
-			usr << "<span class='info'>The tag says it adds [seat_amount] new seat(s).</span>"
+			usr.text2tab("<span class='info'>The tag says it adds [seat_amount] new seat(s).</span>")
 
 		GetAvailableKeybinds()
 			return list()
@@ -255,7 +255,7 @@
 
 			if(href_list["action"] == "toggle_exclude_pilot")
 				exclude_pilot = !exclude_pilot
-				usr << "<span class='info'>The pilot is now [exclude_pilot ? "excluded" : "included"].</span>"
+				usr.text2tab("<span class='info'>The pilot is now [exclude_pilot ? "excluded" : "included"].</span>")
 
 		Use(var/atom/target, var/mob/user, var/flags = P_ATTACHMENT_PLAYSOUND | P_ATTACHMENT_IGNORE_POWER | P_ATTACHMENT_IGNORE_COOLDOWN)
 			if(!(..(target, user, flags)))
@@ -299,10 +299,10 @@
 			if(!stored_mech && istype(dropping, /obj/mecha))
 				var/obj/mecha/mech = dropping
 				if(mech.occupant)
-					user << "<span class='warning'>The mech has to be unoccupied.</span>"
+					user.text2tab("<span class='warning'>The mech has to be unoccupied.</span>")
 					return 0
 
-				user << "<span class='info'>You start loading the mech into the pod, this may take a while.</span>"
+				user.text2tab("<span class='info'>You start loading the mech into the pod, this may take a while.</span>")
 				var/turf/mech_turf = get_turf(mech)
 				if(do_after(user, 100))
 					if(!mech)
@@ -312,7 +312,7 @@
 					if(mech.occupant)
 						return 0
 
-					user << "<span class='info'>You load the mech into the pod.</span>"
+					user.text2tab("<span class='info'>You load the mech into the pod.</span>")
 
 					mech.loc = src
 					stored_mech = mech
@@ -330,5 +330,5 @@
 				if(!stored_mech)
 					return 0
 
-				usr << "<span class='info'>You release the mech.</span>"
+				usr.text2tab("<span class='info'>You release the mech.</span>")
 				stored_mech.loc = get_turf(attached_to)

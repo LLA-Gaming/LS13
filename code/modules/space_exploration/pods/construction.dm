@@ -132,24 +132,24 @@
 				overlays += image(icon = icon, icon_state = "pod_control")
 
 		examine()
-			usr << "\blue Attached are:"
+			usr.text2tab("\blue Attached are:")
 			if(CSHasFlag(P_CS_CIRCUITS))
-				usr << "\blue * Circuits"
+				usr.text2tab("\blue * Circuits")
 
 			if(CSHasFlag(P_CS_ENGINE))
-				usr << "\blue * Engine"
+				usr.text2tab("\blue * Engine")
 
 			if(CSHasFlag(P_CS_WIRES))
-				usr << "\blue * Wires"
+				usr.text2tab("\blue * Wires")
 
 			if(CSHasFlag(P_CS_COVERS))
-				usr << "\blue * Covers"
+				usr.text2tab("\blue * Covers")
 
 			if(CSHasFlag(P_CS_CONTROL))
-				usr << "\blue * Control"
+				usr.text2tab("\blue * Control")
 
 			if(CSHasFlag(P_CS_CELL))
-				usr << "\blue * Cell."
+				usr.text2tab("\blue * Cell.")
 
 		attackby(var/obj/item/I, var/mob/living/user)
 			var/requires_tool = GetRequiredToolUsage(src)
@@ -171,7 +171,7 @@
 				if(istype(I, required_tool))
 					CSRemoveFlag(requires_tool)
 					if(requires_tool == P_CS_ACTION_MULTI)
-						user << "<span class='info'>You use the multitool on the [src].</span>"
+						user.text2tab("<span class='info'>You use the multitool on the [src].</span>")
 					else if(required_tool == P_CS_ACTION_WELD)
 						var/obj/item/weapon/weldingtool/welder = I
 						if(!welder.isOn())
@@ -179,15 +179,15 @@
 						if(!welder.remove_fuel(1, user))
 							return 0
 					else
-						user << "<span class='info'>You [BF2Text(requires_tool)] the [src].</span>"
+						user.text2tab("<span class='info'>You [BF2Text(requires_tool)] the [src].</span>")
 					PlayToolSound(requires_tool)
 
 			// Special behavior for engines.
 			if(istype(I, /obj/item/weapon/pod_attachment/engine))
 				if(CSHasFlag(P_CS_CIRCUITS) && !CSHasFlag(!P_CS_ENGINE) && GetRequiredToolUsage(src) == 0)
-					user << "<span class='info'>You start attaching the [I] to the [src].</span>"
+					user.text2tab("<span class='info'>You start attaching the [I] to the [src].</span>")
 					if(do_after(user, 20))
-						user << "<span class='info'>You attached the [I] to the [src].</span>"
+						user.text2tab("<span class='info'>You attached the [I] to the [src].</span>")
 						CSAddFlag(P_CS_ACTION_WRENCH)
 						CSAddFlag(P_CS_ENGINE)
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 100, 0, 0)
@@ -197,9 +197,9 @@
 
 			else if(istype(I, /obj/item/stack/cable_coil))
 				if(CSHasFlag(P_CS_ENGINE) && !CSHasFlag(P_CS_WIRES) && GetRequiredToolUsage(src) == 0)
-					user << "<span class='info'>You start attaching the [I] to the [src].</span>"
+					user.text2tab("<span class='info'>You start attaching the [I] to the [src].</span>")
 					if(do_after(user, 20))
-						user << "<span class='info'>You attached the [I] to the [src].</span>"
+						user.text2tab("<span class='info'>You attached the [I] to the [src].</span>")
 						CSAddFlag(P_CS_ACTION_WIRECUT)
 						CSAddFlag(P_CS_WIRES)
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 100, 0, 0)
@@ -209,9 +209,9 @@
 
 			else if(istype(I, /obj/item/weapon/stock_parts/cell))
 				if(CSHasFlag(P_CS_CONTROL) && !CSHasFlag(P_CS_CELL) && GetRequiredToolUsage(src) == 0)
-					user << "<span class='info'>You start attaching the [I] to the [src].</span>"
+					user.text2tab("<span class='info'>You start attaching the [I] to the [src].</span>")
 					if(do_after(user, 20))
-						user << "<span class='info'>You attached the [I] to the [src].</span>"
+						user.text2tab("<span class='info'>You attached the [I] to the [src].</span>")
 						CSAddFlag(P_CS_ACTION_SCREW)
 						CSAddFlag(P_CS_CELL)
 						playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 100, 0, 0)
@@ -264,7 +264,7 @@
 		proc/FrameAction(var/obj/item/pod_construction_part/frame/frame, var/mob/user)
 			var/result = CanAttach(frame)
 			if(result == 0)
-				user << "<span class='info'>You start attaching the [src] to the [frame].</span>"
+				user.text2tab("<span class='info'>You start attaching the [src] to the [frame].</span>")
 				if(do_after(user, attach_delay))
 					if(istype(src, /obj/item/pod_construction_part/parts/armor))
 						var/obj/item/pod_construction_part/parts/armor/A = src
@@ -274,7 +274,7 @@
 						qdel(src)
 						return 0
 
-					user << "<span class='info'>You attached the [src] to the [frame].</span>"
+					user.text2tab("<span class='info'>You attached the [src] to the [frame].</span>")
 					frame.CSAddFlag(added_construction_stage)
 					frame.CSAddFlag(required_action)
 					frame.update_icon()
@@ -282,15 +282,15 @@
 					qdel(src)
 			else
 				if(result == P_C_ERROR_REQUIRES)
-					user << "<span class='info'>The [src] requires [BF2Text(required_construction_stage)].</span>"
+					user.text2tab("<span class='info'>The [src] requires [BF2Text(required_construction_stage)].</span>")
 				else if(result == P_C_ERROR_ALREADY_HAS)
-					user << "<span class='info'>The frame already has that part."
+					user.text2tab("<span class='info'>The frame already has that part.")
 				else if(result == P_C_ERROR_NEEDS_TOOL)
 					var/required_tool = GetRequiredToolUsage(frame)
 					if(required_tool == P_CS_ACTION_MULTI)
-						user << "<span class='warning'>You need to use a multitool on the frame.</span>"
+						user.text2tab("<span class='warning'>You need to use a multitool on the frame.</span>")
 					else
-						user << "<span class='warning'>You need to [BF2Text(required_tool)] the frame.</span>"
+						user.text2tab("<span class='warning'>You need to [BF2Text(required_tool)] the frame.</span>")
 
 		frames/
 			name = "pod frame part"
@@ -321,7 +321,7 @@
 
 						F.PlayToolSound(P_CS_ACTION_WELD)
 
-						user << "<span class='info'>You weld the frames together.</span>"
+						user.text2tab("<span class='info'>You weld the frames together.</span>")
 
 			pickup()
 				return 0
