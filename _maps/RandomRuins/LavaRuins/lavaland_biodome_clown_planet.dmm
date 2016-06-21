@@ -7,7 +7,8 @@
 /area/ruin/powered)
 "ac" = (
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ad" = (
@@ -21,7 +22,8 @@
 "af" = (
 /obj/item/clothing/head/cone,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ag" = (
@@ -30,7 +32,8 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ah" = (
@@ -46,7 +49,8 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aj" = (
@@ -55,7 +59,8 @@
 	dir = 1
 	},
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ak" = (
@@ -96,7 +101,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ap" = (
@@ -106,7 +112,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aq" = (
@@ -115,7 +122,8 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ar" = (
@@ -124,6 +132,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -135,6 +144,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -146,6 +156,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -154,7 +165,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "av" = (
@@ -174,7 +186,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ax" = (
@@ -184,6 +197,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -196,6 +210,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -207,6 +222,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -217,6 +233,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -228,12 +245,14 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
 "aC" = (
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -241,6 +260,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -250,6 +270,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -261,6 +282,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -272,6 +294,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -284,6 +307,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -296,6 +320,7 @@
 /obj/item/weapon/bikehorn,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -317,6 +342,7 @@
 /obj/effect/decal/cleanable/pie_smudge,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -337,6 +363,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -354,6 +381,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -363,12 +391,14 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aQ" = (
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aR" = (
@@ -386,7 +416,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aT" = (
@@ -396,6 +427,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -403,7 +435,8 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aV" = (
@@ -415,6 +448,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -426,6 +460,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -437,7 +472,8 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aY" = (
@@ -447,6 +483,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -456,13 +493,16 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "darkredfull"
+	icon_state = "darkredfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	wet = 5
 	},
 /area/ruin/powered)
 "ba" = (
 /obj/effect/decal/cleanable/pie_smudge,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -472,7 +512,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bc" = (
@@ -484,6 +525,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -498,7 +540,8 @@
 	},
 /obj/item/weapon/pen/fourcolor,
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "be" = (
@@ -509,7 +552,8 @@
 /obj/structure/table,
 /obj/item/device/flashlight/lamp/bananalamp,
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bf" = (
@@ -521,6 +565,7 @@
 /obj/effect/decal/cleanable/pie_smudge,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -531,7 +576,8 @@
 	},
 /obj/item/weapon/pickaxe,
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bh" = (
@@ -541,7 +587,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bi" = (
@@ -551,7 +598,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bj" = (
@@ -560,7 +608,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "light_on"
+	icon_state = "light_on";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bk" = (
@@ -568,12 +617,14 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bl" = (
 /turf/open/indestructible{
-	icon_state = "light_on"
+	icon_state = "light_on";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bm" = (
@@ -583,7 +634,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bn" = (
@@ -593,7 +645,8 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bo" = (
@@ -609,12 +662,14 @@
 "bq" = (
 /obj/item/weapon/pickaxe,
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "br" = (
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bs" = (
@@ -624,7 +679,9 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "darkredfull"
+	icon_state = "darkredfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	wet = 5
 	},
 /area/ruin/powered)
 "bt" = (
@@ -634,7 +691,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bu" = (
@@ -646,6 +704,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -662,6 +721,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/indestructible{
 	icon_state = "darkredfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -669,6 +729,7 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -678,18 +739,21 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/indestructible{
-	icon_state = "white"
+	icon_state = "white";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bA" = (
 /turf/open/indestructible{
 	icon_state = "darkredfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
 "bB" = (
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -704,6 +768,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -714,7 +779,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bE" = (
@@ -725,7 +791,8 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "bF" = (
@@ -734,6 +801,7 @@
 	},
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -750,6 +818,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -760,6 +829,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -781,6 +851,7 @@
 	},
 /turf/open/indestructible{
 	icon_state = "darkredfull";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	wet = 5
 	},
 /area/ruin/powered)
@@ -809,6 +880,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -867,6 +939,7 @@
 /obj/item/weapon/bikehorn,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -882,6 +955,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -891,6 +965,7 @@
 /obj/machinery/door/airlock/clown,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -901,6 +976,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
 	wet = 5
@@ -1025,7 +1101,7 @@ ah
 ak
 ak
 ak
-aR
+ao
 aJ
 ao
 aJ
@@ -1039,7 +1115,7 @@ ah
 ah
 ak
 ak
-bX
+aU
 aQ
 ak
 ak
@@ -1058,7 +1134,7 @@ ah
 ak
 ak
 am
-aN
+au
 aS
 aV
 aH
@@ -1072,7 +1148,7 @@ ah
 ah
 bO
 bB
-bX
+aU
 ak
 ak
 ak
@@ -1108,9 +1184,9 @@ bB
 bH
 bY
 bB
-bX
+aU
 ak
-bX
+aU
 ak
 ak
 ah
@@ -1178,7 +1254,7 @@ ah
 bB
 bB
 bB
-bX
+aU
 ak
 ak
 ak
@@ -1248,7 +1324,7 @@ bH
 bB
 bB
 ak
-bX
+aU
 ak
 ah
 ah
@@ -1282,7 +1358,7 @@ bB
 bB
 bH
 ak
-bX
+aU
 ak
 ak
 ah
@@ -1317,7 +1393,7 @@ bB
 bH
 ak
 aQ
-bX
+aU
 ak
 ah
 "}
@@ -1351,7 +1427,7 @@ bH
 ca
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1385,7 +1461,7 @@ bH
 bH
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1419,7 +1495,7 @@ bH
 bB
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1453,7 +1529,7 @@ bH
 bB
 ah
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1487,7 +1563,7 @@ bB
 bB
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1521,7 +1597,7 @@ bB
 bB
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1555,7 +1631,7 @@ bH
 bH
 bB
 ak
-bX
+aU
 ak
 ah
 "}
@@ -1588,7 +1664,7 @@ bB
 bH
 bB
 ak
-bX
+aU
 aQ
 ak
 ah
@@ -1611,7 +1687,7 @@ bl
 bl
 bp
 ah
-bJ
+aZ
 bA
 bB
 bB
@@ -1622,7 +1698,7 @@ bB
 bB
 bB
 ak
-bX
+aU
 ak
 ak
 ah
@@ -1656,7 +1732,7 @@ bB
 bW
 bB
 ah
-bX
+aU
 ak
 ah
 ah
@@ -1757,7 +1833,7 @@ bB
 bB
 ah
 ak
-bX
+aU
 ak
 ah
 ah
@@ -1856,7 +1932,7 @@ ah
 ak
 ak
 aQ
-bX
+aU
 ak
 ak
 ah

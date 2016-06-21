@@ -260,7 +260,7 @@
 "K" = (
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=13;n2=24;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "L" = (
@@ -274,21 +274,15 @@
 /obj/item/weapon/pickaxe,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=13;n2=24;TEMP=300"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "N" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"R" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"Q" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+"O" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -299,8 +293,14 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
-"O" = (
-/obj/item/weapon/reagent_containers/glass/bowl,
+"Q" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/unpowered)
+"R" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

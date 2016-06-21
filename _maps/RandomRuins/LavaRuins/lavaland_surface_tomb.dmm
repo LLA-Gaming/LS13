@@ -28,18 +28,21 @@
 "h" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "i" = (
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "j" = (
 /mob/living/simple_animal/hostile/skeleton,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "k" = (
@@ -49,31 +52,36 @@
 	},
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "l" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/transparent/diamond,
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "m" = (
 /obj/item/weapon/ore/diamond,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "n" = (
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "o" = (
 /obj/item/weapon/ore/gold,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "p" = (
@@ -83,27 +91,31 @@
 /obj/structure/table,
 /obj/item/weapon/tome,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "r" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/silver,
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "s" = (
 /obj/item/weapon/ore/bananium,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "t" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/gold,
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "u" = (
@@ -116,14 +128,16 @@
 /obj/item/weapon/veilrender/honkrender,
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "v" = (
 /obj/structure/table,
 /obj/item/weapon/spellbook/oneuse/charge,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "w" = (
@@ -137,26 +151,30 @@
 	uniform = /obj/item/clothing/under/soviet
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "x" = (
 /obj/item/weapon/ore/uranium,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "y" = (
 /obj/item/weapon/ore/plasma,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "z" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/iron,
 /turf/open/floor/vault{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "A" = (
@@ -164,14 +182,16 @@
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/shield/riot/buckler,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "B" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 

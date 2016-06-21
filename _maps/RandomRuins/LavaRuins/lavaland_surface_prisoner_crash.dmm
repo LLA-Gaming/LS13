@@ -38,7 +38,7 @@
 "i" = (
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "j" = (
@@ -60,8 +60,7 @@
 "l" = (
 /obj/item/weapon/shard,
 /turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "m" = (
@@ -94,7 +93,7 @@
 /obj/item/weapon/shard,
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "r" = (
@@ -109,8 +108,7 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "t" = (
