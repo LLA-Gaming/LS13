@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab-idle"
+	icon_state = "fab"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = 1
