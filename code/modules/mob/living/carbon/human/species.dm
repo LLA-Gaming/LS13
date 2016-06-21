@@ -943,6 +943,7 @@
 				return 1
 			else
 				H.grabbedby(M)
+				add_logs(M,H,"grabbed")
 				return 1
 
 		if("harm")
@@ -973,7 +974,7 @@
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
-				add_logs(M, H, "punched")
+				add_logs(M, H, "punched",addition="DAMAGE:[damage]")
 				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
