@@ -1414,9 +1414,8 @@
 /turf/open/floor/plating,
 /area/ctf)
 "eq" = (
-/turf/open/floor/plating/airless/warnplate{
-	dir = 4;
-	luminosity = 2
+/turf/open/floor/plating/warnplate{
+	dir = 4
 	},
 /area/ctf)
 "er" = (
@@ -3207,23 +3206,23 @@
 	},
 /area/centcom/evac)
 "jV" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "jW" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "jX" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "jY" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "jZ" = (
 /obj/item/weapon/disk/data,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "ka" = (
 /turf/closed/indestructible/fakeglass{
@@ -3267,7 +3266,7 @@
 /area/centcom/evac)
 "kh" = (
 /obj/item/toy/figure/syndie,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "ki" = (
 /obj/machinery/door/airlock/external{
@@ -3314,7 +3313,7 @@
 /area/centcom/evac)
 "ko" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "kp" = (
 /obj/machinery/computer/cargo,
@@ -3430,7 +3429,7 @@
 /turf/open/floor/engine,
 /area/centcom/evac)
 "kG" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/space)
 "kH" = (
 /turf/closed/indestructible/fakeglass,
@@ -4263,7 +4262,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 18
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/space)
 "nj" = (
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -4363,7 +4362,7 @@
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "nA" = (
 /turf/open/floor/wood,
@@ -4988,7 +4987,7 @@
 /area/wizard_station)
 "ps" = (
 /obj/structure/statue/uranium/nuke,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/floor/plating/asteroid/snow/syndicate,
 /area/syndicate_mothership)
 "pt" = (
 /obj/machinery/door/poddoor{
@@ -5288,7 +5287,7 @@
 /obj/machinery/door/poddoor{
 	id = "prisonship"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/security/perseus/mycenae_centcom)
 "qm" = (
 /obj/structure/table/reinforced,
@@ -6050,15 +6049,8 @@
 	},
 /area/security/perseus/mycenae_centcom)
 "si" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Brig";
-	req_access_txt = "69"
-	},
-/turf/open/floor{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/security/perseus/mycenae_centcom)
+/turf/open/floor/plating/warnplate,
+/area/ctf)
 "sj" = (
 /turf/open/floor{
 	tag = "icon-warning (WEST)";
@@ -52790,7 +52782,7 @@ ea
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -53818,7 +53810,7 @@ dJ
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -54846,7 +54838,7 @@ ea
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -56131,7 +56123,7 @@ dx
 dx
 dx
 eh
-em
+si
 ep
 eu
 ez
@@ -57416,7 +57408,7 @@ ea
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -58444,7 +58436,7 @@ eM
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -59472,7 +59464,7 @@ ea
 dM
 ea
 eh
-em
+si
 ep
 eu
 ez
@@ -64847,9 +64839,9 @@ dx
 dx
 dx
 ep
-ea
-ea
-ea
+dx
+dx
+dx
 dF
 dF
 dF
@@ -65360,7 +65352,7 @@ dx
 dx
 dx
 dx
-eq
+ep
 dx
 dx
 dx

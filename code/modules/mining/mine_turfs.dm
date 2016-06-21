@@ -471,6 +471,9 @@
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "TEMP=255.37"
 
+/turf/open/floor/plating/asteroid/snow/syndicate
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/floor/plating/asteroid/New()
 	var/proper_name = name
 	..()

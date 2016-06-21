@@ -1101,7 +1101,7 @@
 	icon_state = "propulsion_l";
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/prison/station)
 "acZ" = (
 /obj/structure/shuttle/engine/heater{
@@ -1111,7 +1111,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/prison/station)
 "ada" = (
 /obj/machinery/computer/shuttle/perseus,
@@ -1304,7 +1304,7 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/prison/station)
 "adA" = (
 /obj/structure/chair{
@@ -1475,7 +1475,7 @@
 	icon_state = "burst_r";
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/prison/station)
 "adW" = (
 /obj/structure/bed,
@@ -60635,338 +60635,98 @@
 /obj/structure/chair/comfy/teal,
 /turf/open/floor/carpet,
 /area/medical/medbay)
-"cDG" = (
-/obj/machinery/camera{
-	c_tag = "Arrivals Bay B";
-	dir = 8;
-	network = list("SS13")
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDF" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDE" = (
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/black,
+"cCw" = (
+/turf/closed/wall/r_wall,
 /area/pod_hangar/crew)
-"cDD" = (
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/black,
+"cCx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
 /area/pod_hangar/crew)
-"cDC" = (
-/obj/machinery/light,
-/obj/machinery/space_heater,
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
-	},
-/area/pod_hangar/crew)
-"cDB" = (
-/obj/machinery/camera{
-	c_tag = "Bridge West Entrance";
-	dir = 1;
-	name = "Pod Bay C"
-	},
+"cCy" = (
 /turf/open/floor/engine,
 /area/pod_hangar/crew)
-"cDA" = (
-/obj/machinery/light,
-/turf/open/floor/engine,
-/area/pod_hangar/crew)
-"cDz" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDy" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDx" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high/plus,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDw" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high/plus,
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDv" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+"cCz" = (
+/obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDu" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/pod_hangar/crew)
-"cDs" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDq" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Pod Bay"
-	},
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cDp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cDo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
-	},
-/area/pod_hangar/crew)
-"cDn" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDl" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDk" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDj" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Pod Bay"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDi" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDh" = (
-/obj/machinery/hologram/holopad,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDg" = (
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDf" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/cable_coil/random,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDe" = (
-/obj/machinery/hologram/holopad,
 /turf/open/floor/engine,
 /area/pod_hangar/crew)
-"cDd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/turf/open/floor/plating,
-/area/pod_hangar/crew)
-"cDb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cDa" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCZ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCY" = (
+"cCA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/device/multitool,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cCW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Pod Bay"
-	},
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCS" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
-	},
-/area/pod_hangar/crew)
-"cCQ" = (
-/obj/pod/large/light,
-/turf/open/floor/engine,
-/area/pod_hangar/crew)
-"cCP" = (
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/camera{
-	c_tag = "Arrivals Bay A";
+	c_tag = "Pod Bay A"
+	},
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cCB" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cCC" = (
+/obj/item/weapon/wrench,
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cCD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
+	},
+/area/pod_hangar/crew)
+"cCE" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cCF" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cCG" = (
+/turf/closed/wall,
+/area/pod_hangar/crew)
+"cCH" = (
+/obj/machinery/hangar_forcefield_generator,
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cCI" = (
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
+	},
+/area/pod_hangar/crew)
+"cCJ" = (
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cCK" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cCL" = (
+/obj/machinery/mecha_part_fabricator/pod,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/firealarm{
 	dir = 8;
-	network = list("SS13")
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
+/area/pod_hangar/crew)
+"cCM" = (
+/obj/machinery/mecha_part_fabricator/pod,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cCN" = (
+/obj/machinery/computer/rdconsole/podbay,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
 "cCO" = (
 /obj/structure/closet/crate,
 /obj/structure/cable{
@@ -60988,98 +60748,338 @@
 	},
 /turf/open/floor/plasteel,
 /area/pod_hangar/crew)
-"cCN" = (
-/obj/machinery/computer/rdconsole/podbay,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCM" = (
-/obj/machinery/mecha_part_fabricator/pod,
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCL" = (
-/obj/machinery/mecha_part_fabricator/pod,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/plasteel,
-/area/pod_hangar/crew)
-"cCK" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCJ" = (
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCI" = (
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
-	},
-/area/pod_hangar/crew)
-"cCH" = (
-/obj/machinery/hangar_forcefield_generator,
-/turf/open/floor/engine,
-/area/pod_hangar/crew)
-"cCG" = (
-/turf/closed/wall,
-/area/pod_hangar/crew)
-"cCF" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCE" = (
-/obj/machinery/vending/assist,
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
-"cCD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/vending/tool,
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
-	},
-/area/pod_hangar/crew)
-"cCC" = (
-/obj/item/weapon/wrench,
-/turf/open/floor/engine,
-/area/pod_hangar/crew)
-"cCB" = (
-/obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma,
-/turf/open/floor/engine,
-/area/pod_hangar/crew)
-"cCA" = (
-/obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma,
+"cCP" = (
 /obj/machinery/camera{
-	c_tag = "Pod Bay A"
+	c_tag = "Arrivals Bay A";
+	dir = 8;
+	network = list("SS13")
 	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cCQ" = (
+/obj/pod/large/light,
 /turf/open/floor/engine,
 /area/pod_hangar/crew)
-"cCz" = (
-/obj/machinery/light{
-	dir = 1
+"cCR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
+	},
 /area/pod_hangar/crew)
-"cCy" = (
-/turf/open/floor/engine,
+"cCS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
 /area/pod_hangar/crew)
-"cCx" = (
+"cCT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cCU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cCV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cCW" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cCX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 2;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cCY" = (
+/obj/structure/table,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/device/multitool,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cCZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDa" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDc" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
 /turf/open/floor/plating,
 /area/pod_hangar/crew)
-"cCw" = (
-/turf/closed/wall/r_wall,
+"cDd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDe" = (
+/obj/machinery/hologram/holopad,
+/turf/open/floor/engine,
 /area/pod_hangar/crew)
+"cDf" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/cable_coil/random,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDg" = (
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDh" = (
+/obj/machinery/hologram/holopad,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDi" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDk" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDl" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDn" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDo" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
+	},
+/area/pod_hangar/crew)
+"cDp" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cDq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cDr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDs" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/pod_hangar/crew)
+"cDu" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDv" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDw" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high/plus,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDx" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high/plus,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDy" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDz" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/pod_hangar/crew)
+"cDA" = (
+/obj/machinery/light,
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cDB" = (
+/obj/machinery/camera{
+	c_tag = "Bridge West Entrance";
+	dir = 1;
+	name = "Pod Bay C"
+	},
+/turf/open/floor/engine,
+/area/pod_hangar/crew)
+"cDC" = (
+/obj/machinery/light,
+/obj/machinery/space_heater,
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
+	},
+/area/pod_hangar/crew)
+"cDD" = (
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cDE" = (
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/black,
+/area/pod_hangar/crew)
+"cDF" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDG" = (
+/obj/machinery/camera{
+	c_tag = "Arrivals Bay B";
+	dir = 8;
+	network = list("SS13")
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
