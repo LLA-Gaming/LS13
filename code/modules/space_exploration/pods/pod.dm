@@ -59,10 +59,6 @@ var/list/pod_list = list()
 		seats = GetSeats()
 		pod_log = new(src)
 
-		// Should be fine if we initialize a global variable in here.
-		if(!pod_config)
-			pod_config = new()
-
 		max_health = initial(health)
 
 		sparks = new /datum/effect_system/spark_spread()

@@ -578,8 +578,7 @@ var/next_mob_id = 0
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			config.stat_entry()
-			#warn Pods
-			//pod_config.AddToStat()
+			pod_config.AddToStat()
 			stat(null)
 			if(Master)
 				Master.stat_entry()

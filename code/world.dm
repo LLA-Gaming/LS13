@@ -291,6 +291,7 @@ var/inerror = 0
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
+	pod_config = new()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
