@@ -23,10 +23,6 @@
 	var/active = P_ATTACHMENT_ACTIVE
 	var/can_detach = 1
 
-	// Necessary for the fabricator
-	var/construction_time = 100
-	var/list/construction_cost = list()
-
 	New()
 		..()
 

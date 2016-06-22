@@ -362,7 +362,7 @@
 		var/T = filter.getStr("part")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
-			if(D.build_type & MECHFAB)
+			if(D.build_type & production_type)
 				if(D.id == T)
 					if(!processing_queue)
 						build_part(D)
@@ -373,7 +373,7 @@
 		var/T = filter.getStr("add_to_queue")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
-			if(D.build_type & MECHFAB)
+			if(D.build_type & production_type)
 				if(D.id == T)
 					add_to_queue(D)
 					break
@@ -411,7 +411,7 @@
 		var/T = filter.getStr("part_desc")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
-			if(D.build_type & MECHFAB)
+			if(D.build_type & production_type)
 				if(D.id == T)
 					var/obj/part = D.build_path
 					temp = {"<h1>[initial(part.name)] description:</h1>

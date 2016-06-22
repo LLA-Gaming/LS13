@@ -55,14 +55,12 @@
 	gps/ // This is used in human.Stat
 		name = "gps"
 		active = P_ATTACHMENT_PASSIVE
-		construction_cost = list("metal" = 400)
 		origin_tech = "programming=1"
 		has_menu = 0
 
 	lifeform/
 		name = "lifeform sensor"
 		cooldown = 10
-		construction_cost = list("metal" = 400)
 		origin_tech = "engineering=2;powerstorage=2;magnets=2;programming=2"
 
 		Sense(var/mob/living/user)

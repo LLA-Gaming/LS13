@@ -48,14 +48,12 @@
 			name = "light armor"
 			health = 50
 			damage_reduction_multiplier = 0.95
-			construction_cost = list("metal" = 16000)
 			origin_tech = "engineering=1;materials=1"
 
 		gold/
 			name = "golden armor"
 			health = 100
 			damage_reduction_multiplier = 0.90
-			construction_cost = list("metal" = 16000, "gold" = 8000)
 			origin_tech = "engineering=2;materials=2"
 
 		industrial/
@@ -63,26 +61,22 @@
 			health = 150
 			damage_reduction_multiplier = 0.85
 			temperature_damage_minimum = PLASMA_UPPER_TEMPERATURE
-			construction_cost = list("metal" = 16000, "uranium" = 8000)
 			origin_tech = "engineering=4;materials=4"
 
 		heavy/
 			name = "heavy armor"
 			health = 200
 			damage_reduction_multiplier = 0.80
-			construction_cost = list("metal" = 16000, "uranium" = 12000)
 			origin_tech = "engineering=4;materials=4;combat=3"
 
 		prototype/
 			name = "prototype armor"
 			health = 300
 			damage_reduction_multiplier = 0.75
-			construction_cost = list("metal" = 16000, "uranium" = 12000, "diamond" = 6000, "silver" = 6000)
 			origin_tech = "engineering=5;materials=6;illegal=2"
 
 		precursor/
 			name = "precursor armor"
 			health = 500
 			damage_reduction_multiplier = 0.70
-			construction_cost = list("metal" = 16000, "uranium" = 12000, "diamond" = 10000, "silver" = 8000)
 			origin_tech = "engineering=5;materials=6;illegal=4"
