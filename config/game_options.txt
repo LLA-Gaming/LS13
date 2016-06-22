@@ -18,6 +18,10 @@ REVIVAL_CLONING 1
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
+## BLOOD ##
+## Comment out to make blood packs require exact blood type
+ONE_BLOOD_FITS_ALL
+
 ### RENAMING ###
 
 #Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
