@@ -72,16 +72,16 @@
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(det_time)
-			if ("1")
+			if (1)
 				det_time = 10
 				user.text2tab("<span class='notice'>You set the [name] for 1 second detonation time.</span>")
-			if ("10")
+			if (10)
 				det_time = 30
 				user.text2tab("<span class='notice'>You set the [name] for 3 second detonation time.</span>")
-			if ("30")
+			if (30)
 				det_time = 50
 				user.text2tab("<span class='notice'>You set the [name] for 5 second detonation time.</span>")
-			if ("50")
+			if (50)
 				det_time = 1
 				user.text2tab("<span class='notice'>You set the [name] for instant detonation.</span>")
 		add_fingerprint(user)
