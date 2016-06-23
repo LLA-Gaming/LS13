@@ -144,6 +144,8 @@
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
 
+	var/simple_blood = 0
+
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
@@ -458,6 +460,8 @@
 					config.revival_cloning			= text2num(value)
 				if("revival_brain_life")
 					config.revival_brain_life		= text2num(value)
+				if("one_blood_fits_all")
+					config.simple_blood				= 1
 				if("rename_cyborg")
 					config.rename_cyborg			= 1
 				if("ooc_during_round")

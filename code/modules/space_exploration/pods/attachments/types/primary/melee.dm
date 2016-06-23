@@ -11,7 +11,6 @@
 		var/damage = 15
 		var/damage_type = BRUTE
 		var/automine = 0
-		construction_cost = list("metal" = 4000)
 		origin_tech = "engineering=1"
 
 		Use(var/atom/target, var/mob/user, var/flags = P_ATTACHMENT_IGNORE_POWER)
@@ -83,5 +82,4 @@
 			damage_predicate = "cut"
 			damage = 20
 			damage_type = BURN
-			construction_cost = list("metal" = 4000, "plasma" = 1500, "silver" = 1500)
 			origin_tech = "engineering=2;magnets=2"

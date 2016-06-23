@@ -139,7 +139,6 @@
 		small/
 			name = "small cargo hold"
 			capacity = 10
-			construction_cost = list("metal" = 1000)
 			origin_tech = "engineering=1;materials=1"
 
 		medium/
@@ -147,7 +146,6 @@
 			capacity = 25
 			max_w_class = 4
 			minimum_pod_size = list(2, 2)
-			construction_cost = list("metal" = 2000)
 			origin_tech = "engineering=2;materials=2"
 
 		large/
@@ -155,7 +153,6 @@
 			capacity = 50
 			max_w_class = 4
 			minimum_pod_size = list(2, 2)
-			construction_cost = list("metal" = 4000)
 			origin_tech = "engineering=4;materials=4"
 
 		industrial/
@@ -164,6 +161,5 @@
 			capacity = 200
 			max_w_class = 4
 			minimum_pod_size = list(2, 2)
-			construction_cost = list("metal" = 2000)
 			origin_tech = "engineering=1;materials=1"
 			can_hold = list(/obj/item/weapon/ore)
