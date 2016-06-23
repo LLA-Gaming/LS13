@@ -112,6 +112,10 @@ var/datum/subsystem/shuttle/SSshuttle
 			user.text2tab("The emergency shuttle has been disabled by Centcom.")
 			return
 
+	if(istype(get_area(user),/area/shuttle/abandoned))
+		user.text2tab("Call request blocked by [pick(list("GRIFFON particle emissions","bluespace disruptions","quantum fluctuations","bad karma","odd smells"))] from a nearby warp engine.")
+		return
+
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
@@ -119,6 +123,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		return
 
 	var/area/signal_origin = get_area(user)
+
+
+
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
@@ -138,6 +145,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	src.emergency = src.backup_shuttle
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(istype(get_area(user),/area/shuttle/abandoned))
+		user.text2tab("Recall attempt blocked by [pick(list("GRIFFON particle emissions","bluespace disruptions","quantum fluctuations","bad karma","odd smells"))] from a nearby warp engine.")
+		log_game("[key_name(user)] has attempted to recall the shuttle from a forbidden area.")
+		message_admins("[key_name(user)] has attempted to recall the shuttle from a forbidden area.")
+		return
+
 	if(canRecall())
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
