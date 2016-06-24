@@ -82,6 +82,8 @@ var/list/pod_list = list()
 					power_source = cell
 
 
+
+
 	process()
 		/*
 		* Damage Handling
@@ -605,3 +607,39 @@ var/list/pod_list = list()
 			user.client.debug_variables(pod_log)
 
 		OpenDebugMenu(user)
+
+	Adjacent(var/atom/neighbor)
+		if(neighbor in bounds(1))
+			return 1
+
+	return_air()
+		if(toggles & P_TOGGLE_ENVAIR)
+			return loc.return_air()
+		if(internal_air)
+			return internal_air
+		else	..()
+
+
+	remove_air(var/amt)
+		if(toggles & P_TOGGLE_ENVAIR)
+			var/datum/gas_mixture/env = loc.return_air()
+			return env.remove(amt)
+		if(internal_air)
+			return internal_air.remove(amt)
+		else return ..()
+
+	proc/return_temperature()
+		if(toggles & P_TOGGLE_ENVAIR)
+			var/datum/gas_mixture/env = loc.return_air()
+			return env.return_temperature()
+		if(internal_air)
+			return internal_air.return_temperature()
+		else return ..()
+
+	proc/return_pressure()
+		if(toggles & P_TOGGLE_ENVAIR)
+			var/datum/gas_mixture/env = loc.return_air()
+			return env.return_pressure()
+		if(internal_air)
+			return internal_air.return_pressure()
+		else return ..()
