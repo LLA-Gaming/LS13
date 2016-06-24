@@ -18,6 +18,8 @@ var/datum/subsystem/minimap/SSminimap
 		return
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
 	if(hash == trim(file2text(hash_path())))
+		for(var/z in z_levels)
+			register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
 		return ..()
 
 	for(var/z in z_levels)
