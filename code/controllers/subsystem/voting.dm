@@ -193,6 +193,9 @@ var/datum/subsystem/vote/SSvote
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
+		var/sound/S = sound('sound/effects/ghost2.ogg',0,1,0)
+		for(var/mob/M in world)
+			M << S
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
 			text += "\n[question]"
@@ -286,6 +289,8 @@ var/datum/subsystem/vote/SSvote
 			if(config.allow_vote_restart || usr.client.holder)
 				initiate_vote("restart",usr.key)
 		if("crewtransfer")
+			if(ticker.current_state != GAME_STATE_PLAYING)
+				return
 			if(usr.client.holder)
 				var/input = stripped_input(usr, "Please supply a reason", "Reason", "I ded: please restart" , 30)
 				if(!input)
