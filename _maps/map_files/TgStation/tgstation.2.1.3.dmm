@@ -24028,7 +24028,12 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "bcA" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bcB" = (
@@ -25398,12 +25403,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bga" = (
@@ -25414,12 +25413,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bgb" = (
@@ -25427,12 +25420,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bgc" = (
@@ -25442,12 +25429,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bgd" = (
@@ -25456,12 +25437,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -25474,12 +25449,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bgf" = (
@@ -25875,12 +25844,6 @@
 "bhe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bhf" = (
@@ -26447,12 +26410,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "biu" = (
@@ -26466,12 +26423,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -60637,10 +60588,12 @@
 /turf/closed/wall/r_wall,
 /area/pod_hangar/crew)
 "cCx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/pod_hangar/crew)
+/obj/machinery/camera{
+	c_tag = "Arrivals Bay 3 & 4";
+	dir = 1
+	},
+/turf/open/floor/plasteel/warning,
+/area/hallway/secondary/entry)
 "cCy" = (
 /turf/open/floor/engine,
 /area/pod_hangar/crew)
@@ -61059,23 +61012,22 @@
 /turf/open/floor/plasteel/black,
 /area/pod_hangar/crew)
 "cDF" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cDG" = (
 /obj/machinery/camera{
-	c_tag = "Arrivals Bay B";
+	c_tag = "Arrivals Bay 2";
 	dir = 8;
 	network = list("SS13")
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cDG" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27;
+	pixel_y = 0
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 
@@ -64817,16 +64769,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmK
 bpN
 bmO
@@ -64933,18 +64875,18 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 "}
 (16,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -65190,6 +65132,16 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 "}
 (17,1,1) = {"
 aaa
@@ -65331,21 +65283,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -65588,21 +65540,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -65845,21 +65797,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66102,21 +66054,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66359,21 +66311,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66616,21 +66568,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66734,16 +66686,6 @@ aaa
 aaa
 "}
 (23,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -66989,18 +66931,18 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 "}
 (24,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -67246,18 +67188,18 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 "}
 (25,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -67402,6 +67344,16 @@ bpN
 bmO
 bpN
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67645,19 +67597,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmN
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67901,21 +67853,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmK
 bpN
 bmO
 bpN
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68157,16 +68109,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmK
 bpN
 bry
@@ -68174,6 +68116,16 @@ boo
 buD
 bpN
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68406,16 +68358,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaK
 bmK
 bol
@@ -68438,6 +68380,16 @@ bpK
 bpK
 buz
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68664,16 +68616,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmL
 bom
 bpL
@@ -68695,6 +68637,16 @@ bpL
 bpL
 bta
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68922,16 +68874,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 bmL
 bpM
 brx
@@ -68951,6 +68893,16 @@ brx
 brx
 bKH
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69166,17 +69118,7 @@ abi
 aaa
 aaa
 aaa
-cCw
-cCw
-cCH
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCw
-cCw
+abi
 aaa
 aaa
 aaa
@@ -69207,6 +69149,16 @@ brx
 brx
 bKH
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69423,17 +69375,7 @@ abi
 aaa
 aaa
 aaa
-cCw
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCw
+abi
 aaa
 aaa
 aaa
@@ -69463,6 +69405,16 @@ bon
 buB
 bpP
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69680,17 +69632,7 @@ abi
 abi
 aaa
 aaa
-cCx
-cCy
-cCy
-cCQ
-cCy
-cCy
-cCy
-cCy
-cCQ
-cCy
-cCx
+abi
 aaa
 aXQ
 baN
@@ -69720,6 +69662,16 @@ boo
 boo
 bta
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69937,17 +69889,7 @@ aCD
 abi
 aaa
 aaa
-cCx
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCx
+abi
 aXQ
 aZf
 aZg
@@ -69978,6 +69920,16 @@ boo
 bta
 bpN
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70194,17 +70146,7 @@ atw
 auw
 ayS
 ayS
-cCw
-cCz
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cDA
-cCw
+atw
 aXR
 aZg
 aZg
@@ -70236,6 +70178,16 @@ bta
 bon
 bpN
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70451,17 +70403,7 @@ ayS
 ayS
 aTD
 aUZ
-cCw
-cCA
-cCy
-cCy
-cCy
-cDe
-cCy
-cCy
-cCy
-cDB
-cCw
+atw
 aXR
 aZh
 aZg
@@ -70493,6 +70435,16 @@ bmO
 boo
 buD
 bom
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70708,17 +70660,7 @@ awJ
 aBz
 aAj
 aVa
-cCx
-cCB
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCx
+ayS
 aXS
 aZi
 aZg
@@ -70751,6 +70693,16 @@ boo
 bMg
 bta
 bEn
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70965,17 +70917,7 @@ ayS
 ayS
 ayT
 aVa
-cCx
-cCC
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCy
-cCx
+ayS
 aXR
 aZi
 aZg
@@ -71008,6 +70950,16 @@ boo
 boo
 buD
 bom
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71222,17 +71174,7 @@ aQU
 aBA
 aSp
 aVa
-cCw
-cCD
-cCI
-cCR
-cCI
-cCI
-cCI
-cDo
-cCI
-cDC
-cCw
+ayS
 aXR
 aZi
 aZg
@@ -71265,6 +71207,16 @@ bKI
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71479,17 +71431,7 @@ aQV
 aAj
 aAj
 aVa
-cCx
-cCE
-cCJ
-cCS
-cCJ
-cCJ
-cCJ
-cDp
-cCJ
-cDD
-cCx
+ayS
 aXR
 aZi
 aZg
@@ -71522,6 +71464,16 @@ boo
 boo
 bNH
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71736,17 +71688,7 @@ aQW
 aAj
 aAj
 aVa
-cCx
-cCF
-cCK
-cCS
-cCJ
-cCJ
-cCJ
-cDp
-cCJ
-cDE
-cCx
+ayS
 aXT
 aZi
 aZg
@@ -71756,7 +71698,7 @@ ayS
 aza
 aAj
 aAj
-bjI
+cCx
 ayS
 bmN
 boo
@@ -71779,6 +71721,16 @@ boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71993,17 +71945,7 @@ aQX
 aBB
 aTE
 aVa
-cCw
-cCw
-cCw
-cCT
-cCx
-cCx
-cCx
-cDq
-cCw
-cCw
-cCw
+ayS
 aXR
 aZi
 aZg
@@ -72036,6 +71978,16 @@ boo
 boo
 boo
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -72249,18 +72201,8 @@ ayS
 ayS
 ayS
 ayT
-aAj
 aVa
-cCw
-cCL
-cCU
-cCY
-cDf
-cDl
-cDr
-cDw
-cCw
-aaa
+ayS
 aXR
 aZi
 aZg
@@ -72293,6 +72235,16 @@ boo
 boo
 bsZ
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -72506,18 +72458,8 @@ aBz
 awJ
 aBz
 aAj
-aAj
 aVa
-cCx
-cCM
-cCU
-cCZ
-cDg
-cDm
-cDs
-cDx
-cCx
-aaa
+ayS
 aXU
 aXS
 baO
@@ -72549,6 +72491,16 @@ buD
 buG
 buF
 bmN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -72763,18 +72715,8 @@ ayS
 ayS
 ayS
 aTD
-aAj
-aVa
-cCx
-cCN
-cCV
-cDa
-cDh
-cDg
-cDr
-cDy
-cCx
-aaa
+aUZ
+atw
 aaa
 aZj
 baP
@@ -72806,6 +72748,16 @@ buF
 bta
 bpP
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73020,19 +72972,9 @@ aaa
 ayS
 aSn
 aSp
-aAj
-aUZ
-cCw
-cCO
-cCW
-cDb
-cDi
-cDg
-cDr
-cDz
-cCw
-aaa
-aaa
+aVa
+atw
+ayS
 ayS
 awJ
 ayS
@@ -73062,6 +73004,16 @@ boo
 bsZ
 bpN
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73277,19 +73229,9 @@ atw
 atw
 aSo
 aAj
-aAj
 aVb
-cCG
-cCG
-cCx
-cDc
-cDj
-cCx
-cDt
-cCG
-cCG
 auw
-auw
+aCF
 ayS
 baP
 ayS
@@ -73318,6 +73260,16 @@ boo
 bsZ
 bpN
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73535,16 +73487,6 @@ aBA
 aSp
 aAj
 aAj
-aAj
-aKX
-aAj
-aAj
-cDd
-cDk
-cDn
-cDu
-aAj
-aAj
 aKX
 aAk
 aBA
@@ -73574,6 +73516,16 @@ bxE
 bor
 bon
 bEo
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73792,27 +73744,27 @@ aAj
 aAj
 aAj
 aAj
-aAj
 aWt
-cCP
-cCX
-bcA
-aAj
-aAj
-cDv
-aVc
-aVc
 cDF
+aAj
+aAj
+bcA
 cDG
-aVc
-aVc
-aVc
-aXV
-aVc
-bdX
+aAj
+bfY
 aAj
 bin
 auw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74065,11 +74017,11 @@ bhb
 bhb
 bhb
 bhb
-auw
-auw
-auw
-auw
-auw
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
