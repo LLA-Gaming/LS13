@@ -274,7 +274,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			T.ChangeTurf(path, TRUE)
 			instance = T
 		else
-			instance = new path (T)//first preloader pass
+			instance = new path(T)//first preloader pass
 
 	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
