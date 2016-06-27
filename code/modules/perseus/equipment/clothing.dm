@@ -194,8 +194,10 @@
 /*
 * Perseus Winter Coat
 */
-/obj/item/clothing/suit/wintercoat/perseus
+/obj/item/clothing/suit/hooded/wintercoat/perseus
 	name = "perseus winter coat"
-	desc = "A coat that protects against the bitter cold."
 	icon_state = "coatperc"
+	hoodtype = /obj/item/clothing/head/winterhood/perseus
 
+/obj/item/clothing/head/winterhood/perseus
+	icon_state = "winterhood_perc"
