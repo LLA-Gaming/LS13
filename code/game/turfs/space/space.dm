@@ -14,10 +14,14 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 
+	plane = PLANE_SPACE_BACKGROUND
+
 
 /turf/open/space/New()
 	update_icon()
 	air = space_gas
+
+
 
 /turf/open/space/Destroy(force)
 	if(force)
@@ -162,3 +166,9 @@
 
 /turf/open/space/proc/update_icon()
 	icon_state = SPACE_ICON_STATE
+
+	var/image/I = image('icons/turf/space_parallax1.dmi', "[icon_state]")
+	I.plane = PLANE_SPACE_DUST
+	I.alpha = 80
+	I.blend_mode = BLEND_ADD
+	overlays += I

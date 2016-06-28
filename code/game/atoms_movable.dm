@@ -78,10 +78,25 @@
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
+	update_client_hook(loc)
+
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	return 1
 
+/atom/movable/proc/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax()
+
+/mob/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax()
+	else if(client && hud_used)
+		hud_used.update_parallax()
 
 /atom/movable/Destroy()
 	. = ..()
@@ -131,6 +146,9 @@
 				continue
 			AM.Crossed(src)
 		Moved(oldloc, 0)
+
+		update_client_hook(destination)
+
 		return 1
 	return 0
 
