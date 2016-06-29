@@ -13,8 +13,10 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(mind && mind.IsInVR())
+	if(mind && mind.IsStoredInVR())
 		virtual_reality.KickOut(key) //You are dead, no time for games
+	if(mind && mind.IsInVR())
+		ghostize(0) //Immediate ghosting and sent back to the VR hub to prevent metagaming the current minigame
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0

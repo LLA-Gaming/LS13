@@ -1116,7 +1116,7 @@
 		return 0
 
 	//VR CODE
-	if(H.mind && H.mind.IsInVR())
+	if(H.mind && H.mind.IsStoredInVR())
 		virtual_reality.KickOut(H.key)
 		H.text2tab("<span class='userdanger'>Your connection to virtual reality was lost due to sudden pain!</span>")
 

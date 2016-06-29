@@ -108,9 +108,10 @@
 /datum/mind/proc/IsPerseus()
 	if(assigned_role == "Perseus Security Enforcer" || assigned_role == "Perseus Security Commander")
 		return 1
-/datum/mind/proc/IsInVR()
+/datum/mind/proc/IsInVR() //If this mind belongs to VR
 	if(virtual)
 		return 1
+/datum/mind/proc/IsStoredInVR() //If this mind is occupied in VR
 	for(var/X in virtual_reality.mind_storage)
 		if(virtual_reality.mind_storage[X] == src)
 			return 1

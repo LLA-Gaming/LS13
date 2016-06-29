@@ -17,6 +17,7 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 	bound_width = 64
 	var/vr_area = /area/virtual/vr_dome
 	var/ghost_hub = /area/virtual/vr_hub_1
+	var/ghost_bar = /area/virtual/vr_bar
 	var/vr_loader = /obj/effect/landmark/vr_import
 	//
 	var/list/mind_storage = list()			//Storage for users minds to safekeep their minds while in VR
@@ -26,23 +27,30 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 	//
 	var/loaded
 	//
-	var/can_enter = 0
+	var/can_enter = 1
 
 	New()
 		..()
-		if(virtual_reality)
-			loc = virtual_reality.loc
-			qdel(virtual_reality)
-		if(istype(src, /obj/machinery/virtual_reality_manipulator))
-			virtual_reality = src
 		update_icon()
+		if(type == /obj/machinery/virtual_reality_manipulator)
+			if(!virtual_reality)
+				virtual_reality = src
+
+	Destroy()
+		ShutDown()
+		if(type == /obj/machinery/virtual_reality_manipulator)
+			virtual_reality = null
+		..()
 
 	update_icon()
 		cut_overlays()
 		if(loaded)
+			icon_state = "holograph_on"
 			var/image/hologram_projection = image(icon, "hologram_on")
 			hologram_projection.pixel_y = 22
 			add_overlay(hologram_projection)
+		else
+			icon_state = "holograph_off"
 
 	Adjacent(var/atom/neighbor)
 		if(neighbor in bounds(1))
@@ -55,14 +63,20 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 	vr_area = /area/virtual/vr_dome_ghost
 	vr_loader = /obj/effect/landmark/vr_import/ghosts
 	ghost_hub = /area/virtual/vr_hub_ghosts
+	ghost_bar = /area/virtual/vr_bar_ghost
 
 	New()
 		..()
-		if(virtual_reality_ghosts)
-			loc = virtual_reality_ghosts.loc
-			qdel(virtual_reality_ghosts)
-		if(istype(src, /obj/machinery/virtual_reality_manipulator/ghostvr))
-			virtual_reality_ghosts = src
+		if(type == /obj/machinery/virtual_reality_manipulator/ghostvr)
+			if(!virtual_reality_ghosts)
+				virtual_reality_ghosts = src
+
+
+	Destroy()
+		ShutDown()
+		if(type == /obj/machinery/virtual_reality_manipulator/ghostvr)
+			virtual_reality_ghosts = null
+		..()
 
 /obj/machinery/virtual_reality_manipulator/proc/ShutDown()
 	can_enter = 0
@@ -101,6 +115,8 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 		L.Remove(L.owner)
 
 /obj/machinery/virtual_reality_manipulator/proc/EnterVR(var/mob/M)
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
 	if(!can_enter)
 		return
 	if(mind_storage[M.key])
@@ -146,15 +162,16 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 	return 1
 
 
-/obj/machinery/virtual_reality_manipulator/proc/MakeBody(var/client/C, var/turf/T)
+/obj/machinery/virtual_reality_manipulator/proc/MakeBody(var/client/C, var/turf/T, var/duplicate) //duplicating a VR body for minigames, set duplicate to 1
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M, icon_updates=0)
-	M.key = C.key
-	M.mind.virtual = src
-	vr_minds.Add(M.mind)
-	M.mind.name = usr.real_name
-	M.real_name = usr.real_name
-	M.name = usr.real_name
+	if(!duplicate)
+		M.key = C.key
+		M.mind.virtual = src
+		vr_minds.Add(M.mind)
+		M.mind.name = C.mob.real_name
+	M.real_name = C.mob.real_name
+	M.name = C.mob.real_name
 	M.update_body()
 	M.update_hair()
 	M.update_body_parts()
