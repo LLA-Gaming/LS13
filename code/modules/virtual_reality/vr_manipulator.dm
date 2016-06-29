@@ -16,6 +16,7 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 	density = 1
 	bound_width = 64
 	var/vr_area = /area/virtual/vr_dome
+	var/ghost_hub = /area/virtual/vr_hub_1
 	var/vr_loader = /obj/effect/landmark/vr_import
 	//
 	var/list/mind_storage = list()			//Storage for users minds to safekeep their minds while in VR
@@ -53,6 +54,7 @@ var/global/obj/machinery/virtual_reality_manipulator/virtual_reality_ghosts
 /obj/machinery/virtual_reality_manipulator/ghostvr
 	vr_area = /area/virtual/vr_dome_ghost
 	vr_loader = /obj/effect/landmark/vr_import/ghosts
+	ghost_hub = /area/virtual/vr_hub_ghosts
 
 	New()
 		..()
