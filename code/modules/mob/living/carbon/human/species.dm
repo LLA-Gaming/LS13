@@ -1115,6 +1115,11 @@
 	if(!damage || blocked <= 0)
 		return 0
 
+	//VR CODE
+	if(H.mind && H.mind.IsInVR())
+		virtual_reality.KickOut(H.key)
+		H.text2tab("<span class='userdanger'>Your connection to virtual reality was lost due to sudden pain!</span>")
+
 	var/obj/item/bodypart/organ = null
 	if(islimb(def_zone))
 		organ = def_zone

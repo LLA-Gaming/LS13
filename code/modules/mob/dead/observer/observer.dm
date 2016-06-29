@@ -320,7 +320,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
-	return 1
+	return mind.current
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)
@@ -346,6 +346,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!istype(usr, /mob/dead/observer))
 		usr.text2tab("Not when you're not dead!")
 		return
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 	var/A
 	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
 	var/area/thearea = A
@@ -366,6 +369,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 	var/list/mobs = getpois(skip_mindless=1)
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
@@ -373,6 +379,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 	if (!istype(target))
 		return
 
@@ -416,6 +425,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
 
+		if(mind && mind.IsInVR())
+			usr.text2tab("You are not a real ghost!")
+			return
+
 
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
@@ -441,6 +454,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Scare your crew members because of boredom!"
 
 	if(bootime > world.time) return
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L)
 		L.flicker()
@@ -529,6 +545,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Possess!"
 	set desc= "Take over the body of a mindless creature!"
 
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
+
 	var/list/possessible = list()
 	for(var/mob/living/L in living_mob_list)
 		if(!(L in player_list) && !L.mind)
@@ -560,12 +580,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
 		return 0
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
 	return 1
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
+
+	if(mind && mind.IsInVR())
+		usr.text2tab("You are not a real ghost!")
+		return
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"

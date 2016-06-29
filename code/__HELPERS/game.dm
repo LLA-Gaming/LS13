@@ -295,6 +295,7 @@
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
+			if(G.mind && G.mind.IsInVR()) continue
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
@@ -401,6 +402,8 @@
 
 	for(var/mob/dead/observer/G in player_list)
 		if(!G.key || !G.client)
+			continue
+		if(G.mind && G.mind.IsInVR())
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))

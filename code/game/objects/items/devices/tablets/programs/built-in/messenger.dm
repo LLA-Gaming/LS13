@@ -230,7 +230,7 @@
 
 						//send messages to ghosts
 						for(var/mob/M in player_list)
-							if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+							if(isobserver(M) && !M.IsInVR() && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 								var/link = FOLLOW_LINK(M, usr)
 								M.show_message("[link] <span class='game say'>Tablet Message - \[<span class='name'>[chat.name]</span>\] <span class='name'>[tablet.owner]</span>: <span class='message'>[t]</span></span>")
 

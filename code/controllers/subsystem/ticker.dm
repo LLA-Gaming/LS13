@@ -170,6 +170,7 @@ var/datum/subsystem/ticker/ticker
 		mode.announce()
 
 	current_state = GAME_STATE_PLAYING
+	StartUpVR()
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
@@ -355,6 +356,7 @@ var/datum/subsystem/ticker/ticker
 	var/num_escapees = 0
 
 	text2world("<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	ShutDownVR()
 
 	//Player status report
 	for(var/mob/Player in mob_list)

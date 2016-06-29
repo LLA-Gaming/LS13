@@ -24,6 +24,10 @@
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
+	var/mob/dead/observer/O = user
+	if(O.mind && O.mind.IsInVR())
+		user << "<span class='warning'>You aren't a real ghost, leave VR and try again!</span>"
+		return
 	if(!uses)
 		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return

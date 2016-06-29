@@ -26,6 +26,8 @@
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
+		if(M.mind && M.mind.IsInVR())
+			continue
 		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 			M.text2tab(rendered,"ooc")
 

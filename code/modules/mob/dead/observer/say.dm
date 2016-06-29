@@ -4,6 +4,10 @@
 	if (!message)
 		return
 
+	if(mind && mind.IsInVR())
+		src.text2tab("<span class='danger'>You aren't a real ghost! Only real ghosts can talk.</span>")
+		return
+
 	log_say("Ghost/[src.key] : [message]")
 
 	if(jobban_isbanned(src, "OOC"))

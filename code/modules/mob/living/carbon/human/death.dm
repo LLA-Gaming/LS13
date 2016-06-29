@@ -13,6 +13,8 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	if(mind && mind.IsInVR())
+		virtual_reality.KickOut(key) //You are dead, no time for games
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0

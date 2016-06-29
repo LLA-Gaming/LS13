@@ -62,6 +62,8 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/obj/machinery/virtual_reality_manipulator/virtual //The VR manipulator that made this mind (if applicable)
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -106,6 +108,16 @@
 /datum/mind/proc/IsPerseus()
 	if(assigned_role == "Perseus Security Enforcer" || assigned_role == "Perseus Security Commander")
 		return 1
+/datum/mind/proc/IsInVR()
+	if(virtual)
+		return 1
+	for(var/X in virtual_reality.mind_storage)
+		if(virtual_reality.mind_storage[X] == src)
+			return 1
+
+//blarghghuhu sanity rasins
+/mob/proc/IsInVR()
+	if(mind) return mind.IsInVR()
 
 /datum/mind/proc/remove_objectives()
 	if(objectives.len)

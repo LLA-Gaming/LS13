@@ -393,6 +393,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
+		if(O.mind && O.mind.IsInVR()) continue
 		if(O.client)
 			O.text2tab("<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)

@@ -464,7 +464,7 @@ var/next_mob_id = 0
 
 	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	else if(stat != DEAD || istype(src, /mob/new_player) || (mind && mind.IsInVR()))
 		usr.text2tab("<span class='notice'>You must be observing to use this!</span>")
 		return
 
