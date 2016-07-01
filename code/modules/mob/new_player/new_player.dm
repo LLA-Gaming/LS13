@@ -177,6 +177,11 @@
 				usr.text2tab("<span class='warning'>Server is full.</span>")
 				return
 
+		if(href_list["SelectedJob"] in list("Perseus Security Enforcer", "Perseus Security Commander"))
+			if(!perseusList[ckey(key)])
+				message_admins("[ckey(key)] attempted to join as perseus without being on the whitelist.")
+				return
+
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
@@ -283,6 +288,10 @@
 /mob/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		src << alert("[rank] is not available. Please try another.")
+		return 0
+
+	if(rank in list("Perseus Security Enforcer", "Perseus Security Commander") && !(ckey(key) in assignPerseus))
+		message_admins("[ckey(key)] attempted to join as perseus without being on the whitelist.")
 		return 0
 
 	//Remove the player from the join queue if he was in one and reset the timer
