@@ -12,7 +12,7 @@
 
 /obj/item/device/paicard/New()
 	..()
-	overlays += "pai-off"
+	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
@@ -69,20 +69,20 @@
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
+				usr.text2tab("<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
-				pai << "<span class='notice'>You have been bound to a new master.</span>"
+				pai.text2tab("<span class='notice'>You have been bound to a new master.</span>")
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
-					pai << "<span class='warning'>You feel yourself slipping away from reality.</span>"
-					pai << "<span class='danger'>Byte by byte you lose your sense of self.</span>"
-					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
-					pai << "<span class='rose'>oblivion... </span>"
+					pai.text2tab("<span class='warning'>You feel yourself slipping away from reality.</span>")
+					pai.text2tab("<span class='danger'>Byte by byte you lose your sense of self.</span>")
+					pai.text2tab("<span class='userdanger'>Your mental faculties leave you.</span>")
+					pai.text2tab("<span class='rose'>oblivion... </span>")
 					pai.death(0)
 				removePersonality()
 		if(href_list["wires"])
@@ -93,10 +93,10 @@
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
+				pai.text2tab("Your supplemental directives have been updated. Your new directives are:")
+				pai.text2tab("Prime Directive : <br>[pai.laws.zeroth]")
 				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
+					pai.text2tab("Supplemental Directives: <br>[slaws]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
@@ -105,30 +105,30 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-null"
+	src.add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	src.overlays.Cut()
-	src.overlays += "pai-off"
+	src.cut_overlays()
+	src.add_overlay("pai-off")
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.overlays.Cut()
+		src.cut_overlays()
 		switch(emotion)
-			if(1) src.overlays += "pai-happy"
-			if(2) src.overlays += "pai-cat"
-			if(3) src.overlays += "pai-extremely-happy"
-			if(4) src.overlays += "pai-face"
-			if(5) src.overlays += "pai-laugh"
-			if(6) src.overlays += "pai-off"
-			if(7) src.overlays += "pai-sad"
-			if(8) src.overlays += "pai-angry"
-			if(9) src.overlays += "pai-what"
-			if(10) src.overlays += "pai-null"
+			if(1) src.add_overlay("pai-happy")
+			if(2) src.add_overlay("pai-cat")
+			if(3) src.add_overlay("pai-extremely-happy")
+			if(4) src.add_overlay("pai-face")
+			if(5) src.add_overlay("pai-laugh")
+			if(6) src.add_overlay("pai-off")
+			if(7) src.add_overlay("pai-sad")
+			if(8) src.add_overlay("pai-angry")
+			if(9) src.add_overlay("pai-what")
+			if(10) src.add_overlay("pai-null")
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

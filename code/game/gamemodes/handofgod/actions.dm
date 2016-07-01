@@ -16,12 +16,12 @@
 	if(!msg)
 		return
 	var/rendered = "<font color='[god.side]'><span class='game say'><i>Prophet [owner]:</i> <span class='message'>[msg]</span></span>"
-	god << rendered
-	owner << rendered
+	god.text2tab(rendered)
+	owner.text2tab(rendered)
 	for(var/mob/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, owner)
-			M << "[link] [rendered]"
+			M.text2tab("[link] [rendered]")
 
 /datum/action/innate/godspeak/Destroy()
 	god = null

@@ -93,7 +93,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.id != "shadowling")
-		user << "<span class='warning'>You aren't sure how to do this...</span>"
+		user.text2tab("<span class='warning'>You aren't sure how to do this...</span>")
 		return
 	H.dna.species.darksight = 0 //so our species' vision in the dark doesn't interfere.
 	var/new_dark_view
@@ -101,8 +101,8 @@
 	new_dark_view = Clamp(new_dark_view,min_darkness_view,max_darkness_view)
 	switch(new_dark_view)
 		if(0)
-			user << "<span class='notice'>Your night vision capabilities fade away for the time being.</span>"
+			user.text2tab("<span class='notice'>Your night vision capabilities fade away for the time being.</span>")
 		else
-			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
+			user.text2tab("<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>")
 	darkness_view = new_dark_view
 	user.update_sight()

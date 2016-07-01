@@ -25,6 +25,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
@@ -103,12 +104,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
+		user.text2tab("<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
+		user.text2tab("<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 
 /*
  * Pumpkin head
@@ -178,3 +179,11 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+/obj/item/clothing/head/batman
+	name = "bathelmet"
+	desc = "No one cares who you are until you put on the mask."
+	icon_state = "bmhead"
+	item_state = "xenos_helm"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = HEAD

@@ -16,7 +16,7 @@ var/list/GPS_list = list()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -25,31 +25,31 @@ var/list/GPS_list = list()
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
 	overlays -= "working"
-	overlays += "emp"
+	add_overlay("emp")
 	addtimer(src, "reboot", 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
 	overlays -= "emp"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return //user not valid to use gps
 	if(emped)
-		user << "It's busted!"
+		user.text2tab("It's busted!")
 	if(tracking)
 		overlays -= "working"
-		user << "[src] is no longer tracking, or visible to other GPS devices."
+		user.text2tab("[src] is no longer tracking, or visible to other GPS devices.")
 		tracking = FALSE
 	else
-		overlays += "working"
-		user << "[src] is now tracking, and visible to other GPS devices."
+		add_overlay("working")
+		user.text2tab("[src] is now tracking, and visible to other GPS devices.")
 		tracking = TRUE
 
 /obj/item/device/gps/attack_self(mob/user)
 	if(!tracking)
-		user << "[src] is turned off. Use alt+click to toggle it back on."
+		user.text2tab("[src] is turned off. Use alt+click to toggle it back on.")
 		return
 
 	var/obj/item/device/gps/t = ""
@@ -100,6 +100,12 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/cyborg
+	icon_state = "gps-b"
+	gpstag = "BORG0"
+	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
+	flags = NODROP
 
 /obj/item/device/gps/internal
 	icon_state = null

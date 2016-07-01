@@ -16,9 +16,9 @@
 
 		C << 'sound/effects/adminhelp.ogg'
 
-		C << "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>"
-		C << "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again</font>"
-		C << "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
+		C.text2tab("<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>","ahelp")
+		C.text2tab("<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again</font>","ahelp")
+		C.text2tab("Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.","ahelp")
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
@@ -28,7 +28,7 @@
 
 	else if(href_list["makeAntag"])
 		if (!ticker.mode)
-			usr << "<span class='danger'>Not until the round starts!</span>"
+			usr.text2tab("<span class='danger'>Not until the round starts!</span>")
 			return
 		switch(href_list["makeAntag"])
 			if("1")
@@ -135,7 +135,7 @@
 					log_admin("[key_name(usr)] failed to create a shadowling.")
 
 	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
 		if(E)
@@ -275,7 +275,7 @@
 		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
-		if(!check_rights(R_SERVER))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num
@@ -344,7 +344,7 @@
 		check_antagonists()
 
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		ticker.delay_end = !ticker.delay_end
@@ -368,7 +368,7 @@
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
 
 	else if(href_list["simplemake"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["mob"])
@@ -439,7 +439,7 @@
 
 	/////////////////////////////////////new ban stuff
 	else if(href_list["unbanf"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/banfolder = href_list["unbanf"]
@@ -453,7 +453,7 @@
 				unbanpanel()
 
 	else if(href_list["unbane"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		UpdateTime()
@@ -507,7 +507,7 @@
 	/////////////////////////////////////new ban stuff
 
 	else if(href_list["appearanceban"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 		var/mob/M = locate(href_list["appearanceban"])
 		if(!ismob(M))
@@ -527,7 +527,7 @@
 					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
 					appearance_unban(M)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban</span>")
-					M << "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>"
+					M.text2tab("<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>")
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
@@ -541,13 +541,13 @@
 				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)]</span>")
-				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
-				M << "<span class='boldannounce'>The reason is: [reason]</span>"
-				M << "<span class='danger'>Appearance ban can be lifted only upon request.</span>"
+				M.text2tab("<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
+				M.text2tab("<span class='boldannounce'>The reason is: [reason]</span>")
+				M.text2tab("<span class='danger'>Appearance ban can be lifted only upon request.</span>")
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
+					M.text2tab("<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
-					M << "<span class='danger'>No ban appeals URL has been set.</span>"
+					M.text2tab("<span class='danger'>No ban appeals URL has been set.</span>")
 			if("No")
 				return
 
@@ -866,7 +866,7 @@
 
 	//JOBBAN'S INNARDS
 	else if(href_list["jobban3"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["jobban4"])
@@ -982,9 +982,9 @@
 							msg += ", [job]"
 					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
-					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
-					M << "<span class='boldannounce'>The reason is: [reason]</span>"
-					M << "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>"
+					M.text2tab("<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>")
+					M.text2tab("<span class='boldannounce'>The reason is: [reason]</span>")
+					M.text2tab("<span class='danger'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
@@ -1005,9 +1005,9 @@
 								msg += ", [job]"
 						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
-						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
-						M << "<span class='boldannounce'>The reason is: [reason]</span>"
-						M << "<span class='danger'>Jobban can be lifted only upon request.</span>"
+						M.text2tab("<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>")
+						M.text2tab("<span class='boldannounce'>The reason is: [reason]</span>")
+						M.text2tab("<span class='danger'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
 						return 1
 				if("Cancel")
@@ -1038,7 +1038,7 @@
 						continue
 			if(msg)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg]</span>")
-				M << "<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>"
+				M.text2tab("<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>")
 				href_list["jobban2"] = 1 // lets it fall through and refresh
 			return 1
 		return 0 //we didn't do anything!
@@ -1047,9 +1047,9 @@
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
-				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
+				usr.text2tab("<span class='danger'>Error: They have more rights than you do.</span>")
 				return
-			M << "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>"
+			M.text2tab("<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>")
 			log_admin("[key_name(usr)] kicked [key_name(M)].")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			//M.client = null
@@ -1100,7 +1100,7 @@
 			usr << browse(edit_log,"window=noteedits")
 
 	else if(href_list["newban"])
-		if(!check_rights(R_BAN))
+		if(!check_rights(R_SECONDARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["newban"])
@@ -1120,15 +1120,15 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
-				M << "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
+				M.text2tab("<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
+				M.text2tab("<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
+					M.text2tab("<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
-					M << "<span class='danger'>No ban appeals URL has been set.</span>"
+					M.text2tab("<span class='danger'>No ban appeals URL has been set.</span>")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='adminnotice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
@@ -1145,12 +1145,12 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
-				M << "<span class='danger'>This is a permanent ban.</span>"
+				M.text2tab("<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
+				M.text2tab("<span class='danger'>This is a permanent ban.</span>")
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
+					M.text2tab("<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
-					M << "<span class='danger'>No ban appeals URL has been set.</span>"
+					M.text2tab("<span class='danger'>No ban appeals URL has been set.</span>")
 				ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 				message_admins("<span class='adminnotice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
@@ -1239,7 +1239,7 @@
 		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		if (ticker && ticker.mode)
@@ -1253,7 +1253,7 @@
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		if(ticker && ticker.mode)
@@ -1267,7 +1267,7 @@
 		.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
@@ -1280,7 +1280,7 @@
 		H.monkeyize()
 
 	else if(href_list["humanone"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
@@ -1293,7 +1293,7 @@
 		Mo.humanize()
 
 	else if(href_list["corgione"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["corgione"])
@@ -1307,7 +1307,7 @@
 
 
 	else if(href_list["forcespeech"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		var/mob/M = locate(href_list["forcespeech"])
@@ -1338,7 +1338,7 @@
 			return
 
 		M.loc = pick(prisonwarp)
-		M << "<span class='adminnotice'>You have been sent to Prison!</span>"
+		M.text2tab("<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
@@ -1350,11 +1350,11 @@
 		var/mob/M = locate(href_list["sendbacktolobby"])
 
 		if(!isobserver(M))
-			usr << "<span class='notice'>You can only send ghost players back to the Lobby.</span>"
+			usr.text2tab("<span class='notice'>You can only send ghost players back to the Lobby.</span>")
 			return
 
 		if(!M.client)
-			usr << "<span class='warning'>[M] doesn't seem to have an active client.</span>"
+			usr.text2tab("<span class='warning'>[M] doesn't seem to have an active client.</span>")
 			return
 
 		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
@@ -1368,7 +1368,7 @@
 		qdel(M)
 
 	else if(href_list["tdome1"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1393,12 +1393,12 @@
 		sleep(5)
 		M.loc = pick(tdome1)
 		spawn(50)
-			M << "<span class='adminnotice'>You have been sent to the Thunderdome.</span>"
+			M.text2tab("<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)")
 
 	else if(href_list["tdome2"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1423,12 +1423,12 @@
 		sleep(5)
 		M.loc = pick(tdome2)
 		spawn(50)
-			M << "<span class='adminnotice'>You have been sent to the Thunderdome.</span>"
+			M.text2tab("<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)")
 
 	else if(href_list["tdomeadmin"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1446,12 +1446,12 @@
 		sleep(5)
 		M.loc = pick(tdomeadmin)
 		spawn(50)
-			M << "<span class='adminnotice'>You have been sent to the Thunderdome.</span>"
+			M.text2tab("<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Admin.)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Admin.)")
 
 	else if(href_list["tdomeobserve"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_PRIMARYADMIN))
 			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
@@ -1480,12 +1480,12 @@
 		sleep(5)
 		M.loc = pick(tdomeobserve)
 		spawn(50)
-			M << "<span class='adminnotice'>You have been sent to the Thunderdome.</span>"
+			M.text2tab("<span class='adminnotice'>You have been sent to the Thunderdome.</span>")
 		log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Observer.)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)")
 
 	else if(href_list["revive"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/L = locate(href_list["revive"])
@@ -1498,7 +1498,7 @@
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)]")
 
 	else if(href_list["makeai"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
@@ -1511,7 +1511,7 @@
 		H.AIize()
 
 	else if(href_list["makealien"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makealien"])
@@ -1522,7 +1522,7 @@
 		usr.client.cmd_admin_alienize(H)
 
 	else if(href_list["makeslime"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
@@ -1533,7 +1533,7 @@
 		usr.client.cmd_admin_slimeize(H)
 
 	else if(href_list["makeblob"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
@@ -1545,7 +1545,7 @@
 
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
@@ -1556,7 +1556,7 @@
 		usr.client.cmd_admin_robotize(H)
 
 	else if(href_list["makeanimal"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["makeanimal"])
@@ -1608,7 +1608,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 
@@ -1721,7 +1721,7 @@
 
 
 	else if(href_list["adminspawncookie"])
-		if(!check_rights(R_ADMIN|R_FUN))
+		if(!check_rights(R_ADMIN|R_PRIMARYADMIN))
 			return
 
 		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
@@ -1743,7 +1743,7 @@
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
-		H << "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>"
+		H.text2tab("<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 		H << 'sound/effects/pray_chaplain.ogg'
 
 	else if(href_list["BlueSpaceArtillery"])
@@ -1838,32 +1838,32 @@
 		show_traitor_panel(M)
 
 	else if(href_list["create_object"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_object(usr)
 
 	else if(href_list["quick_create_object"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return quick_create_object(usr)
 
 	else if(href_list["create_turf"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_turf(usr)
 
 	else if(href_list["create_mob"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return create_mob(usr)
 
 	else if(href_list["dupe_marked_datum"])
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 		return DuplicateObject(marked_datum, perfectcopy=1, newloc=get_turf(usr))
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
-		if(!check_rights(R_SPAWN))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/atom/loc = usr.loc
@@ -1943,7 +1943,7 @@
 					else
 						var/atom/O = new path(target)
 						if(O)
-							O.dir = obj_dir
+							O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name
 								if(istype(O,/mob))

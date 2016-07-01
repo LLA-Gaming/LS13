@@ -35,6 +35,10 @@
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	if(href_list["mentor_reply"])
+		cmd_mentor_reply(href_list["mentor_reply"])
+		return 0
+
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -61,11 +65,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			src.text2tab("<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+			src.text2tab("<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message = message
@@ -136,6 +140,9 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
+	if(ckey in mentors)
+		verbs += list(/client/proc/cmd_mentor_say)
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -147,7 +154,7 @@ var/next_external_rsc = 0
 	. = ..()	//calls mob.Login()
 
 	if (byond_version < config.client_error_version)		//Out of date client.
-		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
+		src.text2tab("<span class='danger'><b>Your version of byond is too old:</b></span>")
 		src << config.client_error_message
 		src << "Your version: [byond_version]"
 		src << "Required version: [config.client_error_version] or later"
@@ -158,7 +165,7 @@ var/next_external_rsc = 0
 			del(src)
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
-		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
+		src.text2tab("<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
 		src << config.client_warn_message
 		src << "Your version: [byond_version]"
 		src << "Required version to remove this message: [config.client_warn_version] or later"
@@ -183,7 +190,11 @@ var/next_external_rsc = 0
 		admin_memo_output("Show")
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
-			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
+			src.text2tab("<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
+
+	else
+		winset(src, "outputwindow.tabs", "tabs=-ASAYtab")
+
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -206,9 +217,12 @@ var/next_external_rsc = 0
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
-	findJoinDate()
+	if(!IsGuestKey(key) && dbcon.IsConnected())
+		findJoinDate()
 
 	sync_client_with_db()
+
+	check_ip_intel()
 
 	send_resources()
 
@@ -234,7 +248,7 @@ var/next_external_rsc = 0
 		convert_notes_sql(ckey)
 
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
-		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
+		src.text2tab("<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 
 	//This is down here because of the browse() calls in tooltip/New()
@@ -322,6 +336,15 @@ var/next_external_rsc = 0
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
+/client/proc/check_ip_intel()
+	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
+	if (config.ipintel_email)
+		var/datum/ipintel/res = get_ip_intel(address)
+		if (res.intel >= config.ipintel_rating_bad)
+			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
+		ip_intel = res.intel
+
+
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
 		verbs += /client/proc/self_notes
@@ -363,3 +386,9 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+
+//Hook, override it to run code when dir changes
+//Like for /atoms, but clients are their own snowflake FUCK
+/client/proc/setDir(newdir)
+	dir = newdir

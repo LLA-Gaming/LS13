@@ -4,9 +4,9 @@
 	if(!H || !istype(H)) return
 	if(H.dna.species.id == "shadowling" && is_shadow(H)) return 1
 	if(H.dna.species.id == "l_shadowling" && is_thrall(H)) return 1
-	if(!is_shadow_or_thrall(usr)) usr << "<span class='warning'>You can't wrap your head around how to do this.</span>"
-	else if(is_thrall(usr)) usr << "<span class='warning'>You aren't powerful enough to do this.</span>"
-	else if(is_shadow(usr)) usr << "<span class='warning'>Your telepathic ability is suppressed. Hatch or use Rapid Re-Hatch first.</span>"
+	if(!is_shadow_or_thrall(usr)) usr.text2tab("<span class='warning'>You can't wrap your head around how to do this.</span>")
+	else if(is_thrall(usr)) usr.text2tab("<span class='warning'>You aren't powerful enough to do this.</span>")
+	else if(is_shadow(usr)) usr.text2tab("<span class='warning'>Your telepathic ability is suppressed. Hatch or use Rapid Re-Hatch first.</span>")
 	return 0
 
 
@@ -22,32 +22,32 @@
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		if(!ishuman(target))
-			user << "<span class='warning'>You may only glare at humans!</span>"
+			user.text2tab("<span class='warning'>You may only glare at humans!</span>")
 			revert_cast()
 			return
 		if(!shadowling_check(user))
 			revert_cast()
 			return
 		if(target.stat)
-			user << "<span class='warning'>[target] must be conscious!</span>"
+			user.text2tab("<span class='warning'>[target] must be conscious!</span>")
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			user << "<span class='warning'>You cannot glare at allies!</span>"
+			user.text2tab("<span class='warning'>You cannot glare at allies!</span>")
 			revert_cast()
 			return
 		var/mob/living/L = user
 		if(L.incorporeal_move) //Other abilities can still be used, but glare needed balancing
-			user << "<span class='warning'>You cannot glare while shadow walking!</span>"
+			user.text2tab("<span class='warning'>You cannot glare while shadow walking!</span>")
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target
 		user.visible_message("<span class='warning'><b>[user]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
 		if(in_range(target, user))
-			target << "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are mesmerized by the heavenly lights...</span>"
+			target.text2tab("<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are mesmerized by the heavenly lights...</span>")
 		else //Only alludes to the shadowling if the target is close by
-			target << "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>"
+			target.text2tab("<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
 		target.Stun(10)
 		M.silent += 10
 
@@ -76,6 +76,9 @@
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
 		P.fon = 0
+	else if(istype(I, /obj/item/device/tablet))
+		var/obj/item/device/tablet/T = I
+		T.fon = 0
 	I.SetLuminosity(0)
 	return I.luminosity
 
@@ -89,7 +92,7 @@
 	if(!shadowling_check(user) && !admin_override)
 		revert_cast()
 		return
-	user << "<span class='shadowling'>You silently disable all nearby lights.</span>"
+	user.text2tab("<span class='shadowling'>You silently disable all nearby lights.</span>")
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
 			extinguishItem(F)
@@ -136,7 +139,7 @@
 	if(user.pulledby)
 		user.pulledby.stop_pulling()
 	user.stop_pulling()
-	if(user.buckled_mobs.len)
+	if(user.has_buckled_mobs())
 		user.unbuckle_all_mobs(force=1)
 	sleep(40) //4 seconds
 	if(!qdeleted(user))
@@ -160,16 +163,16 @@
 	if(!shadowling_check(user))
 		revert_cast()
 		return
-	user << "<span class='shadowling'>You freeze the nearby air.</span>"
+	user.text2tab("<span class='shadowling'>You freeze the nearby air.</span>")
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/M in T.contents)
 			if(is_shadow_or_thrall(M))
 				if(M == user) //No message for the user, of course
 					continue
 				else
-					M << "<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>"
+					M.text2tab("<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>")
 					continue
-			M << "<span class='userdanger'>A wave of shockingly cold air engulfs you!</span>"
+			M.text2tab("<span class='userdanger'>A wave of shockingly cold air engulfs you!</span>")
 			M.Stun(2)
 			M.apply_damage(10, BURN)
 			if(M.bodytemperature)
@@ -198,69 +201,69 @@
 			return
 	for(var/mob/living/carbon/human/target in targets)
 		if(!in_range(user, target))
-			user << "<span class='warning'>You need to be closer to enthrall [target]!</span>"
+			user.text2tab("<span class='warning'>You need to be closer to enthrall [target]!</span>")
 			revert_cast()
 			return
 		if(!target.key || !target.mind)
-			user << "<span class='warning'>The target has no mind!</span>"
+			user.text2tab("<span class='warning'>The target has no mind!</span>")
 			revert_cast()
 			return
 		if(target.stat)
-			user << "<span class='warning'>The target must be conscious!</span>"
+			user.text2tab("<span class='warning'>The target must be conscious!</span>")
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			user << "<span class='warning'>You can not enthrall allies!</span>"
+			user.text2tab("<span class='warning'>You can not enthrall allies!</span>")
 			revert_cast()
 			return
 		if(!ishuman(target))
-			user << "<span class='warning'>You can only enthrall humans!</span>"
+			user.text2tab("<span class='warning'>You can only enthrall humans!</span>")
 			revert_cast()
 			return
 		if(enthralling)
-			user << "<span class='warning'>You are already enthralling!</span>"
+			user.text2tab("<span class='warning'>You are already enthralling!</span>")
 			revert_cast()
 			return
 		if(!target.client)
-			user << "<span class='warning'>[target]'s mind is vacant of activity.</span>"
+			user.text2tab("<span class='warning'>[target]'s mind is vacant of activity.</span>")
 		enthralling = 1
-		user << "<span class='danger'>This target is valid. You begin the enthralling...</span>"
-		target << "<span class='userdanger'>[user] stares at you. You feel your head begin to pulse.</span>"
+		user.text2tab("<span class='danger'>This target is valid. You begin the enthralling...</span>")
+		target.text2tab("<span class='userdanger'>[user] stares at you. You feel your head begin to pulse.</span>")
 
 		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
 				if(1)
-					user << "<span class='notice'>You place your hands to [target]'s head...</span>"
+					user.text2tab("<span class='notice'>You place your hands to [target]'s head...</span>")
 					user.visible_message("<span class='warning'>[user] places their hands onto the sides of [target]'s head!</span>")
 				if(2)
-					user << "<span class='notice'>You begin preparing [target]'s mind as a blank slate...</span>"
+					user.text2tab("<span class='notice'>You begin preparing [target]'s mind as a blank slate...</span>")
 					user.visible_message("<span class='warning'>[user]'s palms flare a bright red against [target]'s temples!</span>")
-					target << "<span class='danger'>A terrible red light floods your mind. You collapse as conscious thought is wiped away.</span>"
+					target.text2tab("<span class='danger'>A terrible red light floods your mind. You collapse as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
 					if(isloyal(target))
-						user << "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>"
+						user.text2tab("<span class='notice'>They are protected by a mindshield implant. You begin to shut down the nanobot implant - this will take some time.</span>")
 						user.visible_message("<span class='warning'>[user] pauses, then dips their head in concentration!</span>")
-						target << "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>"
+						target.text2tab("<span class='boldannounce'>You feel your resolve begin to fade!</span>")
 						sleep(100) //10 seconds - not spawn() so the enthralling takes longer
-						user << "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>"
+						user.text2tab("<span class='notice'>The nanobots composing the mindshield implant have been rendered inert. Now to continue.</span>")
 						user.visible_message("<span class='warning'>[user] relaxes again.</span>")
-						for(var/obj/item/weapon/implant/loyalty/L in target)
+						for(var/obj/item/weapon/implant/mindshield/L in target)
 							if(L && L.implanted)
 								qdel(L)
-						target << "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies.</span>"
+						target.text2tab("<span class='boldannounce'>You feel the protection from your mindshield implant strain and fail.</span>")
 				if(3)
-					user << "<span class='notice'>You begin planting the tumor that will control the new thrall...</span>"
+					user.text2tab("<span class='notice'>You begin planting the tumor that will control the new thrall...</span>")
 					user.visible_message("<span class='warning'>A strange energy passes from [user]'s hands into [target]'s head!</span>")
-					target << "<span class='boldannounce'>You feel your memories twisting, morphing. A sense of horror dominates your mind.</span>"
-			if(!do_mob(user, target, 70)) //around 21 seconds total for enthralling, 31 for someone with a loyalty implant
-				user << "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>"
-				target << "<span class='userdanger'>You wrest yourself away from [user]'s hands and compose yourself</span>"
+					target.text2tab("<span class='boldannounce'>You feel your memories twisting, morphing. A sense of horror dominates your mind.</span>")
+			if(!do_mob(user, target, 70)) //around 21 seconds total for enthralling, 31 for someone with a mindshield implant
+				user.text2tab("<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
+				target.text2tab("<span class='userdanger'>You wrest yourself away from [user]'s hands and compose yourself</span>")
 				enthralling = 0
 				return
 
 		enthralling = 0
-		user << "<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>"
+		user.text2tab("<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>")
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
@@ -279,7 +282,7 @@
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind/cast(mob/living/user,mob/user = usr)
 	if(!is_shadow(user))
-		user << "<span class='warning'>You must be a shadowling to do that!</span>"
+		user.text2tab("<span class='warning'>You must be a shadowling to do that!</span>")
 		return
 	var/text = stripped_input(user, "What do you want to say your thralls and fellow shadowlings?.", "Hive Chat", "")
 	if(!text)
@@ -287,10 +290,10 @@
 	var/my_message = "<span class='shadowling'><b>\[Shadowling\]</b><i> [user.real_name]</i>: [text]</span>"
 	for(var/mob/M in mob_list)
 		if(is_shadow_or_thrall(M))
-			M << my_message
+			M.text2tab(my_message)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [my_message]"
+			M.text2tab("[link] [my_message]")
 
 
 
@@ -305,7 +308,7 @@
 
 /obj/effect/proc_holder/spell/self/shadowling_regenarmor/cast(mob/living/carbon/human/user)
 	if(!is_shadow(user))
-		user << "<span class='warning'>You must be a shadowling to do this!</span>"
+		user.text2tab("<span class='warning'>You must be a shadowling to do this!</span>")
 		revert_cast()
 		return
 	user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and shifts around their body!</span>", \
@@ -342,46 +345,46 @@
 	var/victory_threshold = 15
 	var/mob/M
 
-	user << "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>"
+	user.text2tab("<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
 
 	for(M in living_mob_list)
 		if(is_thrall(M))
 			thralls++
-			M << "<span class='shadowling'>You feel hooks sink into your mind and pull.</span>"
+			M.text2tab("<span class='shadowling'>You feel hooks sink into your mind and pull.</span>")
 
 	if(!do_after(user, 30, target = user))
-		user << "<span class='warning'>Your concentration has been broken. The mental hooks you have sent out now retract into your mind.</span>"
+		user.text2tab("<span class='warning'>Your concentration has been broken. The mental hooks you have sent out now retract into your mind.</span>")
 		return
 
 	if(thralls >= 3 && !screech_acquired)
 		screech_acquired = 1
-		user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>"
+		user.text2tab("<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech(null))
 
 	if(thralls >= 5 && !blind_smoke_acquired)
 		blind_smoke_acquired = 1
-		user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
-			</i></span>"
+		user.text2tab("<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
+			</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/blindness_smoke(null))
 
 	if(thralls >= 7 && !drainLifeAcquired)
 		drainLifeAcquired = 1
-		user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Drain Life</b> ability. You can now drain the health of nearby humans to heal yourself.</i></span>"
+		user.text2tab("<span class='shadowling'><i>The power of your thralls has granted you the <b>Drain Life</b> ability. You can now drain the health of nearby humans to heal yourself.</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/drain_life(null))
 
 
 	if(thralls >= 9 && !reviveThrallAcquired)
 		reviveThrallAcquired = 1
-		user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
-		with no bodily defects.</i></span>"
+		user.text2tab("<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
+		with no bodily defects.</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/revive_thrall(null))
 
 	if(thralls < victory_threshold)
-		user << "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>"
+		user.text2tab("<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
 
 	else if(thralls >= victory_threshold)
-		user << "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>"
-		user << "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>"
+		user.text2tab("<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>")
+		user.text2tab("<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 		for(M in living_mob_list)
 			if(is_shadow(M))
 				var/obj/effect/proc_holder/spell/self/collective_mind/CM
@@ -391,9 +394,9 @@
 				M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 				M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_ascend(null))
 				if(M == user)
-					M << "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>"
+					M.text2tab("<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>")
 				else
-					M << "<span class='shadowling'><b>[user.real_name] has coalesced the strength of the thralls. You can draw upon it at any time to ascend. (Shadowling Evolution Tab)</b></span>" //Tells all the other shadowlings
+					M.text2tab("<span class='shadowling'><b>[user.real_name] has coalesced the strength of the thralls. You can draw upon it at any time to ascend. (Shadowling Evolution Tab)</b></span>") //Tells all the other shadowlings
 
 
 /obj/effect/proc_holder/spell/self/blindness_smoke //Spawns a cloud of smoke that blinds non-thralls/shadows and grants slight healing to shadowlings and their allies
@@ -411,7 +414,7 @@
 		revert_cast()
 		return
 	user.visible_message("<span class='warning'>[user] bends over and coughs out a cloud of black smoke!</span>")
-	user << "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>"
+	user.text2tab("<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>")
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B = new /obj/item/weapon/reagent_containers/glass/beaker/large(user.loc) //hacky
 	B.reagents.clear_reagents() //Just in case!
 	B.invisibility = INVISIBILITY_ABSTRACT //This ought to do the trick
@@ -448,12 +451,12 @@
 					continue
 			if(iscarbon(target))
 				var/mob/living/carbon/M = target
-				M << "<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>"
+				M.text2tab("<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>")
 				M.confused += 10
 				M.setEarDamage(M.ear_damage + 3)
 			else if(issilicon(target))
 				var/mob/living/silicon/S = target
-				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
+				S.text2tab("<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>")
 				S << 'sound/misc/interference.ogg'
 				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
 				var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
@@ -489,7 +492,7 @@
 			nearbyTargets.Add(M)
 	if(!targetsDrained)
 		revert_cast()
-		user << "<span class='warning'>There were no nearby humans for you to drain.</span>"
+		user.text2tab("<span class='warning'>There were no nearby humans for you to drain.</span>")
 		return
 	for(var/mob/living/carbon/M in nearbyTargets)
 		user.heal_organ_damage(10, 10)
@@ -500,8 +503,8 @@
 		user.AdjustStunned(-1)
 		M.adjustOxyLoss(20)
 		M.adjustStaminaLoss(20)
-		M << "<span class='boldannounce'>You feel a wave of exhaustion and a curious draining sensation directed towards [usr]!</span>"
-	user << "<span class='shadowling'>You draw life from those around you to heal your wounds.</span>"
+		M.text2tab("<span class='boldannounce'>You feel a wave of exhaustion and a curious draining sensation directed towards [usr]!</span>")
+	user.text2tab("<span class='shadowling'>You draw life from those around you to heal your wounds.</span>")
 
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall //Completely revives a dead thrall
@@ -524,15 +527,15 @@
 		switch(choice)
 			if("Empower")
 				if(!is_thrall(thrallToRevive))
-					user << "<span class='warning'>[thrallToRevive] is not a thrall.</span>"
+					user.text2tab("<span class='warning'>[thrallToRevive] is not a thrall.</span>")
 					revert_cast()
 					return
 				if(thrallToRevive.stat != CONSCIOUS)
-					user << "<span class='warning'>[thrallToRevive] must be conscious to become empowered.</span>"
+					user.text2tab("<span class='warning'>[thrallToRevive] must be conscious to become empowered.</span>")
 					revert_cast()
 					return
 				if(thrallToRevive.dna.species.id == "l_shadowling")
-					user << "<span class='warning'>[thrallToRevive] is already empowered.</span>"
+					user.text2tab("<span class='warning'>[thrallToRevive] is already empowered.</span>")
 					revert_cast()
 					return
 				var/empowered_thralls = 0
@@ -543,17 +546,17 @@
 					if(H.dna.species.id == "l_shadowling")
 						empowered_thralls++
 				if(empowered_thralls >= EMPOWERED_THRALL_LIMIT)
-					user << "<span class='warning'>You cannot spare this much energy. There are too many empowered thralls.</span>"
+					user.text2tab("<span class='warning'>You cannot spare this much energy. There are too many empowered thralls.</span>")
 					revert_cast()
 					return
 				user.visible_message("<span class='danger'>[user] places their hands over [thrallToRevive]'s face, red light shining from beneath.</span>", \
 									"<span class='shadowling'>You place your hands on [thrallToRevive]'s face and begin gathering energy...</span>")
-				thrallToRevive << "<span class='userdanger'>[user] places their hands over your face. You feel energy gathering. Stand still...</span>"
+				thrallToRevive.text2tab("<span class='userdanger'>[user] places their hands over your face. You feel energy gathering. Stand still...</span>")
 				if(!do_mob(user, thrallToRevive, 80))
-					user << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
+					user.text2tab("<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 					revert_cast()
 					return
-				user << "<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>"
+				user.text2tab("<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>")
 				user.visible_message("<span class='boldannounce'><i>Red lightning surges into [thrallToRevive]'s face!</i></span>")
 				playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
 				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
@@ -572,21 +575,21 @@
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_walk(null))
 			if("Revive")
 				if(!is_thrall(thrallToRevive))
-					user << "<span class='warning'>[thrallToRevive] is not a thrall.</span>"
+					user.text2tab("<span class='warning'>[thrallToRevive] is not a thrall.</span>")
 					revert_cast()
 					return
 				if(thrallToRevive.stat != DEAD)
-					user << "<span class='warning'>[thrallToRevive] is not dead.</span>"
+					user.text2tab("<span class='warning'>[thrallToRevive] is not dead.</span>")
 					revert_cast()
 					return
 				user.visible_message("<span class='danger'>[user] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
 									"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
 				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.", source = thrallToRevive)
 				if(!do_mob(user, thrallToRevive, 30))
-					user << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
+					user.text2tab("<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 					revert_cast()
 					return
-				user << "<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>"
+				user.text2tab("<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>")
 				user.visible_message("<span class='boldannounce'><i>Red lightning surges from [user]'s hands into [thrallToRevive]'s chest!</i></span>")
 				playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
 				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
@@ -622,11 +625,11 @@
 			revert_cast()
 			return
 		if(!is_thrall(target))
-			user << "<span class='warning'>[target] must be a thrall.</span>"
+			user.text2tab("<span class='warning'>[target] must be a thrall.</span>")
 			revert_cast()
 			return
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
-			user << "<span class='warning'>The shuttle must be inbound only to the station.</span>"
+			user.text2tab("<span class='warning'>The shuttle must be inbound only to the station.</span>")
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target
@@ -635,10 +638,10 @@
 		M.visible_message("<span class='warning'>[M]'s face falls slack, their jaw slightly distending.</span>", \
 						  "<span class='boldannounce'>You are suddenly transported... far, far away...</span>")
 		if(!do_after(user, 50, target = M))
-			M << "<span class='warning'>You are snapped back to reality, your haze dissipating!</span>"
-			user << "<span class='warning'>You have been interrupted. The draw has failed.</span>"
+			M.text2tab("<span class='warning'>You are snapped back to reality, your haze dissipating!</span>")
+			user.text2tab("<span class='warning'>You have been interrupted. The draw has failed.</span>")
 			return
-		user << "<span class='notice'>You project [M]'s life force toward the approaching shuttle, extending its arrival duration!</span>"
+		user.text2tab("<span class='notice'>You project [M]'s life force toward the approaching shuttle, extending its arrival duration!</span>")
 		M.visible_message("<span class='warning'>[M]'s eyes suddenly flare red. They proceed to collapse on the floor, not breathing.</span>", \
 						  "<span class='warning'><b>...speeding by... ...pretty blue glow... ...touch it... ...no glow now... ...no light... ...nothing at all...</span>")
 		M.death()
@@ -667,24 +670,24 @@
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		if(!ishuman(target) || !target)
-			user << "<span class='warning'>You nay only glare at humans!</span>"
+			user.text2tab("<span class='warning'>You nay only glare at humans!</span>")
 			revert_cast()
 			return
 		if(target.stat)
-			user << "<span class='warning'>[target] must be conscious!</span>"
+			user.text2tab("<span class='warning'>[target] must be conscious!</span>")
 			revert_cast()
 			return
 		if(is_shadow_or_thrall(target))
-			user << "<span class='warning'>You cannot glare at allies!</span>"
+			user.text2tab("<span class='warning'>You cannot glare at allies!</span>")
 			revert_cast()
 			return
 		var/mob/living/carbon/human/M = target
 		user.visible_message("<span class='warning'><b>[user]'s eyes flash a bright red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes clouding...</span>")
 		if(in_range(target, user))
-			target << "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are starstruck by the heavenly lights...</span>"
+			target.text2tab("<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are starstruck by the heavenly lights...</span>")
 		else //Only alludes to the shadowling if the target is close by
-			target << "<span class='userdanger'>Red lights suddenly dance in your vision, and you are starstruck by their heavenly beauty...</span>"
+			target.text2tab("<span class='userdanger'>Red lights suddenly dance in your vision, and you are starstruck by their heavenly beauty...</span>")
 		target.Stun(5) //Roughly 50% as long as the normal one
 		M.silent += 5
 
@@ -719,11 +722,11 @@
 /obj/effect/proc_holder/spell/self/thrall_vision/cast(mob/living/carbon/human/user)
 	active = !active
 	if(active)
-		user << "<span class='notice'>You shift the nerves in your eyes, allowing you to see in the dark.</span>"
+		user.text2tab("<span class='notice'>You shift the nerves in your eyes, allowing you to see in the dark.</span>")
 		user.dna.species.darksight = 8
 		user.dna.species.invis_sight = SEE_INVISIBLE_MINIMUM
 	else
-		user << "<span class='notice'>You return your vision to normal.</span>"
+		user.text2tab("<span class='notice'>You return your vision to normal.</span>")
 		user.dna.species.darksight = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
 	user.update_sight()
@@ -740,7 +743,7 @@
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/cast(mob/living/carbon/human/user)
 	if(!is_shadow_or_thrall(user))
-		user << "<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>"
+		user.text2tab("<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>")
 		user.apply_damage(10, BRUTE, "head")
 		return
 	var/text = stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", "")
@@ -749,10 +752,10 @@
 	text = "<span class='shadowling'><b>\[Thrall\]</b><i> [user.real_name]</i>: [text]</span>"
 	for(var/mob/M in mob_list)
 		if(is_shadow_or_thrall(M))
-			M << text
+			M.text2tab(text)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [text]"
+			M.text2tab("[link] [text]")
 	log_say("[user.real_name]/[user.key] : [text]")
 
 
@@ -771,12 +774,12 @@
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
 	if(user.incorporeal_move)
-		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
+		user.text2tab("<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		revert_cast()
 		return
 	for(var/mob/living/boom in targets)
 		if(is_shadow(boom)) //Used to not work on thralls. Now it does so you can PUNISH THEM LIKE THE WRATHFUL GOD YOU ARE.
-			user << "<span class='warning'>Making an ally explode seems unwise.<span>"
+			user.text2tab("<span class='warning'>Making an ally explode seems unwise.<span>")
 			revert_cast()
 			return
 		user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
@@ -800,29 +803,29 @@
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
 	if(user.incorporeal_move)
 		revert_cast()
-		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
+		user.text2tab("<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		return
 
 	for(var/mob/living/carbon/human/target in targets)
 		if(is_shadow_or_thrall(target))
-			user << "<span class='warning'>You cannot enthrall an ally.<span>"
+			user.text2tab("<span class='warning'>You cannot enthrall an ally.<span>")
 			revert_cast()
 			return
 		if(!target.ckey || !target.mind)
-			user << "<span class='warning'>The target has no mind.</span>"
+			user.text2tab("<span class='warning'>The target has no mind.</span>")
 			revert_cast()
 			return
 		if(target.stat)
-			user << "<span class='warning'>The target must be conscious.</span>"
+			user.text2tab("<span class='warning'>The target must be conscious.</span>")
 			revert_cast()
 			return
 		if(!ishuman(target))
-			user << "<span class='warning'>You can only enthrall humans.</span>"
+			user.text2tab("<span class='warning'>You can only enthrall humans.</span>")
 			revert_cast()
 			return
 
-		user << "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>"
-		target << "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>"
+		user.text2tab("<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>")
+		target.text2tab("<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>")
 		target.mind.special_role = "thrall"
 		ticker.mode.add_thrall(target.mind)
 
@@ -861,7 +864,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
 	if(user.incorporeal_move)
-		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
+		user.text2tab("<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		revert_cast()
 		return
 	user.visible_message("<span class='warning'><b>A massive ball of lightning appears in [user]'s hands and flares out!</b></span>", \
@@ -871,7 +874,7 @@
 		for(var/mob/living/carbon/human/target in T.contents)
 			if(is_shadow_or_thrall(target))
 				continue
-			target << "<span class='userdanger'>You are struck by a bolt of lightning!</span>"
+			target.text2tab("<span class='userdanger'>You are struck by a bolt of lightning!</span>")
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)
 			target.Weaken(8)
 			target.take_organ_damage(0,50)
@@ -893,8 +896,8 @@
 	text = "<font size=4><span class='shadowling'><b>\[Ascendant\]<i> [user.real_name]</i>: [text]</b></span></font>"
 	for(var/mob/M in mob_list)
 		if(is_shadow_or_thrall(M))
-			M << text
+			M.text2tab(text)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [text]"
+			M.text2tab("[link] [text]")
 	log_say("[user.real_name]/[user.key] : [text]")

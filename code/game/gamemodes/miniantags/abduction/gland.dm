@@ -60,7 +60,7 @@
 	icon_state = "health"
 
 /obj/item/organ/gland/heals/activate()
-	owner << "<span class='notice'>You feel curiously revitalized.</span>"
+	owner.text2tab("<span class='notice'>You feel curiously revitalized.</span>")
 	owner.adjustBruteLoss(-20)
 	owner.adjustOxyLoss(-20)
 	owner.adjustFireLoss(-20)
@@ -72,10 +72,11 @@
 	icon_state = "slime"
 
 /obj/item/organ/gland/slime/activate()
-	owner << "<span class='warning'>You feel nauseous!</span>"
+	owner.text2tab("<span class='warning'>You feel nauseous!</span>")
 	owner.vomit(20)
 
-	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(get_turf(owner))
+	var/mob/living/simple_animal/slime/Slime
+	Slime = new(get_turf(owner), "grey")
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
@@ -87,13 +88,13 @@
 	icon_state = "mindshock"
 
 /obj/item/organ/gland/mindshock/activate()
-	owner << "<span class='notice'>You get a headache.</span>"
+	owner.text2tab("<span class='notice'>You get a headache.</span>")
 
 	var/turf/T = get_turf(owner)
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		H << "<span class='alien'>You hear a buzz in your head.</span>"
+		H.text2tab("<span class='alien'>You hear a buzz in your head.</span>")
 		H.confused += 20
 
 /obj/item/organ/gland/pop
@@ -104,7 +105,7 @@
 	icon_state = "species"
 
 /obj/item/organ/gland/pop/activate()
-	owner << "<span class='notice'>You feel unlike yourself.</span>"
+	owner.text2tab("<span class='notice'>You feel unlike yourself.</span>")
 	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
 	owner.set_species(species)
 
@@ -116,7 +117,7 @@
 	icon_state = "vent"
 
 /obj/item/organ/gland/ventcrawling/activate()
-	owner << "<span class='notice'>You feel very stretchy.</span>"
+	owner.text2tab("<span class='notice'>You feel very stretchy.</span>")
 	owner.ventcrawler = 2
 	return
 
@@ -128,7 +129,7 @@
 	icon_state = "viral"
 
 /obj/item/organ/gland/viral/activate()
-	owner << "<span class='warning'>You feel sick.</span>"
+	owner.text2tab("<span class='warning'>You feel sick.</span>")
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
 	D.carrier = 1
@@ -146,7 +147,7 @@
 	icon_state = "emp"
 
 /obj/item/organ/gland/emp/activate()
-	owner << "<span class='warning'>You feel a spike of pain in your head.</span>"
+	owner.text2tab("<span class='warning'>You feel a spike of pain in your head.</span>")
 	empulse(get_turf(owner), 2, 5, 1)
 
 /obj/item/organ/gland/spiderman
@@ -156,7 +157,7 @@
 	icon_state = "spider"
 
 /obj/item/organ/gland/spiderman/activate()
-	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
+	owner.text2tab("<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
 	new /obj/effect/spider/spiderling(owner.loc)
 
@@ -167,7 +168,7 @@
 	icon_state = "egg"
 
 /obj/item/organ/gland/egg/activate()
-	owner << "<span class='boldannounce'>You lay an egg!</span>"
+	owner.text2tab("<span class='boldannounce'>You lay an egg!</span>")
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
@@ -195,7 +196,7 @@
 	uses = 1
 
 /obj/item/organ/gland/bodysnatch/activate()
-	owner << "<span class='warning'>You feel something moving around inside you...</span>"
+	owner.text2tab("<span class='warning'>You feel something moving around inside you...</span>")
 	//spawn cocoon with clone greytide snpc inside
 	if(ishuman(owner))
 		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
@@ -246,10 +247,10 @@
 	uses = 1
 
 /obj/item/organ/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
+	owner.text2tab("<span class='warning'>You feel bloated.</span>")
 	sleep(150)
 	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
+	owner.text2tab("<span class='userdanger'>A massive stomachache overcomes you.</span>")
 	sleep(50)
 	if(!owner) return
 	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")

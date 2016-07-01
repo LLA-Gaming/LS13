@@ -10,6 +10,7 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
@@ -38,7 +39,7 @@
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
 	..()
 	if(W.is_sharp())
-		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
+		user.text2tab("<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
 		qdel(src)
@@ -73,7 +74,7 @@
 
 /obj/item/weapon/grown/snapcorn/attack_self(mob/user)
 	..()
-	user << "<span class='notice'>You pick up a snap pops from the cob.</span>"
+	user.text2tab("<span class='notice'>You pick up a snap pops from the cob.</span>")
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)

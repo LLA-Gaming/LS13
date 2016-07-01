@@ -7,6 +7,7 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash)
@@ -118,14 +119,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
-		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>"
+		user.text2tab("<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>")
 		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || istype(user.loc,/turf/open/space))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
+	user.text2tab("<span class='notice'>You begin to awaken the Killer Tomato...</span>")
 	awakening = 1
 
 	spawn(30)

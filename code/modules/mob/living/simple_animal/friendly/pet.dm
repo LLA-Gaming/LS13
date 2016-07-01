@@ -13,7 +13,7 @@
 		collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
 		pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
 		regenerate_icons()
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
+		user.text2tab("<span class='notice'>You put the [P] around [src]'s neck.</span>")
 		if(P.tagname)
 			real_name = "\proper [P.tagname]"
 			name = real_name
@@ -24,7 +24,7 @@
 			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 	else
 		..()
@@ -45,6 +45,6 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/regenerate_icons()
-	overlays.Cut()
-	overlays += collar
-	overlays += pettag
+	cut_overlays()
+	add_overlay(collar)
+	add_overlay(pettag)

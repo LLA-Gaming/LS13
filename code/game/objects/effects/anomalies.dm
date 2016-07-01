@@ -46,7 +46,7 @@
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
-		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>"
+		user.text2tab("<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
 
@@ -172,7 +172,7 @@
 	..()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air("o2=15;plasma=15;TEMP=1000")
+		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
 
 /////////////////////
 

@@ -34,6 +34,9 @@
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
 		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.vchange && wear_id)
+			if(V.locked)
+				if(!check_contents_for(V.locked))
+					return real_name
 			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
 				return idcard.registered_name

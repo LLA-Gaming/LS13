@@ -34,7 +34,7 @@
 	. = ..()
 
 /obj/item/weapon/gun/energy/pulse/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/carbine
 	name = "pulse carbine"
@@ -49,7 +49,7 @@
 	flight_y_offset = 12
 
 /obj/item/weapon/gun/energy/pulse/carbine/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/pistol
 	name = "pulse pistol"
@@ -62,7 +62,7 @@
 	can_charge = 0
 
 /obj/item/weapon/gun/energy/pulse/pistol/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/destroyer
 	name = "pulse destroyer"
@@ -71,7 +71,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
 /obj/item/weapon/gun/energy/pulse/destroyer/attack_self(mob/living/user)
-	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
+	user.text2tab("<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>")
 
 /obj/item/weapon/gun/energy/pulse/pistol/m1911
 	name = "\improper M1911-P"

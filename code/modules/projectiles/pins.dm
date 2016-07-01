@@ -28,20 +28,20 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.loc = get_turf(G)
 				G.pin.gun_remove(user)
-				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
+				user.text2tab("<span class ='notice'>You remove [G]'s old pin.</span>")
 
 			if(!G.pin)
 				if(!user.unEquip(src))
 					return
 				gun_insert(user, G)
-				user << "<span class ='notice'>You insert [src] into [G].</span>"
+				user.text2tab("<span class ='notice'>You insert [src] into [G].</span>")
 			else
-				user << "<span class ='notice'>This firearm already has a firing pin installed.</span>"
+				user.text2tab("<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/device/firing_pin/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
-		user << "<span class='notice'>You override the authentication mechanism.</span>"
+		user.text2tab("<span class='notice'>You override the authentication mechanism.</span>")
 
 /obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	gun = G
@@ -61,7 +61,7 @@
 	user.show_message(fail_message, 1)
 	if(selfdestruct)
 		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
-		user << "<span class='userdanger'>[gun] explodes!</span>"
+		user.text2tab("<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
@@ -100,11 +100,11 @@
 			return 1
 	return 0
 
-/obj/item/device/firing_pin/implant/loyalty
-	name = "loyalty firing pin"
-	desc = "This Security firing pin authorizes the weapon for only loyalty-implanted users."
+/obj/item/device/firing_pin/implant/mindshield
+	name = "mindshield firing pin"
+	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
-	req_implant = /obj/item/weapon/implant/loyalty
+	req_implant = /obj/item/weapon/implant/mindshield
 
 /obj/item/device/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
@@ -163,7 +163,7 @@
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			user << "<span class='notice'>DNA-LOCK SET.</span>"
+			user.text2tab("<span class='notice'>DNA-LOCK SET.</span>")
 
 /obj/item/device/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(istype(user) && user.dna && user.dna.unique_enzymes)
@@ -176,7 +176,7 @@
 	if(!unique_enzymes)
 		if(istype(user) && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			user << "<span class='notice'>DNA-LOCK SET.</span>"
+			user.text2tab("<span class='notice'>DNA-LOCK SET.</span>")
 	else
 		..()
 
@@ -198,7 +198,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	user << "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>"
+	user.text2tab("<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
 	return 0
 
 /obj/item/device/firing_pin/tag/red

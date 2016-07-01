@@ -36,7 +36,7 @@
 		IC.Remove(target, special = 1)
 		return 1
 	else
-		user << "<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>"
+		user.text2tab("<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>")
 		return 0
 
 /datum/surgery_step/gland_insert

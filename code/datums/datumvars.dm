@@ -14,7 +14,7 @@
 
 
 	if(!usr.client || !usr.client.holder)
-		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
+		usr.text2tab("<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
 
@@ -305,6 +305,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
@@ -445,7 +446,7 @@ body
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["godmode"])
@@ -489,7 +490,7 @@ body
 
 //Needs +VAREDIT past this point
 
-	else if(check_rights(R_VAREDIT))
+	else if(check_rights(R_PRIMARYADMIN))
 
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
@@ -569,7 +570,7 @@ body
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/mob/M = locate(href_list["ninja"])
@@ -581,7 +582,7 @@ body
 			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/mob/M = locate(href_list["gib"])
@@ -592,7 +593,7 @@ body
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(R_BUILDMODE))
+			if(!check_rights(R_SENIORADMIN))
 				return
 
 			var/mob/M = locate(href_list["build_mode"])
@@ -638,7 +639,7 @@ body
 			offer_control(M)
 
 		else if(href_list["delall"])
-			if(!check_rights(R_DEBUG|R_SERVER))
+			if(!check_rights(R_DEBUG|R_PRIMARYADMIN))
 				return
 
 			var/obj/O = locate(href_list["delall"])
@@ -707,7 +708,7 @@ body
 			href_list["datumrefresh"] = href_list["addreagent"]
 
 		else if(href_list["explode"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/atom/A = locate(href_list["explode"])
@@ -719,7 +720,7 @@ body
 			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
-			if(!check_rights(R_FUN))
+			if(!check_rights(R_PRIMARYADMIN))
 				return
 
 			var/atom/A = locate(href_list["emp"])
@@ -741,9 +742,9 @@ body
 
 			switch(href_list["rotatedir"])
 				if("right")
-					A.dir = turn(A.dir, -45)
+					A.setDir(turn(A.dir, -45))
 				if("left")
-					A.dir = turn(A.dir, 45)
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
@@ -759,7 +760,7 @@ body
 			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["makehuman"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"])
@@ -775,7 +776,7 @@ body
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
 		else if(href_list["makemonkey"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
@@ -791,7 +792,7 @@ body
 			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
 		else if(href_list["makerobot"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makerobot"])
@@ -807,7 +808,7 @@ body
 			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
 		else if(href_list["makealien"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makealien"])
@@ -823,7 +824,7 @@ body
 			holder.Topic(href, list("makealien"=href_list["makealien"]))
 
 		else if(href_list["makeslime"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makeslime"])
@@ -839,7 +840,7 @@ body
 			holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 		else if(href_list["makeai"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/H = locate(href_list["makeai"])
@@ -855,7 +856,7 @@ body
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 
 		else if(href_list["setspecies"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["setspecies"])
@@ -871,12 +872,10 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["removebodypart"])
@@ -896,7 +895,7 @@ body
 					BP.drop_limb()
 
 		else if(href_list["purrbation"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(R_ADMIN))
 				return
 
 			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
@@ -910,15 +909,15 @@ body
 
 			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
+					usr.text2tab("Put [H] on purrbation.",null)
+					H.text2tab("Something is nya~t right.")
 					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 					H.dna.features["tail_human"] = "Cat"
 					H.dna.features["ears"] = "Cat"
 				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
+					usr.text2tab("Removed [H] from purrbation.",null)
+					H.text2tab("You are no longer a cat.")
 					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
 					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 					H.dna.features["tail_human"] = "None"
@@ -926,7 +925,7 @@ body
 				H.regenerate_icons()
 				return
 
-			usr << "You can only put humans on purrbation."
+			usr.text2tab("You can only put humans on purrbation.",null)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))

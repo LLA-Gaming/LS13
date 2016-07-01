@@ -38,7 +38,7 @@
 		if(number < 3)
 			var/obj/effect/particle_effect/steam/I = PoolOrNew(/obj/effect/particle_effect/steam, oldposition)
 			number++
-			I.dir = holder.dir
+			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
 			spawn(10)
 				qdel(I)
@@ -68,7 +68,7 @@
 		if(T != oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
-				I.dir = holder.dir
+				I.setDir(holder.dir)
 				flick("ion_fade", I)
 				I.icon_state = ""
 				spawn(20)
@@ -114,7 +114,7 @@
 
 		for(var/mob/M in viewers(1, location))
 			if (prob (50 * amount))
-				M << "<span class='danger'>The explosion knocks you down.</span>"
+				M.text2tab("<span class='danger'>The explosion knocks you down.</span>")
 				M.Weaken(rand(1,5))
 		return
 	else

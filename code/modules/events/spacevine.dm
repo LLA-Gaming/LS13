@@ -43,8 +43,8 @@
 /datum/spacevine_mutation/proc/on_death(obj/effect/spacevine/holder)
 	return
 
-/datum/spacevine_mutation/proc/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
-	return
+/datum/spacevine_mutation/proc/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
+	. = expected_damage
 
 /datum/spacevine_mutation/proc/on_cross(obj/effect/spacevine/holder, mob/crosser)
 	return
@@ -157,7 +157,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser))
-		crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
+		crosser.text2tab("<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
@@ -187,6 +187,10 @@
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/effect/spacevine/holder, temp, volume)
 	return 1
+
+/datum/spacevine_mutation/fire_proof/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
+	if(I && I.damtype == "fire")
+		. = 0
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
@@ -289,13 +293,13 @@
 	if(prob(severity) && istype(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		M.text2tab("<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter)
 	if(prob(severity) && istype(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		M.text2tab("<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -306,17 +310,14 @@
 	if(holder.energy)
 		holder.density = 1
 
-/datum/spacevine_mutation/woodening/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
+/datum/spacevine_mutation/woodening/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
+	if(!expected_damage)
+		return
 	if(hitter)
-		var/chance
 		if(I)
-			chance = I.force * 2
+			. = I.force * 2
 		else
-			chance = 8
-		if(prob(chance))
-			qdel(holder)
-	return 1
-
+			. = 8
 
 /datum/spacevine_mutation/flowering
 	name = "flowering"
@@ -324,15 +325,12 @@
 	quality = NEGATIVE
 	severity = 10
 
-
 /datum/spacevine_mutation/flowering/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
 		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
 
-
 /datum/spacevine_mutation/flowering/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	holder.entangle(crosser)
-
 
 
 // SPACE VINES (Note that this code is very similar to Biomass code)
@@ -363,7 +361,7 @@
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
 
@@ -389,32 +387,23 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	var/override = 0
+	var/override = W.force
+	if(W.is_sharp())
+		override = 100
+	if(istype(W, /obj/item/weapon/scythe))
+		var/local_override = override
+		for(var/obj/effect/spacevine/B in orange(1,src))
+			for(var/datum/spacevine_mutation/SM in mutations)
+				local_override = SM.on_hit(src, user, W, local_override)
+				if(prob(local_override))
+					qdel(B)
 
 	for(var/datum/spacevine_mutation/SM in mutations)
-		override += SM.on_hit(src, user)
+		override = SM.on_hit(src, user, W, override) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 
-	if(override)
-		..()
-		return
-
-	if(istype(W, /obj/item/weapon/scythe))
-		for(var/obj/effect/spacevine/B in orange(1,src))
-			if(prob(80))
-				qdel(B)
+	if(prob(override))
 		qdel(src)
 
-	else if(W.is_sharp())
-		qdel(src)
-
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			qdel(src)
-		else
-			user_unbuckle_mob(user,user)
-			return
-		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 
 /obj/effect/spacevine/Crossed(mob/crosser)
@@ -540,7 +529,7 @@
 		SM.on_grow(src)
 
 /obj/effect/spacevine/proc/entangle_mob()
-	if(!buckled_mobs.len && prob(25))
+	if(!has_buckled_mobs() && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
 			if(buckled_mobs.len)
@@ -553,7 +542,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
+		V.text2tab("<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V)
 
 /obj/effect/spacevine/proc/spread()

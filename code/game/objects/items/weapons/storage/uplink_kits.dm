@@ -18,7 +18,7 @@
 		if("stealth")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
-			new /obj/item/device/rad_laser(src)
+			new /obj/item/device/healthanalyzer/rad_laser(src)
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
@@ -262,7 +262,7 @@
 	new /obj/item/weapon/storage/backpack/chameleon(src)
 	new /obj/item/device/radio/headset/chameleon(src)
 	new /obj/item/weapon/stamp/chameleon(src)
-	new /obj/item/device/pda/chameleon(src)
+	new /obj/item/device/tablet/chameleon(src)
 	new /obj/item/weapon/gun/energy/laser/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.

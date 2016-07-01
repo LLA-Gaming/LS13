@@ -13,18 +13,18 @@
 
 /obj/structure/closet/crate/bin/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len == 0)
-		overlays += "largebing"
+		add_overlay("largebing")
 	else if(contents.len >= storage_capacity)
-		overlays += "largebinr"
+		add_overlay("largebinr")
 	else
-		overlays += "largebino"
+		add_overlay("largebino")
 
 /obj/structure/closet/crate/bin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = W
-		user << "<span class='notice'>You fill the bag.</span>"
+		user.text2tab("<span class='notice'>You fill the bag.</span>")
 		for(var/obj/item/O in src)
 			if(T.can_be_inserted(O, 1))
 				O.loc = T

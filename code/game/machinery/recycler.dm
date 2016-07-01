@@ -20,7 +20,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/New()
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_PLASMA=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_URANIUM=1, MAT_BANANIUM=1))
+	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recycler(null)
 	B.apply_default_parts(src)
 	update_icon()
@@ -46,9 +46,9 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
-	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	user.text2tab("The power light is [(stat & NOPOWER) ? "off" : "on"].")
+	user.text2tab("The safety-mode light is [safety_mode ? "on" : "off"].")
+	user.text2tab("The safety-sensors status light is [emagged ? "off" : "on"].")
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -79,7 +79,7 @@ var/const/SAFETY_COOLDOWN = 100
 			safety_mode = FALSE
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
+		user.text2tab("<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/recycler/update_icon()
 	..()

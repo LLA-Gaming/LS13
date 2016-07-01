@@ -41,11 +41,11 @@
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.unEquip(L))
-				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				user.text2tab("<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return
 			L.loc = src
 			locked = L
-			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
+			user.text2tab("<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
 	else
 		return ..()
 
@@ -207,7 +207,7 @@
 		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			user << "<span class='alert'>No connected stations located.</span>"
+			user.text2tab("<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
@@ -255,13 +255,17 @@
 /obj/machinery/teleport/hub/New()
 	..()
 	link_power_station()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/teleporter_hub
+	name = "circuit board (Teleporter Hub)"
+	build_path = /obj/machinery/teleport/hub
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 3,
+							/obj/item/weapon/stock_parts/matter_bin = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/hub/initialize()
 	link_power_station()
@@ -289,7 +293,9 @@
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	if(z == ZLEVEL_CENTCOM)
-		M << "You can't use this here."
+		var/mob/mob = M
+		if(ismob(mob))
+			mob.text2tab("You can't use this here.")
 	if(is_ready())
 		teleport(M)
 		use_power(5000)
@@ -320,7 +326,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+						human.text2tab("<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
@@ -363,15 +369,19 @@
 
 /obj/machinery/teleport/station/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
+	B.apply_default_parts(src)
 	link_console_and_hub()
+
+/obj/item/weapon/circuitboard/machine/teleporter_station
+	name = "circuit board (Teleporter Station)"
+	build_path = /obj/machinery/teleport/station
+	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/station/initialize()
 	link_console_and_hub()
@@ -411,15 +421,15 @@
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+			user.text2tab("<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+					user.text2tab("<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 				else
-					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+					user.text2tab("<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
@@ -434,7 +444,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
-			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
+			user.text2tab("<span class='caution'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()

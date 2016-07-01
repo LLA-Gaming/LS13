@@ -60,10 +60,23 @@
 	set desc = "Toggle recieving a message in deadchat when sentient mobs \
 		die."
 	prefs.toggles ^= DISABLE_DEATHRATTLE
+	prefs.save_preferences()
 	usr << "You will \
 		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
 		messages when a sentient mob dies."
 	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
+/client/verb/toggle_arrivalrattle()
+	set name = "Toggle Arrivalrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when someone joins \
+		the station."
+	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
+		messages when someone joins the station."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
 
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
@@ -332,9 +345,9 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
 	prefs.save_preferences()
 	if(prefs.inquisitive_ghost)
-		src << "<span class='notice'>You will now examine everything you click on.</span>"
+		src.text2tab("<span class='notice'>You will now examine everything you click on.</span>")
 	else
-		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+		src.text2tab("<span class='notice'>You will no longer examine things you click on.</span>")
 
 /client/verb/toggle_announcement_sound()
 	set name = "Hear/Silence Announcements"

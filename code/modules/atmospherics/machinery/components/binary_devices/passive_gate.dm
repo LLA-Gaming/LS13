@@ -29,10 +29,10 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
 	if(!on)
 		icon_state = "passgate_off"
-		overlays.Cut()
+		cut_overlays()
 		return
 
-	overlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "passgate_on")
+	add_overlay(getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "passgate_on"))
 
 /obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	..()
@@ -169,7 +169,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/can_unwrench(mob/user)
 	if(..())
 		if(on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			user.text2tab("<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 

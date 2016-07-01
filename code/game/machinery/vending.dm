@@ -93,7 +93,7 @@
 		position = (position == names_paths.len) ? 1 : (position + 1)
 		var/typepath = names_paths[position]
 
-		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		user.text2tab("<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>")
 		set_type(typepath)
 	else
 		return ..()
@@ -209,9 +209,9 @@
 					return
 				W.loc = src
 				food_load(W)
-				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
+				user.text2tab("<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
 		else
-			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
+			user.text2tab("<span class='notice'>[src]'s chef compartment does not accept junk food.</span>")
 
 	else if(istype(W, /obj/item/weapon/storage/bag/tray))
 		if(!compartment_access_check(user))
@@ -229,19 +229,19 @@
 			else
 				denied_items++
 		if(denied_items)
-			user << "<span class='notice'>[src] refuses some items.</span>"
+			user.text2tab("<span class='notice'>[src] refuses some items.</span>")
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
+			user.text2tab("<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>")
 		updateUsrDialog()
 		return
 
 	else
 		return ..()
 
-/obj/machinery/vending/snack/proc/compartment_access_check(user)
+/obj/machinery/vending/snack/proc/compartment_access_check(mob/user)
 	req_access_txt = chef_compartment_access
 	if(!allowed(user) && !emagged && scan_id)
-		user << "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>"
+		user.text2tab("<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
 	req_access_txt = "0"
@@ -254,7 +254,7 @@
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
-		user << "<span class='warning'>[src]'s chef compartment is full.</span>"
+		user.text2tab("<span class='warning'>[src]'s chef compartment is full.</span>")
 		return 1
 	return 0
 
@@ -277,13 +277,13 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(anchored)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
-			overlays.Cut()
+			user.text2tab("<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
+			cut_overlays()
 			if(panel_open)
-				overlays += image(icon, "[initial(icon_state)]-panel")
+				add_overlay(image(icon, "[initial(icon_state)]-panel"))
 			updateUsrDialog()
 		else
-			user << "<span class='warning'>You must first secure [src].</span>"
+			user.text2tab("<span class='warning'>You must first secure [src].</span>")
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -294,25 +294,25 @@
 			return
 		W.loc = src
 		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		user.text2tab("<span class='notice'>You insert [W] into [src].</span>")
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			user.text2tab("<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges[STANDARD_CHARGE] == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				user.text2tab("<span class='notice'>This [canister.name] is empty!</span>")
 			else
 				var/transfered = refill_inventory(canister,product_records,user)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
+					user.text2tab("<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					user.text2tab("<span class='notice'>The [name] is fully stocked.</span>")
 			return
 		else
-			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
+			user.text2tab("<span class='notice'>You should probably unscrew the service panel first.</span>")
 	else
 		return ..()
 
@@ -339,7 +339,7 @@
 /obj/machinery/vending/emag_act(mob/user)
 	if(!emagged)
 		emagged  = 1
-		user << "<span class='notice'>You short out the product lock on [src].</span>"
+		user.text2tab("<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
@@ -412,21 +412,21 @@
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+				usr.text2tab("<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 				return
 		else
-			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+			usr.text2tab("<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return
 
 	if(href_list["remove_coin"])
 		if(!coin)
-			usr << "<span class='notice'>There is no coin in this machine.</span>"
+			usr.text2tab("<span class='notice'>There is no coin in this machine.</span>")
 			return
 
 		coin.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "<span class='notice'>You remove [coin] from [src].</span>"
+		usr.text2tab("<span class='notice'>You remove [coin] from [src].</span>")
 		coin = null
 
 
@@ -451,11 +451,11 @@
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
-			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
+			usr.text2tab("<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
 		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-			usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
+			usr.text2tab("<span class='warning'>Access denied.</span>")	//Unless emagged of course
 			flick(icon_deny,src)
 			return
 
@@ -472,20 +472,20 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
+				usr.text2tab("<span class='warning'>You need to insert a coin to get this item!</span>")
 				vend_ready = 1
 				return
 			if(coin.string_attached)
 				if(prob(50))
 					if(usr.put_in_hands(coin))
-						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
+						usr.text2tab("<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
 					else
-						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
+						usr.text2tab("<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
+					usr.text2tab("<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
 					qdel(coin)
 					coin = null
 			else
@@ -497,7 +497,7 @@
 			return
 
 		if (R.amount <= 0)
-			usr << "<span class='warning'>Sold out.</span>"
+			usr.text2tab("<span class='warning'>Sold out.</span>")
 			vend_ready = 1
 			return
 		else
@@ -894,10 +894,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/under/jester = 1, /obj/item/clothing/head/jester = 1,
 					/obj/item/clothing/suit/hooded/carp_costume = 1,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
+					/obj/item/clothing/tie/bowtie=1,
+					/obj/item/clothing/head/fez=1,
 					/obj/item/clothing/suit/snowman = 1,
 					/obj/item/clothing/head/snowman = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
-	premium = list(/obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
+	premium = list(/obj/item/clothing/head/batman = 1, /obj/item/clothing/under/batman = 1, /obj/item/clothing/gloves/batman = 1, /obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
@@ -987,10 +989,11 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/tie/scarf/zebra=1,/obj/item/clothing/tie/scarf/christmas=1,/obj/item/clothing/tie/stripedredscarf=1,
 	/obj/item/clothing/tie/stripedbluescarf=1,/obj/item/clothing/tie/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
 	/obj/item/clothing/under/blackskirt=1,/obj/item/clothing/under/blueskirt=1,/obj/item/clothing/under/blueskirt/redskirt=1,
+	/obj/item/clothing/glasses/regular/reading=2,/obj/item/clothing/suit/toggle/aviator=2,/obj/item/clothing/suit/jacket/leather/biker=2,/obj/item/clothing/under/explorer=1,/obj/item/clothing/under/fembuisness=2,/obj/item/clothing/suit/jacket/dandy_varsity=1,
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
 	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
-	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
+	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/suit/hooded/hoodie/random=3,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/femoffice=1,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
 	/obj/item/clothing/suit/jacket/letterman_red=1)

@@ -13,6 +13,7 @@
 	var/obj/item/stack/rods/stored
 
 /obj/structure/grille/New()
+	..()
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
 
@@ -160,16 +161,16 @@
 		if (!destroyed)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
+				user.text2tab("<span class='warning'>You need at least two sheets of glass for that!</span>")
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
+				user.text2tab("<span class='warning'>[src] needs to be fastened to the floor first!</span>")
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				user << "<span class='warning'>There is already a window there!</span>"
+				user.text2tab("<span class='warning'>There is already a window there!</span>")
 				return
-			user << "<span class='notice'>You start placing the window...</span>"
+			user.text2tab("<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
 					return
@@ -180,12 +181,12 @@
 					WD = new/obj/structure/window/reinforced/fulltile(loc) //reinforced window
 				else
 					WD = new/obj/structure/window/fulltile(loc) //normal window
-				WD.dir = dir_to_set
+				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
 				WD.anchored = 0
 				WD.state = 0
 				ST.use(2)
-				user << "<span class='notice'>You place [WD] on [src].</span>"
+				user.text2tab("<span class='notice'>You place [WD] on [src].</span>")
 			return
 //window placing end
 

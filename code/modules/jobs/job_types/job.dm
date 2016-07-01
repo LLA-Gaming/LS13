@@ -136,7 +136,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/weapon/card/id
 	ears = /obj/item/device/radio/headset
-	belt = /obj/item/device/pda
+	belt = /obj/item/device/tablet
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
@@ -145,7 +145,7 @@
 	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	var/box = /obj/item/weapon/storage/box/survival
 
-	var/pda_slot = slot_belt
+	var/tablet_slot = slot_belt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)
@@ -164,7 +164,9 @@
 		else
 			back = backpack //Department backpack
 
-	backpack_contents[box] = 1
+	if(box)
+		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
+		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -179,11 +181,11 @@
 		C.update_label()
 		H.sec_hud_set_ID()
 
-	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
-	if(istype(PDA))
-		PDA.owner = H.real_name
-		PDA.ownjob = H.job
-		PDA.update_label()
+	var/obj/item/device/tablet/T = H.get_item_by_slot(tablet_slot)
+	if(istype(T))
+		T.core.owner = H.real_name
+		T.core.ownjob = H.job
+		T.update_label()
 
 /datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization

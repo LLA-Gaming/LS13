@@ -121,7 +121,7 @@
 			new /obj/item/weapon/storage/backpack/clown(src)
 			new /obj/item/clothing/under/rank/clown(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/device/pda/clown(src)
+			new /obj/item/device/tablet/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/weapon/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
@@ -129,7 +129,7 @@
 		if(95)
 			new /obj/item/clothing/under/rank/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)
-			new /obj/item/device/pda/mime(src)
+			new /obj/item/device/tablet/mime(src)
 			new /obj/item/clothing/gloves/color/white(src)
 			new /obj/item/clothing/mask/gas/mime(src)
 			new /obj/item/clothing/head/beret(src)
@@ -152,18 +152,18 @@
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		user.text2tab("<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			if (input == code)
-				user << "<span class='notice'>The crate unlocks!</span>"
+				user.text2tab("<span class='notice'>The crate unlocks!</span>")
 				locked = 0
-				overlays.Cut()
-				overlays += "securecrateg"
+				cut_overlays()
+				add_overlay("securecrateg")
 			else if (input == null || length(input) != codelen)
-				user << "<span class='notice'>You leave the crate alone.</span>"
+				user.text2tab("<span class='notice'>You leave the crate alone.</span>")
 			else
-				user << "<span class='warning'>A red light flashes.</span>"
+				user.text2tab("<span class='warning'>A red light flashes.</span>")
 				lastattempt = replacetext(input, 0, "z")
 				attempts--
 				if(attempts == 0)
@@ -185,11 +185,11 @@
 			boom(user)
 			return
 		else if(istype(W, /obj/item/device/multitool))
-			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
+			user.text2tab("<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
-				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
+				user.text2tab("<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
+				user.text2tab("<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/bulls = 0
@@ -204,7 +204,7 @@
 						++bulls
 					else if(a)
 						++cows
-				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
+				user.text2tab("<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
 
@@ -215,7 +215,7 @@
 		..()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	user.text2tab("<span class='danger'>The crate's anti-tamper system activates!</span>")
 	for(var/atom/movable/AM in src)
 		qdel(AM)
 	var/turf/T = get_turf(src)

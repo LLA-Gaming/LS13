@@ -52,19 +52,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
+		add_overlay(greenlight)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		overlays |= pinklight
+		add_overlay(pinklight)
 	else
 		overlays -= pinklight
 
 	if(broken)
-		overlays |= errorlight
+		add_overlay(errorlight)
 	else
 		overlays -= errorlight
 
@@ -80,12 +80,12 @@ var/list/announcement_systems = list()
 	if(istype(P, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+		user.text2tab("<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
 	else if(istype(P, /obj/item/device/multitool) && panel_open && broken)
-		user << "<span class='notice'>You reset [src]'s firmware.</span>"
+		user.text2tab("<span class='notice'>You reset [src]'s firmware.</span>")
 		broken = 0
 		update_icon()
 	else
@@ -158,13 +158,12 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
 	if(broken)
-		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
+		user.text2tab("<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
 		return
 	interact(user)
 

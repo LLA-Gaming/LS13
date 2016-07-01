@@ -46,23 +46,23 @@ var/global/list/rad_collectors = list()
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			user.text2tab("<span class='warning'>The controls are locked!</span>")
 			return
 ..()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
+		user.text2tab("<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
 		return 1
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(!anchored)
-			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
+			user.text2tab("<span class='warning'>The [src] needs to be secured to the floor first!</span>")
 			return 1
 		if(loaded_tank)
-			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
+			user.text2tab("<span class='warning'>There's already a plasma tank loaded!</span>")
 			return 1
 		if(!user.drop_item())
 			return 1
@@ -75,7 +75,7 @@ var/global/list/rad_collectors = list()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(loaded_tank)
-			user << "<span class='warning'>Remove the plasma tank first!</span>"
+			user.text2tab("<span class='warning'>Remove the plasma tank first!</span>")
 			return 1
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -95,11 +95,11 @@ var/global/list/rad_collectors = list()
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>"
+				user.text2tab("<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 			else
-				user << "<span class='warning'>The controls can only be locked when \the [src] is active!</span>"
+				user.text2tab("<span class='warning'>The controls can only be locked when \the [src] is active!</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			user.text2tab("<span class='danger'>Access denied.</span>")
 			return 1
 	else
 		return ..()
@@ -136,13 +136,13 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(loaded_tank)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+		add_overlay(image('icons/obj/singularity.dmi', "ptank"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		overlays += image('icons/obj/singularity.dmi', "on")
+		add_overlay(image('icons/obj/singularity.dmi', "on"))
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

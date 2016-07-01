@@ -26,6 +26,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	visor_flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
@@ -85,7 +86,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
+		user.text2tab("<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -124,7 +125,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
+	user.text2tab("<span class='notice'>You adjust your mask to portray a different emotion.</span>")
 	return 1
 
 /obj/item/clothing/mask/gas/monkeymask

@@ -84,7 +84,8 @@
 
 
 //Middle right (status indicators)
-#define ui_healthdoll "EAST-1:28,CENTER-2:13"
+#define ui_healthdoll "EAST-1:28,CENTER-3:11"
+#define ui_stamina "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
 
@@ -106,11 +107,10 @@
 #define ui_ai_announcement "SOUTH:6,WEST+7"
 #define ui_ai_shuttle "SOUTH:6,WEST+8"
 #define ui_ai_state_laws "SOUTH:6,WEST+9"
-#define ui_ai_pda_send "SOUTH:6,WEST+10"
-#define ui_ai_pda_log "SOUTH:6,WEST+11"
-#define ui_ai_take_picture "SOUTH:6,WEST+12"
-#define ui_ai_view_images "SOUTH:6,WEST+13"
-#define ui_ai_sensor "SOUTH:6,WEST+14"
+#define ui_ai_use_tablet "SOUTH:6,WEST+10"
+#define ui_ai_take_picture "SOUTH:6,WEST+11"
+#define ui_ai_view_images "SOUTH:6,WEST+12"
+#define ui_ai_sensor "SOUTH:6,WEST+13"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

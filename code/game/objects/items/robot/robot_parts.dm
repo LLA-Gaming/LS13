@@ -76,19 +76,19 @@
 	src.updateicon()
 
 /obj/item/robot_parts/robot_suit/proc/updateicon()
-	src.overlays.Cut()
+	src.cut_overlays()
 	if(src.l_arm)
-		src.overlays += "l_arm+o"
+		src.add_overlay("l_arm+o")
 	if(src.r_arm)
-		src.overlays += "r_arm+o"
+		src.add_overlay("r_arm+o")
 	if(src.chest)
-		src.overlays += "chest+o"
+		src.add_overlay("chest+o")
 	if(src.l_leg)
-		src.overlays += "l_leg+o"
+		src.add_overlay("l_leg+o")
 	if(src.r_leg)
-		src.overlays += "r_leg+o"
+		src.add_overlay("r_leg+o")
 	if(src.head)
-		src.overlays += "head+o"
+		src.add_overlay("head+o")
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -106,13 +106,13 @@
 			if (M.use(1))
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
-				user << "<span class='notice'>You arm the robot frame.</span>"
+				user.text2tab("<span class='notice'>You arm the robot frame.</span>")
 				if (user.get_inactive_hand()==src)
 					user.unEquip(src)
 					user.put_in_inactive_hand(B)
 				qdel(src)
 			else
-				user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
+				user.text2tab("<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)
@@ -160,9 +160,9 @@
 			src.chest = W
 			src.updateicon()
 		else if(!W:wired)
-			user << "<span class='warning'>You need to attach wires to it first!</span>"
+			user.text2tab("<span class='warning'>You need to attach wires to it first!</span>")
 		else
-			user << "<span class='warning'>You need to attach a cell to it first!</span>"
+			user.text2tab("<span class='warning'>You need to attach a cell to it first!</span>")
 
 	else if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)
@@ -174,57 +174,58 @@
 			src.head = W
 			src.updateicon()
 		else
-			user << "<span class='warning'>You need to attach a flash to it first!</span>"
+			user.text2tab("<span class='warning'>You need to attach a flash to it first!</span>")
 
 	else if (istype(W, /obj/item/device/multitool))
 		if(check_completion())
 			Interact(user)
 		else
-			user << "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>"
+			user.text2tab("<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>")
 
 	else if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				user.text2tab("<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
+				user.text2tab("<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>")
 				return
 
 			var/mob/living/carbon/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
-				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
+				user.text2tab("<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>")
 				return
 
 			if(!BM.client) //braindead
-				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
+				user.text2tab("<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>")
 				return
 
 			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
-				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+				user.text2tab("<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
 			if(jobban_isbanned(BM, "Cyborg"))
-				user << "<span class='warning'>This MMI does not seem to fit!</span>"
+				user.text2tab("<span class='warning'>This MMI does not seem to fit!</span>")
+				return
+
+			if(!user.unEquip(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)
 				return
 
-			if(!user.unEquip(W))
-				return
-
 			if(M.hacked || M.clockwork)
 				aisync = 0
 				lawsync = 0
+				var/datum/ai_laws/L
 				if(M.clockwork)
-					O.laws = new/datum/ai_laws/ratvar
-					spawn(1)
-						add_servant_of_ratvar(O)
+					L = new/datum/ai_laws/ratvar
 				else
-					O.laws = new/datum/ai_laws/syndicate_override
+					L = new/datum/ai_laws/syndicate_override
+				O.laws = L
+				L.associate(O)
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -237,17 +238,24 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync && !M.hacked)
+			if(!lawsync)
 				O.lawupdate = 0
-				O.make_laws()
+				if(!M.hacked && !M.clockwork)
+					O.make_laws()
 
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
 
+			if(M.clockwork)
+				O.emagged = 1
+				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
+				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
+				ticker.mode.update_servant_icons_added(O.mind)
+
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
-				O << "<span class='userdanger'>You have been robotized!</span>"
-				O << "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>"
+				O.text2tab("<span class='userdanger'>You have been robotized!</span>")
+				O.text2tab("<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>")
 
 			O.job = "Cyborg"
 
@@ -268,13 +276,13 @@
 			if(!locomotion)
 				O.lockcharge = 1
 				O.update_canmove()
-				O << "<span class='warning'>Error: Servo motors unresponsive.</span>"
+				O.text2tab("<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+			user.text2tab("<span class='warning'>The MMI must go in after everything else!</span>")
 
 	else if(istype(W,/obj/item/weapon/pen))
-		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"
+		user.text2tab("<span class='warning'>You need to use a multitool to name [src]!</span>")
 	else
 		return ..()
 
@@ -297,7 +305,7 @@
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_hand()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
-		living_user << "<span class='warning'>You need a multitool!</span>"
+		living_user.text2tab("<span class='warning'>You need a multitool!</span>")
 		return
 
 	if(href_list["Name"])
@@ -312,7 +320,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			usr << "<span class='error'>No active AIs detected.</span>"
+			usr.text2tab("<span class='error'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync
@@ -330,24 +338,24 @@
 /obj/item/robot_parts/chest/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
-			user << "<span class='warning'>You have already inserted a cell!</span>"
+			user.text2tab("<span class='warning'>You have already inserted a cell!</span>")
 			return
 		else
 			if(!user.unEquip(W))
 				return
 			W.loc = src
 			src.cell = W
-			user << "<span class='notice'>You insert the cell.</span>"
+			user.text2tab("<span class='notice'>You insert the cell.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wired)
-			user << "<span class='warning'>You have already inserted wire!</span>"
+			user.text2tab("<span class='warning'>You have already inserted wire!</span>")
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			src.wired = 1
-			user << "<span class='notice'>You insert the wire.</span>"
+			user.text2tab("<span class='notice'>You insert the wire.</span>")
 		else
-			user << "<span class='warning'>You need one length of coil to wire it!</span>"
+			user.text2tab("<span class='warning'>You need one length of coil to wire it!</span>")
 	else
 		return ..()
 
@@ -355,10 +363,10 @@
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/F = W
 		if(src.flash1 && src.flash2)
-			user << "<span class='warning'>You have already inserted the eyes!</span>"
+			user.text2tab("<span class='warning'>You have already inserted the eyes!</span>")
 			return
 		else if(F.crit_fail)
-			user << "<span class='warning'>You can't use a broken flash!</span>"
+			user.text2tab("<span class='warning'>You can't use a broken flash!</span>")
 			return
 		else
 			if(!user.unEquip(W))
@@ -368,7 +376,7 @@
 				src.flash2 = F
 			else
 				src.flash1 = F
-			user << "<span class='notice'>You insert the flash into the eye socket.</span>"
+			user.text2tab("<span class='notice'>You insert the flash into the eye socket.</span>")
 	else
 		return ..()
 

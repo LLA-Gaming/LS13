@@ -19,8 +19,8 @@
 
 /obj/item/weapon/grenade/iedcasing/New(loc)
 	..()
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"))
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired"))
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 	det_time = text2num(pickweight(times))
 	if(det_time < 0) //checking for 'duds'
@@ -42,7 +42,7 @@
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You light the [name]!</span>"
+			user.text2tab("<span class='warning'>You light the [name]!</span>")
 			active = 1
 			overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
@@ -65,4 +65,4 @@
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
 	..()
-	user << "You can't tell when it will explode!"
+	user.text2tab("You can't tell when it will explode!")

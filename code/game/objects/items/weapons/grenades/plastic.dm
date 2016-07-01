@@ -10,6 +10,7 @@
 	var/image_overlay = null
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
+	var/explosion_size = list(0,0,3,0)
 
 /obj/item/weapon/grenade/plastic/New()
 	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
@@ -30,7 +31,7 @@
 		A.master = src
 		A.loc = src
 		assemblyattacher = user.ckey
-		user << "<span class='notice'>You add [A] to the [name].</span>"
+		user.text2tab("<span class='notice'>You add [A] to the [name].</span>")
 		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
 		update_icon()
 		return
@@ -63,14 +64,14 @@
 	if(user.get_active_hand() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		det_time = newtime
-		user << "Timer set for [det_time] seconds."
+		user.text2tab("Timer set for [det_time] seconds.")
 
 /obj/item/weapon/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
 	if (istype(AM, /mob/living/carbon))
 		return
-	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
+	user.text2tab("<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
 
 	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
@@ -81,9 +82,9 @@
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [det_time] second fuse")
 
-		target.overlays += image_overlay
+		target.add_overlay(image_overlay, 1)
 		if(!nadeassembly)
-			user << "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>"
+			user.text2tab("<span class='notice'>You plant the [src]. Timer counting down from [det_time].</span>")
 			addtimer(src, "prime", det_time*10)
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)
@@ -130,11 +131,12 @@
 		if(!qdeleted(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
+			target.priority_overlays -= image_overlay
 	else
 		location = get_turf(src)
 	if(location)
 		location.ex_act(2, target)
-		explosion(location,0,0,3)
+		explosion(location, explosion_size[1], explosion_size[2], explosion_size[3], explosion_size[4])
 	if(istype(target, /mob))
 		var/mob/M = target
 		M.gib()
@@ -157,6 +159,7 @@
 		if(!qdeleted(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
+			target.priority_overlays -= image_overlay
 	else
 		location = get_turf(src)
 	if(location)

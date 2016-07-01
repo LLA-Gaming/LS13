@@ -45,7 +45,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+	if(((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) || w_uniform && w_uniform.flags & STOPSPRESSUREDMAGE) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -118,8 +118,11 @@
 	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
-	if(!dna || !dna.species.IgniteMob(src))
-		..()
+	//If have no DNA or can be Ignited, call parent handling to light user
+	//If firestacks are high enough
+	if(!dna || dna.species.CanIgniteMob(src))
+		return ..()
+	. = FALSE //No ignition
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
@@ -285,7 +288,7 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
 				BP.take_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
+				src.text2tab("<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>")
 
 			if(prob(I.embedded_fall_chance))
 				BP.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
@@ -373,15 +376,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
 			if(prob(5) && !stat)
-				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+				src.text2tab("<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+					src.text2tab("<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
-					src << "<span class='warning'>Just a quick nap...</span>"
+					src.text2tab("<span class='warning'>Just a quick nap...</span>")
 					Sleeping(45)
 
 		if(drunkenness >= 101)

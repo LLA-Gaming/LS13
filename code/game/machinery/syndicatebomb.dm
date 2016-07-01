@@ -35,10 +35,10 @@
 	if(!active || defused)					//Counter terrorists win
 		if(defused && payload in src)
 			payload.defuse()
-		return
+			countdown.stop()
 
 /obj/machinery/syndicatebomb/New()
-	wires 	= new /datum/wires/syndicatebomb(src)
+	wires = new /datum/wires/syndicatebomb(src)
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
@@ -52,7 +52,7 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	user.text2tab("A digital display on it reads \"[timer]\".")
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -61,25 +61,25 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
-				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
+				user.text2tab("<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
-				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
+				user.text2tab("<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 1
 				if(active)
-					user << "<span class='notice'>The bolts lock in place.</span>"
+					user.text2tab("<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
-				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
+				user.text2tab("<span class='notice'>You wrench the bomb from the floor.</span>")
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 0
 			else
-				user << "<span class='warning'>The bolts are locked down!</span>"
+				user.text2tab("<span class='warning'>The bolts are locked down!</span>")
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		update_icon()
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		user.text2tab("<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 
 	else if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
@@ -87,24 +87,24 @@
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(open_panel && wires.is_all_cut())
 			if(payload)
-				user << "<span class='notice'>You carefully pry out [payload].</span>"
+				user.text2tab("<span class='notice'>You carefully pry out [payload].</span>")
 				payload.loc = user.loc
 				payload = null
 			else
-				user << "<span class='warning'>There isn't anything in here to remove!</span>"
+				user.text2tab("<span class='warning'>There isn't anything in here to remove!</span>")
 		else if (open_panel)
-			user << "<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>"
+			user.text2tab("<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>")
 		else
-			user << "<span class='warning'>The cover is screwed on, it won't pry off!</span>"
+			user.text2tab("<span class='warning'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/bombcore))
 		if(!payload)
 			if(!user.drop_item())
 				return
 			payload = I
-			user << "<span class='notice'>You place [payload] into [src].</span>"
+			user.text2tab("<span class='notice'>You place [payload] into [src].</span>")
 			payload.loc = src
 		else
-			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"
+			user.text2tab("<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
@@ -112,15 +112,15 @@
 		if(!WT.isOn())
 			return
 		if(WT.get_fuel() < 5) //uses up 5 fuel.
-			user << "<span class='warning'>You need more fuel to complete this task!</span>"
+			user.text2tab("<span class='warning'>You need more fuel to complete this task!</span>")
 			return
 
 		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-		user << "<span class='notice'>You start to cut the [src] apart...</span>"
+		user.text2tab("<span class='notice'>You start to cut the [src] apart...</span>")
 		if(do_after(user, 20/I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
-			user << "<span class='notice'>You cut the [src] apart.</span>"
+			user.text2tab("<span class='notice'>You cut the [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 			return
@@ -138,10 +138,8 @@
 	if(!open_panel)
 		if(!active)
 			settings(user)
-			return
 		else if(anchored)
-			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
-			return
+			user.text2tab("<span class='warning'>The bomb is bolted to the floor!</span>")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
@@ -156,6 +154,7 @@
 			return
 		else
 			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
+			countdown.start()
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			active = 1
 			update_icon()
@@ -408,10 +407,10 @@
 			if(!user.drop_item())
 				return
 			beakers += I
-			user << "<span class='notice'>You load [src] with [I].</span>"
+			user.text2tab("<span class='notice'>You load [src] with [I].</span>")
 			I.loc = src
 		else
-			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>"
+			user.text2tab("<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
 			return
 	..()
 
@@ -480,7 +479,7 @@
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
+		user.text2tab("<span class='notice'>[existant] found, [detonated] triggered.</span>")
 		if(detonated)
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)

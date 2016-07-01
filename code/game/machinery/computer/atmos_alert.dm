@@ -44,11 +44,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				usr << "Priority alarm for [zone] cleared."
+				usr.text2tab("Priority alarm for [zone] cleared.")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				usr << "Minor alarm for [zone] cleared."
+				usr.text2tab("Minor alarm for [zone] cleared.")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()
@@ -80,6 +80,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		overlays += "alert:2"
+		add_overlay("alert:2")
 	else if(minor_alarms.len)
-		overlays += "alert:1"
+		add_overlay("alert:1")

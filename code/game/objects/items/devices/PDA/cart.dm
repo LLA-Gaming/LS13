@@ -41,6 +41,9 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
+	//for tablets
+	var/usedup = 0
+
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
@@ -169,7 +172,6 @@
 	access_status_display = 1
 	access_security = 1
 	bot_access_flags = SEC_BOT
-
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"

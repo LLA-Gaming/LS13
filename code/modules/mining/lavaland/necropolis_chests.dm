@@ -79,27 +79,27 @@
 
 /obj/item/device/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		user << "<span class='warning'>The wisp has gone missing!</span>"
+		user.text2tab("<span class='warning'>The wisp has gone missing!</span>")
 		return
 	if(wisp.loc == src)
-		user << "<span class='notice'>You release the wisp. It begins to \
-			bob around your head.</span>"
+		user.text2tab("<span class='notice'>You release the wisp. It begins to \
+			bob around your head.</span>")
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
-		user << "<span class='notice'>You return the wisp to the lantern.\
-			</span>"
+		user.text2tab("<span class='notice'>You return the wisp to the lantern.\
+			</span>")
 
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "<span class='notice'>Your vision returns to \
-					normal.</span>"
+				M.text2tab("<span class='notice'>Your vision returns to \
+					normal.</span>")
 
 		wisp.stop_orbit()
 		wisp.loc = src
@@ -140,9 +140,9 @@
 
 /obj/item/device/warp_cube/attack_self(mob/user)
 	if(!linked)
-		user << "[src] fizzles uselessly."
+		user.text2tab("[src] fizzles uselessly.")
 	if(linked.z == CENTCOMM)
-		user << "[linked] is somewhere you can't go."
+		user.text2tab("[linked] is somewhere you can't go.")
 
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
@@ -228,7 +228,7 @@
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.dir = user.dir
+		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
@@ -359,7 +359,7 @@
 	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
-		user << "Boats don't go on land!"
+		user.text2tab("Boats don't go on land!")
 		return 0
 
 /obj/item/weapon/oar
@@ -396,7 +396,7 @@
 	icon_state = "ship_bottle"
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
-	user << "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."
+	user.text2tab("You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	new /obj/vehicle/lavaboat/dragon(get_turf(src))
 	qdel(src)
@@ -422,18 +422,18 @@
 
 /obj/item/weapon/wingpotion/attack_self(mob/living/M)
 	if(used)
-		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+		M.text2tab("<span class='notice'>The flask is empty, what a shame.</span>")
 	else
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			CHECK_DNA_AND_SPECIES(C)
 			if(C.wear_mask)
-				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
+				C.text2tab("<span class='notice'>It's pretty hard to drink something with a mask on!</span>")
 			else
 				if(ishumanbasic(C)) //implying xenoshumans are holy
-					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
+					C.text2tab("<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>")
 				else
-					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
+					C.text2tab("<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>")
 					C.set_species(/datum/species/angel)
 					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
 					C.adjustBruteLoss(20)
@@ -442,17 +442,33 @@
 				src.used = TRUE
 
 
+
+
+
+
+///Bosses
+
+
+
+
+//Dragon
+
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
 	..()
-	var/loot = rand(1,2)
+	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/melee/ghost_sword(src)
 		if(2)
 			new /obj/item/weapon/lava_staff(src)
+		if(3)
+			new /obj/item/weapon/spellbook/oneuse/fireball(src)
+			new /obj/item/weapon/gun/magic/wand/fireball(src)
+		if(4)
+			new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -485,9 +501,9 @@
 
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
-		user << "You just recently called out for aid. You don't want to annoy the spirits."
+		user.text2tab("You just recently called out for aid. You don't want to annoy the spirits.")
 		return
-	user << "You call out for aid, attempting to summon spirits to your side."
+	user.text2tab("You call out for aid, attempting to summon spirits to your side.")
 
 	notify_ghosts("[user] is raising their [src], calling for your help!",
 		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
@@ -549,18 +565,21 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,3)
+	var/random = rand(1,4)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
+			user.text2tab("<span class='danger'>Other than tasting terrible, nothing really happens.</span>")
 		if(2)
-			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
+			user.text2tab("<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
 			H.set_species(/datum/species/skeleton)
 		if(3)
-			user << "<span class='danger'>You don't feel so good...</span>"
+			user.text2tab("<span class='danger'>You don't feel so good...</span>")
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+		if(4)
+			user.text2tab("<span class='danger'>You feel like you could walk straight through lava now.</span>")
+			H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
@@ -578,7 +597,7 @@
 	stage2	= list("Your skin feels scaley.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -615,8 +634,83 @@
 		return
 
 	if(target in view(user.client.view, get_turf(user)))
+		var/turf/T = get_turf(target)
+		message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
+		log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
+
 		var/turf/open/O = target
 		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
 		O.ChangeTurf(turf_type)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
+
+///Bubblegum
+
+/obj/item/mayhem
+	name = "mayhem in a bottle"
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/mayhem/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in range(7,user))
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(H)
+			B.mineEffect(H)
+	user.text2tab("<span class='notice'>You shatter the bottle!</span>")
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+/obj/structure/closet/crate/necropolis/bubblegum
+	name = "bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/New()
+	..()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
+		if(2)
+			new /obj/item/mayhem(src)
+		if(3)
+			new /obj/item/blood_contract(src)
+
+/obj/item/blood_contract
+	name = "blood contract"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	color = "#FF0000"
+	desc = "Mark your target for death. "
+	var/used = FALSE
+
+/obj/item/blood_contract/attack_self(mob/user)
+	if(used)
+		return
+	used = TRUE
+	var/choice = input(user,"Who do you want dead?","Pick Reinforcement") as null|anything in player_list
+
+	if(!(isliving(choice)))
+		user.text2tab("[choice] is already dead!")
+		used = FALSE
+	else
+
+		var/mob/living/L = choice
+
+		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+
+		var/datum/objective/survive/survive = new
+		survive.owner = L.mind
+		L.mind.objectives += survive
+		L.text2tab("<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
+		L.color = "#FF0000"
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(L)
+			B.mineEffect(L)
+
+		for(var/mob/living/carbon/human/H in player_list)
+			if(H == L)
+				continue
+			H.text2tab("<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>")
+			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
+
+	qdel(src)

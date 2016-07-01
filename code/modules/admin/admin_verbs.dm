@@ -21,64 +21,93 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds
 	)
-var/list/admin_verbs_admin = list(
-	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
-	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
-//	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
+
+
+var/list/admin_verbs_trial = list(
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
-	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
-	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
-	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
-	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
-	/datum/admins/proc/set_admin_notice,/*announcement all clients see when joining the server.*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/toggle_view_range,		/*changes how far we can see*/
+	/client/proc/check_antagonists		/*shows all antags*/
+	)
+
+var/list/admin_verbs_secondary = list(
+	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
-	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
-	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
-	/client/proc/check_antagonists,		/*shows all antags*/
-	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
-	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
-	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
-	/client/proc/Getmob,				/*teleports a mob to our location*/
-	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
-//	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
+	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/jumptoarea,
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
+	/client/proc/cmd_admin_create_centcom_report,
+	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
+	//ban
+	/client/proc/unban_panel,
+	/client/proc/DB_ban_panel,
+	/client/proc/stickybanpanel,
+	/client/proc/cmd_mentor_say
+	)
+
+var/list/admin_verbs_admin = list(
+	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
+	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
+	/client/proc/Getmob,				/*teleports a mob to our location*/
+	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
-	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
+	//spawn
+	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
+	/client/proc/respawn_character,
+	/client/proc/stealth,
+	/client/proc/view_pod_logs
+	)
+
+var/list/admin_verbs_primary = list(
+	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
+	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
+	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
+	/client/proc/toggle_view_range,		/*changes how far we can see*/
+	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
+	/client/proc/cmd_change_command_name,
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
-	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
-	)
-var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel,
-	/client/proc/DB_ban_panel,
-	/client/proc/stickybanpanel
-	)
-var/list/admin_verbs_sounds = list(
+	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
+	//server
+	/datum/admins/proc/startnow,
+	/datum/admins/proc/restart,
+	/datum/admins/proc/end_round,
+	/datum/admins/proc/delay,
+	/datum/admins/proc/toggleaban,
+	/client/proc/toggle_log_hrefs,
+	/client/proc/everyone_random,
+	/datum/admins/proc/toggleAI,
+	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
+	/client/proc/cmd_debug_del_all,
+	/client/proc/toggle_random_events,
+#if SERVERTOOLS
+	/client/proc/forcerandomrotate,
+	/client/proc/adminchangemap,
+#endif
+	/client/proc/panicbunker,
+	//sounds
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
 	/client/proc/set_round_end_sound,
-	)
-var/list/admin_verbs_fun = list(
+	//possess
+	/proc/possess,
+	/proc/release,
+	//fun
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -95,33 +124,20 @@ var/list/admin_verbs_fun = list(
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
-	/client/proc/mass_zombie_infection,
-	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all
 	)
-var/list/admin_verbs_spawn = list(
-	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
-	/client/proc/respawn_character
-	)
-var/list/admin_verbs_server = list(
-	/datum/admins/proc/startnow,
-	/datum/admins/proc/restart,
-	/datum/admins/proc/end_round,
-	/datum/admins/proc/delay,
-	/datum/admins/proc/toggleaban,
-	/client/proc/toggle_log_hrefs,
-	/client/proc/everyone_random,
-	/datum/admins/proc/toggleAI,
-	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
-	/client/proc/cmd_debug_del_all,
-	/client/proc/toggle_random_events,
-#if SERVERTOOLS
-	/client/proc/forcerandomrotate,
-	/client/proc/adminchangemap,
-#endif
-	/client/proc/panicbunker
 
+var/list/admin_verbs_senior = list(
+	/datum/admins/proc/set_admin_notice,/*announcement all clients see when joining the server.*/
+	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
+	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
+	/client/proc/edit_admin_permissions,
+	/client/proc/create_poll,
+	/client/proc/mass_zombie_infection,
+	/client/proc/mass_zombie_cure,
+	/client/proc/togglebuildmodeself
 	)
+
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
@@ -148,88 +164,28 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload
 	)
-var/list/admin_verbs_possess = list(
-	/proc/possess,
-	/proc/release
-	)
-var/list/admin_verbs_permissions = list(
-	/client/proc/edit_admin_permissions,
-	/client/proc/create_poll
-	)
-var/list/admin_verbs_rejuv = list(
-	/client/proc/respawn_character
-	)
 
-//verbs which can be hidden - needs work
-var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
-	/client/proc/deadmin,
-	/client/proc/deadchat,
-	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_radio,
-	/datum/admins/proc/show_traitor_panel,
-	/datum/admins/proc/toggleenter,
-	/datum/admins/proc/toggleguests,
-	/datum/admins/proc/announce,
-	/datum/admins/proc/set_admin_notice,
-	/client/proc/admin_ghost,
-	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
-	/client/proc/cmd_admin_subtle_message,
-	/client/proc/cmd_admin_check_contents,
-	/datum/admins/proc/access_news_network,
-	/client/proc/admin_call_shuttle,
-	/client/proc/admin_cancel_shuttle,
-	/client/proc/cmd_admin_direct_narrate,
-	/client/proc/cmd_admin_world_narrate,
-	/client/proc/cmd_admin_local_narrate,
-	/client/proc/play_local_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-	/client/proc/cmd_admin_dress,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/cinematic,
-	/client/proc/send_space_ninja,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
-	/client/proc/cmd_admin_add_random_ai_law,
-	/datum/admins/proc/startnow,
-	/datum/admins/proc/restart,
-	/datum/admins/proc/delay,
-	/datum/admins/proc/toggleaban,
-	/client/proc/toggle_log_hrefs,
-	/client/proc/everyone_random,
-	/datum/admins/proc/toggleAI,
-	/client/proc/restart_controller,
-	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/Debug2,
+//verbs which can be kept when hiding most verbs
+var/list/admin_verbs_minimum = list(
+	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
+	/client/proc/deadchat,				/*toggles deadchat on/off*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleprayers,			/*toggles prayers on/off*/
+	/client/verb/toggleprayersounds,	/*Toggles prayer sounds (HALLELUJAH!)*/
+	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
+	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/secrets,
 	/client/proc/reload_admins,
-	/client/proc/cmd_debug_make_powernets,
-	/client/proc/startSinglo,
-	/client/proc/cmd_debug_mob_lists,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/enable_debug_verbs,
-	/proc/possess,
-	/proc/release,
-	/client/proc/reload_admins,
-	/client/proc/panicbunker,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/cmd_display_del_log,
-	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
-	/client/proc/toggleSNPC
+	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
+	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
+	/client/proc/stealth,
+	/client/proc/unban_panel,
+	/client/proc/DB_ban_panel,
+	/client/proc/stickybanpanel,
+	/client/proc/cmd_mentor_say,
+	/client/proc/admin_ghost			/*allows us to ghost/reenter body at will*/
 	)
 
 /client/proc/add_admin_verbs()
@@ -238,30 +194,18 @@ var/list/admin_verbs_hideable = list(
 
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
-		if(rights & R_BUILDMODE)
-			verbs += /client/proc/togglebuildmodeself
+		if(rights & R_TRIALADMIN)
+			verbs += admin_verbs_trial
+		if(rights & R_SECONDARYADMIN)
+			verbs += admin_verbs_secondary
 		if(rights & R_ADMIN)
 			verbs += admin_verbs_admin
-		if(rights & R_BAN)
-			verbs += admin_verbs_ban
-		if(rights & R_FUN)
-			verbs += admin_verbs_fun
-		if(rights & R_SERVER)
-			verbs += admin_verbs_server
+		if(rights & R_PRIMARYADMIN)
+			verbs += admin_verbs_primary
+		if(rights & R_SENIORADMIN)
+			verbs += admin_verbs_senior
 		if(rights & R_DEBUG)
 			verbs += admin_verbs_debug
-		if(rights & R_POSSESS)
-			verbs += admin_verbs_possess
-		if(rights & R_PERMISSIONS)
-			verbs += admin_verbs_permissions
-		if(rights & R_STEALTH)
-			verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)
-			verbs += admin_verbs_rejuv
-		if(rights & R_SOUNDS)
-			verbs += admin_verbs_sounds
-		if(rights & R_SPAWN)
-			verbs += admin_verbs_spawn
 
 		for(var/path in holder.rank.adds)
 			verbs += path
@@ -271,18 +215,12 @@ var/list/admin_verbs_hideable = list(
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		admin_verbs_default,
-		/client/proc/togglebuildmodeself,
+		admin_verbs_trial,
+		admin_verbs_secondary,
 		admin_verbs_admin,
-		admin_verbs_ban,
-		admin_verbs_fun,
-		admin_verbs_server,
+		admin_verbs_primary,
+		admin_verbs_senior,
 		admin_verbs_debug,
-		admin_verbs_possess,
-		admin_verbs_permissions,
-		/client/proc/stealth,
-		admin_verbs_rejuv,
-		admin_verbs_sounds,
-		admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
 		/client/proc/do_not_use_these,
@@ -308,10 +246,18 @@ var/list/admin_verbs_hideable = list(
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
-	verbs += /client/proc/show_verbs
+	for(var/X in verbs)
+		if(!(X in admin_verbs_default) && !(X in admin_verbs_trial) && !(X in admin_verbs_secondary) && !(X in admin_verbs_admin) && !(X in admin_verbs_primary)  && !(X in admin_verbs_senior)  && !(X in admin_verbs_debug))
+			continue //skip non-admin verbs
+		if(X in admin_verbs_minimum)
+			continue //skip minimum verbs
+		verbs.Remove(X)
+			//finally remove those verbs
 
-	src << "<span class='interface'>Most of your adminverbs have been hidden.</span>"
+	verbs.Remove(/client/proc/hide_most_verbs) // then remove the hide most verbs command
+	verbs += /client/proc/show_verbs //then give them the return verbs command
+
+	src.text2tab("<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -322,7 +268,7 @@ var/list/admin_verbs_hideable = list(
 	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
 
-	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"
+	src.text2tab("<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -333,7 +279,7 @@ var/list/admin_verbs_hideable = list(
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
 
-	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
+	src.text2tab("<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -375,10 +321,10 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
+			mob.text2tab("<span class='boldannounce'>Invisimin off. Invisibility reset.</span>")
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
+			mob.text2tab("<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 
 /client/proc/player_panel_new()
 	set name = "Player Panel"
@@ -598,7 +544,7 @@ var/list/admin_verbs_hideable = list(
 	admin_datums -= ckey
 	verbs += /client/proc/readmin
 
-	src << "<span class='interface'>You are now a normal player.</span>"
+	src.text2tab("<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
@@ -616,7 +562,7 @@ var/list/admin_verbs_hideable = list(
 	deadmins -= ckey
 	verbs -= /client/proc/readmin
 
-	src << "<span class='interface'>You are now an admin.</span>"
+	src.text2tab("<span class='interface'>You are now an admin.</span>")
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	feedback_add_details("admin_verb","RAS")

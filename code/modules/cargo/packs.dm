@@ -16,9 +16,14 @@
 	if(access)
 		C.req_access = list(access)
 
+	fill(C)
+
+	return C
+
+/datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		new item(C)
-	return C
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Emergency ///////////////////////////////////////
@@ -342,11 +347,11 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/loyalty
-	name = "Loyalty Implants Crate"
+/datum/supply_pack/security/armory/mindshield
+	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
-	crate_name = "loyalty implant crate"
+	crate_name = "mindshield implant crate"
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
@@ -789,7 +794,6 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	cost = 6000
@@ -799,6 +803,14 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
+
+/datum/supply_pack/science/research
+	name = "Machine Prototype Crate"
+	cost = 8000
+	access = access_research
+	contains = list(/obj/item/device/machineprototype)
+	crate_name = "machine prototype crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
@@ -872,6 +884,12 @@
 	cost = 3000
 	contains = list(/mob/living/simple_animal/cow)
 	crate_name = "cow crate"
+
+/datum/supply_pack/organic/critter/alpaca
+	name = "Alpaca Crate"
+	cost = 2500
+	contains = list(/mob/living/simple_animal/alpaca)
+	crate_name = "alpaca crate"
 
 /datum/supply_pack/organic/critter/goat
 	name = "Goat Crate"
@@ -1188,8 +1206,19 @@
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/under/burial,
+					/obj/item/clothing/under/burial)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/book_crate
+	name = "Book Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/book/codex_gigas,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/random/triple)
 
 /datum/supply_pack/misc/posters
 	name = "Corporate Posters Crate"
@@ -1349,6 +1378,13 @@
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
 	crate_name = "collectable hats crate"
+
+/datum/supply_pack/misc/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 
 /datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"

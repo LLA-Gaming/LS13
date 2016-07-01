@@ -16,7 +16,7 @@
 		var/obj/item/stack/rods/R = I
 		if(R.get_amount() >= 4)
 			R.use(4)
-			user << "<span class='notice'>You add spikes to the frame.</span>"
+			user.text2tab("<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
@@ -40,24 +40,24 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!buckled_mobs.len)
+		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
-				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
+				user.text2tab("<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
 				transfer_fingerprints_to(F)
 				qdel(src)
 		else
-			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
+			user.text2tab("<span class='notice'>You can't do that while something's on the spike!</span>")
 	else
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !buckled_mobs.len)
+	if(isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
-			if(buckled_mobs.len) //to prevent spam/queing up attacks
+			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
@@ -68,7 +68,7 @@
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
@@ -105,7 +105,7 @@
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
-					M << "<span class='warning'>You fail to free yourself!</span>"
+					M.text2tab("<span class='warning'>You fail to free yourself!</span>")
 				return
 		if(!M.buckled)
 			return

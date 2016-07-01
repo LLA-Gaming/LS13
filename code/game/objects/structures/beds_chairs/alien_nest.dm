@@ -18,7 +18,7 @@
 	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
@@ -39,7 +39,7 @@
 					"<span class='italics'>You hear squelching...</span>")
 				if(!do_after(M, 1200, target = src))
 					if(M && M.buckled)
-						M << "<span class='warning'>You fail to unbuckle yourself!</span>"
+						M.text2tab("<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
 				if(!M.buckled)
 					return
@@ -60,7 +60,7 @@
 	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
@@ -74,7 +74,7 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = BELOW_MOB_LAYER
-		overlays += nest_overlay
+		add_overlay(nest_overlay)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)

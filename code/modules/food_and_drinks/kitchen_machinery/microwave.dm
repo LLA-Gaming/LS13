@@ -35,7 +35,8 @@
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -93,7 +94,7 @@
 				src.flags = OPENCONTAINER
 				return 0 //to use some fuel
 		else
-			user << "<span class='warning'>It's broken!</span>"
+			user.text2tab("<span class='warning'>It's broken!</span>")
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
@@ -111,7 +112,7 @@
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
-			user << "<span class='warning'>You need more space cleaner!<span>"
+			user.text2tab("<span class='warning'>You need more space cleaner!<span>")
 			return 1
 
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
@@ -131,7 +132,7 @@
 			src.flags = OPENCONTAINER
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		user << "<span class='warning'>It's dirty!</span>"
+		user.text2tab("<span class='warning'>It's dirty!</span>")
 		return 1
 
 	else if(istype(O, /obj/item/weapon/storage/bag/tray))
@@ -139,23 +140,23 @@
 		var/loaded = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
-				user << "<span class='warning'>[src] is full, you cannot put more!</span>"
+				user.text2tab("<span class='warning'>[src] is full, you cannot put more!</span>")
 				return 1
 			T.remove_from_storage(S, src)
 			loaded++
 
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
+			user.text2tab("<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
 	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
 		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>[src] is full, you cannot put more!</span>"
+			user.text2tab("<span class='warning'>[src] is full, you cannot put more!</span>")
 			return 1
 		else
 		//	user.unEquip(O)	//This just causes problems so far as I can tell. -Pete
 			if(!user.drop_item())
-				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				user.text2tab("<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 			O.loc = src
 			user.visible_message( \
@@ -293,7 +294,7 @@
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
 		O.loc = src.loc
-	usr << "<span class='notice'>You dispose of the microwave contents.</span>"
+	usr.text2tab("<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()

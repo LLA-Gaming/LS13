@@ -4,6 +4,7 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
+	fps = 20
 
 var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
@@ -34,6 +35,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
+	loadPerseusList()
+	LoadMentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	appearance_loadbanfile()
@@ -145,8 +148,7 @@ var/last_irc_status = 0
 		else
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C << "<span class='announce'>PR: [input["announce"]]</span>"
+				C.text2tab("<span class='announce'>Announcement: [input["announce"]]</span>")
 #undef CHAT_PULLR
 
 	else if("crossmessage" in input)
@@ -155,6 +157,50 @@ var/last_irc_status = 0
 		else
 			if(input["crossmessage"] == "Ahelp")
 				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
+
+	else if("playerinfo" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				if(input["amt"])
+					return "[length(clients)]"
+				if(input["index"])
+					if(!length(clients))
+						return "No players."
+
+					var/num = text2num(input["index"]) + 1
+					var/client/C = clients[num]
+					if(!C)
+						return "Client not found."
+					return "[C.ckey] - [C.address] - [C.computer_id]"
+
+		return "Error."
+
+	else if("currpercs" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				var/returnstring = ""
+				for(var/mob/living/carbon/human/H in world)
+					if(H.job in list("Perseus Security Enforcer", "Perseus Security Commander"))
+						returnstring += "#[pnumbers[H.ckey] ? pnumbers[H.ckey] : "UKN"] "
+				if(returnstring == "")
+					returnstring = "None."
+				return returnstring
+
+	else if("currpmissions" in input)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				if(input["amt"])
+					return "[perseusMissions.len]"
+				if(input["index"])
+					var/num = text2num(input["index"]) + 1
+					var/datum/perseus_mission/mission = perseusMissions[num]
+					return "[mission.mission] - [mission.status]"
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
@@ -201,7 +247,7 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -245,6 +291,7 @@ var/inerror = 0
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
 	config = new /datum/configuration()
+	pod_config = new()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
@@ -261,7 +308,7 @@ var/inerror = 0
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<b>[station_name()]</b>";
+//	s += "<b>[station_name()]</b>";
 	s += " ("
 	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"

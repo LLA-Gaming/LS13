@@ -53,7 +53,7 @@
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
 	T.loc = src.loc
-	T.dir = turn(src.dir, -90)
+	T.setDir(turn(src.dir, -90))
 	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 
@@ -64,13 +64,13 @@
 			if(icon_state == "open")
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
-					if(GM.buckled || GM.buckled_mobs.len)
-						user << "<span class='warning'>[GM] is attached to something!</span>"
+					if(GM.buckled || GM.has_buckled_mobs())
+						user.text2tab("<span class='warning'>[GM] is attached to something!</span>")
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
 						if(do_after(user, 15, target = src))
-							if(GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.buckled_mobs.len)
+							if(GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Weaken(5)
 								src.Bumped(GM)
 						break
@@ -100,7 +100,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
-				user << "<span class='warning'>Empty the pod first!</span>"
+				user.text2tab("<span class='warning'>Empty the pod first!</span>")
 				return
 			user.visible_message("[user] removes the [pod].", "<span class='notice'>You remove the [pod].</span>")
 			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)

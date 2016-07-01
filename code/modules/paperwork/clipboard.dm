@@ -17,13 +17,13 @@
 
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(toppaper)
-		overlays += toppaper.icon_state
-		overlays += toppaper.overlays
+		add_overlay(toppaper.icon_state)
+		add_overlay(toppaper.overlays)
 	if(haspen)
-		overlays += "clipboard_pen"
-	overlays += "clipboard_over"
+		add_overlay("clipboard_pen")
+	add_overlay("clipboard_over")
 
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
@@ -32,7 +32,7 @@
 			return
 		W.loc = src
 		toppaper = W
-		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
+		user.text2tab("<span class='notice'>You clip the paper onto \the [src].</span>")
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -81,7 +81,7 @@
 						return
 					W.loc = src
 					haspen = W
-					usr << "<span class='notice'>You slot [W] into [src].</span>"
+					usr.text2tab("<span class='notice'>You slot [W] into [src].</span>")
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -111,7 +111,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(istype(P) && P.loc == src)
 				toppaper = P
-				usr << "<span class='notice'>You move [P.name] to the top.</span>"
+				usr.text2tab("<span class='notice'>You move [P.name] to the top.</span>")
 
 		//Update everything
 		attack_self(usr)

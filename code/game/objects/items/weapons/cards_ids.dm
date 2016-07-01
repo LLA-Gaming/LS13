@@ -92,7 +92,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		user.text2tab("There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -147,7 +147,7 @@ update_label("John Doe", "Clowny")
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
+				usr.text2tab("<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(istype(user, /mob/living) && user.mind)
@@ -166,7 +166,7 @@ update_label("John Doe", "Clowny")
 					return
 				assignment = u
 				update_label()
-				user << "<span class='notice'>You successfully forge the ID card.</span>"
+				user.text2tab("<span class='notice'>You successfully forge the ID card.</span>")
 				return
 	..()
 
@@ -243,7 +243,7 @@ update_label("John Doe", "Clowny")
 	var/points = 0
 
 /obj/item/weapon/card/id/prisoner/attack_self(mob/user)
-	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
+	usr.text2tab("<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
 
 /obj/item/weapon/card/id/prisoner/one
 	name = "Prisoner #13-001"

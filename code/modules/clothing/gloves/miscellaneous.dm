@@ -53,3 +53,7 @@
 	burn_state = FIRE_PROOF
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
 
+/obj/item/clothing/gloves/batman
+	name = "batgloves"
+	desc = "Used for handling all things bat related."
+	icon_state = "bmgloves"

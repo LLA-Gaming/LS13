@@ -60,23 +60,23 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
 		if(W)
-			user << "<span class='warning'>There is already a catwalk here!</span>"
+			user.text2tab("<span class='warning'>There is already a catwalk here!</span>")
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				user.text2tab("<span class='notice'>You begin constructing catwalk...</span>")
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				qdel(L)
 				ReplaceWithCatwalk()
 			else
-				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
+				user.text2tab("<span class='warning'>You need two rods to build a catwalk!</span>")
 			return
 		if(R.use(1))
-			user << "<span class='notice'>Constructing support lattice...</span>"
+			user.text2tab("<span class='notice'>Constructing support lattice...</span>")
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need one rod to build a lattice.</span>"
+			user.text2tab("<span class='warning'>You need one rod to build a lattice.</span>")
 		return
 	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -85,12 +85,12 @@
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				user << "<span class='notice'>You build a floor.</span>"
+				user.text2tab("<span class='notice'>You build a floor.</span>")
 				ChangeTurf(/turf/open/floor/plating)
 			else
-				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
+				user.text2tab("<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
-			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
+			user.text2tab("<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/space/Entered(atom/movable/A)
 	..()

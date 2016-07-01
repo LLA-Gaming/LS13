@@ -6,7 +6,8 @@
 #define MUTE_PRAY		4
 #define MUTE_ADMINHELP	8
 #define MUTE_DEADCHAT	16
-#define MUTE_ALL		31
+#define MUTE_MENTORHELP	32
+#define MUTE_ALL		63
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
@@ -21,18 +22,11 @@
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
-#define R_BUILDMODE		1
-#define R_ADMIN			2
-#define R_BAN			4
-#define R_FUN			8
-#define R_SERVER		16
-#define R_DEBUG			32
-#define R_POSSESS		64
-#define R_PERMISSIONS	128
-#define R_STEALTH		256
-#define R_REJUVINATE	512
-#define R_VAREDIT		1024
-#define R_SOUNDS		2048
-#define R_SPAWN			4096
+#define R_TRIALADMIN		1
+#define R_SECONDARYADMIN 	2
+#define R_ADMIN				4
+#define R_PRIMARYADMIN		8
+#define R_SENIORADMIN		16
+#define R_DEBUG				32
 
-#define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION 32 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.

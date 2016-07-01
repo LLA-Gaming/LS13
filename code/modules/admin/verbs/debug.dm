@@ -111,14 +111,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
+		usr.text2tab("<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>")
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(!A || !IsValidSrc(A))
-		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
+		usr.text2tab("<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -445,6 +445,9 @@ var/global/list/g_fancy_list_of_types = null
 
 			if(worn)
 				if(istype(worn,/obj/item/device/pda))
+					worn:id = id
+					id.loc = worn
+				if(istype(worn,/obj/item/device/tablet))
 					worn:id = id
 					id.loc = worn
 				else if(istype(worn,/obj/item/weapon/storage/wallet))

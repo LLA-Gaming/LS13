@@ -60,12 +60,12 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 
 	if(!ID)
-		user << "<span class='warning'>You don't have an ID.</span>"
+		user.text2tab("<span class='warning'>You don't have an ID.</span>")
 		return
 
 	if(!(access_heads in ID.access))
-		user << "<span class='warning'>The access level of \
-			your card is not high enough.</span>"
+		user.text2tab("<span class='warning'>The access level of \
+			your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -157,8 +157,8 @@
 
 	if(ENGINES_STARTED)
 		// Give them a message anyway
-		user << "<span class='warning'>The shuttle is already \
-			about to launch!</span>"
+		user.text2tab("<span class='warning'>The shuttle is already \
+			about to launch!</span>")
 	else
 		process()
 
@@ -178,7 +178,7 @@
 	dwidth = 9
 	width = 22
 	height = 11
-	dir = 4
+	dir = EAST
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
@@ -231,8 +231,10 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
-
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	if(SSshuttle.crewtransfer)
+		priority_announce("The crew transfer shuttle has been dispatched. It will arrive in [timeLeft(600)] minutes.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	else
+		priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -240,6 +242,7 @@
 
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
+	SSshuttle.crewtransfer = 0
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
@@ -435,7 +438,7 @@
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
 		return ..()
 	else
-		usr << "The storage unit will only unlock during a Red or Delta security alert."
+		usr.text2tab("The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return
@@ -446,8 +449,7 @@
 	dwidth = 2
 	width = 8
 	height = 8
-	dir = 4
-
+	dir = EAST
 	roundstart_move = "backup_away"
 
 /obj/docking_port/mobile/emergency/backup/New()

@@ -8,7 +8,7 @@
 	if(!src.mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		src << "<span class='danger'>You cannot send DSAY messages (muted).</span>"
+		src.text2tab("<span class='danger'>You cannot send DSAY messages (muted).</span>")
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
@@ -27,6 +27,6 @@
 		if (istype(M, /mob/new_player))
 			continue
 		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			M.show_message(rendered, 2)
+			M.text2tab(rendered,"ooc")
 
 	feedback_add_details("admin_verb","D") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

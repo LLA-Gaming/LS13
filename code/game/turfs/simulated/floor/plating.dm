@@ -30,20 +30,20 @@
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
-			user << "<span class='warning'>Repair the plating first!</span>"
+			user.text2tab("<span class='warning'>Repair the plating first!</span>")
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			user << "<span class='warning'>You need two rods to make a reinforced floor!</span>"
+			user.text2tab("<span class='warning'>You need two rods to make a reinforced floor!</span>")
 			return
 		else
-			user << "<span class='notice'>You begin reinforcing the floor...</span>"
+			user.text2tab("<span class='notice'>You begin reinforcing the floor...</span>")
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					ChangeTurf(/turf/open/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
-					user << "<span class='notice'>You reinforce the floor.</span>"
+					user.text2tab("<span class='notice'>You reinforce the floor.</span>")
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
@@ -57,12 +57,12 @@
 				F.state = L.state
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
-			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"
+			user.text2tab("<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
 			if(welder.remove_fuel(0,user))
-				user << "<span class='danger'>You fix some dents on the broken plating.</span>"
+				user.text2tab("<span class='danger'>You fix some dents on the broken plating.</span>")
 				playsound(src, 'sound/items/Welder.ogg', 80, 1)
 				icon_state = icon_plating
 				burnt = 0
@@ -97,7 +97,7 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin removing rods...</span>"
+		user.text2tab("<span class='notice'>You begin removing rods...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/open/floor/engine))
@@ -228,6 +228,9 @@
 		processing = 0
 		SSobj.processing.Remove(src)
 
+/turf/open/floor/plating/lava/make_plating()
+	return
+
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
 
@@ -289,8 +292,9 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
-	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface
-	)
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/closed/mineral, /turf/open/floor/plating/lava/smooth)
+
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
 
@@ -299,4 +303,6 @@
 /turf/open/floor/plating/airless/warnplate
 	icon_state = "warnplate"
 /turf/open/floor/plating/warnplate/corner
+	icon_state = "warnplatecorner"
+/turf/open/floor/plating/airless/warnplate/corner
 	icon_state = "warnplatecorner"

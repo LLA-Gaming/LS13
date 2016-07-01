@@ -6,7 +6,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
-	required_players = 20
+	required_players = 18
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 14
@@ -26,7 +26,7 @@
 	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
 	if(wizardstart.len == 0)
-		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
+		wizard.current.text2tab("<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
@@ -115,12 +115,12 @@
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
-		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+		wizard.current.text2tab("<span class='boldannounce'>You are the Space Wizard!</span>")
+	wizard.current.text2tab("<B>The Space Wizards Federation has given you the following tasks:</B>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in wizard.objectives)
-		wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		wizard.current.text2tab("<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -144,6 +144,7 @@
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)
 
+	wizard_mob.set_species(/datum/species/human)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(wizard_mob), slot_w_uniform)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
@@ -156,9 +157,9 @@
 	spellbook.owner = wizard_mob
 	wizard_mob.equip_to_slot_or_del(spellbook, slot_r_hand)
 
-	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "The spellbook is bound to you, and others cannot use it."
-	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
+	wizard_mob.text2tab("You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
+	wizard_mob.text2tab("The spellbook is bound to you, and others cannot use it.")
+	wizard_mob.text2tab("In your pockets you will find a teleport scroll. Use it as needed.")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
 	return 1
@@ -230,7 +231,7 @@
 					i++
 			text += "<br>"
 
-		world << text
+		text2world(text)
 	return 1
 
 //OTHER PROCS
@@ -249,13 +250,13 @@ Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
 //Removed the stat check because not all spells require clothing now.
 	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
+		usr.text2tab("I don't feel strong enough without my robe.")
 		return 0
 	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
+		usr.text2tab("I don't feel strong enough without my sandals.")
 		return 0
 	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
+		usr.text2tab("I don't feel strong enough without my hat.")
 		return 0
 	else
 		return 1

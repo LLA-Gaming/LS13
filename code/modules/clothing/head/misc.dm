@@ -261,3 +261,8 @@
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/head/fez
+	desc = "Fezzes are cool"
+	name = "fez"
+	icon_state = "fez"

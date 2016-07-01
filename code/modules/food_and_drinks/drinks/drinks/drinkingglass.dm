@@ -24,7 +24,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
-	overlays.Cut()
+	cut_overlays()
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("beer")
@@ -515,7 +515,7 @@
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
 				I.color = mix_color_from_reagents(reagents.reagent_list)
-				overlays += I
+				add_overlay(I)
 				name = "glass of ..what?"
 				desc = "You can't really tell what this is."
 	else
@@ -643,9 +643,9 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "<span class='notice'>[src] is full.</span>"
+				user.text2tab("<span class='notice'>[src] is full.</span>")
 			else
-				user << "<span class='notice'>You break [E] in [src].</span>"
+				user.text2tab("<span class='notice'>You break [E] in [src].</span>")
 				reagents.add_reagent("eggyolk", 5)
 				qdel(E)
 			return

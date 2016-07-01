@@ -531,7 +531,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	user.text2tab("<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -552,11 +552,11 @@
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
-			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			user.text2tab("<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			user.text2tab("<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>")
 			qdel(E)
 			return
 		return
@@ -574,3 +574,25 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/explorer
+	name = "exploring vest"
+	desc = "when you really need to shoot first"
+	icon_state = "exploring"
+	item_state = "exploring"
+	item_color = "exploring"
+	can_adjust = 0
+
+/obj/item/clothing/under/fembuisness
+	name = "female business skirt"
+	desc = "The latest in fashionable skirts."
+	icon_state = "femalebusiness"
+	item_state = "femalebusiness"
+	item_color = "femalebusiness"
+	can_adjust = 0
+
+/obj/item/clothing/under/batman
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	item_color = "bmuniform"

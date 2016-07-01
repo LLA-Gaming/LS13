@@ -24,17 +24,17 @@
 	update_icon()
 
 /obj/structure/tank_dispenser/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(oxygentanks)
 		if(1 to 3)
-			overlays += "oxygen-[oxygentanks]"
+			add_overlay("oxygen-[oxygentanks]")
 		if(4 to TANK_DISPENSER_CAPACITY)
-			overlays += "oxygen-4"
+			add_overlay("oxygen-4")
 	switch(plasmatanks)
 		if(1 to 4)
-			overlays += "plasma-[plasmatanks]"
+			add_overlay("plasma-[plasmatanks]")
 		if(5 to TANK_DISPENSER_CAPACITY)
-			overlays += "plasma-5"
+			add_overlay("plasma-5")
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
 	var/full
@@ -49,18 +49,18 @@
 		else
 			full = TRUE
 	else if(user.a_intent != "harm")
-		user << "<span class='notice'>[I] does not fit into [src].</span>"
+		user.text2tab("<span class='notice'>[I] does not fit into [src].</span>")
 		return
 	else
 		return ..()
 	if(full)
-		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
+		user.text2tab("<span class='notice'>[src] can't hold anymore of [I].</span>")
 		return
 
 	if(!user.drop_item())
 		return
 	I.loc = src
-	user << "<span class='notice'>You put [I] in [src].</span>"
+	user.text2tab("<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
 
 /obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \

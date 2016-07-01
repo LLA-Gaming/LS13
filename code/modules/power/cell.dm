@@ -45,13 +45,13 @@
 		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		overlays += image('icons/obj/power.dmi', "cell-o2")
+		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 	else
-		overlays += image('icons/obj/power.dmi', "cell-o1")
+		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge
@@ -82,9 +82,9 @@
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(rigged)
-		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+		user.text2tab("<span class='danger'>This power cell seems to be faulty!</span>")
 	else
-		user << "The charge meter reads [round(src.percent() )]%."
+		user.text2tab("The charge meter reads [round(src.percent() )]%.")
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -94,7 +94,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-		user << "<span class='notice'>You inject the solution into the power cell.</span>"
+		user.text2tab("<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
 		S.reagents.clear_reagents()

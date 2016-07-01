@@ -67,8 +67,8 @@
 
 /obj/item/zombie_hand/proc/tear_airlock(obj/machinery/door/airlock/A, mob/user)
 	removing_airlock = TRUE
-	user << "<span class='notice'>You start tearing apart the airlock...\
-		</span>"
+	user.text2tab("<span class='notice'>You start tearing apart the airlock...\
+		</span>")
 
 	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 	A.audible_message("<span class='italics'>You hear a loud metallic \
@@ -80,7 +80,7 @@
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		A.audible_message("<span class='danger'>With a screech, [A] is torn \
 			apart!</span>")
-		var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
+		var/obj/structure/door_assembly/door = new A.assemblytype(get_turf(A))
 		door.density = 0
 		door.anchored = 1
 		door.name = "ravaged [door]"

@@ -72,13 +72,13 @@
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
-		user << "[src] has no destination."
+		user.text2tab("[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
-		user << "[src] has no destination."
+		user.text2tab("[src] has no destination.")
 
 /obj/item/weapon/storage/attack_ghost(mob/user)
 	orient2hud(user)

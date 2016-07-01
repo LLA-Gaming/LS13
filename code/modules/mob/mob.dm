@@ -25,6 +25,7 @@ var/next_mob_id = 0
 	..()
 
 /atom/proc/prepare_huds()
+	hud_list = list()
 	for(var/hud in hud_possible)
 		var/image/I = image('icons/mob/hud.dmi', src, "")
 		I.appearance_flags = RESET_COLOR
@@ -73,9 +74,9 @@ var/next_mob_id = 0
 	// voice muffling
 	if(stat == UNCONSCIOUS)
 		if(type & 2) //audio
-			src << "<I>... You can almost hear something ...</I>"
+			src.text2tab("<I>... You can almost hear something ...</I>")
 	else
-		src << msg
+		src.text2tab(msg)
 
 // Show a message the src mob and to all player mobs who sees the src mob
 // This would be for visible actions by the src mob
@@ -212,7 +213,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
+				src.text2tab("<span class='warning'>You are unable to equip that!</span>") //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -232,7 +233,7 @@ var/next_mob_id = 0
 	if(!istype(W)) return 0
 
 	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0
@@ -271,7 +272,7 @@ var/next_mob_id = 0
 	set category = "IC"
 
 	if(is_blind(src))
-		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		src.text2tab("<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -430,12 +431,12 @@ var/next_mob_id = 0
 	if (!( abandon_allowed ))
 		return
 	if ((stat != 2 || !( ticker )))
-		usr << "<span class='boldnotice'>You must be dead to use this!</span>"
+		usr.text2tab("<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "<span class='boldnotice'>Please roleplay correctly!</span>"
+	usr.text2tab("<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -464,7 +465,7 @@ var/next_mob_id = 0
 	if(check_rights_for(client,R_ADMIN))
 		is_admin = 1
 	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
+		usr.text2tab("<span class='notice'>You must be observing to use this!</span>")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -550,7 +551,7 @@ var/next_mob_id = 0
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
-	src << message
+	src.text2tab(message)
 	return 1
 
 /mob/proc/show_viewers(message)
@@ -577,6 +578,7 @@ var/next_mob_id = 0
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			config.stat_entry()
+			pod_config.AddToStat()
 			stat(null)
 			if(Master)
 				Master.stat_entry()
@@ -587,7 +589,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -700,7 +701,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = EAST
+	setDir(EAST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -709,7 +710,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = WEST
+	setDir(WEST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -718,7 +719,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = NORTH
+	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -727,7 +728,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = SOUTH
+	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -764,7 +765,7 @@ var/next_mob_id = 0
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)
@@ -870,6 +871,7 @@ var/next_mob_id = 0
 	var/list/searching = GetAllContents()
 	var/search_id = 1
 	var/search_pda = 1
+	var/search_tablet = 1
 
 	for(var/A in searching)
 		if( search_id && istype(A,/obj/item/weapon/card/id) )
@@ -877,16 +879,25 @@ var/next_mob_id = 0
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
-				if(!search_pda)
+				if(!search_pda || !search_tablet)
 					break
 				search_id = 0
+
+		else if( search_pda && istype(A,/obj/item/device/tablet) )
+			var/obj/item/device/tablet/T = A
+			if(T.core.owner == oldname)
+				T.core.owner = newname
+				T.update_label()
+				if(!search_id || !search_pda)
+					break
+				search_tablet = 0
 
 		else if( search_pda && istype(A,/obj/item/device/pda) )
 			var/obj/item/device/pda/PDA = A
 			if(PDA.owner == oldname)
 				PDA.owner = newname
 				PDA.update_label()
-				if(!search_id)
+				if(!search_id || !search_tablet)
 					break
 				search_pda = 0
 

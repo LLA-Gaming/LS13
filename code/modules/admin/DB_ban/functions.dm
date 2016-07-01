@@ -3,7 +3,7 @@
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 
 	establish_db_connection()
@@ -97,7 +97,7 @@
 
 	if(blockselfban)
 		if(a_ckey == ckey)
-			usr << "<span class='danger'>You cannot apply this ban type on yourself.</span>"
+			usr.text2tab("<span class='danger'>You cannot apply this ban type on yourself.</span>")
 			return
 
 	var/who
@@ -122,13 +122,13 @@
 		if(adm_query.NextRow())
 			var/adm_bans = text2num(adm_query.item[1])
 			if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
-				usr << "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>"
+				usr.text2tab("<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>")
 				return
 
 	var/sql = "INSERT INTO [format_table_name("ban")] (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
-	usr << "<span class='adminnotice'>Ban saved to database.</span>"
+	usr.text2tab("<span class='adminnotice'>Ban saved to database.</span>")
 	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
 
 	if(announceinirc)
@@ -141,7 +141,7 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 
 	var/bantype_str
@@ -203,24 +203,24 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "<span class='danger'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>"
+		usr.text2tab("<span class='danger'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>")
 		return
 
 	if(ban_number > 1)
-		usr << "<span class='danger'>Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.</span>"
+		usr.text2tab("<span class='danger'>Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.</span>")
 		return
 
 	if(istext(ban_id))
 		ban_id = text2num(ban_id)
 	if(!isnum(ban_id))
-		usr << "<span class='danger'>Database update failed due to a ban ID mismatch. Contact the database admin.</span>"
+		usr.text2tab("<span class='danger'>Database update failed due to a ban ID mismatch. Contact the database admin.</span>")
 		return
 
 	DB_ban_unban_by_id(ban_id)
 
 /datum/admins/proc/DB_ban_edit(banid = null, param = null)
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 
 	if(!isnum(banid) || !istext(param))
@@ -281,7 +281,7 @@
 
 /datum/admins/proc/DB_ban_unban_by_id(id)
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 
 	var/sql = "SELECT ckey FROM [format_table_name("ban")] WHERE id = [id]"
@@ -300,11 +300,11 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "<span class='danger'>Database update failed due to a ban id not being present in the database.</span>"
+		usr.text2tab("<span class='danger'>Database update failed due to a ban id not being present in the database.</span>")
 		return
 
 	if(ban_number > 1)
-		usr << "<span class='danger'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>"
+		usr.text2tab("<span class='danger'>Database update failed due to multiple bans having the same ID. Contact the database admin.</span>")
 		return
 
 	if(!src.owner || !istype(src.owner, /client))
@@ -336,12 +336,12 @@
 	if(!usr.client)
 		return
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_SECONDARYADMIN))
 		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"

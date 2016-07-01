@@ -3,13 +3,13 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		usr.text2tab("<span class='danger'>Speech is currently admin-disabled.</span>","ooc")
 		return
 
 	if(!mob)
 		return
 	if(IsGuestKey(key))
-		src << "Guests may not use OOC."
+		src.text2tab("Guests may not use OOC.","ooc")
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -17,27 +17,27 @@
 		return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		src << "<span class='danger'>You have OOC muted.</span>"
+		src.text2tab("<span class='danger'>You have OOC muted.</span>","ooc")
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			src << "<span class='danger'>OOC is globally muted.</span>"
+			src.text2tab("<span class='danger'>OOC is globally muted.</span>","ooc")
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
+			usr.text2tab("<span class='danger'>OOC for dead mobs has been turned off.</span>","ooc")
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "<span class='danger'>You cannot use OOC (muted).</span>"
+			src.text2tab("<span class='danger'>You cannot use OOC (muted).</span>","ooc")
 			return
 		if(src.mob)
 			if(jobban_isbanned(src.mob, "OOC"))
-				src << "<span class='danger'>You have been banned from OOC.</span>"
+				src.text2tab("<span class='danger'>You have been banned from OOC.</span>","ooc")
 				return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			src << "<B>Advertising other servers is not allowed.</B>"
+			src.text2tab("<B>Advertising other servers is not allowed.</B>","ooc")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
@@ -61,14 +61,14 @@
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					if(check_rights_for(src, R_ADMIN))
-						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+					if(check_rights_for(src, R_TRIALADMIN))
+						C.text2tab("<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>","ooc")
 					else
-						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+						C.text2tab("<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>","ooc")
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+					C.text2tab("<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>","ooc")
 			else if(!(key in C.prefs.ignoring))
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+				C.text2tab("<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>","ooc")
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -78,7 +78,7 @@
 			return
 	else //otherwise just toggle it
 		ooc_allowed = !ooc_allowed
-	world << "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>"
+	text2world("<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>","ooc")
 
 var/global/normal_ooc_colour = OOC_COLOR
 
@@ -128,9 +128,9 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc ="Check the admin notice if it has been set"
 
 	if(admin_notice)
-		src << "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]"
+		src.text2tab("<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]","ooc")
 	else
-		src << "<span class='notice'>There are no admin notices at the moment.</span>"
+		src.text2tab("<span class='notice'>There are no admin notices at the moment.</span>","ooc")
 
 /client/verb/motd()
 	set name = "MOTD"
@@ -138,9 +138,9 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc ="Check the Message of the Day"
 
 	if(join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
+		src.text2tab("<div class=\"motd\">[join_motd]</div>","ooc")
 	else
-		src << "<span class='notice'>The Message of the Day has not been set.</span>"
+		src.text2tab("<span class='notice'>The Message of the Day has not been set.</span>","ooc")
 
 /client/proc/self_notes()
 	set name = "View Admin Notes"
@@ -148,7 +148,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc = "View the notes that admins have written about you"
 
 	if(!config.see_own_notes)
-		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
+		usr.text2tab("<span class='notice'>Sorry, that function is not enabled on this server.</span>","ooc")
 		return
 
 	show_note(usr, null, 1)
@@ -159,7 +159,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		prefs.ignoring -= C.key
 	else
 		prefs.ignoring |= C.key
-	src << "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
+	src.text2tab("You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.","ooc")
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
@@ -171,6 +171,6 @@ var/global/normal_ooc_colour = OOC_COLOR
 	if(!selection)
 		return
 	if(selection == src)
-		src << "You can't ignore yourself."
+		src.text2tab("You can't ignore yourself.","ooc")
 		return
 	ignore_key(selection)

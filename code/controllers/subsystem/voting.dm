@@ -2,9 +2,9 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote
 	name = "Vote"
-	can_fire = 1
 	wait = 10
-	priority = -1
+
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
 
 	var/initiator = null
 	var/started_time = null
@@ -114,6 +114,9 @@ var/datum/subsystem/vote/SSvote
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
+			if("crewtransfer")
+				if(. == "Call transfer shuttle")
+					SSshuttle.crewtransfer = 1
 			if("gamemode")
 				if(master_mode != .)
 					world.save_mode(.)
@@ -124,7 +127,7 @@ var/datum/subsystem/vote/SSvote
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in admins)
-			if(!C.is_afk() && check_rights_for(C, R_SERVER))
+			if(!C.is_afk() && check_rights_for(C, R_PRIMARYADMIN))
 				active_admins = 1
 				break
 		if(!active_admins)
@@ -132,6 +135,11 @@ var/datum/subsystem/vote/SSvote
 		else
 			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
+
+	if(SSshuttle.crewtransfer)
+		SSshuttle.emergency.request()
+		message_admins("Crew transfer vote has passed, you may recall to cancel it.")
+
 
 	return .
 
@@ -151,22 +159,24 @@ var/datum/subsystem/vote/SSvote
 		if(started_time)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(mode)
-				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
+				usr.text2tab("<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
 				return 0
-	
+
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
-			
+
 			if(next_allowed_time > world.time && !admin)
-				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
+				usr.text2tab("<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
 				return 0
 
 		reset()
 		switch(vote_type)
 			if("restart")
 				choices.Add("Restart Round","Continue Playing")
+			if("crewtransfer")
+				choices.Add("Call transfer shuttle","Do not call transfer shuttle")
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("custom")
@@ -183,6 +193,9 @@ var/datum/subsystem/vote/SSvote
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
+		var/sound/S = sound('sound/effects/ghost2.ogg',0,1,0)
+		for(var/mob/M in world)
+			M << S
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
 			text += "\n[question]"
@@ -224,6 +237,12 @@ var/datum/subsystem/vote/SSvote
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
+		//Crew Transfer
+		if(SSshuttle.crewtransfer)
+			. += "<font color='grey'>Crew Transfer (In Progress)</font>"
+		else
+			. += "<a href='?src=\ref[src];vote=crewtransfer'>Crew Transfer</a>"
+		. += "</li><li>"
 		//restart
 		if(trialmin || config.allow_vote_restart)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
@@ -269,6 +288,19 @@ var/datum/subsystem/vote/SSvote
 		if("restart")
 			if(config.allow_vote_restart || usr.client.holder)
 				initiate_vote("restart",usr.key)
+		if("crewtransfer")
+			if(ticker.current_state != GAME_STATE_PLAYING)
+				return
+			if(usr.client.holder)
+				var/input = stripped_input(usr, "Please supply a reason", "Reason", "I ded: please restart" , 30)
+				if(!input)
+					message_admins("[usr.ckey] Asked for a crew transfer vote without a reason (AUTO DENIED)")
+					return
+				if(input == "I ded: please restart")
+					message_admins("[usr.ckey] Asked for a crew transfer vote: [input] (AUTO DENIED)")
+					return
+				message_admins("[usr.ckey] Asked for a crew transfer vote: [input]")
+				initiate_vote("crewtransfer",usr.key)
 		if("gamemode")
 			if(config.allow_vote_mode || usr.client.holder)
 				initiate_vote("gamemode",usr.key)

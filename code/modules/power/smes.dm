@@ -43,13 +43,9 @@
 
 /obj/machinery/power/smes/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/smes(null)
-	for(var/i in 1 to 5)
-		component_parts += new /obj/item/weapon/stock_parts/cell/high/empty(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 5)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
+	B.apply_default_parts(src)
+
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -65,6 +61,16 @@
 		terminal.master = src
 		update_icon()
 	return
+
+/obj/item/weapon/circuitboard/machine/smes
+	name = "circuit board (SMES)"
+	build_path = /obj/machinery/power/smes
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 5,
+							/obj/item/weapon/stock_parts/cell = 5,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high/empty)
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
@@ -95,10 +101,10 @@
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
 				terminal.master = src
-				user << "<span class='notice'>Terminal found.</span>"
+				user.text2tab("<span class='notice'>Terminal found.</span>")
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power source found.</span>"
+			user.text2tab("<span class='alert'>No power source found.</span>")
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -115,25 +121,25 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='warning'>This SMES already has a power terminal!</span>"
+			user.text2tab("<span class='warning'>This SMES already has a power terminal!</span>")
 			return
 
 		if(!panel_open) //is the panel open ?
-			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			user.text2tab("<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
 		if (T.intact) //is the floor plating removed ?
-			user << "<span class='warning'>You must first remove the floor plating!</span>"
+			user.text2tab("<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
 
 		var/obj/item/stack/cable_coil/C = I
 		if(C.amount < 10)
-			user << "<span class='warning'>You need more wires!</span>"
+			user.text2tab("<span class='warning'>You need more wires!</span>")
 			return
 
-		user << "<span class='notice'>You start building the power terminal...</span>"
+		user.text2tab("<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.amount >= 10)
@@ -187,7 +193,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/proc/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.setDir(get_dir(T,src))
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()
@@ -197,7 +203,7 @@
 
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		return
 
@@ -220,19 +226,19 @@
 		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
 
 	if(outputting)
-		overlays += smesImageCache[SMES_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_OUTPUTTING])
 	else
-		overlays += smesImageCache[SMES_NOT_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
 
 	if(inputting)
-		overlays += smesImageCache[SMES_INPUTTING]
+		add_overlay(smesImageCache[SMES_INPUTTING])
 	else
 		if(input_attempt)
-			overlays += smesImageCache[SMES_INPUT_ATTEMPT]
+			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += smesImageCache[clevel]
+		add_overlay(smesImageCache[clevel])
 	return
 
 

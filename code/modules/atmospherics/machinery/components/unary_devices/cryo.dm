@@ -32,7 +32,8 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 4)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)
@@ -53,7 +54,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	if(panel_open)
+/*	if(panel_open)
 		icon_state = "cell-o"
 	else if(state_open)
 		icon_state = "cell-open"
@@ -64,6 +65,60 @@
 			icon_state = "cell-on"
 	else
 		icon_state = "cell-off"
+*/
+	if(panel_open)
+		icon_state = "cell-o"
+		overlays.Cut()
+		return
+	if(state_open)
+		icon_state = "cell-open"
+		overlays.Cut()
+		return
+	if(on)
+		if(occupant)
+			icon_state = "cell-on"
+			overlays.Cut()
+			var/image/Occ = image(occupant)
+			Occ.dir = dir
+			var/icon/O = getFlatIcon(Occ)
+			O.Crop(8,1,25,32)
+			Occ = image(O)
+			Occ.pixel_y = 24
+			Occ.pixel_x = 7
+			Occ.layer = layer + 0.01
+			overlays += Occ
+			var/image/I = new
+			I.icon = icon
+			I.icon_state = "cell-on"
+			I.layer = layer + 0.02
+			I.alpha = 190
+			overlays += I
+		else
+			icon_state = "cell-on"
+			overlays.Cut()
+	else
+		if(occupant)
+			icon_state = "cell-off"
+			overlays.Cut()
+			var/image/Occ = image(occupant)
+			Occ.dir = dir
+			var/icon/O = getFlatIcon(Occ)
+			O.Crop(8,1,25,32)
+			Occ = image(O)
+			Occ.pixel_y = 24
+			Occ.pixel_x = 7
+			Occ.layer = layer + 0.01
+			Occ.color = rgb(120,120,120)
+			overlays += Occ
+			var/image/I = new
+			I.icon = icon
+			I.icon_state = "cell-off"
+			I.layer = layer + 0.02
+			I.alpha = 190
+			overlays += I
+		else
+			icon_state = "cell-off"
+			overlays.Cut()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -144,7 +199,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	user.text2tab("<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
@@ -154,11 +209,11 @@
 	..()
 	if(occupant)
 		if(on)
-			user << "Someone's inside [src]!"
+			user.text2tab("Someone's inside [src]!")
 		else
-			user << "You can barely make out a form floating in [src]."
+			user.text2tab("You can barely make out a form floating in [src].")
 	else
-		user << "[src] seems empty."
+		user.text2tab("[src] seems empty.")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -171,7 +226,7 @@
 		if(!user.drop_item())
 			return
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			user.text2tab("<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
 		beaker = I
 		I.loc = src

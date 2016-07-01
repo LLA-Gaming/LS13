@@ -55,12 +55,7 @@
 		..()
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.stat == DEAD)
-				src.visible_message(
-					"<span class='danger'>[src] devours [L]!</span>",
-					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-				adjustBruteLoss(-L.maxHealth)
-				L.gib()
+			devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -153,7 +148,7 @@
 				for(var/mob/living/L in J)
 					if(L != src)
 						L.adjustFireLoss(20)
-						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
+						L.text2tab("<span class='danger'>You're hit by the drake's fire breath!</span>")
 				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
@@ -181,7 +176,7 @@
 		fire_rain()
 
 	icon_state = "dragon"
-	if(swoop_target)
+	if(swoop_target && !qdeleted(swoop_target))
 		tturf = get_turf(swoop_target)
 	else
 		tturf = get_turf(src)
@@ -190,18 +185,18 @@
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
-	for(var/mob/living/L in range(1,tturf))
-		if(L == src)
-			continue
+	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
 			visible_message("<span class='danger'>[src] slams down on [L], crushing them!</span>")
 			L.gib()
 		else
-			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			L.adjustBruteLoss(75)
-			L.throw_at_fast(throwtarget)
-			visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
-	for(var/mob/M in range(7,src))
+			if(L && !qdeleted(L)) // Some mobs are deleted on death
+				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+				L.throw_at_fast(throwtarget)
+				visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
+
+	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
 
 	stop_automated_movement = FALSE
@@ -212,7 +207,7 @@
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "You need to wait 20 seconds between swoop attacks!"
+		src.text2tab("You need to wait 20 seconds between swoop attacks!")
 		return
 	swoop_attack(1, A)
 
@@ -224,8 +219,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 750
-	health = 750
+	maxHealth = 300
+	health = 300
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

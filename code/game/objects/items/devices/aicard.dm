@@ -30,12 +30,12 @@
 		else
 			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			overlays += image('icons/obj/aicards.dmi', "aicard-on")
+			add_overlay(image('icons/obj/aicards.dmi', "aicard-on"))
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
-		overlays.Cut()
+		cut_overlays()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
@@ -67,7 +67,7 @@
 				flush = TRUE
 				if(AI && AI.loc == src)
 					AI.suiciding = TRUE
-					AI << "Your core files are being wiped!"
+					AI.text2tab("Your core files are being wiped!")
 					while(AI.stat != DEAD)
 						AI.adjustOxyLoss(2)
 						AI.updatehealth()
@@ -76,10 +76,10 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			AI << "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
+			AI.text2tab("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!")
 			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled
-			AI << "Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!"
+			AI.text2tab("Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!")
 			. = TRUE
 	update_icon()

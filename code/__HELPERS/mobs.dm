@@ -346,12 +346,17 @@ Proc for attack log creation, because really why not
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue
-		if(message_type == DEADCHAT_DEATHRATTLE)
-			if(prefs.toggles & DISABLE_DEATHRATTLE)
-				continue
+
+		switch(message_type)
+			if(DEADCHAT_DEATHRATTLE)
+				if(prefs.toggles & DISABLE_DEATHRATTLE)
+					continue
+			if(DEADCHAT_ARRIVALRATTLE)
+				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+					continue
 
 		if(istype(M, /mob/dead/observer) && follow_target)
 			var/link = FOLLOW_LINK(M, follow_target)
-			M << "[link] [message]"
+			M.text2tab("[link] [message]","ooc")
 		else
-			M << "[message]"
+			M.text2tab("[message]","ooc")

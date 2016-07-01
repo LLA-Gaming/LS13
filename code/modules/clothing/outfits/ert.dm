@@ -10,7 +10,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -174,7 +174,7 @@
 	belt = /obj/item/weapon/gun/energy/gun
 	l_pocket = /obj/item/weapon/pen
 	back = /obj/item/weapon/storage/backpack/satchel_norm
-	r_pocket = /obj/item/device/pda/heads
+	r_pocket = /obj/item/device/tablet/clear
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id
 
@@ -182,10 +182,10 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/pda/heads/pda = H.r_store
-	pda.owner = H.real_name
-	pda.ownjob = "Centcom Official"
-	pda.update_label()
+	var/obj/item/device/tablet/clear/tablet = H.r_store
+	tablet.owner = H.real_name
+	tablet.ownjob = "Centcom Official"
+	tablet.update_label()
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"

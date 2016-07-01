@@ -11,6 +11,7 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	var/list/active_tables = list()
+	var/tables_required = 2
 	active = FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/New()
@@ -27,22 +28,18 @@
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
-	var/changed = FALSE
-	if(active_tables.len >= 2)
+	if(active_tables.len >= tables_required)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")
-			changed = TRUE
 		active = TRUE
 	else
 		if(active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] closes its eyes.</span>")
-			changed = TRUE
 		active = FALSE
+	update_icon()
 
-	if(changed)
-		update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
 	return
@@ -58,6 +55,8 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
+	desc = "Whether you're sleeping or waking, it's going to be \
+		quite chaotic."
 	health = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
@@ -80,6 +79,12 @@
 			our_statue = M
 			break
 
+	if(!our_statue)
+		name = "inert [name]"
+		return
+	else
+		name = initial(name)
+
 	var/turf/T = get_turf(src)
 	var/list/found = list()
 	for(var/mob/living/carbon/C in T)
@@ -93,7 +98,8 @@
 		L.visible_message("<span class='revennotice'>A strange purple glow \
 			wraps itself around [L] as they suddenly fall unconcious.</span>",
 			"<span class='revendanger'>[desc]</span>")
-
+		// Don't let them sit suround unconscious forever
+		addtimer(src, "sleeper_dreams", 100, FALSE, L)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -106,6 +112,7 @@
 		L.color = initial(L.color)
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
+		L.grab_ghost()
 
 	sleepers = found
 
@@ -115,7 +122,14 @@
 			say(desc)
 			never_spoken = FALSE
 	else
-		our_statue.active_tables &= src
+		our_statue.active_tables -= src
+
+/obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
+	if(sleeper in sleepers)
+		sleeper << "<span class='revennotice'>While you slumber, you have \
+			the strangest dream, like you can see yourself from the outside.\
+			</span>"
+		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."
@@ -181,7 +195,7 @@
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Weaken(2)
 		M.throw_at_fast(throwtarget, 5, 1,src)
-		M << "<span class='notice'>No climbing on the bar please.</span>"
+		M.text2tab("<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
 

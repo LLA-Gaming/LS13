@@ -20,7 +20,7 @@ Quartermaster
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
 
-	belt = /obj/item/device/pda/quartermaster
+	belt = /obj/item/device/tablet/qm
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -49,7 +49,7 @@ Cargo Technician
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
 
-	belt = /obj/item/device/pda/cargo
+	belt = /obj/item/device/tablet/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
 
@@ -76,7 +76,7 @@ Shaft Miner
 /datum/outfit/job/miner
 	name = "Shaft Miner"
 
-	belt = /obj/item/device/pda/shaftminer
+	belt = /obj/item/device/tablet/miner
 	ears = /obj/item/device/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
@@ -117,7 +117,7 @@ Bartender
 	name = "Bartender"
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/device/pda/bar
+	belt = /obj/item/device/tablet/bartender
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
@@ -147,7 +147,7 @@ Cook
 /datum/outfit/job/cook
 	name = "Cook"
 
-	belt = /obj/item/device/pda/cook
+	belt = /obj/item/device/tablet/cook
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
@@ -191,7 +191,7 @@ Botanist
 /datum/outfit/job/botanist
 	name = "Botanist"
 
-	belt = /obj/item/device/pda/botanist
+	belt = /obj/item/device/tablet/hydro
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
@@ -225,6 +225,6 @@ Janitor
 /datum/outfit/job/janitor
 	name = "Janitor"
 
-	belt = /obj/item/device/pda/janitor
+	belt = /obj/item/device/tablet/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor

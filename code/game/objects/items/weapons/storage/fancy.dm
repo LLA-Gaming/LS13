@@ -34,9 +34,9 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len == 1)
-		user << "There is one [src.icon_type] left."
+		user.text2tab("There is one [src.icon_type] left.")
 	else
-		user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
+		user.text2tab("There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
 
 /*
  * Donut Box
@@ -106,14 +106,14 @@
 	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	icon_state = initial(icon_state)
 	if(!contents.len)
 		icon_state += "_empty"
 	else
-		overlays += "[icon_state]_open"
+		add_overlay("[icon_state]_open")
 		for(var/c = contents.len, c >= 1, c--)
-			overlays += image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1))
+			add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
@@ -132,11 +132,11 @@
 			remove_from_storage(W, M)
 			M.equip_to_slot_if_possible(W, slot_wear_mask)
 			contents -= W
-			user << "<span class='notice'>You take a [icon_type] out of the pack.</span>"
+			user.text2tab("<span class='notice'>You take a [icon_type] out of the pack.</span>")
 		else
 			..()
 	else
-		user << "<span class='notice'>There are no [icon_type]s left in the pack.</span>"
+		user.text2tab("<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
 	name = "DromedaryCo"
@@ -211,9 +211,9 @@
 	spawn_type = /obj/item/weapon/rollingpaper
 
 /obj/item/weapon/storage/fancy/rollingpapers/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
-		overlays += "[icon_state]_empty"
+		add_overlay("[icon_state]_empty")
 	return
 
 /////////////
@@ -232,10 +232,10 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
-	overlays.Cut()
-	overlays += "[icon_state]_open"
+	cut_overlays()
+	add_overlay("[icon_state]_open")
 	for(var/c = contents.len, c >= 1, c--)
-		overlays += image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1))
+		add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

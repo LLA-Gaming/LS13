@@ -75,6 +75,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
+	var/list/programs = list()
+	var/list/convos = list()
 	var/active = 1
 	var/decryptkey = "password"
 
@@ -82,6 +84,14 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+
+	for(var/x in typesof(/datum/program/))
+		var/datum/program/A = new x(src)
+		if(!A.app_id)
+			del(A)
+			continue
+		programs.Add(A)
+
 	..()
 	return
 
@@ -115,7 +125,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /obj/machinery/message_server/attack_hand(mob/user)
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few Centcom delays."
-	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+	user.text2tab("You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
 

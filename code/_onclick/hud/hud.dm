@@ -41,6 +41,7 @@
 	var/action_buttons_hidden = 0
 
 	var/obj/screen/healths
+	var/obj/screen/staminas
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 
@@ -199,7 +200,7 @@
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+		usr.text2tab("<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		usr.text2tab("<span class ='warning'>This mob type does not use a HUD.</span>")
 

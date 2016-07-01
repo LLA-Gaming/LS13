@@ -1,12 +1,12 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
+	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
-		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
+		user.text2tab("<B>You summoned [summon_type ? "magic" : "guns"]!</B>")
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
 		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
@@ -23,10 +23,10 @@
 			survive.owner = H.mind
 			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
-			H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
+			H.text2tab("<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in H.mind.objectives)
-				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+				H.text2tab("<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 				obj_count++
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
@@ -117,6 +117,8 @@
 					G = new /obj/item/weapon/gun/medbeam(get_turf(H))
 				if("scatterbeam")
 					G = new /obj/item/weapon/gun/energy/laser/scatter(get_turf(H))
+				if("gravgun")
+					G = new /obj/item/weapon/gun/energy/gravity_gun(get_turf(H))
 			G.unlock()
 			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 
@@ -164,7 +166,7 @@
 					new /obj/item/weapon/scrying(get_turf(H))
 					if (!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
-						H << "<span class='notice'>The walls suddenly disappear.</span>"
+						H.text2tab("<span class='notice'>The walls suddenly disappear.</span>")
 				if("voodoo")
 					new /obj/item/voodoo(get_turf(H))
 				if("special")
@@ -182,7 +184,7 @@
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 						if("necromantic")
 							new /obj/item/device/necromantic_stone(get_turf(H))
-					H << "<span class='notice'>You suddenly feel lucky.</span>"
+					H.text2tab("<span class='notice'>You suddenly feel lucky.</span>")
 			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
 
 

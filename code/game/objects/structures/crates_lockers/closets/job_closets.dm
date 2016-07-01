@@ -320,6 +320,19 @@
 	new /obj/item/weapon/storage/backpack/satchel_vir(src)
 	return
 
+/obj/structure/closet/wardrobe/therapy
+	name = "therapy wardrobe"
+	icon_door = "white"
+
+/obj/structure/closet/wardrobe/therapy/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/under/rank/therapist(src)
+	new /obj/item/clothing/under/rank/therapist(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	return
+
 /obj/structure/closet/wardrobe/science_white
 	name = "science wardrobe"
 	icon_door = "white"

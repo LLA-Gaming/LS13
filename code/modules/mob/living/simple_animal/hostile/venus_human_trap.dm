@@ -41,7 +41,7 @@
 		var/mob/living/L = AM
 		if(!("vines" in L.faction))
 			L.adjustBruteLoss(5)
-			L << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+			L.text2tab("<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 
 
@@ -82,7 +82,7 @@
 				L.attack_animal(src)
 			else
 				if(prob(grasp_pull_chance))
-					dir = get_dir(src,L) //staaaare
+					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
 					L.Weaken(3) //you can't get away now~
 
@@ -91,7 +91,7 @@
 				if(L == src || faction_check(L))
 					continue
 				if(!(L in grasping) && L != target && prob(grasp_chance))
-					L << "<span class='userdanger'>\the [src] has you entangled!</span>"
+					L.text2tab("<span class='userdanger'>\the [src] has you entangled!</span>")
 					grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
 
 					break //only take 1 new victim per cycle

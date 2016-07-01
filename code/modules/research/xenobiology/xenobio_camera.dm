@@ -65,7 +65,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user.text2tab("<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>")
 		user.drop_item()
 		qdel(O)
 		return
@@ -112,7 +112,7 @@
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		owner.text2tab("<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
@@ -136,7 +136,7 @@
 				S.loc = X
 				X.stored_slimes += S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		owner.text2tab("<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/feed_slime
@@ -155,9 +155,9 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys] monkeys left."
+			owner.text2tab("[X] now has [X.monkeys] monkeys left.")
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		owner.text2tab("<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/monkey_recycle
@@ -178,4 +178,4 @@
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		owner.text2tab("<span class='notice'>Target is not near a camera. Cannot proceed.</span>")

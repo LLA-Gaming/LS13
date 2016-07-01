@@ -46,5 +46,5 @@
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.blob_overminds.len > 1 ? "s were" : " was")]:</B></FONT>"
 			for(var/datum/mind/blob in blob_mode.blob_overminds)
 				text += printplayer(blob)
-			world << text
+			text2world(text)
 		return 1

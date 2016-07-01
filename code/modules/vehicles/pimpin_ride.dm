@@ -10,7 +10,7 @@
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
@@ -54,32 +54,32 @@
 /obj/vehicle/janicart/examine(mob/user)
 	..()
 	if(floorbuffer)
-		user << "It has been upgraded with a floor buffer."
+		user.text2tab("It has been upgraded with a floor buffer.")
 
 
 /obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You hook the trashbag onto \the [name].</span>"
+		user.text2tab("<span class='notice'>You hook the trashbag onto \the [name].</span>")
 		I.loc = src
 		mybag = I
 		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
 		floorbuffer = 1
 		qdel(I)
-		user << "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>"
+		user.text2tab("<span class='notice'>You upgrade \the [name] with the floor buffer.</span>")
 		update_icon()
 	else
 		return ..()
 
 
 /obj/vehicle/janicart/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(mybag)
-		overlays += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(floorbuffer)
-		overlays += "cart_buffer"
+		add_overlay("cart_buffer")
 
 
 /obj/vehicle/janicart/attack_hand(mob/user)

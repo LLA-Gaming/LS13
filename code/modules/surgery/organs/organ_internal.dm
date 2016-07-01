@@ -52,7 +52,7 @@
 /obj/item/organ/examine(mob/user)
 	..()
 	if(status == ORGAN_ROBOTIC && crit_fail)
-		user << "<span class='warning'>[src] seems to be broken!</span>"
+		user.text2tab("<span class='warning'>[src] seems to be broken!</span>")
 
 
 /obj/item/organ/proc/prepare_eat()
@@ -195,7 +195,7 @@
 			var/mob/living/carbon/human/H = owner
 			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
 				H.blood_volume = max(H.blood_volume - blood_loss, 0)
-				H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
+				H.text2tab("<span class = 'userdanger'>You have to keep pumping your blood!</span>")
 				if(add_colour)
 					H.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
 					add_colour = FALSE
@@ -205,7 +205,7 @@
 /obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(owner)
-		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+		owner.text2tab("<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "pump your blood"
@@ -217,12 +217,12 @@
 		var/obj/item/organ/heart/cursed/cursed_heart = target
 
 		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam
-			owner << "<span class='userdanger'>Too soon!</span>"
+			owner.text2tab("<span class='userdanger'>Too soon!</span>")
 			return
 
 		cursed_heart.last_pump = world.time
 		playsound(owner,'sound/effects/singlebeat.ogg',40,1)
-		owner << "<span class = 'notice'>Your heart beats.</span>"
+		owner.text2tab("<span class = 'notice'>Your heart beats.</span>")
 
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
@@ -326,10 +326,10 @@
 			var/datum/species/abductor/Byy = H.dna.species
 			if(Ayy.team != Byy.team)
 				continue
-		H << rendered
+		H.text2tab(rendered)
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
-		M << "[link] [rendered]"
+		M.text2tab("[link] [rendered]")
 	return ""
 
 /obj/item/organ/tongue/zombie

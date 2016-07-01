@@ -56,23 +56,23 @@
 		return 0
 
 	if(isslime(M))
-		src << "<span class='warning'><i>I can't latch onto another slime...</i></span>"
+		src.text2tab("<span class='warning'><i>I can't latch onto another slime...</i></span>")
 		return 0
 
 	if(docile)
-		src << "<span class='notice'><i>I'm not hungry anymore...</i></span>"
+		src.text2tab("<span class='notice'><i>I'm not hungry anymore...</i></span>")
 		return 0
 
 	if(stat)
-		src << "<span class='warning'><i>I must be conscious to do this...</i></span>"
+		src.text2tab("<span class='warning'><i>I must be conscious to do this...</i></span>")
 		return 0
 
 	if(M.stat == DEAD)
-		src << "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>"
+		src.text2tab("<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
 		return 0
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
-		src << "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>"
+		src.text2tab("<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
 		return 0
 	return 1
 
@@ -80,18 +80,18 @@
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
 	if(M.buckle_mob(src, force=1))
 		layer = M.layer+0.01 //appear above the target mob
-		M.visible_message("<span class='danger'>The [name] has latched onto [M]!</span>", \
-						"<span class='userdanger'>The [name] has latched onto [M]!</span>")
+		M.visible_message("<span class='danger'>[name] has latched onto [M]!</span>", \
+						"<span class='userdanger'>[name] has latched onto [M]!</span>")
 	else
-		src << "<span class='warning'><i>I have failed to latch onto the subject</i></span>"
+		src.text2tab("<span class='warning'><i>I have failed to latch onto the subject</i></span>")
 
 /mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
 	if(buckled)
 		if(!living)
-			src << "<span class='warning'>[pick("This subject is incompatible", \
+			src.text2tab("<span class='warning'>[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>"
+			"I do not feel nourished", "This subject is not food")]!</span>")
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")
@@ -103,7 +103,7 @@
 	set desc = "This will let you evolve from baby to adult slime."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		src.text2tab("<i>I must be conscious to do this...</i>")
 		return
 	if(!is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
@@ -113,11 +113,11 @@
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
 			regenerate_icons()
-			name = text("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
+			update_name()
 		else
-			src << "<i>I am not ready to evolve yet...</i>"
+			src.text2tab("<i>I am not ready to evolve yet...</i>")
 	else
-		src << "<i>I have already evolved...</i>"
+		src.text2tab("<i>I have already evolved...</i>")
 
 /datum/action/innate/slime/evolve
 	name = "Evolve"
@@ -136,26 +136,28 @@
 	set desc = "This will make you split into four Slimes."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		src.text2tab("<i>I must be conscious to do this...</i>")
 		return
 
 	if(is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(stat)
-				src << "<i>I must be conscious to do this...</i>"
+				src.text2tab("<i>I must be conscious to do this...</i>")
 				return
 
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
-				var/mob/living/simple_animal/slime/M = new /mob/living/simple_animal/slime/(loc)
+				var/child_colour
 				if(mutation_chance >= 100)
-					M.colour = "rainbow"
+					child_colour = "rainbow"
 				else if(prob(mutation_chance))
-					M.colour = slime_mutation[rand(1,4)]
+					child_colour = slime_mutation[rand(1,4)]
 				else
-					M.colour = colour
+					child_colour = colour
+				var/mob/living/simple_animal/slime/M
+				M = new(loc, child_colour)
 				if(ckey)
 					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
@@ -175,9 +177,9 @@
 				new_slime.key = src.key
 			qdel(src)
 		else
-			src << "<i>I am not ready to reproduce yet...</i>"
+			src.text2tab("<i>I am not ready to reproduce yet...</i>")
 	else
-		src << "<i>I am not old enough to reproduce yet...</i>"
+		src.text2tab("<i>I am not old enough to reproduce yet...</i>")
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"

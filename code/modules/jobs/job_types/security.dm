@@ -35,7 +35,7 @@ Head of Security
 	name = "Head of Security"
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/device/tablet/hos
 	ears = /obj/item/device/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -59,7 +59,7 @@ Head of Security
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -93,7 +93,7 @@ Warden
 /datum/outfit/job/warden
 	name = "Warden"
 
-	belt = /obj/item/device/pda/warden
+	belt = /obj/item/device/tablet/warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -118,7 +118,7 @@ Warden
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -146,7 +146,7 @@ Detective
 /datum/outfit/job/detective
 	name = "Detective"
 
-	belt = /obj/item/device/pda/detective
+	belt = /obj/item/device/tablet/detective
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -169,7 +169,7 @@ Detective
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -204,7 +204,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 /datum/outfit/job/security
 	name = "Security Officer"
 
-	belt = /obj/item/device/pda/security
+	belt = /obj/item/device/tablet/security
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
@@ -270,7 +270,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -297,9 +297,9 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				else
 					break
 	if(department)
-		H << "<b>You have been assigned to [department]!</b>"
+		H.text2tab("<b>You have been assigned to [department]!</b>")
 	else
-		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
+		H.text2tab("<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
 /obj/item/device/radio/headset/headset_sec/department/New()
 	wires = new(src)

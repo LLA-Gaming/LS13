@@ -62,17 +62,17 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda)||istype(W, /obj/item/device/tablet))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
+			user.text2tab("<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				user.text2tab("<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				user.text2tab("<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>"
+				user.text2tab("<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 	else
 		return ..()
 
@@ -80,7 +80,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>[src] buzzes and beeps.</span>"
+			user.text2tab("<span class='danger'>[src] buzzes and beeps.</span>")
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))

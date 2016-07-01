@@ -21,7 +21,7 @@
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(var/client/C)
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -42,7 +42,12 @@
 	var/datum/job/previewJob
 	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
 
-	if(job_civilian_low & ASSISTANT)
+	if(assignPerseus.Find(C.ckey))
+		if(perseusList[C.ckey] == "Commander")
+			previewJob = SSjob.GetJob("Perseus Security Commander")
+		else
+			previewJob = SSjob.GetJob("Perseus Security Enforcer")
+	else if(job_civilian_low & ASSISTANT)
 		previewJob = SSjob.GetJob("Assistant")
 	else if(highRankFlag)
 		var/highDeptFlag
@@ -65,15 +70,15 @@
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
 
-	mannequin.dir = NORTH
+	mannequin.setDir(NORTH)
 	var/icon/stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
 
-	mannequin.dir = WEST
+	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
 
-	mannequin.dir = SOUTH
+	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
 

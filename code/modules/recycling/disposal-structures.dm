@@ -57,7 +57,7 @@
 		return
 	loc = D.trunk
 	active = 1
-	dir = DOWN
+	setDir(DOWN)
 	move()
 
 	return
@@ -134,7 +134,7 @@
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
-	dir = 0				// dir will contain dominant direction for junction pipes
+	dir = 0// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
@@ -146,7 +146,7 @@
 
 	if(make_from && !qdeleted(make_from))
 		base_icon_state = make_from.base_state
-		dir = make_from.dir
+		setDir(make_from.dir)
 		dpdir = make_from.dpdir
 		make_from.loc = src
 		stored = make_from
@@ -209,7 +209,7 @@
 	return transfer_to_dir(H, nextdir)
 
 /obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
-	H.dir = nextdir
+	H.setDir(nextdir)
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
 
@@ -298,7 +298,7 @@
 		for(var/D in cardinal)
 			if(D & dpdir)
 				var/obj/structure/disposalpipe/broken/P = new(src.loc)
-				P.dir = D
+				P.setDir(D)
 
 	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
@@ -367,12 +367,12 @@
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the disposal pipe...</span>"
+				user.text2tab("<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
 					Deconstruct()
-					user << "<span class='notice'>You slice the disposal pipe.</span>"
+					user.text2tab("<span class='notice'>You slice the disposal pipe.</span>")
 	else
 		return ..()
 
@@ -386,7 +386,7 @@
 		var/turf/T = loc
 		stored.loc = T
 		transfer_fingerprints_to(stored)
-		stored.dir = dir
+		stored.setDir(dir)
 		stored.density = 0
 		stored.anchored = 1
 		stored.update_icon()
@@ -479,11 +479,11 @@
 /obj/structure/disposalpipe/sortjunction/examine(mob/user)
 	..()
 	if(sortTypes.len>0)
-		user << "It is tagged with the following tags:"
+		user.text2tab("It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			user << TAGGERLOCATIONS[t]
+			user.text2tab(TAGGERLOCATIONS[t])
 	else
-		user << "It has no sorting tags set."
+		user.text2tab("It has no sorting tags set.")
 
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
@@ -523,10 +523,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				user << "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				user.text2tab("<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			else
 				sortTypes |= O.currTag
-				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				user.text2tab("<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -639,7 +639,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
+		user.text2tab("<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
 	else
 		. = 1
 
@@ -706,7 +706,7 @@
 	..()
 
 	if(make_from)
-		dir = make_from.dir
+		setDir(make_from.dir)
 		make_from.loc = src
 		stored = make_from
 	else
@@ -752,20 +752,20 @@
 		if(mode==0)
 			mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You remove the screws around the power connection.</span>"
+			user.text2tab("<span class='notice'>You remove the screws around the power connection.</span>")
 		else if(mode==1)
 			mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You attach the screws around the power connection.</span>"
+			user.text2tab("<span class='notice'>You attach the screws around the power connection.</span>")
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
+			user.text2tab("<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20/I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
-				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
+				user.text2tab("<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()

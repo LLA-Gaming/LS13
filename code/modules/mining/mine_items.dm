@@ -182,7 +182,7 @@
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
+		user.text2tab("<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -234,8 +234,8 @@
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
-	user << template.description
+	user.text2tab("This capsule has the [template.name] stored.")
+	user.text2tab(template.description)
 
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
@@ -321,14 +321,14 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
 
 /obj/machinery/door/airlock/survival_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
@@ -358,9 +358,9 @@
 
 /obj/machinery/sleeper/survival_pod/update_icon()
 	if(state_open)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "sleeper_cover"
+		add_overlay("sleeper_cover")
 
 //Computer
 /obj/item/device/gps/computer

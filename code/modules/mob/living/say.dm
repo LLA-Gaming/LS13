@@ -87,7 +87,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		return
 
 	if(!can_speak_vocal(message))
-		src << "<span class='warning'>You find yourself unable to speak!</span>"
+		src.text2tab("<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
@@ -171,7 +171,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
+			src.text2tab("<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return 0
@@ -209,16 +209,16 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						M.text2tab("[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								M.text2tab(msg)
 							if(2)
-								M << msg
+								M.text2tab(msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
+									M.text2tab("<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 				return 1
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
@@ -226,23 +226,26 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						M.text2tab("[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								M.text2tab(msg)
 							if(2)
-								M << msg
+								M.text2tab(msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+									M.text2tab("<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
 				return 1
 			if(1)
-				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
+				src.text2tab("<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
 				return 1
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
+			return 1
+		if(src.check_contents_for(/obj/item/weapon/implant/enforcer))
+			perseusHivemindSay(message)
 			return 1
 	return 0
 

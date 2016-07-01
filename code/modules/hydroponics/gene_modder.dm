@@ -38,21 +38,25 @@
 
 /obj/machinery/plantgenes/RefreshParts()
 	rating = 0
-	for(var/obj/item/weapon/stock_parts/S in component_parts)
-		rating += S.rating-1
+	for(var/I in component_parts)
+		if(istype(I, /obj/item/weapon/stock_parts))
+			var/obj/item/weapon/stock_parts/S = I
+			rating += S.rating-1
+		else if(istype(I, /obj/item/weapon/circuitboard/machine/plantgenes/vault))
+			rating += 5 // Having original alien board is +25%
 	max_extract_pot = initial(max_extract_pot) + rating*5
 
 /obj/machinery/plantgenes/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"
 	if(seed)
-		overlays += "dnamod-dna"
+		add_overlay("dnamod-dna")
 	if(panel_open)
-		overlays += "dnamod-open"
+		add_overlay("dnamod-open")
 
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
@@ -67,23 +71,23 @@
 
 	if(istype(I, /obj/item/seeds))
 		if(seed)
-			user << "<span class='warning'>A sample is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A sample is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			insert_seed(I)
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			user.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 		return
 	else if(istype(I, /obj/item/weapon/disk/plantgene))
 		if(disk)
-			user << "<span class='warning'>A data disk is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A data disk is already loaded into the machine!</span>")
 		else
 			if(!user.drop_item())
 				return
 			disk = I
 			disk.loc = src
-			user << "<span class='notice'>You add [I] to the machine.</span>"
+			user.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 	else
 		..()
@@ -235,7 +239,7 @@
 				if(!usr.drop_item())
 					return
 				insert_seed(I)
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				usr.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
@@ -250,7 +254,7 @@
 					return
 				disk = I
 				disk.loc = src
-				usr << "<span class='notice'>You add [I] to the machine.</span>"
+				usr.text2tab("<span class='notice'>You add [I] to the machine.</span>")
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
 		if(!operation) // Wait for confirmation
 			operation = "insert"
@@ -354,17 +358,21 @@
 
 
 
-// Gene modder for seed vault ship, built with high-end alien (?) parts.
+// Gene modder for seed vault ship, built with high tech alien parts.
 /obj/machinery/plantgenes/seedvault/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/plantgenes(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/quadultra(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(src)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
+	B.apply_default_parts(src)
 
+/obj/item/weapon/circuitboard/machine/plantgenes/vault
+	name = "alien board (Plant DNA Manipulator)"
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;biotech=5"
+	// It wasn't made by actual abductors race, so no abductor tech here.
+	def_components = list(
+		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
+		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra,
+		/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/triphasic)
 
 /*
  *  Plant DNA disk
@@ -380,7 +388,7 @@
 
 /obj/item/weapon/disk/plantgene/New()
 	..()
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -405,11 +413,11 @@
 
 /obj/item/weapon/disk/plantgene/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+	user.text2tab("<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/plantgene/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	user.text2tab("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
 
 
 /*

@@ -113,4 +113,4 @@
 
 
 		if(message)
-			L << message
+			L.text2tab(message)

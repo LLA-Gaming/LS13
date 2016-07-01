@@ -45,7 +45,7 @@
 			newtype = heater
 		name = initial(newtype.name)
 		build_path = initial(newtype.build_path)
-		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
+		user.text2tab("<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
 
@@ -68,9 +68,9 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage(icon, "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()

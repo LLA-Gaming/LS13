@@ -58,9 +58,9 @@
 	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
 
 	if(wait)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "waitlight"
+		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	if(..())
@@ -271,14 +271,14 @@
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A beaker is already loaded into the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		beaker =  I
 		beaker.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		user.text2tab("<span class='notice'>You add the beaker to the machine.</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 	else

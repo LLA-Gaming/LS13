@@ -55,7 +55,7 @@
 /obj/machinery/droneDispenser/New()
 	..()
 	health = max_health
-	materials = new(src, list(MAT_METAL=1, MAT_GLASS=1),
+	materials = new(src, list(MAT_METAL, MAT_GLASS),
 		MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
 
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
@@ -156,16 +156,16 @@
 /obj/machinery/droneDispenser/examine(mob/user)
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		user << "<span class='warning'>[recharging_text]</span>"
+		user.text2tab("<span class='warning'>[recharging_text]</span>")
 	if(stat & BROKEN)
-		user << "<span class='warning'>[src] is smoking and steadily buzzing. \
-			It seems to be broken.</span>"
+		user.text2tab("<span class='warning'>[src] is smoking and steadily buzzing. \
+			It seems to be broken.</span>")
 	if(metal_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] \
-			units of metal stored.</span>"
+		user.text2tab("<span class='notice'>It has [materials.amount(MAT_METAL)] \
+			units of metal stored.</span>")
 	if(glass_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_GLASS)] \
-			units of glass stored.</span>"
+		user.text2tab("<span class='notice'>It has [materials.amount(MAT_GLASS)] \
+			units of glass stored.</span>")
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -249,27 +249,27 @@
 		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
 			return ..()
 		if(!metal_cost && !glass_cost)
-			user << "<span class='warning'>There isn't a place \
-				to insert [O]!</span>"
+			user.text2tab("<span class='warning'>There isn't a place \
+				to insert [O]!</span>")
 			return
 		var/obj/item/stack/sheets = O
 		if(!user.canUnEquip(sheets))
-			user << "<span class='warning'>[O] is stuck to your hand, \
-				you can't get it off!</span>"
+			user.text2tab("<span class='warning'>[O] is stuck to your hand, \
+				you can't get it off!</span>")
 			return
 
 		var/used = materials.insert_stack(sheets, sheets.amount)
 
 		if(used)
-			user << "<span class='notice'>You insert [used] \
-				sheet[used > 1 ? "s" : ""] into [src].</span>"
+			user.text2tab("<span class='notice'>You insert [used] \
+				sheet[used > 1 ? "s" : ""] into [src].</span>")
 		else
-			user << "<span class='warning'>The [src] isn't accepting the \
-				[sheets].</span>"
+			user.text2tab("<span class='warning'>The [src] isn't accepting the \
+				[sheets].</span>")
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		if(!(stat & BROKEN))
-			user << "<span class='warning'>[src] doesn't need repairs.</span>"
+			user.text2tab("<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
 		var/obj/item/weapon/weldingtool/WT = O
@@ -278,8 +278,8 @@
 			return
 
 		if(WT.get_fuel() < 1)
-			user << "<span class='warning'>You need more fuel to \
-				complete this task!</span>"
+			user.text2tab("<span class='warning'>You need more fuel to \
+				complete this task!</span>")
 			return
 
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)

@@ -55,6 +55,9 @@
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
 
+/obj/item/weapon/nullrod/godhand/dropped(mob/user)
+	qdel(src)
+
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
@@ -195,7 +198,7 @@
 	if(possessed)
 		return
 
-	user << "You attempt to wake the spirit of the blade..."
+	user.text2tab("You attempt to wake the spirit of the blade...")
 
 	possessed = TRUE
 
@@ -216,12 +219,12 @@
 			S.real_name = input
 			S.name = input
 	else
-		user << "The blade is dormant. Maybe you can try again later."
+		user.text2tab("The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		S << "You were destroyed!"
+		S.text2tab("You were destroyed!")
 		qdel(S)
 	return ..()
 
@@ -310,7 +313,7 @@
 		return
 	if(user.mind && (user.mind.assigned_role != "Chaplain"))
 		return
-	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
+	user.text2tab("You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
 	user.faction |= "carp"
 	used_blessing = TRUE
 

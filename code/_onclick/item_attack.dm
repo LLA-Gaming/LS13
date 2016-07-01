@@ -15,7 +15,7 @@
 	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			user.text2tab("<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)
@@ -69,6 +69,7 @@
 					add_splatter_floor(location)
 					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 						user.add_mob_blood(src)
+	return TRUE
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.

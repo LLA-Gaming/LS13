@@ -10,7 +10,7 @@
 	use_power = 0
 	idle_power_usage = 500
 	active_power_usage = 10000
-	dir = 1
+	dir = NORTH
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
@@ -83,7 +83,7 @@
 		return
 
 	if(!interface_control)
-		usr << "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>"
+		usr.text2tab("<span class='error'>ERROR: Request timed out. Check wire contacts.</span>")
 		return
 
 	if(href_list["close"])
@@ -166,7 +166,7 @@
 	if(!F)
 		return 0
 
-	dir = F.dir
+	setDir(F.dir)
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
@@ -260,11 +260,11 @@
 	..()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			user << "Looks like it's not attached to the flooring"
+			user.text2tab("Looks like it's not attached to the flooring")
 		if(PA_CONSTRUCTION_UNWIRED)
-			user << "It is missing some cables"
+			user.text2tab("It is missing some cables")
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			user << "The panel is open"
+			user.text2tab("The panel is open")
 
 
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)

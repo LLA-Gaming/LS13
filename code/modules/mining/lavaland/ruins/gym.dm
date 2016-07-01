@@ -22,12 +22,12 @@
 
 /obj/structure/stacklifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "Its already in use - wait a bit."
+		user.text2tab("Its already in use - wait a bit.")
 		return
 	else
 		in_use = 1
 		icon_state = "fitnesslifter2"
-		user.dir = SOUTH
+		user.setDir(SOUTH)
 		user.Stun(4)
 		user.loc = src.loc
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
@@ -48,7 +48,7 @@
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
-		user << finishmessage
+		user.text2tab(finishmessage)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -60,17 +60,17 @@
 
 /obj/structure/weightlifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "Its already in use - wait a bit."
+		user.text2tab("Its already in use - wait a bit.")
 		return
 	else
 		in_use = 1
 		icon_state = "fitnessweight-c"
-		user.dir = SOUTH
+		user.setDir(SOUTH)
 		user.Stun(4)
 		user.loc = src.loc
 		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = WALL_OBJ_LAYER
-		overlays += W
+		add_overlay(W)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/reps = 0
@@ -94,4 +94,4 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		overlays -= W
-		user << "[finishmessage]"
+		user.text2tab("[finishmessage]")

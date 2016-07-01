@@ -99,7 +99,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		greet_changeling(changeling)
 		ticker.mode.update_changeling_icons_added(changeling)
 	..()
-	return
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
@@ -198,19 +197,19 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
-		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
-	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
-	changeling.current << "<b>You must complete the following tasks:</b>"
+		changeling.current.text2tab("<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
+	changeling.current.text2tab("<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	changeling.current.text2tab("<b>You must complete the following tasks:</b>")
 
 	if (changeling.current.mind)
 		var/mob/living/carbon/human/H = changeling.current
 		if(H.mind.assigned_role == "Clown")
-			H << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			H.text2tab("You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
-		changeling.current << "<b>Objective #[obj_count]</b>: [objective.explanation_text]"
+		changeling.current.text2tab("<b>Objective #[obj_count]</b>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -270,7 +269,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 
-		world << text
+		text2world(text)
 
 
 	return 1
@@ -298,6 +297,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/datum/cellular_emporium/cellular_emporium
+	var/datum/action/innate/cellular_emporium/emporium_action
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -313,9 +314,17 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 
+	cellular_emporium = new(src)
+	emporium_action = new(cellular_emporium)
+
+/datum/changeling/Destroy()
+	qdel(cellular_emporium)
+	cellular_emporium = null
+	. = ..()
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
 	if(istype(the_ling))
+		emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -340,25 +349,25 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		var/datum/changelingprofile/prof = stored_profiles[1]
 		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 			if(verbose)
-				user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+				user.text2tab("<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 			return
 	if(!target)
 		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		if(verbose)
-			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
+			user.text2tab("<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
-			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+			user.text2tab("<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>")
 		return
 	if(has_dna(target.dna))
 		if(verbose)
-			user << "<span class='warning'>We already have this DNA in storage!</span>"
+			user.text2tab("<span class='warning'>We already have this DNA in storage!</span>")
 		return
 	if(!target.has_dna())
 		if(verbose)
-			user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+			user.text2tab("<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
 	return 1
 
@@ -486,7 +495,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
-	return ..()
+	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
 	newprofile.name = name

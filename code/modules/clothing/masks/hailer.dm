@@ -12,6 +12,7 @@
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -38,19 +39,19 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
+				user.text2tab("<span class='notice'>You set the restrictor to the middle position.</span>")
 				aggressiveness = 2
 			if(2)
-				user << "<span class='notice'>You set the restrictor to the last position.</span>"
+				user.text2tab("<span class='notice'>You set the restrictor to the last position.</span>")
 				aggressiveness = 3
 			if(3)
-				user << "<span class='notice'>You set the restrictor to the first position.</span>"
+				user.text2tab("<span class='notice'>You set the restrictor to the first position.</span>")
 				aggressiveness = 1
 			if(4)
-				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
+				user.text2tab("<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "<span class='danger'>You broke the restrictor!</span>"
+			user.text2tab("<span class='danger'>You broke the restrictor!</span>")
 			aggressiveness = 4
 	else
 		..()
@@ -73,7 +74,7 @@
 	if(!can_use(usr))
 		return
 	if(broken_hailer)
-		usr << "<span class='warning'>\The [src]'s hailing system is broken.</span>"
+		usr.text2tab("<span class='warning'>\The [src]'s hailing system is broken.</span>")
 		return
 
 	var/phrase = 0	//selects which phrase to use
@@ -88,12 +89,12 @@
 
 		switch(recent_uses)
 			if(3)
-				usr << "<span class='warning'>\The [src] is starting to heat up.</span>"
+				usr.text2tab("<span class='warning'>\The [src] is starting to heat up.</span>")
 			if(4)
-				usr << "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>"
+				usr.text2tab("<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>")
 			if(5) //overload
 				broken_hailer = 1
-				usr << "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>"
+				usr.text2tab("<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>")
 				return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases

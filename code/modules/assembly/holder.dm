@@ -36,11 +36,11 @@
 		a_right = A
 
 /obj/item/device/assembly_holder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(a_left)
-		overlays += "[a_left.icon_state]_left"
+		add_overlay("[a_left.icon_state]_left")
 		for(var/O in a_left.attached_overlays)
-			overlays += "[O]_l"
+			add_overlay("[O]_l")
 
 	if(a_right)
 		var/list/images = list()
@@ -50,7 +50,7 @@
 		var/matrix = matrix(-1, 0, 0, 0, 1, 0)
 		for(var/image/I in images)
 			I.transform = matrix
-			overlays += I
+			add_overlay(I)
 
 	if(master)
 		master.update_icon()
@@ -99,7 +99,7 @@
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(!a_left || !a_right)
-		user << "<span class='danger'>Assembly part missing!</span>"
+		user.text2tab("<span class='danger'>Assembly part missing!</span>")
 		return
 	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 		switch(alert("Which side would you like to use?",,"Left","Right"))

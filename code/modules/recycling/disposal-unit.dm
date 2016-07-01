@@ -24,7 +24,7 @@
 	..()
 
 	if(make_from)
-		dir = make_from.dir
+		setDir(make_from.dir)
 		make_from.loc = 0
 		stored = make_from
 	else
@@ -70,27 +70,27 @@
 	if(mode<=0)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(contents.len > 0)
-				user << "<span class='notice'>Eject the items first!</span>"
+				user.text2tab("<span class='notice'>Eject the items first!</span>")
 				return
 			if(mode==0)
 				mode=-1
 			else
 				mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You [mode==0?"attach":"remove"] the screws around the power connection.</span>"
+			user.text2tab("<span class='notice'>You [mode==0?"attach":"remove"] the screws around the power connection.</span>")
 			return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				if(contents.len > 0)
-					user << "<span class='notice'>Eject the items first!</span>"
+					user.text2tab("<span class='notice'>Eject the items first!</span>")
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
+				user.text2tab("<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20/I.toolspeed, target = src))
 					if(!W.isOn())
 						return
-					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
+					user.text2tab("<span class='notice'>You slice the floorweld off \the [src].</span>")
 					Deconstruct()
 			return
 
@@ -120,10 +120,10 @@
 		return
 	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
 		return
-	if(target.buckled || target.buckled_mobs.len)
+	if(target.buckled || target.has_buckled_mobs())
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
-		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
+		user.text2tab("<span class='warning'>[target] doesn't fit inside [src]!</span>")
 		return
 	add_fingerprint(user)
 	if(user == target)
@@ -186,7 +186,7 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user)
 	if(user && user.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		usr.text2tab("<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
 	/*
 	if(mode==-1)
@@ -301,7 +301,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "<span class='warning'>You empty the bag.</span>"
+		user.text2tab("<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -348,11 +348,11 @@
 	if(..())
 		return
 	if(usr.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		usr.text2tab("<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
+		usr.text2tab("<span class='danger'>\The [src]'s power is disabled.</span>")
 		return
 	..()
 	usr.set_machine(src)
@@ -399,7 +399,7 @@
 	update_icon()
 
 /obj/machinery/disposal/bin/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		mode = 0
 		flush = 0
@@ -407,7 +407,7 @@
 
 	// flush handle
 	if(flush)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -415,13 +415,13 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
 
 	// charging and ready light
 	if(mode == 1)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
 
 
 // timed process
@@ -522,7 +522,7 @@
 	else if(istype(AM, /mob))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
-			M << "<span class='warning'>You hit the edge of the chute.</span>"
+			M.text2tab("<span class='warning'>You hit the edge of the chute.</span>")
 			return
 		M.forceMove(src)
 	flush()

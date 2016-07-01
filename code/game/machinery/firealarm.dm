@@ -23,10 +23,11 @@
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	var/health = 50
 
+
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
-		src.dir = dir
+		src.setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = 1
@@ -56,11 +57,11 @@
 			icon_state = "firex"
 			return
 
-		overlays += "overlay_[security_level]"
+		add_overlay("overlay_[security_level]")
 		if(detecting)
-			overlays += "overlay_[A.fire ? "fire" : "clear"]"
+			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
-			overlays += "overlay_fire"
+			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -87,7 +88,7 @@
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
+	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0) //sound neeeded for space explorer
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(src, "alarm", time, FALSE)
@@ -135,7 +136,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
-		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
+		user.text2tab("<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 		update_icon()
 		return
 
@@ -156,18 +157,18 @@
 					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
-					user << "<span class='notice'>You cut the wires from \the [src].</span>"
+					user.text2tab("<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
 					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
-						user << "<span class='warning'>You need more cable for this!</span>"
+						user.text2tab("<span class='warning'>You need more cable for this!</span>")
 					else
 						coil.use(5)
 						buildstage = 2
-						user << "<span class='notice'>You wire \the [src].</span>"
+						user.text2tab("<span class='notice'>You wire \the [src].</span>")
 						update_icon()
 					return
 
@@ -178,16 +179,16 @@
 					if(do_after(user, 20/W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
-								user << "<span class='notice'>You remove the destroyed circuit.</span>"
+								user.text2tab("<span class='notice'>You remove the destroyed circuit.</span>")
 							else
-								user << "<span class='notice'>You pry out the circuit.</span>"
+								user.text2tab("<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
 					return
 			if(0)
 				if(istype(W, /obj/item/weapon/electronics/firealarm))
-					user << "<span class='notice'>You insert the circuit.</span>"
+					user.text2tab("<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
 					buildstage = 1
 					update_icon()
@@ -223,3 +224,67 @@
 			update_icon()
 		else if(prob(33))
 			alarm()
+
+/*
+ * Party button
+ */
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
+		return
+
+	user.set_machine(src)
+	var/area/A = src.loc
+	var/d1
+	var/dat
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
+		A = A.loc
+
+		if (A.party)
+			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
+		else
+			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
+
+	else
+		A = A.loc
+		if (A.fire)
+			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
+		else
+			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
+
+	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyreset()
+	return
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyalert()
+	return

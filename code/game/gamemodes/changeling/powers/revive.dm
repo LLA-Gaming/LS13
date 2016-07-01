@@ -2,13 +2,15 @@
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
 	req_stat = DEAD
+	always_keep = 1
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
 	user.status_flags &= ~(FAKEDEATH)
 	user.tod = null
 	user.revive(full_heal = 1)
-	user << "<span class='notice'>We have regenerated.</span>"
+	user.regenerate_limbs(0, list("head")) //regenerate all limbs except the head
+	user.text2tab("<span class='notice'>We have regenerated.</span>")
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1

@@ -72,7 +72,7 @@
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.regenerate_icons()
 	return
 
@@ -97,7 +97,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
 	if(istype(src.loc, /mob/living/carbon/human))
 		if(combat_cooldown != initial(combat_cooldown))
-			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			src.loc:text2tab("<span class='warning'>Combat injection is still recharging.</span>")
 			return
 		var/mob/living/carbon/human/M = src.loc
 		M.adjustStaminaLoss(-75)
@@ -112,10 +112,10 @@
 	if(combat_cooldown==initial(combat_cooldown))
 		SSobj.processing.Remove(src)
 
-/obj/item/device/abductor/proc/AbductorCheck(user)
+/obj/item/device/abductor/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
 		return TRUE
-	user << "<span class='warning'>You can't figure how this works!</span>"
+	user.text2tab("<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
@@ -138,7 +138,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='warning'>You're not trained to use this!</span>"
+		user.text2tab("<span class='warning'>You're not trained to use this!</span>")
 		return
 	if(mode == GIZMO_SCAN)
 		mode = GIZMO_MARK
@@ -146,13 +146,13 @@
 	else
 		mode = GIZMO_SCAN
 		icon_state = "gizmo_scan"
-	user << "<span class='notice'>You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE</span>"
+	user.text2tab("<span class='notice'>You switch the device to [mode==GIZMO_SCAN? "SCAN": "MARK"] MODE</span>")
 
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		user.text2tab("<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -167,7 +167,7 @@
 	if(!AbductorCheck(user))
 		return
 	if(!ScientistCheck(user))
-		user << "<span class='notice'>You're not trained to use this</span>"
+		user.text2tab("<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -179,16 +179,16 @@
 	if(istype(target,/mob/living/carbon/human))
 		if(console!=null)
 			console.AddSnapshot(target)
-			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
+			user.text2tab("<span class='notice'>You scan [target] and add them to the database.</span>")
 
 /obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
 	if(marked == target)
-		user << "<span class='warning'>This specimen is already marked!</span>"
+		user.text2tab("<span class='warning'>This specimen is already marked!</span>")
 		return
 	if(istype(target,/mob/living/carbon/human))
 		if(isabductor(target))
 			marked = target
-			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
+			user.text2tab("<span class='notice'>You mark [target] for future retrieval.</span>")
 		else
 			prepare(target,user)
 	else
@@ -196,12 +196,12 @@
 
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user)>1)
-		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
+		user.text2tab("<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>")
 		return
-	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
+	user.text2tab("<span class='notice'>You begin preparing [target] for transport...</span>")
 	if(do_after(user, 100, target = target))
 		marked = target
-		user << "<span class='notice'>You finish preparing [target] for transport.</span>"
+		user.text2tab("<span class='notice'>You finish preparing [target] for transport.</span>")
 
 
 /obj/item/device/abductor/silencer
@@ -234,7 +234,7 @@
 	for(M in view(2,targloc))
 		if(M == user)
 			continue
-		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
+		user.text2tab("<span class='notice'>You silence [M]'s radio devices.</span>")
 		radio_off_mob(M)
 
 /obj/item/device/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
@@ -264,7 +264,7 @@
 		cooldown = 0
 		SSobj.processing |= src
 	else
-		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
+		imp_in.text2tab("<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 	return
 
 /obj/item/weapon/implant/abductor/process()
@@ -375,7 +375,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(BATON_PROBE)
 			txt = "probing"
 
-	usr << "<span class='notice'>You switch the baton to [txt] mode.</span>"
+	usr.text2tab("<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
 /obj/item/weapon/abductor_baton/update_icon()
@@ -455,7 +455,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
-		user << "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>"
+		user.text2tab("<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 	return
@@ -473,12 +473,12 @@ Congratulations! You are now trained for xenobiology research!"}
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
+					user.text2tab("<span class='notice'>You handcuff [C].</span>")
 					add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C].</span>"
+				user.text2tab("<span class='warning'>You fail to handcuff [C].</span>")
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			user.text2tab("<span class='warning'>[C] doesn't have two hands...</span>")
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -498,8 +498,8 @@ Congratulations! You are now trained for xenobiology research!"}
 		else
 			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
 
-	user << "<span class='notice'>Probing result:</span>[species]"
-	user << "[helptext]"
+	user.text2tab("<span class='notice'>Probing result:</span>[species]")
+	user.text2tab("[helptext]")
 
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "hard-light energy field"
@@ -524,13 +524,13 @@ Congratulations! You are now trained for xenobiology research!"}
 	..()
 	switch(mode)
 		if(BATON_STUN)
-			user <<"<span class='warning'>The baton is in stun mode.</span>"
+			user.text2tab("<span class='warning'>The baton is in stun mode.</span>")
 		if(BATON_SLEEP)
-			user <<"<span class='warning'>The baton is in sleep inducement mode.</span>"
+			user.text2tab("<span class='warning'>The baton is in sleep inducement mode.</span>")
 		if(BATON_CUFF)
-			user <<"<span class='warning'>The baton is in restraining mode.</span>"
+			user.text2tab("<span class='warning'>The baton is in restraining mode.</span>")
 		if(BATON_PROBE)
-			user << "<span class='warning'>The baton is in probing mode.</span>"
+			user.text2tab("<span class='warning'>The baton is in probing mode.</span>")
 
 
 /obj/item/weapon/scalpel/alien
@@ -601,7 +601,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start disassembling [src]...</span>"
+		user.text2tab("<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -612,9 +612,9 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
 		var/obj/item/stack/sheet/P = I
 		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one alien alloy sheet to do this!</span>"
+			user.text2tab("<span class='warning'>You need one alien alloy sheet to do this!</span>")
 			return
-		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		user.text2tab("<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
 			new /obj/structure/table/abductor(src.loc)
@@ -662,7 +662,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			if(do_after(user, 40/W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
-				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
+				user.text2tab("<span class='notice'>You disassemble the airlock assembly.</span>")
 				new /obj/item/stack/sheet/mineral/abductor(get_turf(src), 4)
 				qdel(src)
 		else

@@ -42,7 +42,7 @@ var/list/airlock_overlays = list()
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = /obj/structure/door_assembly/door_assembly_0
+	assemblytype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
 	normalspeed = 1
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -146,7 +146,7 @@ var/list/airlock_overlays = list()
 			else /*if(src.justzap)*/
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			user << "<span class='userdanger'>You feel a powerful shock course through your body!</span>"
+			user.text2tab("<span class='userdanger'>You feel a powerful shock course through your body!</span>")
 			user.staminaloss += 50
 			user.stunned += 5
 			return
@@ -335,30 +335,30 @@ var/list/airlock_overlays = list()
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	//doesn't use overlays.Cut() for performance reasons
+	//doesn't use cut_overlays() for performance reasons
 	if(frame_overlay != old_frame_overlay)
 		overlays -= old_frame_overlay
-		overlays += frame_overlay
+		add_overlay(frame_overlay)
 		old_frame_overlay = frame_overlay
 	if(filling_overlay != old_filling_overlay)
 		overlays -= old_filling_overlay
-		overlays += filling_overlay
+		add_overlay(filling_overlay)
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		overlays -= old_lights_overlay
-		overlays += lights_overlay
+		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
 	if(panel_overlay != old_panel_overlay)
 		overlays -= old_panel_overlay
-		overlays += panel_overlay
+		add_overlay(panel_overlay)
 		old_panel_overlay = panel_overlay
 	if(weld_overlay != old_weld_overlay)
 		overlays -= old_weld_overlay
-		overlays += weld_overlay
+		add_overlay(weld_overlay)
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		overlays -= old_sparks_overlay
-		overlays += sparks_overlay
+		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -384,9 +384,9 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
 	if(charge && !panel_open && in_range(user, src))
-		user << "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
+		user.text2tab("<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
 	if(charge && panel_open)
-		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
+		user.text2tab("<span class='warning'>Something is wired up to the airlock's electronics!</span>")
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
@@ -394,12 +394,12 @@ var/list/airlock_overlays = list()
 			src.hack(user)
 			return
 		else
-			user << "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>"
+			user.text2tab("<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
 	if(emagged)
-		user << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		user.text2tab("<span class='warning'>Unable to interface: Airlock is unresponsive.</span>")
 		return
 	if(detonated)
-		user << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
+		user.text2tab("<span class='warning'>Unable to interface. Airlock control panel damaged.</span>")
 		return
 
 	//Separate interface for the AI.
@@ -511,43 +511,43 @@ var/list/airlock_overlays = list()
 	set waitfor = 0
 	if(src.aiHacking == 0)
 		src.aiHacking = 1
-		user << "Airlock AI control has been blocked. Beginning fault-detection."
+		user.text2tab("Airlock AI control has been blocked. Beginning fault-detection.")
 		sleep(50)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user.text2tab("Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
-			user << "Connection lost! Unable to hack airlock."
+			user.text2tab("Connection lost! Unable to hack airlock.")
 			src.aiHacking=0
 			return
-		user << "Fault confirmed: airlock control wire disabled or cut."
+		user.text2tab("Fault confirmed: airlock control wire disabled or cut.")
 		sleep(20)
-		user << "Attempting to hack into airlock. This may take some time."
+		user.text2tab("Attempting to hack into airlock. This may take some time.")
 		sleep(200)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user.text2tab("Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
-			user << "Connection lost! Unable to hack airlock."
+			user.text2tab("Connection lost! Unable to hack airlock.")
 			src.aiHacking=0
 			return
-		user << "Upload access confirmed. Loading control program into airlock software."
+		user.text2tab("Upload access confirmed. Loading control program into airlock software.")
 		sleep(170)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user.text2tab("Alert cancelled. Airlock control has been restored without our assistance.")
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
-			user << "Connection lost! Unable to hack airlock."
+			user.text2tab("Connection lost! Unable to hack airlock.")
 			src.aiHacking=0
 			return
-		user << "Transfer complete. Forcing airlock to execute program."
+		user.text2tab("Transfer complete. Forcing airlock to execute program.")
 		sleep(50)
 		//disable blocked control
 		src.aiControlDisabled = 2
-		user << "Receiving control information from airlock."
+		user.text2tab("Receiving control information from airlock.")
 		sleep(10)
 		//bring up airlock dialog
 		src.aiHacking = 0
@@ -615,9 +615,9 @@ var/list/airlock_overlays = list()
 				if(1)
 					//disable idscan
 					if(wires.is_cut(WIRE_IDSCAN))
-						usr << "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways."
+						usr.text2tab("The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
 					else if(src.aiDisabledIdScanner)
-						usr << "You've already disabled the IdScan feature."
+						usr.text2tab("You've already disabled the IdScan feature.")
 					else
 						src.aiDisabledIdScanner = 1
 				if(2)
@@ -626,24 +626,24 @@ var/list/airlock_overlays = list()
 						src.loseMainPower()
 						update_icon()
 					else
-						usr << "Main power is already offline."
+						usr.text2tab("Main power is already offline.")
 				if(3)
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
 						src.loseBackupPower()
 						update_icon()
 					else
-						usr << "Backup power is already offline."
+						usr.text2tab("Backup power is already offline.")
 				if(4)
 					//drop door bolts
 					if(wires.is_cut(WIRE_BOLTS))
-						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
+						usr.text2tab("You can't drop the door bolts - The door bolt dropping wire has been cut.")
 					else
 						bolt()
 				if(5)
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
+						usr.text2tab(text("Can't un-electrify the airlock - The electrification wire is cut."))
 					else if(src.secondsElectrified==-1)
 						src.secondsElectrified = 0
 					else if(src.secondsElectrified>0)
@@ -652,26 +652,26 @@ var/list/airlock_overlays = list()
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.")
+						usr.text2tab(text("Control to door sensors is disabled."))
 					else if (src.safe)
 						safe = 0
 					else
-						usr << text("Firmware reports safeties already overriden.")
+						usr.text2tab(text("Firmware reports safeties already overriden."))
 
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						usr.text2tab(text("Control to door timing circuitry has been severed."))
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
-						usr << text("Door timing circuitry already accelerated.")
+						usr.text2tab(text("Door timing circuitry already accelerated."))
 				if(7)
 					//close door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						usr.text2tab(text("The airlock has been welded shut!"))
 					else if(src.locked)
-						usr << text("The door bolts are down!")
+						usr.text2tab(text("The door bolts are down!"))
 					else if(!src.density)
 						close()
 					else
@@ -680,12 +680,12 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						usr.text2tab(text("Control to door bolt lights has been severed.</a>"))
 					else if (src.lights)
 						lights = 0
 						update_icon()
 					else
-						usr << text("Door bolt lights are already disabled!")
+						usr.text2tab(text("Door bolt lights are already disabled!"))
 
 				if(11)
 					// Emergency access
@@ -693,7 +693,7 @@ var/list/airlock_overlays = list()
 						emergency = 0
 						update_icon()
 					else
-						usr << text("Emergency access is already disabled!")
+						usr.text2tab(text("Emergency access is already disabled!"))
 
 
 		else if(href_list["aiEnable"])
@@ -702,31 +702,31 @@ var/list/airlock_overlays = list()
 				if(1)
 					//enable idscan
 					if(wires.is_cut(WIRE_IDSCAN))
-						usr << "You can't enable IdScan - The IdScan wire has been cut."
+						usr.text2tab("You can't enable IdScan - The IdScan wire has been cut.")
 					else if(src.aiDisabledIdScanner)
 						src.aiDisabledIdScanner = 0
 					else
-						usr << "The IdScan feature is not disabled."
+						usr.text2tab("The IdScan feature is not disabled.")
 				if(4)
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
-						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
+						usr.text2tab(text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n"))
 					else if(!src.locked)
-						usr << text("The door bolts are already up.<br>\n")
+						usr.text2tab(text("The door bolts are already up.<br>\n"))
 					else
 						if(src.hasPower())
 							unbolt()
 						else
-							usr << text("Cannot raise door bolts due to power failure.<br>\n")
+							usr.text2tab(text("Cannot raise door bolts due to power failure.<br>\n"))
 
 				if(5)
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						usr.text2tab(text("The electrification wire has been cut.<br>\n"))
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n")
+						usr.text2tab(text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n"))
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						usr.text2tab(text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
@@ -741,11 +741,11 @@ var/list/airlock_overlays = list()
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						usr.text2tab(text("The electrification wire has been cut.<br>\n"))
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified.<br>\n")
+						usr.text2tab(text("The door is already indefinitely electrified.<br>\n"))
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						usr.text2tab(text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
@@ -754,29 +754,29 @@ var/list/airlock_overlays = list()
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.")
+						usr.text2tab(text("Control to door sensors is disabled."))
 					else if (!src.safe)
 						safe = 1
 						src.updateUsrDialog()
 					else
-						usr << text("Firmware reports safeties already in place.")
+						usr.text2tab(text("Firmware reports safeties already in place."))
 
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						usr.text2tab(text("Control to door timing circuitry has been severed."))
 					else if (!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
 					else
-						usr << text("Door timing circuitry currently operating normally.")
+						usr.text2tab(text("Door timing circuitry currently operating normally."))
 
 				if(7)
 					//open door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!")
+						usr.text2tab(text("The airlock has been welded shut!"))
 					else if(src.locked)
-						usr << text("The door bolts are down!")
+						usr.text2tab(text("The door bolts are down!"))
 					else if(src.density)
 						open()
 					else
@@ -784,20 +784,20 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						usr.text2tab(text("Control to door bolt lights has been severed.</a>"))
 					else if (!src.lights)
 						lights = 1
 						update_icon()
 						src.updateUsrDialog()
 					else
-						usr << text("Door bolt lights are already enabled!")
+						usr.text2tab(text("Door bolt lights are already enabled!"))
 				if(11)
 					// Emergency access
 					if (!src.emergency)
 						emergency = 1
 						update_icon()
 					else
-						usr << text("Emergency access is already enabled!")
+						usr.text2tab(text("Emergency access is already enabled!"))
 
 	add_fingerprint(usr)
 	if(!nowindow)
@@ -811,10 +811,10 @@ var/list/airlock_overlays = list()
 	add_fingerprint(user)
 	if(istype(C, /obj/item/weapon/screwdriver))
 		if(panel_open && detonated)
-			user << "<span class='warning'>[src] has no maintenance panel!</span>"
+			user.text2tab("<span class='warning'>[src] has no maintenance panel!</span>")
 			return
 		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>"
+		user.text2tab("<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
 		src.update_icon()
 	else if(is_wire_tool(C))
 		return attack_hand(user)
@@ -825,17 +825,17 @@ var/list/airlock_overlays = list()
 		change_paintjob(C, user)
 	else if(istype(C, /obj/item/device/doorCharge))
 		if(!panel_open)
-			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
+			user.text2tab("<span class='warning'>The maintenance panel must be open to apply [C]!</span>")
 			return
 		if(emagged)
 			return
 		if(charge && !detonated)
-			user << "<span class='warning'>There's already a charge hooked up to this door!</span>"
+			user.text2tab("<span class='warning'>There's already a charge hooked up to this door!</span>")
 			return
 		if(detonated)
-			user << "<span class='warning'>The maintenance panel is destroyed!</span>"
+			user.text2tab("<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
-		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
+		user.text2tab("<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
 		user.drop_item()
 		panel_open = 0
 		update_icon()
@@ -854,7 +854,7 @@ var/list/airlock_overlays = list()
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user,40/W.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
-					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
+					if(!user || !W || !W.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
@@ -869,10 +869,10 @@ var/list/airlock_overlays = list()
 	else
 		beingcrowbarred = 0
 	if(panel_open && charge)
-		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
+		user.text2tab("<span class='notice'>You carefully start removing [charge] from [src]...</span>")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		if(!do_after(user, 150/I.toolspeed, target = src))
-			user << "<span class='warning'>You slip and [charge] detonates!</span>"
+			user.text2tab("<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(1)
 			user.Weaken(3)
 			return
@@ -887,18 +887,18 @@ var/list/airlock_overlays = list()
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40/I.toolspeed, target = src))
 			if(src.loc)
-				if(src.doortype)
-					var/obj/structure/door_assembly/A = new src.doortype(src.loc)
+				if(assemblytype)
+					var/obj/structure/door_assembly/A = new assemblytype(src.loc)
 					A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 				else
 					new /obj/structure/door_assembly/door_assembly_0(src.loc)
-					//If you come across a null doortype, it will produce the default assembly instead of disintegrating.
+					//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
 
 				if(emagged)
-					user << "<span class='warning'>You discard the damaged electronics.</span>"
+					user.text2tab("<span class='warning'>You discard the damaged electronics.</span>")
 					qdel(src)
 					return
-				user << "<span class='notice'>You remove the airlock electronics.</span>"
+				user.text2tab("<span class='notice'>You remove the airlock electronics.</span>")
 
 				var/obj/item/weapon/electronics/airlock/ae
 				if(!electronics)
@@ -916,9 +916,9 @@ var/list/airlock_overlays = list()
 				qdel(src)
 				return
 	else if(hasPower())
-		user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
+		user.text2tab("<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)
-		user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
+		user.text2tab("<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 	else if( !welded && !operating)
 		if(beingcrowbarred == 0) //being fireaxe'd
 			var/obj/item/weapon/twohanded/fireaxe/F = I
@@ -929,7 +929,7 @@ var/list/airlock_overlays = list()
 					else
 						close(2)
 			else
-				user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
+				user.text2tab("<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 		else
 			spawn(0)
 				if(density)
@@ -1069,51 +1069,51 @@ var/list/airlock_overlays = list()
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_0
+			assemblytype = /obj/structure/door_assembly/door_assembly_0
 		if("Public2")
 			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_glass
+			assemblytype = /obj/structure/door_assembly/door_assembly_glass
 		if("Engineering")
 			icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_eng
+			assemblytype = /obj/structure/door_assembly/door_assembly_eng
 		if("Atmospherics")
 			icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_atmo
+			assemblytype = /obj/structure/door_assembly/door_assembly_atmo
 		if("Security")
 			icon = 'icons/obj/doors/airlocks/station/security.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_sec
+			assemblytype = /obj/structure/door_assembly/door_assembly_sec
 		if("Command")
 			icon = 'icons/obj/doors/airlocks/station/command.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_com
+			assemblytype = /obj/structure/door_assembly/door_assembly_com
 		if("Medical")
 			icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_med
+			assemblytype = /obj/structure/door_assembly/door_assembly_med
 		if("Research")
 			icon = 'icons/obj/doors/airlocks/station/research.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_research
+			assemblytype = /obj/structure/door_assembly/door_assembly_research
 		if("Mining")
 			icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_min
+			assemblytype = /obj/structure/door_assembly/door_assembly_min
 		if("Maintenance")
 			icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_mai
+			assemblytype = /obj/structure/door_assembly/door_assembly_mai
 		if("External")
 			icon = 'icons/obj/doors/airlocks/external/external.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_ext
+			assemblytype = /obj/structure/door_assembly/door_assembly_ext
 		if("High Security")
 			icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+			assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
@@ -1145,7 +1145,7 @@ var/list/airlock_overlays = list()
 	if(!density) //Already open
 		return
 	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		user << "<span class='warning'>[src] refuses to budge!</span>"
+		user.text2tab("<span class='warning'>[src] refuses to budge!</span>")
 		return
 	user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\
 						"<span class='noticealien'>You begin digging your claws into [src] with all your might!</span>",\
@@ -1158,4 +1158,4 @@ var/list/airlock_overlays = list()
 
 	if(do_after(user, time_to_open, target = src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
-			user << "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>"
+			user.text2tab("<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")

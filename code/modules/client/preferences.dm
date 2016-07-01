@@ -117,7 +117,7 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	update_preview_icon(user.client)
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
 
@@ -359,6 +359,10 @@ var/list/preferences_datums = list()
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
+				if(mentors && user.client.ckey in mentors)
+					dat += "<b>Mentorhelp Sound:</b> "
+					dat += "<a href='?_src_=prefs;preference=hear_mentorhelps'>[(toggles & SOUND_MENTORHELP) ? "On" : "Off"]</a><br>"
+
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
@@ -442,7 +446,7 @@ var/list/preferences_datums = list()
 	popup.set_content(dat)
 	popup.open(0)
 
-/datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
+/datum/preferences/proc/SetChoices(mob/user, limit = 18, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 	if(!SSjob)
 		return
 
@@ -551,6 +555,10 @@ var/list/preferences_datums = list()
 
 	HTML += "</center></table>"
 
+	if(perseusList[user.ckey])
+		HTML += "<center>Start as Perseus: <a href='?_src_=prefs;preference=job;task=perseus'>[(user.ckey in assignPerseus) ? "Yes" : "No"]</a></center>"
+
+
 	HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
 	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
@@ -631,7 +639,7 @@ var/list/preferences_datums = list()
 		return
 
 	if (!isnum(desiredLvl))
-		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
+		user.text2tab("<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
 		ShowChoices(user)
 		return
 
@@ -733,6 +741,13 @@ var/list/preferences_datums = list()
 				SetChoices(user)
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
+			if("perseus")
+				if(perseusList[user.ckey])
+					if(user.ckey in assignPerseus)
+						assignPerseus -= user.ckey
+					else
+						assignPerseus += user.ckey
+				SetChoices(user)
 			else
 				SetChoices(user)
 		return 1
@@ -919,7 +934,7 @@ var/list/preferences_datums = list()
 						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							user.text2tab("<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("tail_lizard")
 					var/new_tail
@@ -1087,6 +1102,10 @@ var/list/preferences_datums = list()
 
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP
+
+				if("hear_mentorhelps")
+					toggles ^= SOUND_MENTORHELP
+
 				if("announce_login")
 					toggles ^= ANNOUNCE_LOGIN
 

@@ -53,7 +53,7 @@
 	else if(istype(old_headgear,/obj/item/clothing/mask/chameleon/drone))
 		new_headgear = new /obj/item/clothing/head/chameleon/drone()
 	else
-		owner << "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>"
+		owner.text2tab("<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
 		// it's NODROP
@@ -261,19 +261,21 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
 	var/vchange = 1
-
+	var/show_action = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action = null
 
 /obj/item/clothing/mask/chameleon/New()
 	..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/mask
-	chameleon_action.chameleon_name = "Mask"
-	chameleon_action.initialize_disguises()
+
+	if(show_action)
+		chameleon_action = new(src)
+		chameleon_action.chameleon_type = /obj/item/clothing/mask
+		chameleon_action.chameleon_name = "Mask"
+		chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	vchange = !vchange
-	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
+	user.text2tab("<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>")
 
 
 /obj/item/clothing/mask/chameleon/drone
@@ -292,7 +294,7 @@
 	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
+	user.text2tab("<span class='notice'>The [src] does not have a voice changer.</span>")
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
@@ -359,4 +361,15 @@
 	chameleon_action.chameleon_type = /obj/item/device/pda
 	chameleon_action.chameleon_name = "PDA"
 	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
+	chameleon_action.initialize_disguises()
+
+/obj/item/device/tablet/chameleon
+	name = "chameleon tablet"
+
+/obj/item/device/tablet/chameleon/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/device/tablet
+	chameleon_action.chameleon_name = "Tablet"
+	chameleon_action.chameleon_blacklist = list(/obj/item/device/tablet/ai)
 	chameleon_action.initialize_disguises()

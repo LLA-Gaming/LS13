@@ -17,7 +17,7 @@
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
-	overlays += "waitlight"
+	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
 
@@ -41,7 +41,7 @@
 
 		build_path = new_path
 		name = "circuit board ([new_name] 3000)"
-		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
+		user.text2tab("<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
 	else
 		return ..()
 
@@ -87,30 +87,30 @@
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
-			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
+			user.text2tab("<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded in the machine!</span>"
+			user.text2tab("<span class='warning'>A container is already loaded in the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		beaker = I
 		beaker.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		user.text2tab("<span class='notice'>You add the beaker to the machine.</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
 		if(bottle)
-			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
+			user.text2tab("<span class='warning'>A pill bottle is already loaded into the machine!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		bottle = I
 		bottle.loc = src
-		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
+		user.text2tab("<span class='notice'>You add the pill bottle into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()
@@ -241,12 +241,12 @@
 			var/many = params["many"]
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
 				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume / amount, 50)
+				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume)
 				return

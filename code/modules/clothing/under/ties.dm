@@ -95,19 +95,19 @@
 
 		if(M.wear_suit)
 			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
-				user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+				user.text2tab("<span class='warning'>Medals can only be pinned on jumpsuits.</span>")
 				return
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
 			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
 				if(user == M)
-					user << "<span class='notice'>You attach [src] to [U].</span>"
+					user.text2tab("<span class='notice'>You attach [src] to [U].</span>")
 				else
 					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
+		else user.text2tab("<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
@@ -321,3 +321,10 @@
 	item_color = "talisman"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 50, bio = 65, rad = 5) //Faith is the best armor. //This won't actually work because of accessories kill me with a fucking knife jesus christ I hate code
+
+//doctor who meme
+/obj/item/clothing/tie/bowtie
+	name = "bow tie"
+	desc = "The doctor is in"
+	icon_state = "redbowtie"
+	item_color = "redbowtie"

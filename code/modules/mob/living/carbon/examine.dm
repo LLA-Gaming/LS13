@@ -61,4 +61,4 @@
 
 	msg += "*---------*</span>"
 
-	user << msg
+	user.text2tab(msg)

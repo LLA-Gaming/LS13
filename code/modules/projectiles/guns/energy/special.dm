@@ -40,7 +40,7 @@
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge > shot.e_cost)
-		overlays += "decloner_spin"
+		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -126,6 +126,10 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	. = ..()
 	if(!holds_charge)
@@ -179,7 +183,8 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
+		if(ismob(loc))
+			loc:text2tab("<span class='warning'>[src] silently charges up.<span>")
 	update_icon()
 	overheat = FALSE
 
@@ -241,18 +246,18 @@
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(power_supply)
-		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
+		user.text2tab("<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>")
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		power_supply.give(1000)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		user.text2tab("<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		user.text2tab("<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else
 		..()
 
@@ -366,8 +371,10 @@
 
 /obj/item/weapon/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
+	icon_state = "gravity_gun"
+	item_state = "gravity_gun"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
-	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
 	item_state = null
 	icon_state = "gravity_gun"

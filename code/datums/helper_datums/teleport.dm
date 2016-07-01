@@ -103,12 +103,19 @@
 		if(!center)
 			center = destination
 		for(var/turf/T in range(precision,center))
-			posturfs.Add(T)
+			var/area/A = T.loc
+			if(!A.noteleport)
+				posturfs.Add(T)
+
 		destturf = safepick(posturfs)
 	else
 		destturf = get_turf(destination)
 
 	if(!destturf || !curturf)
+		return 0
+
+	var/area/A = get_area(curturf)
+	if(A.noteleport)
 		return 0
 
 	playSpecials(curturf,effectin,soundin)
@@ -157,7 +164,7 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
+			MM.text2tab("<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return 1
 
 // Safe location finder

@@ -295,17 +295,17 @@
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
+			user.text2tab("<span class='notice'>[src] has become inert, its healing properties are no more.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				user.text2tab("<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				user.text2tab("<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
@@ -547,10 +547,10 @@
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				user.text2tab("<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				use(1)
 			else
-				user << "<span class='warning'>You can't improve [C] any further!</span>"
+				user.text2tab("<span class='warning'>You can't improve [C] any further!</span>")
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
@@ -561,7 +561,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				user.text2tab("<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -569,7 +569,7 @@
 					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [D] any further!</span>"
+				user.text2tab("<span class='warning'>You can't improve [D] any further!</span>")
 				return
 
 
@@ -632,13 +632,13 @@
 	set category = "Fugu"
 	set desc = "Temporarily increases your size, and makes you significantly more dangerous and tough."
 	if(wumbo)
-		src << "<span class='notice'>You're already inflated.</span>"
+		src.text2tab("<span class='notice'>You're already inflated.</span>")
 		return
 	if(inflate_cooldown)
-		src << "<span class='notice'>We need time to gather our strength.</span>"
+		src.text2tab("<span class='notice'>We need time to gather our strength.</span>")
 		return
 	if(buffed)
-		src << "<span class='notice'>Something is interfering with our growth.</span>"
+		src.text2tab("<span class='notice'>Something is interfering with our growth.</span>")
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
@@ -693,7 +693,7 @@
 	if(proximity_flag && istype(target, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
-			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
+			user.text2tab("<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>")
 			return
 		A.buffed++
 		A.maxHealth *= 1.5
@@ -702,7 +702,7 @@
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
-		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"
+		user.text2tab("<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
 		qdel(src)
 
 /////////////////////Lavaland
@@ -711,7 +711,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
-	desc = "Its stare causes victims to freeze from the inside."
+	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
 	icon = 'icons/mob/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
@@ -721,7 +721,7 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "stares into the soul of"
+	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -734,7 +734,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
@@ -774,7 +774,7 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
 		stored_mob.loc = get_turf(src)
 		stored_mob.adjustBruteLoss(1000)
@@ -833,9 +833,9 @@
 
 /obj/item/organ/hivelord_core/update_icon()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	overlays.Cut()
+	cut_overlays()
 	if(!inert)
-		overlays += image(icon, "legion_soul_crackle")
+		add_overlay(image(icon, "legion_soul_crackle"))
 
 /obj/item/organ/hivelord_core/legion/go_inert()
 	. = ..()
@@ -903,9 +903,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
-		overlays += "gl_full"
+		add_overlay("gl_full")
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
@@ -1007,14 +1007,14 @@
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
-	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)

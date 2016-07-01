@@ -50,7 +50,7 @@ var/global/datum/getrev/revdata = new()
 	src << "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes"
 	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
 	if(config.show_game_type_odds)
-		src <<"<b>Game Mode Odds:</b>"
+		src << "<b>Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/i=1,i<=config.probabilities.len,i++)
 			sum += config.probabilities[config.probabilities[i]]

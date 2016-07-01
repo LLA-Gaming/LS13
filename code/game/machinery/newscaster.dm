@@ -200,7 +200,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
@@ -216,7 +216,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	return ..()
 
 /obj/machinery/newscaster/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
 	else
@@ -225,16 +225,16 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else
 			icon_state = "newscaster_normal"
 			if(alert)
-				overlays += "newscaster_alert"
+				add_overlay("newscaster_alert")
 	switch(health)
 		if(45 to 60)
 			return
 		if(30 to 45)
-			overlays += "crack1"
+			add_overlay("crack1")
 		if(15 to 30)
-			overlays += "crack2"
+			add_overlay("crack2")
 		else
-			overlays += "crack3"
+			add_overlay("crack3")
 
 
 /obj/machinery/newscaster/power_change()
@@ -720,17 +720,17 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+		user.text2tab("<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60/I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
-				user << "<span class='warning'>The broken remains of [src] fall on the ground.</span>"
+				user.text2tab("<span class='warning'>The broken remains of [src] fall on the ground.</span>")
 				new /obj/item/stack/sheet/metal(loc, 5)
 				new /obj/item/weapon/shard(loc)
 				new /obj/item/weapon/shard(loc)
 			else
-				user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+				user.text2tab("<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -744,12 +744,12 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				if(do_after(user,40/WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
-					user << "<span class='notice'>You repair [src].</span>"
+					user.text2tab("<span class='notice'>You repair [src].</span>")
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
 					update_icon()
 		else
-			user << "<span class='notice'>[src] does not need repairs.</span>"
+			user.text2tab("<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
 
@@ -778,7 +778,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	if(user.a_intent != "harm")
-		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
+		user.text2tab("<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else
 		take_damage(5)
 
@@ -811,9 +811,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			else
 				targetcam = R.aicamera
 		else
-			user << "<span class='warning'>You cannot interface with silicon photo uploading!</span>"
+			user.text2tab("<span class='warning'>You cannot interface with silicon photo uploading!</span>")
 		if(targetcam.aipictures.len == 0)
-			usr << "<span class='boldannounce'>No images saved</span>"
+			usr.text2tab("<span class='boldannounce'>No images saved</span>")
 			return
 		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
@@ -832,6 +832,12 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
+			if(istype(human_user.wear_id, /obj/item/device/tablet))
+				var/obj/item/device/tablet/T = human_user.wear_id
+				if(T.id)
+					scanned_user = "[T.id.registered_name] ([T.id.assignment])"
+				else
+					scanned_user = "Unknown"
 			if(istype(human_user.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/P = human_user.wear_id
 				if(P.id)
@@ -990,7 +996,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		user << "The paper is full of intelligible symbols!"
+		user.text2tab("The paper is full of intelligible symbols!")
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -1037,7 +1043,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		if(scribble_page == curr_page)
-			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>"
+			user.text2tab("<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
 		else
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)

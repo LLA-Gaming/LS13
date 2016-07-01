@@ -502,7 +502,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.setDir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -895,18 +895,18 @@ var/list/WALLITEMS_INVERSE = list(
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
+	user.text2tab("<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
 	if(total_moles>0)
-		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
+		user.text2tab("<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
 		var/list/cached_gases = air_contents.gases
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
+				user.text2tab("<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
+		user.text2tab("<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return
@@ -1302,7 +1302,7 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I)
 	sleep(duration)
 	A.overlays -= I
 
@@ -1370,7 +1370,7 @@ proc/pick_closest_path(value)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
 
-/proc/flash_color(mob_or_client, color="#960000", time=20)
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
@@ -1385,6 +1385,6 @@ proc/pick_closest_path(value)
 		return
 
 	var/old_color = C.color
-	C.color = "#960000"
+	C.color = flash_color
 	spawn(0)
-		animate(C, color = old_color, time = 20)
+		animate(C, color = old_color, time = flash_time)

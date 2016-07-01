@@ -11,6 +11,7 @@
 	production = 5
 	yield = 4
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
@@ -87,7 +88,7 @@
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(10))
-				held_mob << "<span class='warning'>Your hand holding [src] burns!</span>"
+				held_mob.text2tab("<span class='warning'>Your hand holding [src] burns!</span>")
 	else
 		held_mob = null
 		..()

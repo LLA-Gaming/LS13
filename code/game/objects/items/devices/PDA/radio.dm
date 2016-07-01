@@ -3,7 +3,7 @@
 	desc = "An electronic radio system of nanotrasen origin."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "power_mod"
-	var/obj/item/device/pda/hostpda = null
+	var/obj/item/device/hostpda = null
 
 	var/on = 0 //Are we currently active??
 	var/menu_message = ""
@@ -12,6 +12,10 @@
 	..()
 	if (istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
+
+/obj/item/radio/integrated/Destroy()
+	hostpda = null
+	return ..()
 
 /*
  *	Radio Cartridge, essentially a signaler.
@@ -32,6 +36,7 @@
 /obj/item/radio/integrated/signal/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src, frequency)
+	radio_connection = null
 	return ..()
 
 /obj/item/radio/integrated/signal/initialize()

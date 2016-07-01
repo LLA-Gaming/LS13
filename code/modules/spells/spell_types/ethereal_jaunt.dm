@@ -35,7 +35,7 @@
 			if(target.pulledby)
 				target.pulledby.stop_pulling()
 			target.stop_pulling()
-			if(target.buckled_mobs.len)
+			if(target.has_buckled_mobs())
 				target.unbuckle_all_mobs(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
@@ -106,7 +106,7 @@
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
-		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
+		user.text2tab("<span class='warning'>Some strange aura is blocking the way!</span>")
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

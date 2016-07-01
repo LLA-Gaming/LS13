@@ -163,6 +163,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(new_form)
 		icon_state = new_form
+		ghostimage.icon_state = new_form
 		if(icon_state in ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
@@ -172,7 +173,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
-		dir = 2 		//reset the dir to its default so the sprites all properly align up
+		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
 	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
@@ -183,7 +184,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
-				overlays += facial_hair_image
+				add_overlay(facial_hair_image)
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
@@ -192,7 +193,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
-				overlays += hair_image
+				add_overlay(hair_image)
 				ghostimage.overlays += hair_image
 
 /*
@@ -252,9 +253,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Relinquish your life and enter the land of the dead."
 
 	if(mental_dominator)
-		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
+		src.text2tab("<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>")
 		if(mind_control_holder)
-			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
+			mind_control_holder.text2tab("<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>")
 		return 0
 	if(stat != DEAD)
 		succumb()
@@ -270,7 +271,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		dir = direct //only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -309,13 +310,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!client)
 		return
 	if(!(mind && mind.current))
-		src << "<span class='warning'>You have no body.</span>"
+		src.text2tab("<span class='warning'>You have no body.</span>")
 		return
 	if(!can_reenter_corpse)
-		src << "<span class='warning'>You cannot re-enter your body.</span>"
+		src.text2tab("<span class='warning'>You cannot re-enter your body.</span>")
 		return
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
-		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		usr.text2tab("<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
@@ -323,7 +324,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)
-		src << "<span class='ghostalert'>[message]</span>"
+		src.text2tab("<span class='ghostalert'>[message]</span>")
 		if(source)
 			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
 			if(A)
@@ -332,9 +333,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.desc = message
 				var/old_layer = source.layer
 				source.layer = FLOAT_LAYER
-				A.overlays += source
+				A.add_overlay(source)
 				source.layer = old_layer
-	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
+	src.text2tab("<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>")
 	if(sound)
 		src << sound(sound)
 
@@ -343,7 +344,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	if(!istype(usr, /mob/dead/observer))
-		usr << "Not when you're not dead!"
+		usr.text2tab("Not when you're not dead!")
 		return
 	var/A
 	A = input("Area to jump to", "BOOYEA", A) as null|anything in sortedAreas
@@ -356,7 +357,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
-		usr << "No area available."
+		usr.text2tab("No area available.")
 
 	usr.loc = pick(L)
 
@@ -381,7 +382,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
 	if(orbiting != target)
-		src << "<span class='notice'>Now orbiting [target].</span>"
+		src.text2tab("<span class='notice'>Now orbiting [target].</span>")
 
 	var/rot_seg
 
@@ -400,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = 2 //reset dir so the right directional sprites show up
+	setDir(2 )//reset dir so the right directional sprites show up
 	..()
 	//restart our floating animation after orbit is done.
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
@@ -432,7 +433,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.loc = T
 			else
-				A << "This mob is not located in the game world."
+				A.text2tab("This mob is not located in the game world.")
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -451,11 +452,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/memory()
 	set hidden = 1
-	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
+	src.text2tab("<span class='danger'>You are dead! You have no mind to store memory!</span>")
 
 /mob/dead/observer/add_memory()
 	set hidden = 1
-	src << "<span class='danger'>You are dead! You have no mind to store memory!</span>"
+	src.text2tab("<span class='danger'>You are dead! You have no mind to store memory!</span>")
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
@@ -537,11 +538,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+
+	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
+
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
 	if(target.key)
-		src << "<span class='warning'>Someone has taken this body while you were choosing!</span>"
+		src.text2tab("<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
 	target.key = key
@@ -608,11 +614,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(data_huds_on) //remove old huds
 		remove_data_huds()
-		src << "<span class='notice'>Data HUDs disabled.</span>"
+		src.text2tab("<span class='notice'>Data HUDs disabled.</span>")
 		data_huds_on = 0
 	else
 		show_data_huds()
-		src << "<span class='notice'>Data HUDs enabled.</span>"
+		src.text2tab("<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
 
 /mob/dead/observer/verb/restore_ghost_apperance()
@@ -650,3 +656,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_literate()
 	return 1
+
+/mob/dead/observer/on_varedit(var_name)
+	. = ..()
+	switch(var_name)
+		if("icon")
+			ghostimage.icon = icon
+			ghostimage_default.icon = icon
+			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state
+		if("fun_verbs")
+			if(fun_verbs)
+				verbs += /mob/dead/observer/verb/boo
+				verbs += /mob/dead/observer/verb/possess
+			else
+				verbs -= /mob/dead/observer/verb/boo
+				verbs -= /mob/dead/observer/verb/possess

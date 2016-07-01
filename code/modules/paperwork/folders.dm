@@ -25,9 +25,9 @@
 
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
@@ -35,7 +35,7 @@
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		user << "<span class='notice'>You put [W] into [src].</span>"
+		user.text2tab("<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)

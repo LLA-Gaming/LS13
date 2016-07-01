@@ -104,9 +104,9 @@
 				if(I.reagents.total_volume < 10)
 					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
 			else
-				user << "<span class='warning'>There is not enough ice cream left!</span>"
+				user.text2tab("<span class='warning'>There is not enough ice cream left!</span>")
 		else
-			user << "<span class='notice'>[O] already has ice cream in it.</span>"
+			user.text2tab("<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
 	else if(O.is_open_container())
 		return
@@ -129,7 +129,7 @@
 		else
 			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 	else
-		user << "<span class='warning'>You don't have the ingredients to make this!</span>"
+		user.text2tab("<span class='warning'>You don't have the ingredients to make this!</span>")
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
@@ -156,7 +156,7 @@
 			I.desc = "Delicious [cone_name] cone, but no ice cream."
 			src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 		else
-			usr << "<span class='warning'>There are no [cone_name] cones left!</span>"
+			usr.text2tab("<span class='warning'>There are no [cone_name] cones left!</span>")
 
 	if(href_list["make"])
 		var/amount = (text2num(href_list["amount"]))
@@ -191,7 +191,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name)
 	name = "[flavour_name] icecream"
-	src.overlays += "icecream_[flavour_name]"
+	src.add_overlay("icecream_[flavour_name]")
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."

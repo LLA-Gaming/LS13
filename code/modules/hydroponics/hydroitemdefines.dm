@@ -8,6 +8,7 @@
 	w_class = 1
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=2;biotech=2"
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
 // Hydroponics Tools
@@ -54,7 +55,8 @@
 	reagents.add_reagent("pestkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/pestspray/suicide_act(mob/user)
-	viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	for(var/mob/M in viewers(user))
+		M.text2tab("<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/cultivator

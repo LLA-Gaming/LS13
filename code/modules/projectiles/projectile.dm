@@ -50,6 +50,8 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 
+	var/bump_at_ttile = 0
+
 /obj/item/projectile/New()
 	permutated = list()
 	return ..()
@@ -72,7 +74,7 @@
 			organ_hit_text = " in \the [parse_zone(def_zone)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
-			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
+			L.text2tab("<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>")
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
@@ -186,7 +188,7 @@
 				else
 					animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (speed <= 3 ? speed - 1 : speed)))
 
-				if(original && (original.layer>=2.75) || ismob(original))
+				if(original && (original.layer>=2.75) || ismob(original) || bump_at_ttile)
 					if(loc == get_turf(original))
 						if(!(original in permutated))
 							Bump(original, 1)
@@ -199,7 +201,7 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
+				if(original && (original.layer>=2.75) || ismob(original) || bump_at_ttile)
 					if(loc == get_turf(original))
 						if(!(original in permutated))
 							Bump(original, 1)

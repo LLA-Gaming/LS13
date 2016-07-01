@@ -25,7 +25,7 @@
 	if(!istype(C))
 		return
 	if(user.disabilities & CLUMSY && prob(50))
-		user << "<span class='warning'>Uh... how do those things work?!</span>"
+		user.text2tab("<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
 
@@ -37,7 +37,7 @@
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
 				apply_cuffs(C,user)
-				user << "<span class='notice'>You handcuff [C].</span>"
+				user.text2tab("<span class='notice'>You handcuff [C].</span>")
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 					feedback_add_details("handcuffs","C")
 				else
@@ -45,9 +45,9 @@
 
 				add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+				user.text2tab("<span class='warning'>You fail to handcuff [C]!</span>")
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			user.text2tab("<span class='warning'>[C] doesn't have two hands...</span>")
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -94,14 +94,14 @@
 	if(!istype(C))
 		return
 	if(wirestorage && wirestorage.energy < 15)
-		user << "<span class='warning'>You need at least 15 wire to restrain [C]!</span>"
+		user.text2tab("<span class='warning'>You need at least 15 wire to restrain [C]!</span>")
 		return
 	return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(wirestorage)
 		if(!wirestorage.use_charge(15))
-			user << "<span class='warning'>You need at least 15 wire to restrain [target]!</span>"
+			user.text2tab("<span class='warning'>You need at least 15 wire to restrain [target]!</span>")
 			return
 		return ..(target, user, 1)
 
@@ -161,22 +161,22 @@
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			user.put_in_hands(W)
-			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+			user.text2tab("<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
+			user.text2tab("<span class='warning'>You need one rod to make a wired rod!</span>")
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.amount < 6)
-			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
+			user.text2tab("<span class='warning'>You need at least six metal sheets to make good enough weights!</span>")
 			return
-		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
+		user.text2tab("<span class='notice'>You begin to apply [I] to [src]...</span>")
 		if(do_after(user, 35, target = src))
 			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
-			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
+			user.text2tab("<span class='notice'>You make some weights out of [I] and tie them to [src].</span>")
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			qdel(src)
@@ -193,10 +193,10 @@
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
+					user.text2tab("<span class='notice'>You handcuff [C].</span>")
 					add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+				user.text2tab("<span class='warning'>You fail to handcuff [C]!</span>")
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
@@ -254,7 +254,7 @@
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
 		icon_state = "[initial(icon_state)][armed]"
-		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
+		user.text2tab("<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 /obj/item/weapon/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
@@ -329,7 +329,7 @@
 		src.loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
-		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
+		C.text2tab("<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)
 
 /obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant

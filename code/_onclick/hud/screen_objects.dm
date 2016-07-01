@@ -102,24 +102,24 @@
 	if(!blocked_overlay)
 		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(hud && hud.mymob)
 		if(iscarbon(hud.mymob))
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
-				overlays += handcuff_overlay
+				add_overlay(handcuff_overlay)
 			if(slot_id == slot_r_hand)
 				if(!C.has_right_hand())
-					overlays += blocked_overlay
+					add_overlay(blocked_overlay)
 			else if(slot_id == slot_l_hand)
 				if(!C.has_left_hand())
-					overlays += blocked_overlay
+					add_overlay(blocked_overlay)
 
 		if(slot_id == slot_l_hand && hud.mymob.hand)
-			overlays += active_overlay
+			add_overlay(active_overlay)
 		else if(slot_id == slot_r_hand && !hud.mymob.hand)
-			overlays += active_overlay
+			add_overlay(active_overlay)
 
 /obj/screen/inventory/hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -207,51 +207,51 @@
 
 	if(C.internal)
 		C.internal = null
-		C << "<span class='notice'>You are no longer running on internals.</span>"
+		C.text2tab("<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
 		if(!C.getorganslot("breathing_tube"))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
-				C << "<span class='warning'>You are not wearing an internals mask!</span>"
+				C.text2tab("<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1
 			else
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
 					M.adjustmask(C) // adjust it back
 				if( !(M.flags & MASKINTERNALS) )
-					C << "<span class='warning'>You are not wearing an internals mask!</span>"
+					C.text2tab("<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 
 		if(istype(C.l_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
+			C.text2tab("<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>")
 			C.internal = C.l_hand
 		else if(istype(C.r_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
+			C.text2tab("<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>")
 			C.internal = C.r_hand
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
+				H.text2tab("<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>")
 				H.internal = H.s_store
 			else if(istype(H.belt, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
+				H.text2tab("<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>")
 				H.internal = H.belt
 			else if(istype(H.l_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
+				H.text2tab("<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>")
 				H.internal = H.l_store
 			else if(istype(H.r_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
+				H.text2tab("<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
 		//Seperate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
+			C.text2tab("<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
 			C.internal = C.back
 
 		if(C.internal)
 			icon_state = "internal1"
 		else
-			C << "<span class='warning'>You don't have an oxygen tank!</span>"
+			C.text2tab("<span class='warning'>You don't have an oxygen tank!</span>")
 			return
 	C.update_action_buttons_icon()
 
@@ -382,16 +382,16 @@
 	return 1
 
 /obj/screen/zone_sel/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/screen_gen.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/alien/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/screen_alien.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/robot
@@ -418,6 +418,11 @@
 	name = "health"
 	icon_state = "health0"
 	screen_loc = ui_health
+
+/obj/screen/staminas
+	name = "stamina"
+	icon_state = "stamina0"
+	screen_loc = ui_stamina
 
 /obj/screen/healths/alien
 	icon = 'icons/mob/screen_alien.dmi'

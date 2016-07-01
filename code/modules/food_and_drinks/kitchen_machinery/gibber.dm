@@ -47,7 +47,7 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
 	B.apply_default_parts(src)
 
@@ -70,17 +70,17 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
-		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -93,26 +93,26 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		user << "<span class='danger'>It's locked and running.</span>"
+		user.text2tab("<span class='danger'>It's locked and running.</span>")
 		return
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
+			user.text2tab("<span class='danger'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.buckled_mobs.len)
-			user << "<span class='warning'>[C] is attached to something!</span>"
+		if(C.buckled ||C.has_buckled_mobs())
+			user.text2tab("<span class='warning'>[C] is attached to something!</span>")
 			return
 		if(C.abiotic(1) && !ignore_clothing)
-			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+			user.text2tab("<span class='danger'>Subject may not have abiotic items on.</span>")
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
-			if(C && user.pulling == C && !C.buckled && !C.buckled_mobs.len && !occupant)
+			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				occupant = C

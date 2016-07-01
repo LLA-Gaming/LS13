@@ -217,28 +217,28 @@
 /datum/ai_laws/proc/clear_ion_laws()
 	src.ion = list()
 
-/datum/ai_laws/proc/show_laws(who)
+/datum/ai_laws/proc/show_laws(mob/who)
 
 	if (src.zeroth)
-		who << "0. [src.zeroth]"
+		who.text2tab("0. [src.zeroth]")
 
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		who << "[num]. [law]"
+		who.text2tab("[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			who.text2tab("[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			who.text2tab("[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1

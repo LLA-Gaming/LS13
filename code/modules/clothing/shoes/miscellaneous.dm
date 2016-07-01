@@ -162,3 +162,9 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	can_hold_items = 1
+
+/obj/item/clothing/shoes/femoffice
+	name = "female office shoes"
+	desc = "female office shoes"
+	icon_state = "femoffice"
+	item_state = "femoffice"

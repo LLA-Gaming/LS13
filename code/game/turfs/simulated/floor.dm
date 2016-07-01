@@ -132,7 +132,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
 	W.icon_regular_floor = old_icon
-	W.dir = old_dir
+	W.setDir(old_dir)
 	W.update_icon()
 	return W
 
@@ -145,12 +145,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
-			user << "<span class='danger'>You remove the broken plating.</span>"
+			user.text2tab("<span class='danger'>You remove the broken plating.</span>")
 		else
 			if(istype(src, /turf/open/floor/wood))
-				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+				user.text2tab("<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
-				user << "<span class='danger'>You remove the floor tile.</span>"
+				user.text2tab("<span class='danger'>You remove the floor tile.</span>")
 				builtin_tile.loc = src
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)

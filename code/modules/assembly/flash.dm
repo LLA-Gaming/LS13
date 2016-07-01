@@ -14,14 +14,14 @@
 
 
 /obj/item/device/assembly/flash/update_icon(var/flash = 0)
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(crit_fail)
-		overlays += "flashburnt"
+		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 
 	if(flash)
-		overlays += "flash-f"
+		add_overlay("flash-f")
 		attached_overlays += "flash-f"
 		spawn(5)
 			update_icon()
@@ -90,15 +90,15 @@
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			user << "<span class='danger'>You blind [M] with the flash!</span>"
-			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
+			user.text2tab("<span class='danger'>You blind [M] with the flash!</span>")
+			M.text2tab("<span class='userdanger'>[user] blinds you with the flash!</span>")
 			if(M.weakeyes)
 				M.Stun(2)
 				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shields your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
-			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
+			user.text2tab("<span class='warning'>You fail to blind [M] with the flash!</span>")
+			M.text2tab("<span class='danger'>[user] fails to blind you with the flash!</span>")
 	else
 		if(M.flash_eyes())
 			M.confused += power
@@ -150,6 +150,7 @@
 					if(!isloyal(M))
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
+								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1
@@ -157,11 +158,11 @@
 						resisted = 1
 
 					if(resisted)
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+						user.text2tab("<span class='warning'>This mind seems resistant to the flash!</span>")
 				else
-					user << "<span class='warning'>They must be conscious before you can convert them!</span>"
+					user.text2tab("<span class='warning'>They must be conscious before you can convert them!</span>")
 			else
-				user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+				user.text2tab("<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg

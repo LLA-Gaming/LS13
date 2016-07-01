@@ -8,7 +8,7 @@
 		var/mob/living/carbon/human/H = src.loc
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
-				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
+				H.text2tab("<span class='danger'>The [src] overloads and blinds you!</span>")
 				H.flash_eyes(visual = 1)
 				H.blind_eyes(3)
 				H.blur_eyes(5)
@@ -290,6 +290,13 @@
 	scan_reagents = 1
 	flags = NODROP
 	invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/regular/reading
+	name = "Reading Glasses"
+	desc = "Made by Nerd. Co."
+	icon_state = "readingglasses"
+	item_state = "readingglasses"
+
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
 	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")

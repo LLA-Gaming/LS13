@@ -35,17 +35,17 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/paperplane/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!stamped)
 		stamped = new
 	else if(stamped)
 		for(var/S in stamped)
 			var/obj/item/weapon/stamp/stamp = S
 			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[initial(stamp.icon_state)]")
-			overlays += stampoverlay
+			add_overlay(stampoverlay)
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
-	user << "<span class='notice'>You unfold [src].</span>"
+	user.text2tab("<span class='notice'>You unfold [src].</span>")
 	user.unEquip(src)
 	user.put_in_hands(internalPaper)
 	qdel(src)
@@ -53,7 +53,7 @@
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << "<span class='notice'>You should unfold [src] before changing it.</span>"
+		user.text2tab("<span class='notice'>You should unfold [src] before changing it.</span>")
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp)) 	//we don't randomize stamps on a paperplane
@@ -65,7 +65,7 @@
 		internalPaper.stamps += "<img src=large_[P.icon_state].png>" //stamps the paper inside!
 		internalPaper.stamped = stamped
 		internalPaper.attackby(P) //spoofed attack to update internal paper.
-		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
+		user.text2tab("<span class='notice'>You stamp [src] with your rubber stamp.</span>")
 		update_icon()
 
 	else if(P.is_hot())
@@ -107,7 +107,7 @@
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I,)
 	if((!in_range(src, user)) || usr.stat || usr.restrained())
 		return
-	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
+	user.text2tab("<span class='notice'>You fold [src] into the shape of a plane!</span>")
 	user.unEquip(src)
 	I = new /obj/item/weapon/paperplane(loc, src)
 	user.put_in_hands(I)

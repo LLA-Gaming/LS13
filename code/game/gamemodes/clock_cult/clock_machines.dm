@@ -14,7 +14,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "INFINITY":"[powered]"]W of power.</span>"
+		user.text2tab("<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "INFINITY":"[powered]"]W of power.</span>")
 
 /obj/structure/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -95,7 +95,7 @@
 	while(sigilpower && amount >= 50)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(T.modify_charge(50))
+			if(amount >= 50 && T.modify_charge(50))
 				sigilpower -= 50
 				amount -= 50
 	var/apcpower = accessable_apc_power()
@@ -150,8 +150,8 @@
 /obj/structure/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It has [stored_alloy*0.004]/[max_alloy*0.004] units of replicant alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
-		user << "<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>"
+		user.text2tab("<span class='alloy'>It has [stored_alloy*0.004]/[max_alloy*0.004] units of replicant alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>")
+		user.text2tab("<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>")
 
 /obj/structure/clockwork/powered/mending_motor/process()
 	if(!..())
@@ -159,28 +159,21 @@
 		toggle()
 		return
 	for(var/atom/movable/M in range(5, src))
-		if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
-			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
+		if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
+			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
 			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
-		else if(istype(M, /mob/living/simple_animal/hostile/anima_fragment))
-			var/mob/living/simple_animal/hostile/anima_fragment/F = M
-			if(F.health == F.maxHealth || F.stat)
+		else if(istype(M, /mob/living/simple_animal/hostile/clockwork))
+			var/mob/living/simple_animal/hostile/clockwork/W = M
+			if(W.health == W.maxHealth || W.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
-			F.adjustBruteLoss(-15)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_reclaimer))
-			var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = M
-			if(R.health == R.maxHealth || R.stat)
-				continue
-			if(!try_use_power(mob_cost))
-				break
-			R.adjustBruteLoss(-15)
+			W.adjustBruteLoss(-15)
 		else if(istype(M, /obj/structure/clockwork))
 			var/obj/structure/clockwork/C = M
 			if(C.health == C.max_health)
@@ -201,14 +194,14 @@
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, be_close = 1))
 		if(!total_accessable_power() >= 300)
-			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
+			user.text2tab("<span class='warning'>[src] needs more power or replicant alloy to function!</span>")
 			return 0
 		toggle(0, user)
 
 /obj/structure/clockwork/powered/mending_motor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
 		if(stored_alloy + 2500 > max_alloy)
-			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
+			user.text2tab("<span class='warning'>[src] is too full to accept any more alloy!</span>")
 			return 0
 		user.whisper("Genafzhgr vagb jngre.")
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
@@ -241,14 +234,14 @@
 	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
 	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gung'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
 	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gurfr vqvbgf va gur neg bs pbairefvba.\"", \
-	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Qevire gung bayl gnxrf gjb frpbaqf gb vaibxr?\"", \
-	"\"Ubj qb gurl snvy gb hfr Qrzragvn Qbpgevar, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
+	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
+	"\"Ubj qb gurl snvy gb hfr n Fvtvy bs Npprffvba, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W  to convert humans adjecent to it.</span>"
+		user.text2tab("<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W to convert humans adjecent to it.</span>")
 
 /obj/structure/clockwork/powered/mania_motor/process()
 	var/turf/T = get_turf(src)
@@ -268,15 +261,15 @@
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
 				if(distance >= 4 && prob(falloff_distance))
-					H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+					H.text2tab("<span class='sevtug_small'>[pick(mania_messages)]</span>")
 				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
 					if(2 to 3)
 						if(prob(falloff_distance))
 							if(prob(falloff_distance))
-								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+								H.text2tab("<span class='sevtug_small'>[pick(mania_messages)]</span>")
 							else
-								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+								H.text2tab("<span class='sevtug'>[pick(compel_messages)]</span>")
 						if(targetbrainloss <= 70)
 							H.adjustBrainLoss(70 - targetbrainloss) //got too close had brain eaten
 						if(targetdruggy <= 150)
@@ -312,12 +305,12 @@
 					else //if it's a distance of 1 or they're on top of it(how'd they get on top of it???)
 						if(try_use_power(convert_attempt_cost))
 							if(is_eligible_servant(H) && try_use_power(convert_cost))
-								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
+								H.text2tab("<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>")
 								add_servant_of_ratvar(H)
 							else if(!H.stat)
 								if(targetbrainloss >= H.maxHealth)
 									H.Paralyse(5)
-									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+									H.text2tab("<span class='sevtug'>[pick(convert_messages)]</span>")
 								else
 									H.adjustBrainLoss(100)
 									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
@@ -333,12 +326,11 @@
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
-	return
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, be_close = 1))
 		if(!total_accessable_power() >= mania_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
+			user.text2tab("<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)
 
@@ -360,10 +352,10 @@
 
 /obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
-	user << "<span class='[recharging >= world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging >= world.time ? "has been breached by writhing tendrils of blackness that cover the obelisk" \
-	: "vibrates in place and thrums with power"]."
+	user.text2tab("<span class='[recharging >= world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging >= world.time ? "has been breached by writhing tendrils of blackness that cover the obelisk" \
+	: "vibrates in place and thrums with power"].")
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics."
+		user.text2tab("<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics.")
 
 /obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src))
@@ -379,10 +371,10 @@
 	if(!user || !is_servant_of_ratvar(user))
 		return 0
 	if(!total_accessable_power() >= disrupt_cost)
-		user << "<span class='warning'>[src] needs more power to function!</span>"
+		user.text2tab("<span class='warning'>[src] needs more power to function!</span>")
 		return 0
 	if(active || recharging >= world.time)
-		user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
+		user.text2tab("<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>")
 		return 0
 	user.visible_message("<span class='warning'>[user] places their hand on [src]' gemstone...</span>", "<span class='brass'>You place your hand on the gemstone...</span>")
 	var/target = input(user, "Power flows through you. Choose where to direct it.", "Interdiction Lens") as null|anything in list("Disrupt Telecommunications", "Disable Cameras", "Disable Cyborgs")
@@ -401,14 +393,14 @@
 		if("Disrupt Telecommunications")
 			for(var/obj/machinery/telecomms/hub/H in telecomms_list)
 				for(var/mob/M in range(7, H))
-					M << "<span class='warning'>You sense a strange force pass through you...</span>"
+					M.text2tab("<span class='warning'>You sense a strange force pass through you...</span>")
 				H.visible_message("<span class='warning'>The lights on [H] flare a blinding yellow before falling dark!</span>")
 				H.emp_act(1)
 		if("Disable Cameras")
 			for(var/obj/machinery/camera/C in cameranet.cameras)
 				C.emp_act(1)
 			for(var/mob/living/silicon/ai/A in living_mob_list)
-				A << "<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>"
+				A.text2tab("<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>")
 				A << 'sound/machines/warning-buzzer.ogg'
 		if("Disable Cyborgs")
 			for(var/mob/living/silicon/robot/R in living_mob_list) //Doesn't include AIs, for obvious reasons
@@ -440,6 +432,7 @@
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
+	var/gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/New()
 	..()
@@ -448,36 +441,47 @@
 /obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nzcrentr'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
+		user.text2tab("<span class='nzcrentr_small'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>")
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
 		icon_state = active_icon
 		density = 0
+		gateway_active = TRUE
 	else
 		icon_state = inactive_icon
 		density = 1
+		gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
-		user << "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
+		user.text2tab("<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>")
 		return
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)
 		if("Hierophant Broadcast")
+			if(gateway_active)
+				user.text2tab("<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>")
+				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(user.canUseTopic(src, be_close = 1))
-				if(try_use_power(hierophant_cost))
-					user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
-					send_hierophant_message(user, input, 1)
-				else
-					user <<  "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
+			if(!input || !user.canUseTopic(src, be_close = 1))
+				return
+			if(gateway_active)
+				user.text2tab("<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>")
+				return
+			if(!try_use_power(hierophant_cost))
+				user.text2tab("<span class='warning'>The obelisk lacks the power to broadcast!</span>")
+				return
+			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
-			if(total_accessable_power() >= gateway_cost)
-				if(procure_gateway(user, 100, 5, 1))
-					user.say("Fcnpvny tngrjnl, npgvingr!")
-					try_use_power(gateway_cost)
-			else
-				user <<  "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+			if(gateway_active)
+				user.text2tab("<span class='warning'>The obelisk is already sustaining a gateway!</span>")
+				return
+			if(!try_use_power(gateway_cost))
+				user.text2tab("<span class='warning'>The obelisk lacks the power to open a gateway!</span>")
+				return
+			if(procure_gateway(user, 100, 5, 1))
+				user.say("Fcnpvny Tngrjnl, npgvingr!")
 		if("Cancel")
 			return

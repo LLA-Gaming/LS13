@@ -191,7 +191,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		pronoun = "It is"
 
-	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
+	user.text2tab("[pronoun] a [size] item.") //e.g. They are a small item. or It is a bulky item.
 
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
@@ -212,7 +212,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
 		msg += "*--------*"
-		user << msg
+		user.text2tab(msg)
 
 
 /obj/item/attack_self(mob/user)
@@ -240,9 +240,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(H))
 			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
 				extinguish()
-				user << "<span class='notice'>You put out the fire on [src].</span>"
+				user.text2tab("<span class='notice'>You put out the fire on [src].</span>")
 			else
-				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				user.text2tab("<span class='warning'>You burn your hand on [src]!</span>")
 				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
@@ -293,7 +293,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
+		user.text2tab("<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 	attack_paw(A)
 
@@ -333,11 +333,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
+						user.text2tab("<span class='notice'>You put everything [S.preposition] [S].</span>")
 					else if(success)
-						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
+						user.text2tab("<span class='notice'>You put some things [S.preposition] [S].</span>")
 					else
-						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+						user.text2tab("<span class='warning'>You fail to pick anything up with [S]!</span>")
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -433,22 +433,22 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			user.text2tab("<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
 		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			user.text2tab("<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
+		user.text2tab("<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
 	if(isbrain(M))
-		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
+		user.text2tab("<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)
@@ -479,20 +479,20 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
-			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
+			M.text2tab("<span class='danger'>Your eyes start to bleed profusely!</span>")
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
-				M << "<span class='danger'>You become nearsighted!</span>"
+				M.text2tab("<span class='danger'>You become nearsighted!</span>")
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_item())
-					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
+					M.text2tab("<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
 		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
-				M << "<span class='danger'>You go blind!</span>"
+				M.text2tab("<span class='danger'>You go blind!</span>")
 
 /obj/item/clean_blood()
 	. = ..()

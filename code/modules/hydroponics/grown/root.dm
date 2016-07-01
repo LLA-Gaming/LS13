@@ -11,6 +11,7 @@
 	yield = 5
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
 	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -24,7 +25,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
-		user << "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>"
+		user.text2tab("<span class='notice'>You sharpen the carrot into a shiv with [I].</span>")
 		var/obj/item/weapon/kitchen/knife/carrotshiv/Shiv = new /obj/item/weapon/kitchen/knife/carrotshiv
 		if(!remove_item_from_storage(user))
 			user.unEquip(src)
@@ -65,6 +66,7 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
@@ -89,6 +91,7 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 

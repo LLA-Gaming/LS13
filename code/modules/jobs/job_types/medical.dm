@@ -18,16 +18,16 @@ Chief Medical Officer
 
 	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_therapy)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_therapy)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/pda/heads/cmo
+	belt = /obj/item/device/tablet/cmo
 	ears = /obj/item/device/radio/headset/heads/cmo
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -70,7 +70,7 @@ Medical Doctor
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
 
-	belt = /obj/item/device/pda/medical
+	belt = /obj/item/device/tablet/medical
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/sneakers/white
@@ -105,7 +105,7 @@ Chemist
 	name = "Chemist"
 
 	glasses = /obj/item/clothing/glasses/science
-	belt = /obj/item/device/pda/chemist
+	belt = /obj/item/device/tablet/chemist
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
@@ -137,7 +137,7 @@ Geneticist
 /datum/outfit/job/geneticist
 	name = "Geneticist"
 
-	belt = /obj/item/device/pda/geneticist
+	belt = /obj/item/device/tablet/genetics
 	ears = /obj/item/device/radio/headset/headset_medsci
 	uniform = /obj/item/clothing/under/rank/geneticist
 	shoes = /obj/item/clothing/shoes/sneakers/white
@@ -170,7 +170,7 @@ Virologist
 /datum/outfit/job/virologist
 	name = "Virologist"
 
-	belt = /obj/item/device/pda/viro
+	belt = /obj/item/device/tablet/virology
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/virologist
 	mask = /obj/item/clothing/mask/surgical
@@ -181,3 +181,32 @@ Virologist
 	backpack = /obj/item/weapon/storage/backpack/virology
 	satchel = /obj/item/weapon/storage/backpack/satchel_vir
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+
+/*
+Therapist
+*/
+/datum/job/therapist
+	title = "Therapist"
+	flag = THERAPIST
+	department_head = list("Chief Medical Officer")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 5
+	spawn_positions = 3
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+	outfit = /datum/outfit/job/therapist
+
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
+	minimal_access = list(access_medical)
+
+/datum/outfit/job/therapist
+	name = "Therapist"
+
+	belt = /obj/item/device/tablet/therapist
+	ears = /obj/item/device/radio/headset/headset_med
+	glasses = /obj/item/clothing/glasses/regular
+	uniform = /obj/item/clothing/under/rank/therapist
+	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/weapon/clipboard

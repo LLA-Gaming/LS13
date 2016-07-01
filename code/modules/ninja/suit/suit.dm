@@ -35,6 +35,7 @@ Contents:
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
 	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
+	var/obj/item/clothing/mask/gas/space_ninja/n_mask
 
 		//Main function variables.
 	var/s_initialized = 0//Suit starts off.
@@ -96,6 +97,7 @@ Contents:
 	qdel(n_hood)
 	qdel(n_gloves)
 	qdel(n_shoes)
+	qdel(n_mask)
 	qdel(src)
 
 
@@ -115,20 +117,21 @@ Contents:
 	if(checkIcons)
 		icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		H.gloves.icon_state = "s-ninjan"
-		H.gloves.item_state = "s-ninjan"
+		if(istype(H.wear_mask,/obj/item/clothing/mask/gas/space_ninja))
+			H.wear_mask.icon_state = "s-ninjan"
 	else
 		if(H.mind.special_role!="Space Ninja")
-			H << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
+			H.text2tab("\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
 			H.gib()
 			return 0
 		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			H.text2tab("<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
 		if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			H.text2tab("<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
 		if(!istype(H.gloves, /obj/item/clothing/gloves/space_ninja))
-			H << "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			H.text2tab("<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = H
@@ -141,6 +144,7 @@ Contents:
 		n_shoes.slowdown--
 		n_gloves = H.gloves
 		n_gloves.flags |= NODROP
+		n_mask = H.wear_mask
 
 	return 1
 
@@ -162,13 +166,15 @@ Contents:
 		n_gloves.flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
+	if(n_mask)
+		n_mask.icon_state = "s-ninja"
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()
 	if(s_initialized)
 		if(user == affecting)
-			user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-			user << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
-			user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
-			user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
+			user.text2tab("All systems operational. Current energy capacity: <B>[cell.charge]</B>.")
+			user.text2tab("The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
+			user.text2tab("There are <B>[s_bombs]</B> smoke bomb\s remaining.")
+			user.text2tab("There are <B>[a_boost]</B> adrenaline booster\s remaining.")

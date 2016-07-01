@@ -252,6 +252,9 @@
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 
+	staminas = new /obj/screen/staminas()
+	infodisplay += staminas
+
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
 

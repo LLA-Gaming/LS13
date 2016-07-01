@@ -14,11 +14,11 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "<span class='notice'>[src] will not function on a deceased cyborg.</span>"
+		usr.text2tab("<span class='notice'>[src] will not function on a deceased cyborg.</span>")
 		return 1
 	if(module_type && !istype(R.module, module_type))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
+		R.text2tab("Upgrade mounting error!  No suitable hardpoint detected!")
+		usr.text2tab("There's no mounting point for the module!")
 		return 1
 
 /obj/item/borg/upgrade/reset
@@ -49,6 +49,7 @@
 	R.speed = 0 // Remove upgrades.
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
+	R.weather_immunities = initial(R.weather_immunities)
 
 	R.status_flags |= CANPUSH
 
@@ -79,7 +80,7 @@
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(R.health < 0)
-		usr << "<span class='warning'>You have to repair the cyborg before using this module!</span>"
+		usr.text2tab("<span class='warning'>You have to repair the cyborg before using this module!</span>")
 		return 0
 
 	if(!R.key)
@@ -102,8 +103,8 @@
 	if(..())
 		return
 	if(R.speed < 0)
-		R << "<span class='notice'>A VTEC unit is already installed!</span>"
-		usr << "<span class='notice'>There's no room for another VTEC unit!</span>"
+		R.text2tab("<span class='notice'>A VTEC unit is already installed!</span>")
+		usr.text2tab("<span class='notice'>There's no room for another VTEC unit!</span>")
 		return
 
 	R.speed = -2 // Gotta go fast.
@@ -124,11 +125,11 @@
 
 	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module.modules
 	if(!T)
-		usr << "<span class='notice'>There's no disabler in this unit!</span>"
+		usr.text2tab("<span class='notice'>There's no disabler in this unit!</span>")
 		return
 	if(T.charge_delay <= 2)
-		R << "<span class='notice'>A cooling unit is already installed!</span>"
-		usr << "<span class='notice'>There's no room for another cooling unit!</span>"
+		R.text2tab("<span class='notice'>A cooling unit is already installed!</span>")
+		usr.text2tab("<span class='notice'>There's no room for another cooling unit!</span>")
 		return
 
 	T.charge_delay = max(2 , T.charge_delay - 4)
@@ -146,7 +147,7 @@
 		return
 
 	if(R.ionpulse)
-		usr << "<span class='notice'>This unit already has ion thrusters installed!</span>"
+		usr.text2tab("<span class='notice'>This unit already has ion thrusters installed!</span>")
 		return
 
 	R.ionpulse = TRUE
@@ -194,6 +195,26 @@
 
 	return 1
 
+/obj/item/borg/upgrade/hyperka
+	name = "mining cyborg hyper-kinetic accelerator"
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
+
+/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+		qdel(H)
+
+	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.rebuild()
+
+	return 1
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
@@ -209,6 +230,22 @@
 		return
 
 	R.SetEmagged(1)
+
+	return 1
+
+/obj/item/borg/upgrade/ashplating
+	name = "mining cyborg ash storm plating"
+	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
+	icon_state = "ash_plating"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "engineering=4;materials=4;plasmatech=4"
+
+/obj/item/borg/upgrade/ashplating/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	R.weather_immunities += "ash"
+	R.icon_state = "ashborg"
 
 	return 1
 
@@ -230,7 +267,7 @@
 
 	var/obj/item/borg/upgrade/selfrepair/U = locate() in R
 	if(U)
-		usr << "<span class='warning'>This unit is already equipped with a self-repair module.</span>"
+		usr.text2tab("<span class='warning'>This unit is already equipped with a self-repair module.</span>")
 		return 0
 
 	cyborg = R
@@ -242,10 +279,10 @@
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
 	on = !on
 	if(on)
-		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
+		cyborg.text2tab("<span class='notice'>You activate the self-repair module.</span>")
 		SSobj.processing |= src
 	else
-		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
+		cyborg.text2tab("<span class='notice'>You deactivate the self-repair module.</span>")
 		SSobj.processing -= src
 	update_icon()
 
@@ -269,8 +306,13 @@
 		return
 
 	if(cyborg && (cyborg.stat != DEAD) && on)
+		if(!cyborg.cell)
+			cyborg << "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>"
+			deactivate()
+			return
+
 		if(cyborg.cell.charge < powercost * 2)
-			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
+			cyborg.text2tab("<span class='warning'>Self-repair module deactivated. Please recharge.</span>")
 			deactivate()
 			return
 
@@ -295,7 +337,7 @@
 				msgmode = "critical"
 			else if(cyborg.health < cyborg.maxHealth)
 				msgmode = "normal"
-			cyborg << "<span class='notice'>Self-repair is active in <span class='boldnotice'>[msgmode]</span> mode.</span>"
+			cyborg.text2tab("<span class='notice'>Self-repair is active in <span class='boldnotice'>[msgmode]</span> mode.</span>")
 			msg_cooldown = world.time
 	else
 		deactivate()

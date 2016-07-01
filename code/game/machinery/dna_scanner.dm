@@ -26,7 +26,7 @@
 							/obj/item/weapon/stock_parts/scanning_module = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1,
 							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -65,7 +65,7 @@
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
-		user << "<span class='notice'>Close the maintenance panel first.</span>"
+		user.text2tab("<span class='notice'>Close the maintenance panel first.</span>")
 		return
 
 	if(state_open)
@@ -73,7 +73,7 @@
 		return
 
 	else if(locked)
-		user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+		user.text2tab("<span class='notice'>The bolts are locked down, securing the door shut.</span>")
 		return
 
 	open_machine()
@@ -86,7 +86,7 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
+	user.text2tab("<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
@@ -95,7 +95,7 @@
 
 		locked = 0
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		user.text2tab("<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
 

@@ -107,7 +107,7 @@ var/global/mulebot_count = 0
 			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>",
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>"
+			user.text2tab("<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
 			..()
 	else
 		..()
@@ -119,7 +119,7 @@ var/global/mulebot_count = 0
 		emagged = 1
 	if(!open)
 		locked = !locked
-		user << "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>"
+		user.text2tab("<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
@@ -128,12 +128,12 @@ var/global/mulebot_count = 0
 		icon_state="mulebot-hatch"
 	else
 		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
-	overlays.Cut()
+	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
 		if(load.layer < layer)
 			load.layer = layer + 0.01
-		overlays += load
+		add_overlay(load)
 	return
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -209,7 +209,7 @@ var/global/mulebot_count = 0
 				turn_off()
 			else if(cell && !open)
 				if(!turn_on())
-					usr << "<span class='warning'>You can't switch on [src]!</span>"
+					usr.text2tab("<span class='warning'>You can't switch on [src]!</span>")
 					return
 			. = TRUE
 		else
@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -400,7 +400,7 @@ var/global/mulebot_count = 0
 
 	mode = BOT_IDLE
 
-	overlays.Cut()
+	cut_overlays()
 
 	unbuckle_all_mobs()
 
@@ -482,14 +482,14 @@ var/global/mulebot_count = 0
 						B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							B.setDir(newdir)
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							B.setDir(newdir)
 						bloodiness--
 
 
@@ -596,7 +596,7 @@ var/global/mulebot_count = 0
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				calling_ai << "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>"
+				calling_ai.text2tab("<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.

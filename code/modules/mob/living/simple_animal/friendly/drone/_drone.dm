@@ -44,6 +44,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
+	faction = list("silicon")
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -189,7 +190,7 @@
 		else
 			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	user.text2tab(msg)
 
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
@@ -207,10 +208,10 @@
 
 /mob/living/simple_animal/drone/emp_act(severity)
 	Stun(5)
-	src << "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	src.text2tab("<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
-		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
+		src.text2tab("<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
@@ -226,7 +227,7 @@
 					sources += alarmsource
 				return
 		L[A.name] = list(A, list(alarmsource))
-		src << "--- [class] alarm detected in [A.name]!"
+		src.text2tab("--- [class] alarm detected in [A.name]!")
 
 
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
@@ -243,7 +244,7 @@
 					cleared = 1
 					L -= I
 		if(cleared)
-			src << "--- [class] alarm in [A.name] has been cleared."
+			src.text2tab("--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

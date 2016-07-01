@@ -24,24 +24,24 @@
 		return
 
 	if(H.internal == src)
-		H << "<span class='notice'>You close [src] valve.</span>"
+		H.text2tab("<span class='notice'>You close [src] valve.</span>")
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot("breathing_tube"))
 			if(!H.wear_mask)
-				H << "<span class='warning'>You need a mask!</span>"
+				H.text2tab("<span class='warning'>You need a mask!</span>")
 				return
 			if(H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
 			if(!(H.wear_mask.flags & MASKINTERNALS))
-				H << "<span class='warning'>[H.wear_mask] can't use [src]!</span>"
+				H.text2tab("<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 
 		if(H.internal)
-			H << "<span class='notice'>You switch your internals to [src].</span>"
+			H.text2tab("<span class='notice'>You switch your internals to [src].</span>")
 		else
-			H << "<span class='notice'>You open [src] valve.</span>"
+			H.text2tab("<span class='notice'>You open [src] valve.</span>")
 		H.internal = src
 		H.update_internals_hud_icon(1)
 	H.update_action_buttons_icon()
@@ -68,10 +68,10 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+		if (icon == src) user.text2tab("<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	user << "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>"
+	user.text2tab("<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>")
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -89,7 +89,7 @@
 	else
 		descriptive = "furiously hot"
 
-	user << "<span class='notice'>It feels [descriptive].</span>"
+	user.text2tab("<span class='notice'>It feels [descriptive].</span>")
 
 /obj/item/weapon/tank/blob_act(obj/effect/blob/B)
 	if(prob(50))

@@ -29,6 +29,9 @@
 	if(!(scanner && pod1 && autoprocess))
 		return
 
+	if(!pod1.is_operational())
+		return
+
 	if(scanner.occupant && (scanner.scan_level > 2))
 		scan_mob(scanner.occupant)
 
@@ -80,7 +83,7 @@
 				return
 			W.loc = src
 			src.diskette = W
-			user << "<span class='notice'>You insert [W].</span>"
+			user.text2tab("<span class='notice'>You insert [W].</span>")
 			src.updateUsrDialog()
 			return
 	else
@@ -274,7 +277,7 @@
 
 		else if (src.menu == 4)
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
-			if (istype(C)||istype(C, /obj/item/device/pda))
+			if (istype(C)||istype(C, /obj/item/device/pda)||istype(C, /obj/item/device/tablet))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
 					src.records.Remove(active_record)

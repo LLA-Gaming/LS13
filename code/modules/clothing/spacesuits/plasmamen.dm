@@ -15,7 +15,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	user.text2tab("<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)

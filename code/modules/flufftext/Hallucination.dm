@@ -199,10 +199,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
 		sleep(10)
 		var/xeno_name = xeno.name
-		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		target.text2tab("<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
 		sleep(10)
 		qdel(xeno)
-		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+		target.text2tab("<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
 
 /obj/effect/hallucination/singularity_scare
@@ -386,7 +386,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "<span class='danger'>[my_target] stumbles around.</span>"
+				O.text2tab("<span class='danger'>[my_target] stumbles around.</span>")
 
 /obj/effect/fake_attacker/New(loc,var/mob/living/carbon/T)
 	..()
@@ -422,7 +422,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
+			src.setDir(get_dir(src,my_target))
 			step_towards(src,my_target)
 			updateimage()
 		else
@@ -518,13 +518,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				person = H
 		people += H
 	if(person) //Basic talk
-		target << target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans())
+		target.text2tab(target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans()))
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
+		target.text2tab(target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans()))
 	qdel(src)
 
 /obj/effect/hallucination/message
@@ -541,7 +541,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		"<span class='warning'>You feel faint.</span>", \
 		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
 		"<span class='notice'>You can see...everything!</span>")
-	target << chosen
+	target.text2tab(chosen)
 	qdel(src)
 
 /mob/living/carbon/proc/hallucinate(hal_type) // Todo -> proc / defines
@@ -601,10 +601,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 					src << pick(creepyasssounds)
 				if(13)
-					src << "<span class='warning'>You feel a tiny prick!</span>"
+					src.text2tab("<span class='warning'>You feel a tiny prick!</span>")
 				if(14)
-					src << "<h1 class='alert'>Priority Announcement</h1>"
-					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+					src.text2tab("<h1 class='alert'>Priority Announcement</h1>")
+					src.text2tab("<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
 					src << sound('sound/AI/shuttledock.ogg')
 				if(15)
 					src << 'sound/items/Welder.ogg'

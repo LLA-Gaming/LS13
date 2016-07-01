@@ -1,11 +1,7 @@
 /world
 
 	hub = "Exadv1.spacestation13"
-#ifdef PUTONHUB
 	hub_password = "kMZy3U5jJHSiBQjr"
-#else
-	hub_password = "SORRYNOPASSWORD"
-#endif
 	name = "/tg/ Station 13"
 
 /*

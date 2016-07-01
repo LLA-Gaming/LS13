@@ -542,7 +542,7 @@
 		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
 		var/points = rand(5, 10)
 		O.add_points(points)
-		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
+		O.text2tab("<span class='notice'>Gained [points] resources from the death of [M].</span>")
 		M.death()
 	if(M)
 		M.apply_damage(0.5*reac_volume, BRUTE)
@@ -663,4 +663,4 @@
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	M << "<span class='userdanger'>[totalmessage]</span>"
+	M.text2tab("<span class='userdanger'>[totalmessage]</span>")

@@ -38,4 +38,4 @@
 
 /obj/item/device/pipe_painter/examine()
 	..()
-	usr << "It is set to [mode]."
+	usr.text2tab("It is set to [mode].")

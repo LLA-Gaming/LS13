@@ -58,7 +58,7 @@
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off [src].</span>"
+		user.text2tab("<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
 		tagged = 0
 		update_icon()
@@ -66,7 +66,7 @@
 /obj/structure/closet/body_bag/update_icon()
 	..()
 	if (tagged)
-		overlays += "bodybag_label"
+		add_overlay("bodybag_label")
 
 /obj/structure/closet/body_bag/close()
 	if(..())

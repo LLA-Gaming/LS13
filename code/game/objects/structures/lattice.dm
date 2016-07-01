@@ -48,7 +48,7 @@
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
-			user << "<span class='notice'>Slicing [name] joints ...</span>"
+			user.text2tab("<span class='notice'>Slicing [name] joints ...</span>")
 			Deconstruct()
 	else
 		var/turf/T = get_turf(src)

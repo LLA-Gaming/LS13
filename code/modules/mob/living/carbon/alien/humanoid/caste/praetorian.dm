@@ -34,9 +34,11 @@
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
 		user << "<span class='danger'>Without the hivemind, you would be unfit to rule as queen!</span>"
+		user.text2tab("<span class='danger'>Without the hivemind, you would be unfit to rule as queen!</span>")
 		return 0
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
+		user.text2tab("<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>")
 		return 0
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
@@ -45,3 +47,9 @@
 	else
 		user << "<span class='notice'>We already have an alive queen.</span>"
 		return 0
+		user.text2tab("<span class='notice'>We already have an alive queen.</span>")
+		return 0
+
+
+
+

@@ -149,7 +149,7 @@
 	l_pocket = /obj/item/weapon/melee/energy/sword/saber
 	l_hand = /obj/item/weapon/storage/secure/briefcase
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/device/pda/heads
+	belt = /obj/item/device/tablet/clear
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
@@ -169,10 +169,10 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 
-	var/obj/item/device/pda/heads/pda = H.belt
-	pda.owner = H.real_name
-	pda.ownjob = "Reaper"
-	pda.update_label()
+	var/obj/item/device/tablet/clear/tablet = H.belt
+	tablet.owner = H.real_name
+	tablet.ownjob = "Reaper"
+	tablet.update_label()
 
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
@@ -357,7 +357,7 @@
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

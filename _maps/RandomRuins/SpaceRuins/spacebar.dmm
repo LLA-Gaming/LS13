@@ -6,7 +6,7 @@
 /turf/closed/mineral,
 /area/space)
 "ac" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/asteroid/airless,
 /area/space)
 "ad" = (
 /obj/structure/grille,

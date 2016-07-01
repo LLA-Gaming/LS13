@@ -85,13 +85,13 @@
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(pin)
-		user << "It has [pin] installed."
+		user.text2tab("It has [pin] installed.")
 	else
-		user << "It doesn't have a firing pin installed, and won't fire."
+		user.text2tab("It doesn't have a firing pin installed, and won't fire.")
 	if(unique_reskin && !current_skin)
-		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+		user.text2tab("<span class='notice'>Alt-click it to reskin it.</span>")
 	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
+		user.text2tab("<span class='notice'>Use a pen on it to rename it.</span>")
 
 
 /obj/item/weapon/gun/proc/process_chamber()
@@ -105,7 +105,7 @@
 
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	user << "<span class='danger'>*click*</span>"
+	user.text2tab("<span class='danger'>*click*</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
@@ -166,14 +166,14 @@
 	if(clumsy_check)
 		if(istype(user))
 			if (user.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				user.text2tab("<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_hand())
-		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+		user.text2tab("<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
 		return
 
 	process_fire(target,user,1,params)
@@ -185,6 +185,15 @@
 	if(!handle_pins(user) || !user.can_use_guns(src))
 		return 0
 
+	if(locked)
+		if(!user.check_contents_for(locked))
+			var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread(get_turf(src))
+			S.set_up(3, 0, get_turf(src))
+			S.start()
+			usr.text2tab("<div class='warning'>The [src] shocks you.</div>")
+			usr.AdjustWeakened(2)
+			return 0
+
 	return 1
 
 /obj/item/weapon/gun/proc/handle_pins(mob/living/user)
@@ -195,7 +204,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		user.text2tab("<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>")
 	return 0
 
 obj/item/weapon/gun/proc/newshot()
@@ -212,6 +221,12 @@ obj/item/weapon/gun/proc/newshot()
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
+
+	if(chambered)
+		if(chambered.burst_size != -1)
+			burst_size = chambered.burst_size
+		if(chambered.fire_delay != -1)
+			fire_delay = chambered.fire_delay
 
 	if(burst_size > 1)
 		firing_burst = 1
@@ -239,6 +254,7 @@ obj/item/weapon/gun/proc/newshot()
 				shoot_with_empty_chamber(user)
 				break
 			process_chamber()
+			newshot()
 			update_icon()
 			sleep(fire_delay)
 		firing_burst = 0
@@ -281,7 +297,7 @@ obj/item/weapon/gun/proc/newshot()
 			if(!F)
 				if(!user.unEquip(I))
 					return
-				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				user.text2tab("<span class='notice'>You click [S] into place on [src].</span>")
 				if(S.on)
 					SetLuminosity(0)
 				F = S
@@ -296,7 +312,7 @@ obj/item/weapon/gun/proc/newshot()
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(F && can_flashlight)
 			for(var/obj/item/device/flashlight/seclite/S in src)
-				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				user.text2tab("<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
 				S.loc = get_turf(user)
 				update_gunlight(user)
@@ -321,9 +337,9 @@ obj/item/weapon/gun/proc/newshot()
 
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
+		user.text2tab("<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>")
 	F.on = !F.on
-	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
+	user.text2tab("<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_gunlight(user)
@@ -375,7 +391,7 @@ obj/item/weapon/gun/proc/newshot()
 /obj/item/weapon/gun/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		user.text2tab("<span class='warning'>You can't do that right now!</span>")
 		return
 	if(unique_reskin && !current_skin && loc == user)
 		reskin_gun(user)
@@ -388,7 +404,7 @@ obj/item/weapon/gun/proc/newshot()
 		if(options[choice] == null)
 			return
 		current_skin = options[choice]
-		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
+		M.text2tab("Your gun is now skinned as [choice]. Say hello to your new friend.")
 		update_icon()
 
 
@@ -397,7 +413,7 @@ obj/item/weapon/gun/proc/newshot()
 
 	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		name = input
-		M << "You name the gun [input]. Say hello to your new friend."
+		M.text2tab("You name the gun [input]. Say hello to your new friend.")
 		return
 
 
@@ -503,3 +519,9 @@ obj/item/weapon/gun/proc/newshot()
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
+
+
+/obj/item/weapon/gun/burn()
+	if(pin)
+		qdel(pin)
+	.=..()

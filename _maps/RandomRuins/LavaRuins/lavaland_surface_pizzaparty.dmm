@@ -326,14 +326,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"Q" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/a_gift,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
 "P" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/decal/remains/human,
@@ -341,6 +333,14 @@
 	desc = "A festive party hat with the name 'timmy' scribbled on the front.";
 	name = "party hat"
 	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/a_gift,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

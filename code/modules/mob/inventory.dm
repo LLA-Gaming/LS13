@@ -26,6 +26,8 @@
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
+	if(!has_left_hand())
+		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -43,6 +45,8 @@
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(!put_in_hand_check(W))
+		return 0
+	if(!has_right_hand())
 		return 0
 	if(!r_hand)
 		W.loc = src
@@ -105,14 +109,14 @@
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand()
-	if(!loc.allow_drop())
+	if(!loc || !loc.allow_drop())
 		return
 	return unEquip(l_hand) //All needed checks are in unEquip
 
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand()
-	if(!loc.allow_drop())
+	if(!loc || !loc.allow_drop())
 		return
 	return unEquip(r_hand)
 
@@ -219,7 +223,7 @@
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)
 	if(src != M.get_active_hand())
-		M << "<span class='warning'>You are not holding anything to equip!</span>"
+		M.text2tab("<span class='warning'>You are not holding anything to equip!</span>")
 		return 0
 
 	if(M.equip_to_appropriate_slot(src))
@@ -253,7 +257,7 @@
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return 1
 
-	M << "<span class='warning'>You are unable to equip that!</span>"
+	M.text2tab("<span class='warning'>You are unable to equip that!</span>")
 	return 0
 
 

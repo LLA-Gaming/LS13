@@ -19,6 +19,7 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/fyellow/New()
+	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/black
@@ -43,7 +44,7 @@
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
+			user.text2tab("<span class='notice'>You snip the fingertips off of [src].</span>")
 			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
 			qdel(src)
@@ -182,6 +183,7 @@
 	item_color = "mime"
 
 /obj/item/clothing/gloves/color/random/New()
+	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
 		/obj/item/clothing/gloves/color/red = 1,

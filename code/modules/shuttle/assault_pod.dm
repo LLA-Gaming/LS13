@@ -47,12 +47,12 @@
 	landing_zone.dheight = dheight
 	landing_zone.width = width
 	landing_zone.height = height
-	landing_zone.dir = lz_dir
+	landing_zone.setDir(lz_dir)
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+	user.text2tab("Landing zone set.")
 
 	qdel(src)

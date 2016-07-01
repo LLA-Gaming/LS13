@@ -217,7 +217,7 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)
-		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		usr.text2tab("<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
 			return 0
 	for(var/obj/item/I in src_object)
@@ -290,7 +290,7 @@
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	I.loc = src
-	I.dir = AM.dir
+	I.setDir(AM.dir)
 	I.alpha = 128
 
 	if(!blueprint_data)

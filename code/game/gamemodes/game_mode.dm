@@ -38,19 +38,18 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
-
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 
 
 ///can_start()
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
-/datum/game_mode/proc/can_start()
+/datum/game_mode/proc/can_start(var/forced = 0)
 	var/playerC = 0
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(!Debug2)
+	if(!Debug2 && !forced)
 		if(playerC < required_players)
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
@@ -318,6 +317,11 @@
 				if(player.assigned_role == job)
 					candidates -= player
 
+	for(var/datum/mind/player in candidates) //remove perc
+		for(var/job in list("Perseus Security Enforcer", "Perseus Security Commander"))
+			if(player.assigned_role == job)
+				candidates -= player
+
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
@@ -474,7 +478,7 @@
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			M.text2tab(msg,"ooc")
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
@@ -526,7 +530,7 @@
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"
+		M.text2tab("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
 		M.ghostize(0)
 		M.key = theghost.key

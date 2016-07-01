@@ -36,12 +36,12 @@
 					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
-					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
+					user.text2tab("<span class='notice'>You inject the contents of the syringe into the seeds.</span>")
 					contains_sample = 1
 				else
-					user << "<span class='warning'>The seeds reject the sample!</span>"
+					user.text2tab("<span class='warning'>The seeds reject the sample!</span>")
 		else
-			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
+			user.text2tab("<span class='warning'>The seeds already contain a genetic sample!</span>")
 	..()
 
 /obj/item/seeds/replicapod/get_analyzer_text()
@@ -108,6 +108,6 @@
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
-			harvestseeds.loc = user.loc
+			harvestseeds.forceMove(parent.loc)
 
 	parent.update_tray()

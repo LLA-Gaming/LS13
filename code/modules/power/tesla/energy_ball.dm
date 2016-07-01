@@ -61,7 +61,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = 0
 		pixel_y = 0
 
-		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		setDir(tesla_zap(src, 7, TESLA_DEFAULT_POWER))
 
 		pixel_x = -32
 		pixel_y = -32
@@ -76,7 +76,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/examine(mob/user)
 	..()
 	if(orbiting_balls.len)
-		user << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+		user.text2tab("The amount of orbiting mini-balls is [orbiting_balls.len].")
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)

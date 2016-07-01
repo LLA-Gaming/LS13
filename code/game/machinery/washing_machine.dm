@@ -14,7 +14,7 @@
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click it to start a wash cycle.</span>"
+	user.text2tab("<span class='notice'>Alt-click it to start a wash cycle.</span>")
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
@@ -24,11 +24,11 @@
 		return
 
 	if(state_open)
-		user << "<span class='notice'>Close the door first</span>"
+		user.text2tab("<span class='notice'>Close the door first</span>")
 		return
 
 	if(bloody_mess)
-		user << "<span class='warning'>[src] must be cleaned up first.</span>"
+		user.text2tab("<span class='warning'>[src] must be cleaned up first.</span>")
 		return
 
 	if(has_corgi)
@@ -177,7 +177,7 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
 	else if(bloody_mess)
@@ -186,7 +186,7 @@
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
 	if(panel_open)
-		overlays += image(icon, icon_state = "wm_panel")
+		add_overlay(image(icon, icon_state = "wm_panel"))
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
@@ -196,19 +196,19 @@
 	else if(user.a_intent != "harm")
 
 		if (!state_open)
-			user << "<span class='warning'>Open the door first!</span>"
+			user.text2tab("<span class='warning'>Open the door first!</span>")
 			return 1
 
 		if(bloody_mess)
-			user << "<span class='warning'>[src] must be cleaned up first.</span>"
+			user.text2tab("<span class='warning'>[src] must be cleaned up first.</span>")
 			return 1
 
 		if(contents.len >= max_wash_capacity)
-			user << "<span class='warning'>The washing machine is full!</span>"
+			user.text2tab("<span class='warning'>The washing machine is full!</span>")
 			return 1
 
 		if(!user.unEquip(W))
-			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
+			user.text2tab("<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
 		if(istype(W,/obj/item/toy/crayon) || istype(W,/obj/item/weapon/stamp))
@@ -221,12 +221,12 @@
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	if(busy)
-		user << "<span class='warning'>[src] is busy.</span>"
+		user.text2tab("<span class='warning'>[src] is busy.</span>")
 		return
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.buckled_mobs.len)
+		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
 			if(iscorgi(L))

@@ -43,10 +43,10 @@
 		return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			user << "Unweld the [src] first!"
+			user.text2tab("Unweld the [src] first!")
 		if(do_after(user, 80/W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "You dismantle the [src]."
+			user.text2tab("You dismantle the [src].")
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)
@@ -63,7 +63,7 @@
 						if(!src || !WT.isOn())
 							return
 						anchored = 1
-						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
+						user.text2tab("<span class='notice'>You weld \the [src] to the floor.</span>")
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -74,7 +74,7 @@
 						if(!src || !WT.isOn())
 							return
 						anchored  = 0
-						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
+						user.text2tab("<span class='notice'>You cut \the [src] free from the floor.</span>")
 	//Finishing the frame
 	else if(istype(W,/obj/item/stack/sheet))
 		if(finished)
@@ -82,7 +82,7 @@
 		var/obj/item/stack/sheet/S = W
 		if(istype(W, /obj/item/stack/sheet/glass))
 			if(S.get_amount() < 5)
-				user << "<span class='warning'>You need five sheets of glass to create a reflector!</span>"
+				user.text2tab("<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
 			else
 				S.use(5)
@@ -90,7 +90,7 @@
 				qdel (src)
 		if(istype(W,/obj/item/stack/sheet/rglass))
 			if(S.get_amount() < 10)
-				user << "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>"
+				user.text2tab("<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
 			else
 				S.use(10)
@@ -116,16 +116,16 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (src.anchored)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		usr.text2tab("<span class='warning'>It is fastened to the floor!</span>")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 
 /obj/structure/reflector/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, be_close=TRUE))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		user.text2tab("<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		rotate()

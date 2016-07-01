@@ -2,12 +2,12 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_SENIORADMIN))
 		return
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_SENIORADMIN))
 		return
 
 	var/output = {"<!DOCTYPE html>
@@ -57,13 +57,13 @@
 	if(!usr.client)
 		return
 
-	if (!check_rights(R_PERMISSIONS))
+	if (!check_rights(R_SENIORADMIN))
 		return
 
 	establish_db_connection()
 
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -91,14 +91,14 @@
 		insert_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
 		log_query.Execute()
-		usr << "<span class='adminnotice'>New admin added.</span>"
+		usr.text2tab("<span class='adminnotice'>New admin added.</span>")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
 			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET rank = '[new_rank]' WHERE id = [admin_id]")
 			insert_query.Execute()
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
-			usr << "<span class='adminnnotice'>Admin rank changed.</span>"
+			usr.text2tab("<span class='adminnnotice'>Admin rank changed.</span>")
 
 
 /datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
@@ -106,12 +106,12 @@
 		return
 	if(!usr.client)
 		return
-	if(check_rights(R_PERMISSIONS))
+	if(check_rights(R_SENIORADMIN))
 		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		usr.text2tab("<span class='danger'>Failed to establish database connection.</span>","asay")
 		return
 
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))

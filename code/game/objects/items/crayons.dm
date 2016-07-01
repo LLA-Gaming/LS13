@@ -5,6 +5,10 @@
 #define RANDOM_RUNE "Random Rune"
 #define RANDOM_ANY "Random Anything"
 
+#define PAINT_NORMAL	1
+#define PAINT_LARGE_HORIZONTAL	2
+#define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
+
 /*
  * Crayons
  */
@@ -34,8 +38,11 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
+	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
 	var/list/all_drawables
+
+	var/paint_mode = PAINT_NORMAL
 
 	var/charges = 30 //-1 or less for unlimited uses
 	var/charges_left
@@ -76,7 +83,7 @@
 			graffiti |= "antilizard"
 			graffiti |= "prolizard"
 
-	all_drawables = graffiti + letters + numerals + oriented + runes
+	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
 
 	refill()
@@ -108,6 +115,10 @@
 
 /obj/item/toy/crayon/proc/use_charges(amount)
 	// Returns number of charges actually used
+	switch(paint_mode)
+		if(PAINT_LARGE_HORIZONTAL)
+			amount *= 3
+
 	if(charges == -1)
 		. = amount
 		refill()
@@ -126,8 +137,8 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
-			left!</span>"
+		user.text2tab("<span class='warning'>There is no more of [src.name] \
+			left!</span>")
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -144,8 +155,8 @@
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(has_cap)
 		is_capped = !is_capped
-		user << "<span class='notice'>The cap on [src] is now \
-			[is_capped ? "on" : "off"].</span>"
+		user.text2tab("<span class='notice'>The cap on [src] is now \
+			[is_capped ? "on" : "off"].</span>")
 		update_icon()
 
 /obj/item/toy/crayon/ui_data()
@@ -157,6 +168,11 @@
 	D += list(list("name" = "Graffiti", "items" = g_items))
 	for(var/g in graffiti)
 		g_items += list(list("item" = g))
+
+	var/list/glh_items = list()
+	D += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
+	for(var/glh in graffiti_large_h)
+		glh_items += list(list("item" = glh))
 
 	var/list/L_items = list()
 	D += list(list("name" = "Letters", "items" = L_items))
@@ -206,6 +222,11 @@
 			if(stencil in all_drawables + randoms)
 				drawtype = stencil
 				. = TRUE
+			if(stencil in graffiti_large_h)
+				paint_mode = PAINT_LARGE_HORIZONTAL
+				text_buffer = ""
+			else
+				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
 				paint_color = input(usr,"Choose Color") as color
@@ -215,6 +236,8 @@
 				"Scribbles",default = text_buffer)
 			text_buffer = crayon_text_strip(txt)
 			. = TRUE
+			paint_mode = PAINT_NORMAL
+			drawtype = "a"
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
@@ -282,9 +305,9 @@
 			else
 				graf_rot = 0
 
-	user << "<span class='notice'>You start \
+	user.text2tab("<span class='notice'>You start \
 		[instant ? "spraying" : "drawing"] a [temp] on the \
-		[target.name]...</span>"
+		[target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -300,7 +323,6 @@
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
-		text_buffer = copytext(text_buffer,2)
 
 	if(actually_paints)
 		if(gang_mode)
@@ -309,11 +331,22 @@
 				return
 			tag_for_gang(user, target)
 		else
-			new /obj/effect/decal/cleanable/crayon(target, paint_color,
-				drawing, temp, graf_rot)
+			switch(paint_mode)
+				if(PAINT_NORMAL)
+					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				if(PAINT_LARGE_HORIZONTAL)
+					if(is_type_in_list(locate(target.x-1,target.y,target.z), validSurfaces)\
+					   && is_type_in_list(locate(target.x+1,target.y,target.z), validSurfaces))
+						new /obj/effect/decal/cleanable/crayon(locate(target.x-1,target.y,target.z), paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					else
+						user.text2tab("<span class='warning'>There isn't enough space to paint!</span>")
+						return
 
-	user << "<span class='notice'>You finish \
-		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+	user.text2tab("<span class='notice'>You finish \
+		[instant ? "spraying" : "drawing"] \the [temp].</span>")
+
+	if(length(text_buffer))
+		text_buffer = copytext(text_buffer,2)
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -327,7 +360,7 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		user << "You take a bite of the [src.name]. Delicious!"
+		user.text2tab("You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(5)
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
@@ -341,8 +374,8 @@
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_area(target)
 	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
-		user << "<span class='warning'>[A] is unsuitable for \
-			tagging.</span>"
+		user.text2tab("<span class='warning'>[A] is unsuitable for \
+			tagging.</span>")
 		return FALSE
 
 	var/spraying_over = FALSE
@@ -350,14 +383,14 @@
 		spraying_over = TRUE
 
 	for(var/obj/machinery/power/apc in target)
-		user << "<span class='warning'>You can't tag an APC.</span>"
+		user.text2tab("<span class='warning'>You can't tag an APC.</span>")
 		return FALSE
 
 	var/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
-		user << "<span class='danger'>[A] has already been tagged \
+		user.text2tab("<span class='danger'>[A] has already been tagged \
 			by the [occupying_gang] gang! You must get rid of or spray over \
-			the old tag first!</span>"
+			the old tag first!</span>")
 		return FALSE
 
 	// If you pass the gaunlet of checks, you're good to proceed
@@ -378,7 +411,7 @@
 	var/area/territory = get_area(target)
 
 	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
-	user << "<span class='notice'>You tagged [territory] for your gang!</span>"
+	user.text2tab("<span class='notice'>You tagged [territory] for your gang!</span>")
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -468,23 +501,23 @@
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.item_color)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.item_color))
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		switch(C.item_color)
 			if("mime")
-				usr << "This crayon is too sad to be contained in this box."
+				usr.text2tab("This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this \
-					box."
+				usr.text2tab("This crayon is too powerful to be contained in this \
+					box.")
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
-			user << "Spraycans are not crayons."
+			user.text2tab("Spraycans are not crayons.")
 			return
 	return ..()
 
@@ -555,16 +588,16 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		user << "It has [charges_left] uses left."
+		user.text2tab("It has [charges_left] uses left.")
 	else
-		user << "It is empty."
+		user.text2tab("It is empty.")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 
 	if(is_capped)
-		user << "<span class='warning'>Take the cap off first!</span>"
+		user.text2tab("<span class='warning'>Take the cap off first!</span>")
 		return
 
 	if(check_empty(user))
@@ -577,8 +610,8 @@
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] \
 			into the face of [target]!</span>")
-		target << "<span class='userdanger'>[user] sprays [src] into your \
-			face!</span>"
+		C.text2tab("<span class='userdanger'>[user] sprays [src] into your \
+			face!</span>")
 
 		if(C.client)
 			C.blur_eyes(3)
@@ -620,11 +653,11 @@
 /obj/item/toy/crayon/spraycan/update_icon()
 	icon_state = is_capped ? icon_capped : icon_uncapped
 	if(use_overlays)
-		overlays.Cut()
+		cut_overlays()
 		var/image/I = image('icons/obj/crayons.dmi',
 			icon_state = "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		I.color = paint_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/toy/crayon/spraycan/gang
 	//desc = "A modified container containing suspicious paint."
@@ -643,8 +676,8 @@
 /obj/item/toy/crayon/spraycan/gang/examine(mob/user)
 	. = ..()
 	if((user.mind && user.mind.gang_datum) || isobserver(user))
-		user << "This spraycan has \
-			been specially modified for tagging territory."
+		user.text2tab("This spraycan has \
+			been specially modified for tagging territory.")
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"
@@ -654,7 +687,7 @@
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
 	if(!isrobot(user))
-		user << "<span class='notice'>How did you get this?</span>"
+		user.text2tab("<span class='notice'>How did you get this?</span>")
 		qdel(src)
 		return FALSE
 

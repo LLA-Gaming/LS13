@@ -5,12 +5,12 @@
 
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to remove the handlebars...</span>"
+		user.text2tab("<span class='notice'>You begin to remove the handlebars...</span>")
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40/I.toolspeed, target = src))
 			new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
-			user << "<span class='notice'>You remove the handlebars from [src].</span>"
+			user.text2tab("<span class='notice'>You remove the handlebars from [src].</span>")
 			qdel(src)
 
 /obj/vehicle/scooter/handle_vehicle_layer()
@@ -21,22 +21,32 @@
 
 /obj/vehicle/scooter/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(EAST)
 					buckled_mob.pixel_x = -2
-					buckled_mob.pixel_y = 4
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(WEST)
 					buckled_mob.pixel_x = 2
-					buckled_mob.pixel_y = 4
+			if(buckled_mob.get_num_legs() > 0)
+				buckled_mob.pixel_y = 4
+			else
+				buckled_mob.pixel_y = -4
+
+/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
+	vehicle_move_delay = initial(vehicle_move_delay)
+	..()
+	if(M.get_num_legs() < 2)
+		vehicle_move_delay ++
+		if(M.get_num_arms() <= 0)
+			if(buckled_mobs.len)//to prevent the message displaying twice due to unbuckling
+				M.text2tab("<span class='warning'>Your limbless body flops off \the [src].</span>")
+			unbuckle_mob(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -46,14 +56,15 @@
 	density = 0
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		density = 1
 	else
 		density = 0
+	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
-	if(A.density && buckled_mobs.len)
+	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
@@ -73,7 +84,7 @@
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You deconstruct [src].</span>"
+		user.text2tab("<span class='notice'>You deconstruct [src].</span>")
 		new /obj/item/stack/rods(get_turf(src),10)
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
 		qdel(src)
@@ -82,21 +93,21 @@
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.amount < 5)
-			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
+			user.text2tab("<span class='warning'>You need at least five metal sheets to make proper wheels!</span>")
 			return
-		user << "<span class='notice'>You begin to add wheels to [src].</span>"
+		user.text2tab("<span class='notice'>You begin to add wheels to [src].</span>")
 		if(do_after(user, 80, target = src))
 			M.use(5)
-			user << "<span class='notice'>You finish making wheels for [src].</span>"
+			user.text2tab("<span class='notice'>You finish making wheels for [src].</span>")
 			new /obj/vehicle/scooter/skateboard(user.loc)
 			qdel(src)
 
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
+		user.text2tab("<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
+			user.text2tab("<span class='notice'>You deconstruct the wheels on [src].</span>")
 			new /obj/item/stack/sheet/metal(get_turf(src),5)
 			new /obj/item/scooter_frame(get_turf(src))
 			qdel(src)
@@ -104,11 +115,11 @@
 	else if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/C = I
 		if(C.get_amount() < 2)
-			user << "<span class='warning'>You need at least two rods to make proper handlebars!</span>"
+			user.text2tab("<span class='warning'>You need at least two rods to make proper handlebars!</span>")
 			return
-		user << "<span class='notice'>You begin making handlebars for [src].</span>"
+		user.text2tab("<span class='notice'>You begin making handlebars for [src].</span>")
 		if(do_after(user, 25, target = src))
-			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
+			user.text2tab("<span class='notice'>You add the rods to [src], creating handlebars.</span>")
 			C.use(2)
 			new/obj/vehicle/scooter(get_turf(src))
 			qdel(src)

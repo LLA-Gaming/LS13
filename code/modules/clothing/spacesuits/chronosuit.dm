@@ -69,7 +69,7 @@
 	switch(severity)
 		if(1)
 			if(activated && user && ishuman(user) && (user.wear_suit == src))
-				user << "<span class='userdanger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
+				user.text2tab("<span class='userdanger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>")
 			deactivate(1, 1)
 
 /obj/item/clothing/suit/space/chronos/proc/finish_chronowalk()
@@ -113,7 +113,7 @@
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
 			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
-				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+				user.text2tab("<span class='notice'>Your [slot_item.name] got left behind.</span>")
 
 		user.ExtinguishMob()
 		if(user.buckled)
@@ -193,24 +193,24 @@
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user))
 			if(user.wear_suit == src)
-				user << "\nChronosuitMK4 login: root"
-				user << "Password:\n"
-				user << "root@ChronosuitMK4# chronowalk4 --start\n"
+				user.text2tab("\nChronosuitMK4 login: root")
+				user.text2tab("Password:\n")
+				user.text2tab("root@ChronosuitMK4# chronowalk4 --start\n")
 				if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helmet"
+					user.text2tab("\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helmet")
 					helmet = user.head
 					helmet.flags |= NODROP
 					helmet.suit = src
 					src.flags |= NODROP
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
+					user.text2tab("\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
+					user.text2tab("\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
+					user.text2tab("\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
 					new_camera(user)
 					SSobj.processing |= src
 					activated = 1
 				else
-					user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet"
-					user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helmet. <b>Aborting...</b>"
+					user.text2tab("\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet")
+					user.text2tab("<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helmet. <b>Aborting...</b>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0
@@ -223,21 +223,21 @@
 		if(user && ishuman(user))
 			if(user.wear_suit == src)
 				if(!silent)
-					user << "\nroot@ChronosuitMK4# chronowalk4 --stop\n"
+					user.text2tab("\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 				if(camera)
 					if(!silent)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view" //yes I know they aren't a different color when shutting down, but they were too similar at a glance
+						user.text2tab("\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view") //yes I know they aren't a different color when shutting down, but they were too similar at a glance
 					qdel(camera)
 				if(helmet)
 					if(!silent)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
+						user.text2tab("\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver")
+						user.text2tab("\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner")
+						user.text2tab("\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
 					helmet.flags &= ~NODROP
 					helmet.suit = null
 					helmet = null
 				if(!silent)
-					user << "logout"
+					user.text2tab("logout")
 			teleport_now.Remove(user)
 		src.flags &= ~NODROP
 		cooldown = world.time + cooldowntime * 1.5

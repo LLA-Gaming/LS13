@@ -5,6 +5,8 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return
@@ -413,14 +415,14 @@
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
+					G.text2tab("<span class='notice'>Choice registered: Yes.</span>")
 					if((world.time-time_passed)>poll_time)
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						G.text2tab("<span class='danger'>Sorry, you were too late for the consideration!</span>")
 						G << 'sound/machines/buzz-sigh.ogg'
 					else
 						candidates += G
 				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
+					G.text2tab("<span class='danger'>Choice registered: No.</span>")
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.

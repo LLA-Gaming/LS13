@@ -161,7 +161,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -211,7 +210,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -281,7 +279,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -304,9 +301,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt
-	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered)
 "bb" = (
 /obj/structure/weightlifter,
@@ -332,9 +327,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt
-	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered)
 "bg" = (
 /obj/structure/sign/barsign,

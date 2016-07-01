@@ -18,7 +18,7 @@
 		if(user.mind && (user.mind in ticker.mode.get_gang_bosses()))
 			if(..(M,user,1))
 				if(cooldown)
-					user << "<span class='warning'>[src] needs more time to recharge before it can be used.</span>"
+					user.text2tab("<span class='warning'>[src] needs more time to recharge before it can be used.</span>")
 					return
 				if(M.client)
 					M.mind_initialize()		//give them a mind datum if they don't have one.
@@ -29,9 +29,9 @@
 							M.Paralyse(5)
 							cooldown(G)
 						if(1)
-							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
+							user.text2tab("<span class='warning'>This mind is resistant to recruitment!</span>")
 						else
-							user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
+							user.text2tab("<span class='warning'>This mind has already been recruited into a gang!</span>")
 			return
 	..()
 
@@ -56,7 +56,7 @@
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
-		M << "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>"
+		M.text2tab("<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
 
 
 //////////////
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/implant/gang/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Criminal Loyalty Implant<BR>
+				<b>Name:</b> Criminal brainwash implant<BR>
 				<b>Life:</b> A few seconds after injection.<BR>
 				<b>Important Notes:</b> Illegal<BR>
 				<HR>

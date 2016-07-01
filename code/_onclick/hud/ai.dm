@@ -83,21 +83,13 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.checklaws()
 
-/obj/screen/ai/pda_msg_send
-	name = "PDA - Send Message"
+/obj/screen/ai/ai_use_tablet
+	name = "Tablet - Use"
 	icon_state = "pda_send"
 
-/obj/screen/ai/pda_msg_send/Click()
+/obj/screen/ai/ai_use_tablet/Click()
 	var/mob/living/silicon/ai/AI = usr
-	AI.cmd_send_pdamesg(usr)
-
-/obj/screen/ai/pda_msg_show
-	name = "PDA - Show Message Log"
-	icon_state = "pda_receive"
-
-/obj/screen/ai/pda_msg_show/Click()
-	var/mob/living/silicon/ai/AI = usr
-	AI.cmd_show_message_log(usr)
+	AI.aitablet.use_messenger()
 
 /obj/screen/ai/image_take
 	name = "Take Image"
@@ -186,14 +178,9 @@
 	using.screen_loc = ui_ai_state_laws
 	static_inventory += using
 
-//PDA message
-	using = new /obj/screen/ai/pda_msg_send()
-	using.screen_loc = ui_ai_pda_send
-	static_inventory += using
-
-//PDA log
-	using = new /obj/screen/ai/pda_msg_show()
-	using.screen_loc = ui_ai_pda_log
+//Tablet
+	using = new /obj/screen/ai/ai_use_tablet()
+	using.screen_loc = ui_ai_use_tablet
 	static_inventory += using
 
 //Take image

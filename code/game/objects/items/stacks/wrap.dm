@@ -69,7 +69,7 @@
 				P.add_fingerprint(user)
 				I.add_fingerprint(user)
 				user.put_in_hands(P)
-			I.loc = P
+			I.forceMove(P)
 			var/size = round(I.w_class)
 			P.w_class = size
 			size = min(size, 5)
@@ -80,7 +80,7 @@
 		if(O.opened)
 			return
 		if(!O.density) //can't wrap non dense closets (e.g. body bags)
-			user << "<span class='warning'>You can't wrap this!</span>"
+			user.text2tab("<span class='warning'>You can't wrap this!</span>")
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
@@ -90,10 +90,10 @@
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			user.text2tab("<span class='warning'>You need more paper!</span>")
 			return
 	else
-		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
+		user.text2tab("<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")

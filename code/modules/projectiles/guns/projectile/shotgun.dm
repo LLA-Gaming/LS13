@@ -17,7 +17,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		user.text2tab("<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
 
@@ -70,7 +70,7 @@
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
-		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+		user.text2tab("A [chambered.BB ? "live" : "spent"] one is in the chamber.")
 
 /obj/item/weapon/gun/projectile/shotgun/lethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
@@ -118,13 +118,13 @@
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(obj/item/A, mob/user, params)
 	if(!bolt_open)
-		user << "<span class='notice'>The bolt is closed!</span>"
+		user.text2tab("<span class='notice'>The bolt is closed!</span>")
 		return
 	. = ..()
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/examine(mob/user)
 	..()
-	user << "The bolt is [bolt_open ? "open" : "closed"]."
+	user.text2tab("The bolt is [bolt_open ? "open" : "closed"].")
 
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
@@ -199,9 +199,9 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		user << "You switch to tube B."
+		user.text2tab("You switch to tube B.")
 	else
-		user << "You switch to tube A."
+		user.text2tab("You switch to tube A.")
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(user.incapacitated() || !Adjacent(user) || !istype(user))

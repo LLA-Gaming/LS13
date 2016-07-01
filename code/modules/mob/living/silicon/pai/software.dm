@@ -8,7 +8,6 @@
 
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
-															"digital messenger" = 5,
 															"medical records" = 15,
 															"security records" = 15,
 															//"camera jack" = 10,
@@ -42,8 +41,6 @@
 				left_part = ""
 			if("directives")
 				left_part = src.directives()
-			if("pdamessage")
-				left_part = src.pdamessage()
 			if("buy")
 				left_part = downloadSoftware()
 			if("manifest")
@@ -200,7 +197,7 @@
 					M = M.loc
 					count++
 					if(count >= 6)
-						src << "You are not being carried by anyone!"
+						src.text2tab("You are not being carried by anyone!")
 						return 0
 				spawn CheckDNA(M, src)
 
@@ -238,15 +235,19 @@
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
-				remove_med_sec_hud()
 				if(secHUD)
 					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
-				remove_med_sec_hud()
 				if(medHUD)
 					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
 				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
@@ -281,8 +282,6 @@
 	// Basic
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
-		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -370,15 +369,15 @@
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
-			P << "<b>No DNA detected</b>"
+			P.text2tab("<b>No DNA detected</b>")
 			return
-		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
+		P.text2tab("<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
 		if(M.dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			P.text2tab("<b>DNA is a match to stored Master DNA.</b>")
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			P.text2tab("<b>DNA does not match stored Master DNA.</b>")
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		P.text2tab("[M] does not seem like \he is going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -559,7 +558,7 @@
 	dat += "<font color=#55FF55>Connected</font> <br>"
 
 	if(!istype(machine, /obj/machinery/camera))
-		src << "DERP"
+		src.text2tab("DERP")
 	return dat
 
 // Door Jack
@@ -595,9 +594,9 @@
 	var/turf/T = get_turf(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+			AI.text2tab("<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+			AI.text2tab("<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
 			hackprogress += rand(1, 10)
@@ -614,23 +613,3 @@
 			src.hackprogress = 0
 			src.cable.machine:open()
 		sleep(50)			// Update every 5 seconds
-
-// Digital Messenger
-/mob/living/silicon/pai/proc/pdamessage()
-
-	var/dat = "<h3>Digital Messenger</h3>"
-	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
-	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
-	dat += "<ul>"
-	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-			if (P == src.pda)
-				continue
-			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
-			dat += "</li>"
-	dat += "</ul>"
-	dat += "<br><br>"
-	dat += "Messages: <hr> [pda.tnote]"
-	return dat

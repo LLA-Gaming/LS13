@@ -11,6 +11,7 @@
 	permeability_coefficient = 0.50
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
@@ -19,14 +20,14 @@
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, be_close=TRUE))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		user.text2tab("<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click [src] to adjust it.</span>"
+	user.text2tab("<span class='notice'>Alt-click [src] to adjust it.</span>")
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

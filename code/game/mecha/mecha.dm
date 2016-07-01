@@ -110,13 +110,6 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
-	var/static/list/armour_facings = list(
-	"[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR ),
-	"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR)
-	)
-
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -250,19 +243,19 @@
 	var/integrity = health/initial(health)*100
 	switch(integrity)
 		if(85 to 100)
-			user << "It's fully intact."
+			user.text2tab("It's fully intact.")
 		if(65 to 85)
-			user << "It's slightly damaged."
+			user.text2tab("It's slightly damaged.")
 		if(45 to 65)
-			user << "It's badly damaged."
+			user.text2tab("It's badly damaged.")
 		if(25 to 45)
-			user << "It's heavily damaged."
+			user.text2tab("It's heavily damaged.")
 		else
-			user << "It's falling apart."
+			user.text2tab("It's falling apart.")
 	if(equipment && equipment.len)
-		user << "It's equipped with:"
+		user.text2tab("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			user << "\icon[ME] [ME]"
+			user.text2tab("\icon[ME] [ME]")
 	return
 
 
@@ -465,7 +458,7 @@
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
-					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+					occupant.text2tab("<span class='info'>You push off of [backup] to propel yourself.</span>")
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
@@ -473,7 +466,7 @@
 		return
 	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
-		user << "<span class='notice'>You climb out from [src].</span>"
+		user.text2tab("<span class='notice'>You climb out from [src].</span>")
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
@@ -520,7 +513,7 @@
 
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
 	return 1
@@ -529,7 +522,7 @@
 	var/current_dir = dir
 	var/result = step(src,direction)
 	if(strafe)
-		dir = current_dir
+		setDir(current_dir)
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -622,10 +615,10 @@
 		examine(user) //Get diagnostic information!
 		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
 		if(B) //Beacons give the AI more detailed mech information.
-			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
-			user << "[B.get_mecha_info()]"
+			user.text2tab("<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:")
+			user.text2tab("[B.get_mecha_info()]")
 		//Nothing like a big, red link to make the player feel powerful!
-		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
+		user.text2tab("<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>")
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -635,14 +628,14 @@
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
 			if(!state) //Mech must be in maint mode to allow carding.
-				user << "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>"
+				user.text2tab("<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
 			AI = occupant
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
-				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
+				user.text2tab("<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
 			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
+				user.text2tab("<span class='boldannounce'>ACCESS DENIED.</span>")
 				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
@@ -653,31 +646,31 @@
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
-			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
-			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
+			AI.text2tab("You have been downloaded to a mobile storage device. Wireless connection offline.")
+			user.text2tab("<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
 			new /obj/structure/AIcore/deactivated(AI.loc)
 			if(occupant) //Oh, I am sorry, were you using that?
-				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
-				occupant << "<span class='danger'>You have been forcibly ejected!</span>"
+				AI.text2tab("<span class='warning'>Pilot detected! Forced ejection initiated!")
+				occupant.text2tab("<span class='danger'>You have been forcibly ejected!</span>")
 				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
 			AI = card.AI
 			if(!AI)
-				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
+				user.text2tab("<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
 			else if(AI.stat || !AI.client)
-				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
+				user.text2tab("<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
-				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
+				user.text2tab("<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
-			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			user.text2tab("<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
 
@@ -695,9 +688,9 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
-	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
-	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+	AI.text2tab("[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]")
+	AI.text2tab("<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
 	GrantActions(AI)
 
 
@@ -787,7 +780,7 @@
 		return
 	log_message("[user] tries to move in.")
 	if (occupant)
-		usr << "<span class='warning'>The [name] is already occupied!</span>"
+		usr.text2tab("<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
@@ -799,32 +792,32 @@
 	else if(operation_allowed(user))
 		passed = 1
 	if(!passed)
-		user << "<span class='warning'>Access denied.</span>"
+		user.text2tab("<span class='warning'>Access denied.</span>")
 		log_append_to_last("Permission denied.")
 		return
 	if(user.buckled)
-		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
+		user.text2tab("<span class='warning'>You are currently buckled and cannot move.</span>")
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mobs.len) //mob attached to us
-		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
+	if(user.has_buckled_mobs()) //mob attached to us
+		user.text2tab("<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		return
 
 	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
 		if(health <= 0)
-			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
+			user.text2tab("<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
-			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
+			user.text2tab("<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
 		else if(user.buckled)
-			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mobs.len)
-			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
+			user.text2tab("<span class='warning'>You can't enter the exosuit while buckled.</span>")
+		else if(user.has_buckled_mobs())
+			user.text2tab("<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		else
 			moved_inside(user)
 	else
-		user << "<span class='warning'>You stop entering the exosuit!</span>"
+		user.text2tab("<span class='warning'>You stop entering the exosuit!</span>")
 	return
 
 /obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
@@ -836,7 +829,7 @@
 		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -846,16 +839,16 @@
 
 /obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-		user << "<span class='warning'>Consciousness matrix not detected!</span>"
+		user.text2tab("<span class='warning'>Consciousness matrix not detected!</span>")
 		return 0
 	else if(mmi_as_oc.brainmob.stat)
-		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
+		user.text2tab("<span class='warning'>Beta-rhythm below acceptable level!</span>")
 		return 0
 	else if(occupant)
-		user << "<span class='warning'>Occupant detected!</span>"
+		user.text2tab("<span class='warning'>Occupant detected!</span>")
 		return 0
 	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
-		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
+		user.text2tab("<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 		return 0
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
@@ -864,21 +857,21 @@
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
-			user << "<span class='warning'>Occupant detected!</span>"
+			user.text2tab("<span class='warning'>Occupant detected!</span>")
 	else
-		user << "<span class='notice'>You stop inserting the MMI.</span>"
+		user.text2tab("<span class='notice'>You stop inserting the MMI.</span>")
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-			user << "<span class='notice'>Consciousness matrix not detected!</span>"
+			user.text2tab("<span class='notice'>Consciousness matrix not detected!</span>")
 			return 0
 		else if(mmi_as_oc.brainmob.stat)
-			user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
+			user.text2tab("<span class='warning'>Beta-rhythm below acceptable level!</span>")
 			return 0
 		if(!user.unEquip(mmi_as_oc))
-			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			user.text2tab("<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob
 		occupant = brainmob
@@ -888,7 +881,7 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -940,7 +933,7 @@
 			mmi.update_icon()
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
-		dir = dir_in
+		setDir(dir_in)
 
 	if(L && L.client)
 		L.client.view = world.view
@@ -969,7 +962,7 @@
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
 		if(occupant && occupant.client)
-			occupant << "\icon[src] [message]"
+			occupant.text2tab("\icon[src] [message]")
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)

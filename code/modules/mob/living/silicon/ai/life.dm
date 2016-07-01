@@ -13,7 +13,7 @@
 
 		if(malfhack)
 			if(malfhack.aidisabled)
-				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
+				src.text2tab("<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>")
 				malfhacking = 0
 				malfhack = null
 
@@ -82,7 +82,7 @@
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
-	src << "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."
+	src.text2tab("Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
@@ -90,16 +90,16 @@
 		if(!istype(T, /turf/open/space))
 			ai_restore_power()
 			return
-	src << "Fault confirmed: missing external power. Shutting down main control system to save power."
+	src.text2tab("Fault confirmed: missing external power. Shutting down main control system to save power.")
 	sleep(20)
-	src << "Emergency control system online. Verifying connection to power network."
+	src.text2tab("Emergency control system online. Verifying connection to power network.")
 	sleep(50)
 	T = get_turf(src)
 	if (istype(T, /turf/open/space))
-		src << "Unable to verify! No power connection detected!"
+		src.text2tab("Unable to verify! No power connection detected!")
 		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 		return
-	src << "Connection verified. Searching for APC in power network."
+	src.text2tab("Connection verified. Searching for APC in power network.")
 	sleep(50)
 	var/obj/machinery/power/apc/theAPC = null
 
@@ -116,9 +116,9 @@
 		if (!theAPC)
 			switch(PRP)
 				if(1)
-					src << "Unable to locate APC!"
+					src.text2tab("Unable to locate APC!")
 				else
-					src << "Lost connection with the APC!"
+					src.text2tab("Lost connection with the APC!")
 			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 			return
 		if(AIarea.master.power_equip)
@@ -126,19 +126,19 @@
 				ai_restore_power()
 				return
 		switch(PRP)
-			if (1) src << "APC located. Optimizing route to APC to avoid needless power waste."
-			if (2) src << "Best route identified. Hacking offline APC power port."
-			if (3) src << "Power port upload access confirmed. Loading control program into APC power port software."
+			if (1) src.text2tab("APC located. Optimizing route to APC to avoid needless power waste.")
+			if (2) src.text2tab("Best route identified. Hacking offline APC power port.")
+			if (3) src.text2tab("Power port upload access confirmed. Loading control program into APC power port software.")
 			if (4)
-				src << "Transfer complete. Forcing APC to execute program."
+				src.text2tab("Transfer complete. Forcing APC to execute program.")
 				sleep(50)
-				src << "Receiving control information from APC."
+				src.text2tab("Receiving control information from APC.")
 				sleep(2)
 				apc_override = 1
 				theAPC.ui_interact(src, state = conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
-				src << "Here are your current laws:"
+				src.text2tab("Here are your current laws:")
 				show_laws()
 		sleep(50)
 		theAPC = null
@@ -146,9 +146,9 @@
 /mob/living/silicon/ai/proc/ai_restore_power()
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
-			src << "Alert cancelled. Power has been restored."
+			src.text2tab("Alert cancelled. Power has been restored.")
 		else
-			src << "Alert cancelled. Power has been restored without our assistance."
+			src.text2tab("Alert cancelled. Power has been restored without our assistance.")
 		aiRestorePowerRoutine = POWER_RESTORATION_OFF
 		set_blindness(0)
 		update_sight()
@@ -157,7 +157,7 @@
 	aiRestorePowerRoutine = POWER_RESTORATION_START
 	blind_eyes(1)
 	update_sight()
-	src << "You've lost power!"
+	src.text2tab("You've lost power!")
 	spawn(20)
 		start_RestorePowerRoutine()
 

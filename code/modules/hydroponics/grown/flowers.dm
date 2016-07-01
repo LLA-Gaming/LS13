@@ -12,6 +12,7 @@
 	potency = 20
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
@@ -78,6 +79,7 @@
 	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_WEED
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list("nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
@@ -103,6 +105,7 @@
 	yield = 2
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
@@ -122,8 +125,8 @@
 	throw_range = 3
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
+	M.text2tab("<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
+	user.text2tab("<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>")
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
@@ -179,21 +182,23 @@
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
-		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
+		M.text2tab("<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
-		M.IgniteMob()
+		if(M.IgniteMob())
+			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+			log_game("[key_name(user)] set [key_name(M)] on fire")
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else
-		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
+		usr.text2tab("<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
 		usr.unEquip(src)
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
 	if(!user.gloves)
-		user << "<span class='danger'>The [name] burns your bare hand!</span>"
+		user.text2tab("<span class='danger'>The [name] burns your bare hand!</span>")
 		user.adjustFireLoss(rand(1, 5))

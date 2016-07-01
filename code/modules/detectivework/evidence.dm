@@ -22,15 +22,15 @@
 		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
-		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
+		user.text2tab("<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
 	if(I.w_class > 3)
-		user << "<span class='notice'>[I] won't fit in [src].</span>"
+		user.text2tab("<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
 	if(contents.len)
-		user << "<span class='notice'>[src] already has something inside it.</span>"
+		user.text2tab("<span class='notice'>[src] already has something inside it.</span>")
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -56,8 +56,8 @@
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
-	overlays += img
-	overlays += "evidence"	//should look nicer for transparent stuff. not really that important, but hey.
+	add_overlay(img)
+	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.loc = src
@@ -69,14 +69,14 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
 		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
-		overlays.Cut()	//remove the overlays
+		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 
 	else
-		user << "[src] is empty."
+		user.text2tab("[src] is empty.")
 		icon_state = "evidenceobj"
 	return
 

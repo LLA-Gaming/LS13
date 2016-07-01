@@ -149,7 +149,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		d = max(d,get_dist(user,focus)) // whichever is further
 	if(d > tk_maxrange)
-		user << "<span class ='warning'>Your mind won't reach that far.</span>"
+		user.text2tab("<span class ='warning'>Your mind won't reach that far.</span>")
 		return 0
 	return 1
 
@@ -177,7 +177,7 @@ var/const/tk_maxrange = 15
 	O.anchored = 1
 	O.density = 0
 	O.layer = FLY_LAYER
-	O.dir = pick(cardinal)
+	O.setDir(pick(cardinal))
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
 	flick("empdisable",O)
@@ -186,9 +186,9 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
+		add_overlay(icon(focus.icon,focus.icon_state))
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)

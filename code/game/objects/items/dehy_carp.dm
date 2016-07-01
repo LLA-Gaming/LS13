@@ -13,7 +13,7 @@
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
 	src.add_fingerprint(user)	//Anyone can add their fingerprints to it with this
 	if(!owned)
-		user << "<span class='notice'>You pet [src]. You swear it looks up at you.</span>"
+		user.text2tab("<span class='notice'>You pet [src]. You swear it looks up at you.</span>")
 		owner = user
 		owned = 1
 	return ..()
@@ -40,7 +40,7 @@
 	var/mob/living/M = new mobtype(get_turf(src))
 	//Make carp non-hostile to user, and their allies
 	if(owner)
-		var/list/factions = owner.faction
+		var/list/factions = owner.faction.Copy()
 		for(var/F in factions)
 			if(F == "neutral")
 				factions -= F

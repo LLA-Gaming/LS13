@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 38
-	required_enemies = 5
+	required_players = 18
+	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
@@ -23,21 +23,17 @@
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
 /datum/game_mode/nuclear/pre_setup()
-	var/agent_number = 0
-	if(antag_candidates.len > agents_possible)
-		agent_number = agents_possible
-	else
-		agent_number = antag_candidates.len
-
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	var/n_agents = min(round(n_players / 10, 1), agents_possible)
 
-	while(agent_number > 0)
+	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
+		n_agents = antag_candidates.len
+
+	while(n_agents > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		agent_number--
+		n_agents--
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "Syndicate"
@@ -85,9 +81,9 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
-		if (nuke_code)
+		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+			synd_mind.current.text2tab("The nuclear authorization code is: <B>[nuke_code]</B>")
 
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
@@ -109,9 +105,9 @@
 		nukeops_lastname = nukelastname(synd_mind.current)
 		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
-	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
-	synd_mind.current << "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>"
+	synd_mind.current.text2tab("<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
+	synd_mind.current.text2tab("<B>If you feel you are not up to this task, give your ID to another operative.</B>")
+	synd_mind.current.text2tab("<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.equip_to_slot_or_del(challenge, slot_r_hand)
@@ -128,7 +124,7 @@
 	if(A)
 		A.command = TRUE
 
-	if (nuke_code)
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -149,11 +145,11 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
-	if (you_are)
-		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+	if(you_are)
+		syndicate.current.text2tab("<span class='notice'>You are a [syndicate_name()] agent!</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
-		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		syndicate.current.text2tab("<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -267,7 +263,7 @@
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
-		world << text
+		text2world(text)
 	return 1
 
 
@@ -280,7 +276,7 @@
 
 	else
 		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
+			M.text2tab("That name is reserved.")
 			return nukelastname(M)
 
 	return capitalize(newname)

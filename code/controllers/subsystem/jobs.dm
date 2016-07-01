@@ -2,20 +2,20 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	priority = 5
+	init_order = 5
+	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/persjobs = list()
 
 /datum/subsystem/job/New()
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/job/Initialize(timeofday)
 	SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
@@ -33,6 +33,8 @@ var/datum/subsystem/job/SSjob
 		var/datum/job/job = new J()
 		if(!job)
 			continue
+		if(job.faction == "Perseus Military Corporation")
+			persjobs += job
 		if(job.faction != faction)
 			continue
 		if(!job.config_check())
@@ -57,6 +59,10 @@ var/datum/subsystem/job/SSjob
 			continue
 		if(J.title == rank)
 			return J
+	for(var/datum/job/J in persjobs)
+		if(J.title == rank)
+			return J
+
 	return null
 
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
@@ -85,6 +91,9 @@ var/datum/subsystem/job/SSjob
 	Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 	var/list/candidates = list()
 	for(var/mob/new_player/player in unassigned)
+		if(assignPerseus.Find(player.ckey))
+			Debug("FOC player is playing as perseus, Player: [player]")
+			continue
 		if(jobban_isbanned(player, job.title))
 			Debug("FOC isbanned failed, Player: [player]")
 			continue
@@ -275,6 +284,15 @@ var/datum/subsystem/job/SSjob
 	// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
 	// Hopefully this will add more randomness and fairness to job giving.
 
+	for(var/mob/new_player/player in unassigned)
+		if(player.ckey in assignPerseus)
+			if(perseusList[player.ckey] == "Commander")
+				if(AssignRole(player, "Perseus Security Commander"))
+					continue
+			else if(perseusList[player.ckey] == "Enforcer")
+				if(AssignRole(player, "Perseus Security Enforcer"))
+					continue
+
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
 	for(var/level = 1 to 3)
@@ -388,13 +406,13 @@ var/datum/subsystem/job/SSjob
 			H = new_mob
 		job.apply_fingerprints(H)
 
-	H << "<b>You are the [rank].</b>"
-	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-	H << "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>"
+	H.text2tab("<b>You are the [rank].</b>")
+	H.text2tab("<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+	H.text2tab("<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 	if(job.req_admin_notify)
-		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		H.text2tab("<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 	if(config.minimal_access_threshold)
-		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
+		H.text2tab("<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 	return 1
 
 
@@ -472,6 +490,19 @@ var/datum/subsystem/job/SSjob
 	if(player.mind && player.mind.special_role)
 		return
 	Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
+	player.text2tab("<b>You have failed to qualify for any job you desired.</b>")
 	unassigned -= player
 	player.ready = 0
+
+
+/datum/subsystem/job/Recover()
+	var/oldjobs = SSjob.occupations
+	spawn(20)
+		for (var/datum/job/J in oldjobs)
+			spawn(-1)
+				var/datum/job/newjob = GetJob(J.title)
+				if (!istype(newjob))
+					return
+				newjob.total_positions = J.total_positions
+				newjob.spawn_positions = J.spawn_positions
+				newjob.current_positions = J.current_positions

@@ -122,11 +122,11 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			src.text2tab("<span class='notice'>Now teleporting.</span>")
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				src.text2tab("<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>")
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -142,7 +142,7 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			usr.text2tab("<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(href_list["late_join"] == "override")
@@ -150,16 +150,16 @@
 			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+			usr.text2tab("<span class='danger'>[config.hard_popcap_message]</span>")
 
 			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
+				usr.text2tab("<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
-				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
+				usr.text2tab("<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
 				ticker.queued_players += usr
-				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
+				usr.text2tab("<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -169,12 +169,17 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			usr.text2tab("<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				usr << "<span class='warning'>Server is full.</span>"
+				usr.text2tab("<span class='warning'>Server is full.</span>")
+				return
+
+		if(href_list["SelectedJob"] in list("Perseus Security Enforcer", "Perseus Security Commander"))
+			if(!perseusList[ckey(key)])
+				message_admins("[ckey(key)] attempted to join as perseus without being on the whitelist.")
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -205,15 +210,15 @@
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				if(vote_on_poll(pollid, optionid))
-					usr << "<span class='notice'>Vote successful.</span>"
+					usr.text2tab("<span class='notice'>Vote successful.</span>")
 				else
-					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				if(log_text_poll_reply(pollid, replytext))
-					usr << "<span class='notice'>Feedback logging successful.</span>"
+					usr.text2tab("<span class='notice'>Feedback logging successful.</span>")
 				else
-					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
+					usr.text2tab("<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
@@ -233,9 +238,9 @@
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
-							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 							return
-				usr << "<span class='notice'>Vote successful.</span>"
+				usr.text2tab("<span class='notice'>Vote successful.</span>")
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
@@ -251,12 +256,12 @@
 							if(0)
 								continue
 							if(1)
-								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								usr.text2tab("<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 								return
 							if(2)
-								usr << "<span class='danger'>Maximum replies reached.</span>"
+								usr.text2tab("<span class='danger'>Maximum replies reached.</span>")
 								break
-				usr << "<span class='notice'>Vote successful.</span>"
+				usr.text2tab("<span class='notice'>Vote successful.</span>")
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -285,6 +290,10 @@
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
+	if(rank in list("Perseus Security Enforcer", "Perseus Security Commander") && !(ckey(key) in assignPerseus))
+		message_admins("[ckey(key)] attempted to join as perseus without being on the whitelist.")
+		return 0
+
 	//Remove the player from the join queue if he was in one and reset the timer
 	ticker.queued_players -= src
 	ticker.queue_delay = 4
@@ -294,20 +303,23 @@
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
-	var/D = pick(latejoin)
-	if(!D)
-		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					D = T
-					continue
+	if(character.mind.assigned_role in list("Perseus Security Enforcer", "Perseus Security Commander"))
+		character.loc = pick(percSpawnTurfs)
+	else
+		var/D = pick(latejoin)
+		if(!D)
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						D = T
+						continue
 
-	character.loc = D
+		character.loc = D
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
@@ -329,12 +341,20 @@
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
-		if(announcement_systems.len)
-			if(character.mind)
-				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.mind.IsPerseus() ? character.mind.GetPerseusName() : character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -368,6 +388,7 @@
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
+
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			job_count++;
@@ -377,12 +398,30 @@
 			if (job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+
+
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != "Assistant") continue
 			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break
-	dat += "</div></div>"
+
+	if(perseusList[ckey])
+		dat += "</div><br><hr>"
+		var/rank = perseusList[ckey]
+		var/list/iteratedJobs = list() //no idea why, but apparently it loops through the jobs twice each, so easy fix here.
+		for(var/datum/job/job in SSjob.persjobs)
+			if(job.title in iteratedJobs)	continue
+			iteratedJobs += job.title
+			if(job.title == "Perseus Security Enforcer" && (rank == "Enforcer" || rank == "Commander"))
+				dat += "<center><a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a></center><br>"
+				continue
+			if(job.title == "Perseus Security Commander" && rank == "Commander")
+				dat += "<center><a class='commandPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a></center><br>"
+				continue
+		dat += "</div>"
+	else
+		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
@@ -408,6 +447,10 @@
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+
+		if(mind.assigned_role == "Perseus Security Enforcer" || mind.assigned_role == "Perseus Security Commander")
+			if(mycenae_at_centcom)
+				move_mycenae()
 
 	new_character.name = real_name
 

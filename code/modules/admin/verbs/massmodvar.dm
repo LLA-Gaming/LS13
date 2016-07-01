@@ -5,7 +5,7 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 
 	if(A && A.type)
@@ -25,12 +25,12 @@
 
 
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_PRIMARYADMIN))
 		return
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+			usr.text2tab("<span class='danger'>It is forbidden to edit this object's variables.</span>")
 			return
 
 	var/list/names = list()
@@ -59,7 +59,7 @@
 		if(!check_rights(R_DEBUG))
 			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG))
+		if(!check_rights(R_PRIMARYADMIN|R_DEBUG))
 			return
 
 	if(isnull(var_value))
@@ -68,7 +68,7 @@
 	else if(isnum(var_value))
 		usr << "Variable appears to be <b>NUM</b>."
 		default = "num"
-		dir = 1
+		setDir(1)
 
 	else if(istext(var_value))
 		usr << "Variable appears to be <b>TEXT</b>."
@@ -103,23 +103,23 @@
 	if(dir)
 		switch(var_value)
 			if(1)
-				dir = "NORTH"
+				setDir("NORTH")
 			if(2)
-				dir = "SOUTH"
+				setDir("SOUTH")
 			if(4)
-				dir = "EAST"
+				setDir("EAST")
 			if(8)
-				dir = "WEST"
+				setDir("WEST")
 			if(5)
-				dir = "NORTHEAST"
+				setDir("NORTHEAST")
 			if(6)
-				dir = "SOUTHEAST"
+				setDir("SOUTHEAST")
 			if(9)
-				dir = "NORTHWEST"
+				setDir("NORTHWEST")
 			if(10)
-				dir = "SOUTHWEST"
+				setDir("SOUTHWEST")
 			else
-				dir = null
+				setDir(null)
 		if(dir)
 			usr << "If a direction, direction is: [dir]"
 

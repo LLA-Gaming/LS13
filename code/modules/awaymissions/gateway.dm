@@ -103,10 +103,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!powered())
 		return
 	if(!awaygate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		user.text2tab("<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
+		user.text2tab("<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -145,7 +145,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 	if(awaygate.calibrated)
 		AM.forceMove(get_step(awaygate.loc, SOUTH))
-		AM.dir = SOUTH
+		AM.setDir(SOUTH)
 		if (ismob(AM))
 			var/mob/M = AM
 			if (M.client)
@@ -155,14 +155,14 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
 			AM.forceMove(get_turf(dest))
-			AM.dir = SOUTH
+			AM.setDir(SOUTH)
 			use_power(5000)
 		return
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
-		user << "\black The gate is already calibrated, there is no work for you to do here."
+		user.text2tab("\black The gate is already calibrated, there is no work for you to do here.")
 		return
 
 
@@ -217,7 +217,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(linked.len != 8)
 		return
 	if(!stationgate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+		user.text2tab("<span class='notice'>Error: No destination found.</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -255,10 +255,12 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(istype(AM, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
 			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
-				AM << "\black The station gate has detected your exile implant and is blocking your entry."
+				var/mob/M = AM
+				if(ismob(M))
+					M.text2tab("\black The station gate has detected your exile implant and is blocking your entry.")
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
-	AM.dir = SOUTH
+	AM.setDir(SOUTH)
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client)
@@ -268,9 +270,9 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
-			user << "\black The gate is already calibrated, there is no work for you to do here."
+			user.text2tab("\black The gate is already calibrated, there is no work for you to do here.")
 			return
 		else
-			user << "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target."
+			user.text2tab("<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
 			return

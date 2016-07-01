@@ -86,7 +86,7 @@
 				return 0
 			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
-		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
+		C.text2tab("<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
@@ -125,7 +125,7 @@
 				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
-		overlays += wet_overlay
+		add_overlay(wet_overlay)
 	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)

@@ -78,9 +78,9 @@
 	return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -310,7 +310,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			user << "<span class='notice'>Now welding the scrubber.</span>"
+			user.text2tab("<span class='notice'>Now welding the scrubber.</span>")
 			if(do_after(user, 20/W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
@@ -330,7 +330,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	if(..())
 		if (!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			user.text2tab("<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
 

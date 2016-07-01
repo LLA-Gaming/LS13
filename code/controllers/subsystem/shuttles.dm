@@ -3,7 +3,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
-	priority = 3
+	init_order = 3
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -17,6 +18,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/crewtransfer				//non-zero means the shuttle cant be recalled unless by admin
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -35,9 +37,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
@@ -93,33 +93,40 @@ var/datum/subsystem/shuttle/SSshuttle
 		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
+		user.text2tab("The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			user << "The emergency shuttle may not be called while returning to Centcom."
+			user.text2tab("The emergency shuttle may not be called while returning to Centcom.")
 			return
 		if(SHUTTLE_CALL)
-			user << "The emergency shuttle is already on its way."
+			user.text2tab("The emergency shuttle is already on its way.")
 			return
 		if(SHUTTLE_DOCKED)
-			user << "The emergency shuttle is already here."
+			user.text2tab("The emergency shuttle is already here.")
 			return
 		if(SHUTTLE_ESCAPE)
-			user << "The emergency shuttle is moving away to a safe distance."
+			user.text2tab("The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			user << "The emergency shuttle has been disabled by Centcom."
+			user.text2tab("The emergency shuttle has been disabled by Centcom.")
 			return
+
+	if(istype(get_area(user),/area/shuttle/abandoned))
+		user.text2tab("Call request blocked by [pick(list("GRIFFON particle emissions","bluespace disruptions","quantum fluctuations","bad karma","odd smells"))] from a nearby warp engine.")
+		return
 
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
-		user << "You must provide a reason."
+		user.text2tab("You must provide a reason.")
 		return
 
 	var/area/signal_origin = get_area(user)
+
+
+
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
@@ -139,6 +146,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	src.emergency = src.backup_shuttle
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(istype(get_area(user),/area/shuttle/abandoned))
+		user.text2tab("Recall attempt blocked by [pick(list("GRIFFON particle emissions","bluespace disruptions","quantum fluctuations","bad karma","odd smells"))] from a nearby warp engine.")
+		log_game("[key_name(user)] has attempted to recall the shuttle from a forbidden area.")
+		message_admins("[key_name(user)] has attempted to recall the shuttle from a forbidden area.")
+		return
+
 	if(canRecall())
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
@@ -149,6 +162,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(emergency.mode != SHUTTLE_CALL)
 		return
 	if(ticker.mode.name == "meteor")
+		return
+	if(crewtransfer)
 		return
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
@@ -177,7 +192,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if(callShuttle)
-		if(!EMERGENCY_IDLE_OR_RECALLED)
+		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
@@ -220,3 +235,28 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK
+
+/datum/subsystem/shuttle/Recover()
+	if (istype(SSshuttle.mobile))
+		mobile = SSshuttle.mobile
+	if (istype(SSshuttle.stationary))
+		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.transit))
+		transit = SSshuttle.transit
+	if (istype(SSshuttle.discoveredPlants))
+		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.requestlist))
+		requestlist = SSshuttle.requestlist
+	if (istype(SSshuttle.orderhistory))
+		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
+	centcom_message = SSshuttle.centcom_message
+	ordernum = SSshuttle.ordernum
+	points = SSshuttle.points
+

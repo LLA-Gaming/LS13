@@ -11,9 +11,9 @@
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
 		if(stat & (NOPOWER|BROKEN))
-			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
+			user.text2tab("<span class='warning'>The screws on [name]'s screen won't budge.</span>")
 		else
-			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
+			user.text2tab("<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>")
 	else
 		return ..()
 
@@ -106,15 +106,15 @@
 		return
 	else
 		if(active)
-			overlays += "ai-fixer-on"
+			add_overlay("ai-fixer-on")
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += "ai-fixer-full"
+					add_overlay("ai-fixer-full")
 				if (2)
-					overlays += "ai-fixer-404"
+					add_overlay("ai-fixer-404")
 		else
-			overlays += "ai-fixer-empty"
+			add_overlay("ai-fixer-empty")
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -122,26 +122,26 @@
 	//Downloading AI from card to terminal.
 	if(interaction == AI_TRANS_FROM_CARD)
 		if(stat & (NOPOWER|BROKEN))
-			user << "[src] is offline and cannot take an AI at this time!"
+			user.text2tab("[src] is offline and cannot take an AI at this time!")
 			return
 		AI.forceMove(src)
 		occupier = AI
 		AI.control_disabled = 1
 		AI.radio_enabled = 0
-		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		AI.text2tab("You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
+		user.text2tab("<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
 		if(occupier && !active)
-			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			occupier.text2tab("You have been downloaded to a mobile storage device. Still no remote access.")
+			user.text2tab("<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 			occupier.loc = card
 			card.AI = occupier
 			occupier = null
 			update_icon()
 		else if (active)
-			user << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
+			user.text2tab("<span class='boldannounce'>ERROR</span>: Reconstruction in progress.")
 		else if (!occupier)
-			user << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."
+			user.text2tab("<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence.")

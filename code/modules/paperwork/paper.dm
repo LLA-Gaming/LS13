@@ -56,7 +56,7 @@
 
 	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
 		if(!iscultist(user) && !user.stat)
-			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			user.text2tab("<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
@@ -66,7 +66,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		user << "<span class='notice'>It is too far away.</span>"
+		user.text2tab("<span class='notice'>It is too far away.</span>")
 
 
 /obj/item/weapon/paper/verb/rename()
@@ -79,7 +79,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.disabilities & CLUMSY && prob(25))
-			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+			H.text2tab("<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
@@ -166,7 +166,7 @@
 	info = null
 	stamps = null
 	stamped = list()
-	overlays.Cut()
+	cut_overlays()
 	updateinfolinks()
 	update_icon()
 
@@ -294,10 +294,10 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			return
 		else
-			user << "<span class='notice'>You don't know how to read or write.</span>"
+			user.text2tab("<span class='notice'>You don't know how to read or write.</span>")
 			return
 		if(istype(src, /obj/item/weapon/paper/talisman/))
-			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
+			user.text2tab("<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -315,9 +315,9 @@
 		if(!stamped)
 			stamped = new
 		stamped += P.type
-		overlays += stampoverlay
+		add_overlay(stampoverlay)
 
-		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
+		user.text2tab("<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))

@@ -79,11 +79,11 @@
 	..()
 
 	if(!beehome)
-		user << "<span class='warning'>This bee is homeless!</span>"
+		user.text2tab("<span class='warning'>This bee is homeless!</span>")
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
-	overlays.Cut()
+	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
 	if(beegent && beegent.color)
@@ -93,20 +93,20 @@
 	if(!bee_icons["[icon_base]_base"])
 		bee_icons["[icon_base]_base"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_base")
 	base = bee_icons["[icon_base]_base"]
-	overlays += base
+	add_overlay(base)
 
 	var/image/greyscale
 	if(!bee_icons["[icon_base]_grey_[col]"])
 		bee_icons["[icon_base]_grey_[col]"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_grey")
 	greyscale = bee_icons["[icon_base]_grey_[col]"]
 	greyscale.color = col
-	overlays += greyscale
+	add_overlay(greyscale)
 
 	var/image/wings
 	if(!bee_icons["[icon_base]_wings"])
 		bee_icons["[icon_base]_wings"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_wings")
 	wings = bee_icons["[icon_base]_wings"]
-	overlays += wings
+	add_overlay(wings)
 
 
 //We don't attack beekeepers/people dressed as bees//Todo: bee costume
@@ -266,7 +266,7 @@
 				user.put_in_active_hand(qb)
 				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
 			else
-				user << "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>"
+				user.text2tab("<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>")
 		else
 			var/datum/reagent/R = chemical_reagents_list[S.reagents.get_master_reagent_id()]
 			if(R && S.reagents.has_reagent(R.id, 5))
@@ -275,7 +275,7 @@
 				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
 				name = queen.name
 			else
-				user << "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>"
+				user.text2tab("<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>")
 	..()
 
 

@@ -23,7 +23,7 @@
 		return
 	if(!user || user.notransform)
 		return 0
-	user << "<span class='notice'>We transform our appearance.</span>"
+	user.text2tab("<span class='notice'>We transform our appearance.</span>")
 
 	changeling.purchasedpowers -= src
 

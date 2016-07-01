@@ -61,7 +61,7 @@
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
-	mask_type = /obj/item/clothing/mask/gas
+	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
@@ -114,28 +114,28 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(uv)
 		if(uv_super)
-			overlays += "super"
+			add_overlay("super")
 		else if(occupant)
-			overlays += "uvhuman"
+			add_overlay("uvhuman")
 		else
-			overlays += "uv"
+			add_overlay("uv")
 	else if(state_open)
 		if(stat & BROKEN)
-			overlays += "broken"
+			add_overlay("broken")
 		else
-			overlays += "open"
+			add_overlay("open")
 			if(suit)
-				overlays += "suit"
+				add_overlay("suit")
 			if(helmet)
-				overlays += "helm"
+				add_overlay("helm")
 			if(storage)
-				overlays += "storage"
+				add_overlay("storage")
 	else if(occupant)
-		overlays += "human"
+		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()
@@ -170,13 +170,13 @@
 		return
 	var/mob/living/target = A
 	if(!state_open)
-		user << "<span class='warning'>The unit's doors are shut!</span>"
+		user.text2tab("<span class='warning'>The unit's doors are shut!</span>")
 		return
 	if(!is_operational())
-		user << "<span class='warning'>The unit is not operational!</span>"
+		user.text2tab("<span class='warning'>The unit is not operational!</span>")
 		return
 	if(occupant || helmet || suit || storage)
-		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
+		user.text2tab("<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
 	if(target == user)
@@ -268,28 +268,28 @@
 	if(state_open && is_operational())
 		if(istype(I, /obj/item/clothing/suit/space))
 			if(suit)
-				user << "<span class='warning'>The unit already contains a suit!.</span>"
+				user.text2tab("<span class='warning'>The unit already contains a suit!.</span>")
 				return
 			if(!user.drop_item())
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
-				user << "<span class='warning'>The unit already contains a helmet!</span>"
+				user.text2tab("<span class='warning'>The unit already contains a helmet!</span>")
 				return
 			if(!user.drop_item())
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
-				user << "<span class='warning'>The unit already contains a mask!</span>"
+				user.text2tab("<span class='warning'>The unit already contains a mask!</span>")
 				return
 			if(!user.drop_item())
 				return
 			mask = I
 		else
 			if(storage)
-				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
+				user.text2tab("<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
 			if(!user.drop_item())
 				return
@@ -358,7 +358,7 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+				occupant.text2tab("<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 				. = TRUE
 		if("dispense")

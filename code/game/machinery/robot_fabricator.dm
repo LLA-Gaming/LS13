@@ -15,7 +15,7 @@
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000)
 			var/count = 0
-			src.overlays += "fab-load-metal"
+			src.add_overlay("fab-load-metal")
 			spawn(15)
 				if(O)
 					if(!O:amount)
@@ -28,11 +28,11 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
+					user.text2tab("<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			user << "\The [src] is full."
+			user.text2tab("\The [src] is full.")
 	else
 		return ..()
 
@@ -134,7 +134,7 @@ Please wait until completion...</TT><BR>
 
 					src.being_built = new building(src)
 
-					src.overlays += "fab-active"
+					src.add_overlay("fab-active")
 					src.updateUsrDialog()
 
 					spawn (build_time)

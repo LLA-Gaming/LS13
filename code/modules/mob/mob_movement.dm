@@ -29,13 +29,13 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
+		usr.text2tab("<span class='danger'>This mob type cannot throw items.</span>")
 	return
 
 
 /client/Northwest()
 	if(!usr.get_active_hand())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		usr.text2tab("<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
 	usr.drop_item()
 
@@ -44,7 +44,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
+		usr.text2tab("<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -83,7 +83,7 @@
 			step(mob.control_object,direct)
 			if(!mob.control_object)
 				return
-			mob.control_object.dir = direct
+			mob.control_object.setDir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
@@ -166,7 +166,7 @@
 			return 1
 		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
-			src << "<span class='warning'>You're restrained! You can't move!</span>"
+			src.text2tab("<span class='warning'>You're restrained! You can't move!</span>")
 			return 1
 		else
 			return mob.resist_grab(1)
@@ -183,7 +183,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.setDir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -223,17 +223,17 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
+			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf.flags & NOJAUNT)
-				L << "<span class='warning'>Holy energies block your path.</span>"
+				L.text2tab("<span class='warning'>Holy energies block your path.</span>")
 				L.notransform = 1
 				spawn(2)
 					L.notransform = 0
 			else
 				L.loc = get_step(L, direct)
-				L.dir = direct
+				L.setDir(direct)
 	return 1
 
 
@@ -248,7 +248,7 @@
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+				src.text2tab("<span class='info'>You push off of [backup] to propel yourself.</span>")
 		return 1
 	return 0
 

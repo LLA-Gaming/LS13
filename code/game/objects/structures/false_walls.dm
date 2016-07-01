@@ -97,22 +97,22 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
+		user.text2tab("<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
-				user << "<span class='warning'>[src] is blocked!</span>"
+				user.text2tab("<span class='warning'>[src] is blocked!</span>")
 				return
 			if(!istype(T, /turf/open/floor))
-				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
+				user.text2tab("<span class='warning'>[src] bolts must be tightened on the floor!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
 		else
-			user << "<span class='warning'>You can't reach, close it first!</span>"
+			user.text2tab("<span class='warning'>You can't reach, close it first!</span>")
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

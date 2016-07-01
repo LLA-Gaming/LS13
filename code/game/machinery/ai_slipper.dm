@@ -36,7 +36,7 @@
 	else // trying to unlock the interface
 		if (src.allowed(user))
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>"
+			user.text2tab("<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>")
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()
@@ -45,7 +45,7 @@
 				if (user.machine==src)
 					src.attack_hand(user)
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			user.text2tab("<span class='danger'>Access denied.</span>")
 
 
 /obj/machinery/ai_slipper/attack_ai(mob/user)
@@ -56,7 +56,7 @@
 		return
 	if ( (get_dist(src, user) > 1 ))
 		if (!(issilicon(user) || IsAdminGhost(user)))
-			user << text("Too far away.")
+			user.text2tab(text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
 			return
@@ -78,7 +78,7 @@
 		return
 	if (src.locked)
 		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
-			usr << "Control panel is locked!"
+			usr.text2tab("Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
 		src.disabled = !src.disabled
