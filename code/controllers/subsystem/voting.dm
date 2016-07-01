@@ -291,16 +291,15 @@ var/datum/subsystem/vote/SSvote
 		if("crewtransfer")
 			if(ticker.current_state != GAME_STATE_PLAYING)
 				return
-			if(usr.client.holder)
-				var/input = stripped_input(usr, "Please supply a reason", "Reason", "I ded: please restart" , 30)
-				if(!input)
-					message_admins("[usr.ckey] Asked for a crew transfer vote without a reason (AUTO DENIED)")
-					return
-				if(input == "I ded: please restart")
-					message_admins("[usr.ckey] Asked for a crew transfer vote: [input] (AUTO DENIED)")
-					return
-				message_admins("[usr.ckey] Asked for a crew transfer vote: [input]")
-				initiate_vote("crewtransfer",usr.key)
+			var/input = stripped_input(usr, "Please supply a reason", "Reason", "I ded: please restart" , 30)
+			if(!input)
+				message_admins("[usr.ckey] Asked for a crew transfer vote without a reason (AUTO DENIED)")
+				return
+			if(input == "I ded: please restart")
+				message_admins("[usr.ckey] Asked for a crew transfer vote: [input] (AUTO DENIED)")
+				return
+			message_admins("[usr.ckey] Asked for a crew transfer vote: [input]")
+			initiate_vote("crewtransfer",usr.key)
 		if("gamemode")
 			if(config.allow_vote_mode || usr.client.holder)
 				initiate_vote("gamemode",usr.key)
