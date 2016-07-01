@@ -1,17 +1,16 @@
 var/list/mentors = list()
 var/mentor_salt = 0
 
-/proc/LoadMentors(var/override = 0)
-	if(!config.sql_enabled || override)
-		var/list/lines = file2list("config/mentors.txt")
-		for(var/line in lines)
-			if(!length(line))
-				continue
+/proc/LoadMentors()
+	var/list/lines = file2list("config/mentors.txt")
+	for(var/line in lines)
+		if(!length(line))
+			continue
 
-			if(findtextEx(line, "#", 1, 2))
-				continue
+		if(findtextEx(line, "#", 1, 2))
+			continue
 
-			mentors += ckey(trim(line))
+		mentors += ckey(trim(line))
 
 /client/verb/mentor_help(var/msg as text)
 	set name = "Mentorhelp"
@@ -51,12 +50,9 @@ var/mentor_salt = 0
 		if(C.ckey in mentors)
 			C.text2tab(mentor_formatted, "mhelp")
 			C << 'sound/effects/mentorhelp.ogg'
-			//if(C.prefs.toggles & SOUND_MENTORHELP)
-			//	C << 'sound/effects/-mentorhelp.ogg'
+
 	for(var/client/C in admins)
 		C.text2tab(admin_formatted, "mhelp")
-
-	//admins << admin_formatted
 
 	var/player_formatted = "<font color='#91219E'><i>To-</i><b>MENTOR:</b> [msg]"
 	src.text2tab(player_formatted, "mhelp")
@@ -72,9 +68,9 @@ var/mentor_salt = 0
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
 				num++
-		usr.text2tab("<span class='info'>There [num == 1 ? "is" : "are"] currently [num] mentor[num == 1 ? "" : "s"] online.</span>","ooc")
+		usr.text2tab("<span class='info'>There [(num == 1 || num == 0) ? "is" : "are"] currently [num] mentor[(num == 1 || num == 0) ? "" : "s"] online.</span>","ooc")
 	else
-		usr.text2tab("<b>Current Mentors:</b>\n","ooc")
+		usr.text2tab("<b>Current Mentors:</b>\n", "ooc")
 		for(var/client/C in clients)
 			if(C.ckey in mentors)
 				usr.text2tab("\t [C]","ooc")
