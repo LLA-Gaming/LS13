@@ -1,0 +1,63 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid/snow/temperatre{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"c" = (/turf/closed/wall/shuttle/survival/nodiagonal,/area/template_noop)
+"d" = (/obj/structure/flora/tree/pine,/turf/open/floor/plating/asteroid/snow/temperatre{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"e" = (/turf/open/floor/pod,/area/template_noop)
+"f" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/turf/open/floor/pod,/area/template_noop)
+"g" = (/obj/structure/chair/office/dark,/turf/open/floor/pod,/area/template_noop)
+"h" = (/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/pod,/area/template_noop)
+"i" = (/obj/structure/table/reinforced,/obj/item/weapon/folder,/turf/open/floor/pod,/area/template_noop)
+"j" = (/obj/structure/frame/computer{anchored = 1},/turf/open/floor/pod,/area/template_noop)
+"k" = (/obj/structure/table/reinforced,/turf/open/floor/pod,/area/template_noop)
+"l" = (/obj/structure/table/reinforced,/obj/effect/landmark/vr_spawn{name = "Disk"},/turf/open/floor/pod,/area/template_noop)
+"m" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/donkpockets,/turf/open/floor/pod,/area/template_noop)
+"n" = (/obj/structure/table/reinforced,/obj/item/weapon/pen,/turf/open/floor/pod,/area/template_noop)
+"o" = (/obj/structure/virtual/solidagent/atv,/turf/open/floor/plating/asteroid/snow/temperatre{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"p" = (/obj/structure/chair/office/dark{dir = 1},/turf/open/floor/pod,/area/template_noop)
+"q" = (/obj/structure/closet/cardboard{always_eggs = 1; health = 100000},/obj/item/weapon/storage/box/donkpockets,/turf/open/floor/pod,/area/template_noop)
+"r" = (/obj/structure/rack,/turf/open/floor/pod,/area/template_noop)
+"s" = (/obj/structure/punching_bag,/turf/open/floor/pod,/area/template_noop)
+"t" = (/obj/structure/chair/comfy/brown{dir = 1},/turf/open/floor/pod,/area/template_noop)
+"u" = (/obj/structure/chair/office/dark{dir = 8},/turf/open/floor/pod,/area/template_noop)
+"v" = (/obj/effect/landmark/vr_spawn{name = "Guard"},/turf/open/floor/pod,/area/template_noop)
+"w" = (/obj/structure/closet,/turf/open/floor/pod,/area/template_noop)
+"x" = (/obj/structure/window/shuttle/survival_pod,/turf/open/floor/pod,/area/template_noop)
+"y" = (/obj/machinery/door/airlock/survival_pod{random = 1},/turf/open/floor/pod,/area/template_noop)
+"z" = (/obj/machinery/door/airlock/survival_pod,/turf/open/floor/pod,/area/template_noop)
+"A" = (/obj/machinery/door/airlock/survival_pod{glass = 0; opacity = 1; random = 1},/turf/open/floor/pod,/area/template_noop)
+"B" = (/obj/structure/sign/securearea,/turf/closed/wall/shuttle/survival/nodiagonal,/area/template_noop)
+"C" = (/obj/effect/landmark/vr_spawn{name = "Escape"},/obj/machinery/door/airlock/survival_pod/random,/turf/open/floor/pod,/area/template_noop)
+"D" = (/obj/machinery/door/airlock/survival_pod/vertical{glass = 0; opacity = 1; random = 1},/turf/open/floor/pod,/area/template_noop)
+"E" = (/obj/structure/table/reinforced,/obj/item/weapon/pen,/obj/item/weapon/paper_bin,/turf/open/floor/pod,/area/template_noop)
+"F" = (/obj/effect/landmark/vr_spawn{name = "Escape"},/obj/machinery/door/airlock/survival_pod/vertical/random,/turf/open/floor/pod,/area/template_noop)
+"G" = (/obj/structure/flora/bush{density = 1},/turf/open/floor/plating/asteroid/snow/temperatre{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbaaaaaaaaa
+ccccccccccaaaaaaaacccccccddbdbbddcccccccca
+cefgeeehicaaaaaaaacjjjjjcdbdbbdbdckleeeeca
+cemlieeencccccccccceeeeecddbobbdbcipeefeca
+ceeeeeeeqcreeeeeesceitlecdbbbbdbdcfeeenuca
+ceeeeeeeecreveevewcenkfecdbbbbbbdceeeeieca
+ccccccxyxcreeeeeewceeeeecdddbddddcxyxcccca
+aaaaaceeeccxxzxxxccccAcccccBCBcccceeecaaaa
+aaaaacqeeceeeeeeeeeeeeeeeeqeeeqeeceeqcaaaa
+aaaaaceeeDeeeeeeeeeeeeeeeeeeeeeeeDeeecaaaa
+aaaaaceeeceeeeeeeeeeeeeeeeeeeeeeeceeecaaaa
+aaaaccxyxccccAcccccccAcccccccAccccxyxccaaa
+aaaacfeeecqeeeeeqcqqceeqqcqqceqqecqeeicaaa
+aaaacjueexeeqqceeceeceeeqceeceeeexqehjcaaa
+aaaacleeexecccceeDeeceeeeDeeeecccxeeencaaa
+aaaacneeexeeqqceqceeccceeceeceeeqxeeejcaaa
+aaaacjueqcqeeeeeqcqeeeeeqcqqcqeeqcegelcaaa
+aaaacieeqccccAcccccccAcccccccAccccinjEcaaa
+aaaacccccceeeeqcqcqeeeeeqcqqeeeeqccccccaaa
+abbbdddddBeeeeececececececeeeqceeBdddddbbb
+abbbbobbbFeeceeceDeeeqeeeDeeecceeFbbbbbbbb
+abdbbbbbGBqqceeeecececececqceeeeeBGbbobdbb
+abdbbbbbGcqqcqqqqcqeeeeeqcqcqqcqqcGbbbbbbb
+abbbdbbdGcccccccccccccccccccccccccGbbbbbdb
+abbdbdbbdaaaaaaaaaaaaaaaaaaaaaaaaabbdbdbbb
+abdbbbbdbaaaaaaaaaaaaaaaaaaaaaaaaabdbbbbdb
+"}

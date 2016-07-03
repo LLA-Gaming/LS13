@@ -62,6 +62,8 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/obj/machinery/virtual_reality_manipulator/virtual
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -106,6 +108,11 @@
 /datum/mind/proc/IsPerseus()
 	if(assigned_role == "Perseus Security Enforcer" || assigned_role == "Perseus Security Commander")
 		return 1
+
+/datum/mind/proc/InVRStorage() //returns 1 if the mind is currently stored in VR. used for examines mostly
+	if(key in virtual_reality.mind_storage)
+		if(src == virtual_reality.mind_storage[key])
+			return 1
 
 /datum/mind/proc/remove_objectives()
 	if(objectives.len)

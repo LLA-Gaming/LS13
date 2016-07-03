@@ -11818,6 +11818,22 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/item/clothing/glasses/virtual{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/virtual{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/virtual{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/virtual{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "azL" = (
@@ -61004,13 +61020,18 @@
 /turf/open/floor/plasteel/black,
 /area/pod_hangar/crew)
 "cDE" = (
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
+/obj/structure/table,
+/obj/item/clothing/glasses/virtual{
+	pixel_x = -4;
+	pixel_y = -4
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/black,
-/area/pod_hangar/crew)
+/obj/item/clothing/glasses/virtual,
+/obj/item/clothing/glasses/virtual{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/red/side,
+/area/security/prison)
 "cDF" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Bay 2";
@@ -85525,7 +85546,7 @@ abD
 abD
 afO
 agG
-ahv
+cDE
 abD
 aaa
 abi

@@ -52,7 +52,7 @@
 			</span>.</span>"
 		deadchat_broadcast(rendered, follow_target = src,
 			message_type=DEADCHAT_DEATHRATTLE)
-	if(mind)
+	if(mind && !mind.virtual)
 		mind.store_memory("Time of death: [tod]", 0)
 	living_mob_list -= src
 	if(!gibbed)
@@ -73,3 +73,5 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+	if(mind && mind.virtual) //If its a virtual body
+		mind.virtual.VirtualDeath(src)

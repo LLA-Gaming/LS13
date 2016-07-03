@@ -1,0 +1,78 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/closed/wall,/area/template_noop)
+"ac" = (/obj/machinery/door/airlock{name = "Theatre Backstage"; req_access_txt = "0"},/turf/open/floor/plasteel,/area/template_noop)
+"ad" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_access_txt = "0"},/turf/open/floor/plating,/area/template_noop)
+"ae" = (/obj/machinery/light_switch{pixel_y = 28},/obj/machinery/light{dir = 1},/turf/open/floor/wood,/area/template_noop)
+"af" = (/turf/open/floor/wood,/area/template_noop)
+"ag" = (/obj/effect/landmark/vr_spawn{name = "Officer"},/turf/open/floor/wood,/area/template_noop)
+"ah" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/wood,/area/template_noop)
+"ai" = (/turf/open/floor/plasteel/bar,/area/template_noop)
+"aj" = (/obj/structure/piano{tag = "icon-piano"; icon_state = "piano"},/turf/open/floor/wood,/area/template_noop)
+"ak" = (/obj/structure/chair/stool{pixel_y = 8},/turf/open/floor/wood,/area/template_noop)
+"al" = (/obj/item/weapon/bikehorn,/turf/open/floor/wood,/area/template_noop)
+"am" = (/obj/structure/chair/stool,/turf/open/floor/plasteel/bar,/area/template_noop)
+"an" = (/obj/machinery/computer/slot_machine,/turf/open/floor/plasteel/bar,/area/template_noop)
+"ao" = (/obj/structure/table/wood,/obj/item/device/instrument/guitar,/turf/open/floor/wood,/area/template_noop)
+"ap" = (/obj/effect/landmark/vr_spawn{name = "Clown"},/turf/open/floor/wood,/area/template_noop)
+"aq" = (/obj/effect/landmark/vr_spawn{name = "Mime"},/turf/open/floor/wood,/area/template_noop)
+"ar" = (/obj/machinery/door/window{dir = 4; name = "Theatre Stage"; req_access_txt = "0"},/turf/open/floor/wood,/area/template_noop)
+"as" = (/obj/machinery/computer/slot_machine,/obj/machinery/light/small{dir = 4},/obj/machinery/status_display{density = 0; layer = 3; pixel_x = 32; pixel_y = 0},/turf/open/floor/plasteel/bar,/area/template_noop)
+"at" = (/obj/structure/window/reinforced,/obj/structure/table/wood,/obj/item/device/instrument/violin,/turf/open/floor/wood,/area/template_noop)
+"au" = (/obj/structure/window/reinforced,/turf/open/floor/wood,/area/template_noop)
+"av" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/open/floor/wood,/area/template_noop)
+"aw" = (/obj/machinery/door/airlock{name = "Bar Storage"; req_access_txt = "0"},/turf/open/floor/plasteel{icon_state = "wood"},/area/template_noop)
+"ax" = (/obj/structure/table,/obj/item/clothing/head/hardhat/cakehat,/turf/open/floor/plasteel/bar,/area/template_noop)
+"ay" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating,/area/template_noop)
+"az" = (/obj/structure/sign/securearea{desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"; icon_state = "monkey_painting"; name = "Mr. Deempisi portrait"; pixel_x = -28; pixel_y = -4},/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/revolver/doublebarrel,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aA" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aB" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/structure/chair/stool,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aC" = (/obj/structure/chair,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aD" = (/obj/effect/landmark/vr_spawn{name = "Assistant 1"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aE" = (/obj/structure/chair/stool/bar,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aF" = (/obj/structure/table/reinforced,/obj/item/weapon/lighter,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aG" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aH" = (/obj/machinery/vending/boozeomat{req_access_txt = "0"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aI" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aJ" = (/obj/structure/table,/obj/item/weapon/kitchen/fork,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aK" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aL" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aM" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aN" = (/obj/effect/landmark/vr_spawn{name = "Bartender"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aO" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access_txt = "0"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aP" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aQ" = (/obj/structure/table/reinforced,/obj/item/clothing/head/that{throwforce = 1; throwing = 1},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aR" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aS" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/item/weapon/reagent_containers/food/snacks/pie/cream,/turf/open/floor/plasteel/cafeteria,/area/template_noop)
+"aT" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aU" = (/obj/structure/table/wood/poker,/obj/item/clothing/mask/cigarette/cigar,/obj/item/toy/cards/deck,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aV" = (/obj/effect/landmark/vr_spawn{name = "Assistant 2"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"aW" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/peppermill{pixel_x = 5; pixel_y = -2},/obj/item/weapon/reagent_containers/food/condiment/saltshaker{pixel_x = -2; pixel_y = 2},/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aX" = (/obj/item/weapon/shard,/obj/item/stack/cable_coil,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aY" = (/obj/structure/table/reinforced,/obj/item/weapon/book/manual/barman_recipes,/obj/item/weapon/reagent_containers/glass/rag,/turf/open/floor/plasteel/bar,/area/template_noop)
+"aZ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{name = "Kitchen"; req_access_txt = "0"},/turf/open/floor/plasteel/bar,/area/template_noop)
+"ba" = (/obj/machinery/computer/arcade,/turf/open/floor/plasteel/bar,/area/template_noop)
+"bb" = (/obj/machinery/vending/cigarette{pixel_x = 0; pixel_y = 0},/turf/open/floor/plasteel/bar,/area/template_noop)
+"bc" = (/obj/machinery/light,/turf/open/floor/plasteel/bar,/area/template_noop)
+"bd" = (/obj/structure/noticeboard{pixel_y = -27},/turf/open/floor/plasteel/bar,/area/template_noop)
+"be" = (/obj/structure/extinguisher_cabinet{pixel_x = 0; pixel_y = -30},/turf/open/floor/plasteel/bar,/area/template_noop)
+"bf" = (/obj/machinery/light/small,/turf/open/floor/plasteel/bar,/area/template_noop)
+"bg" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass{name = "Diner"},/turf/open/floor/plasteel,/area/template_noop)
+"bh" = (/obj/structure/sign/barsign,/turf/closed/wall,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaababacababababadababaaaaaaaaaaaa
+abababaeafagafahaiaiaiabaaaaaaaaaaaa
+abajakafafafalahaiamanabaaaaaaaaaaaa
+abaoafapafafaqaraiamasabaaaaaaaaaaaa
+abatauauauauauavaiamanababawababaaaa
+abaxamaiaiaiaiaiaiaiayabazaiaAabaaaa
+abaBaiaCaiaDaiamaiaiaEaFaiaGaHabaaaa
+ayaiaIaJaKaiamaLamaiaEaMaiaNaiaOaaaa
+abaiaiaPaiaiaiamaiaiaEaQaiaiaRabaaaa
+ayaiaiamaiaiaiaCaiaiaEaMaiaiaiaSaaaa
+abaTamaUamaVaIaWaKaiaEaMaMaXaYabaaaa
+ayaiaiamaiaiaiaPaiaiaiaEaEaiaiaZaaaa
+abbabbaibcaiaiaibcaibdbeaibfaiabaaaa
+abababababbgaybgbhabababababababaaaa
+"}

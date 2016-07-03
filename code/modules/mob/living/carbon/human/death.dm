@@ -26,6 +26,12 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
+	if(mind && mind.InVRStorage()) //If the mind is in VR
+		for(var/client/C in clients)
+			if(C.key == mind.key)
+				C.text2tab("<span class='userdanger'>Your connection to virtual reality was cut short by death</span>")
+				virtual_reality.KickOut(C)
+
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)

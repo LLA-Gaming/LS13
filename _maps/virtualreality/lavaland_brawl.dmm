@@ -1,0 +1,60 @@
+"a" = (/turf/open/floor/plating/lava/smooth/lava_land_surface{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"c" = (/obj/effect/landmark/vr_spawn{name = "FFA"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"d" = (/turf/closed/mineral/volcanic,/area/template_noop)
+"e" = (/turf/closed/mineral/volcanic/weapons,/area/template_noop)
+"f" = (/obj/effect/landmark/vr_spawn{name = "Team 2"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+"g" = (/obj/effect/landmark/vr_spawn{name = "Team 1"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface{initial_gas_mix = "o2=22;n2=82;TEMP=293.15"},/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaabbcddddddbaaaaaaaaaaaaaabbbbbbbbbbbbaaaa
+aaaaaaaaaabdeddeddddbbaaaaaaaaaaabbbbdddddbbbbbaaa
+aaaaaaaaaabddddddeddbbaaaaaaaaaabbbbddeddddbbbbbaa
+aaaaaaaaaaabbdddddddbbaaaaaaaaabbbbdedddeddbbbbbaa
+aaaaaaaaaaaaaddeddeddbaaaaaaaabbbbbdddddddddbbbbba
+aaaaaaaaaaaaaddddddddbaaaaaaaabbbddddeddddedbbbbba
+aaaaaaaaaaaaadeddededbaaaaaaabbbdddeddddedddbbbbba
+aaabbaaaaaaaaddddddddeddddaaabbdddbdddeddddddbbbba
+aaabbbaaaadaaddedddddddeddddbbbdedbcedddeddedebbba
+aaaabbbaadddbddddedaddddddeddbbdddbbbdddddddddbbaa
+aaaabbbbbdedbddddbaaaabbbbdddddedbbbbbbbbbdeddaaaa
+aaaaaabbbdddbddbbbaaaaabcbfbdeddbbabbbbbbbbddeaaaa
+aaaaaaaedddddddbgbbaaaabbfbbddddbbaaaaaaaaadddaaaa
+aaaaaaadddeddbbbbgbaaaaabbfbbdeddbbbaaaaaaaeddaaaa
+aaaaaaaddddddbbbgbbbaaaabbbfbbbddbbbaaaaaaaddddaaa
+aaaaaaadeddedbbbbgbbbaaaabbfbbbdedebaaaaaaaddedaaa
+aaaaaaabdddddddbgbcbbaaaaabbbbbdddddbaaaaaaadddaaa
+aaaaaabcbdddddddbbbbbbaaaaabbdedddddbaaaaaaabcbaaa
+aaaaaabbbddeddeddddddddaaaabddddedddbaaaaaaabbbbaa
+aaaaaabbddddddddeddeddedaaddedddddedbaaaaaaabbbbaa
+aaaaabbbdedddddddddddddddddddddeddddbaaaaaaabbbbaa
+aaaabbbbdddddbbbbbbbbbbbbbbddbbbbbbbbaaaaaaabbbaaa
+aaababbbdddedbbbbbcbbbbbbbbddbbbbbbbaaaaaaaabbbaaa
+aabbaabadddddbbbbbbbbbbbbbdedaaaaaaaaaaaaaaebbbaaa
+aabbbaaaabddbbbbbbbbbddaaaabbbaaaaaaaaaaaaaddbbaaa
+aaaaaaaaabedbaaaaaaaddeaaaabbbbaaaaaaaaaaaaddbaaaa
+aaaaaaaaabddbaaaaaaadedaaaaabbbbaaaaaaaaaadedbaaaa
+aaaaaaaaaddebaaaaaaaaddaaaaabbbbbaaaaaaaabdddbaaaa
+aaaaaaaaadddbaaaaaaaabbaaaaaabbbbbaaaaaaabdedaaaaa
+aaaaaaaaabedbaaaaaaabbbbaaaaabbcbbdaaaabbbdddaaaaa
+aaaaaaaaabddbaaaaaabbbbbbaaaaabbbddbabbbbbbdaaaaaa
+aaaaaaaaabdddbdeddbbbbbbbbbbdddbbdedbbbbbbbaaaaaaa
+aaaaaaaaabdedbdddebbbbbbbbbbdeddbbdedbbbcbaaaaaaaa
+aaaaaaaaabddbaadddabbbbbbbbaaaaaabddddbbbaaaaaaaaa
+aaaaaaaaabddbaaaaaabbbcbbbbaaaaaabbdddebaaaaaaaaaa
+aaaaaaabbbddbbbaaaaabbbbbbaaaaaaaabdeddbaaaaaaaaaa
+aaaaaabbbcddbbbbaaaaaabaaaaaaaaaaabdddddbaaaaaaaaa
+aaaaabbdddededdbbaaaabbaaaaaaaaaaaabddedbbaaaaaaaa
+aaaaabbddddddddbbaaaabaaaaaaaaaaaaabbdddbbaaaaaaaa
+aaaaabbdeaaaadebbbaaabbaaaaaaaaaaaaabddddbbaaaaaaa
+aaaaabbddaaaaddbbbaaaabaaaaaaaaaaaaabbdedbbaaaaaaa
+aaaaabbddaaaaddbbbaaaadaaaaaaaaaaaabbbbddbbaaaaaaa
+aaaaabbedadaaddbbbaaaadaaaaaaaabbbbbaabbbbbaaaaaaa
+aaaaabbddddddedbbbbbddeddbbbbbbbaaaaaaaaabaaaaaaaa
+aaaaaabbbdedddbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

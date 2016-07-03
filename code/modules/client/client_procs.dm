@@ -265,6 +265,7 @@ var/next_external_rsc = 0
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
+
 	directory -= ckey
 	clients -= src
 	return ..()

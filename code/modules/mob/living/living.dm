@@ -221,6 +221,7 @@ Sorry Giacom. Please don't be mad :(
 		if(!whispered)
 			src.text2tab("<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+		return 1
 
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)

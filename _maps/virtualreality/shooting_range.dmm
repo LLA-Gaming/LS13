@@ -1,0 +1,24 @@
+"a" = (/turf/closed/mineral,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid,/area/template_noop)
+"c" = (/obj/structure/target_stake,/turf/open/floor/plating/asteroid,/area/template_noop)
+"d" = (/turf/closed/wall/mineral/wood,/area/template_noop)
+"e" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/template_noop)
+"f" = (/turf/open/floor/wood,/area/template_noop)
+"g" = (/obj/effect/landmark/vr_spawn{name = "Gunman"},/turf/open/floor/wood,/area/template_noop)
+"h" = (/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaa
+aaabbbbbbbaaa
+aabbbbbbbbbaa
+abbbbbbbbbbba
+abbcbbcbbcbba
+abbbbbbbbbbba
+abcbbbbbbbcba
+abbbbbbbbbbba
+abbbbbbbbbbba
+deeeeeeeeeeed
+dddddfgfddddd
+hhhhdfffdhhhh
+hhhhdddddhhhh
+"}
