@@ -198,8 +198,8 @@ Therapist
 
 	outfit = /datum/outfit/job/therapist
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical)
+	access = list(access_therapy, access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
+	minimal_access = list(access_therapy, access_medical)
 
 /datum/outfit/job/therapist
 	name = "Therapist"
