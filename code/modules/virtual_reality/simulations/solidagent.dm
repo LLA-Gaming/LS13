@@ -305,8 +305,6 @@
 	head = /obj/item/clothing/head/sneaking_bandana
 	gloves = /obj/item/clothing/gloves/combat/sneaking
 	shoes = /obj/item/clothing/shoes/space_ninja/sneaking
-	l_pocket = /obj/item/weapon/grenade/chem_grenade/cleaner
-	r_pocket = /obj/item/weapon/grenade/flashbang
 	belt = /obj/item/weapon/storage/belt/military/assault/sneaking
 	suit_store = /obj/item/weapon/gun/syringe/syndicate
 
