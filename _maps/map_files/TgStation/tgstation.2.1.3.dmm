@@ -41393,6 +41393,11 @@
 	pixel_x = -20;
 	pixel_y = 0
 	},
+/obj/machinery/camera{
+	c_tag = "Therapy";
+	dir = 4;
+	network = list("SS13")
+	},
 /turf/open/floor/carpet,
 /area/medical/medbay)
 "bOn" = (
