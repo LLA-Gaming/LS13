@@ -5,10 +5,6 @@
 "ab" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ac" = (
-/obj/machinery/lavaland_controller,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area)
 "ad" = (
 /obj/structure/lavaland_door,
 /turf/closed/indestructible/riveted,
@@ -35169,7 +35165,7 @@ ab
 ab
 ab
 ab
-ac
+ab
 ab
 ab
 ab
