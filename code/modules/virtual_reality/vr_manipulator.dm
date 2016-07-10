@@ -114,6 +114,7 @@ var/global/list/vr_loaders = list()
 			dat += "<div class='statusDisplay'>"
 			dat += "<u>[loaded.name]</u><br>"
 			dat += "[loaded.desc]<br><br>"
+			dat += "<A href='?src=\ref[src];observesim=1'>Observe</A><br>"
 			dat += "<u>Alive:</u><br>"
 			for(var/client/C in loaded.alive)
 				if(ishuman(C.mob))
@@ -136,7 +137,12 @@ var/global/list/vr_loaders = list()
 				dat += "<div class='statusDisplay'>"
 				dat += "<u>[S.name]</u><br>"
 				dat += "[S.desc]<br>"
-				dat += "Players: [S.min_players] to [S.max_players]<br>"
+				if(S.max_players > 1)
+					dat += "Players: [S.min_players] to [S.max_players]<br>"
+				else
+					dat += "Singleplayer<br>"
+				if(S.highscore_score)
+					dat += "Highscore - [S.highscore_name]: [S.highscore_score]<br>"
 				dat += "<A href='?src=\ref[src];loadsim=\ref[S]'>Load Simulation</A><br>"
 				if(S.children_sims.len)
 					dat += "Sub Modes: "
@@ -165,6 +171,13 @@ var/global/list/vr_loaders = list()
 			return
 		if(!user.mind.virtual)
 			return
+		if(href_list["observesim"])
+			if(loaded && loaded.players.len)
+				var/mob/M = pick(loaded.players)
+				loaded.observers.Add(user.client)
+				MakeMob(user.client, /mob/camera/virtual_observer, get_turf(M))
+				qdel(user)
+
 		if(!loaded && !selected)
 			if(href_list["loadsim"])
 				selected = locate(href_list["loadsim"])
@@ -173,8 +186,13 @@ var/global/list/vr_loaders = list()
 					load_time = world.time + 300
 					var/obj/effect/landmark/vr_import/I = locate(vr_loader) in vr_loaders
 					selected.template.load(get_turf(I))
-					narrate_all("<span class ='deadsay'>[selected.name] is now loading, gather around the manipulator to participate. ETA: 30 seconds</span>")
-					attract_players("[selected.name] is loading in virtual reality! You have 30 seconds to join!")
+					if(selected.max_players > 1)
+						narrate_all("<span class ='deadsay'>[selected.name] is now loading, gather around the manipulator to participate. ETA: 30 seconds</span>")
+						attract_players("[selected.name] is loading in virtual reality! You have 30 seconds to join!")
+					else
+						LoadSimulation(selected, list(user.client))
+						selected = null
+						load_time = 0
 					update_icon()
 
 
@@ -184,13 +202,16 @@ var/global/list/vr_loaders = list()
 			ghost.enter_vr()
 
 
-	proc/LoadSimulation(var/datum/vr_simulation/simulation)
+	proc/LoadSimulation(var/datum/vr_simulation/simulation, var/list/prepicked_players)
 		loaded = new simulation.type
 		loaded.virtual = src
 
-		for(var/client/C in contained_clients)
-			if(istype(get_area(C.mob),vr_hub))
-				loaded.players.Add(C)
+		if(!prepicked_players)
+			for(var/client/C in contained_clients)
+				if(istype(get_area(C.mob),vr_hub))
+					loaded.players.Add(C)
+		else
+			loaded.players = prepicked_players
 
 		if(loaded.players.len < loaded.min_players)
 			narrate_all("<span class ='deadsay'>Not enough players to start [loaded.name], please try again.</span>")
@@ -223,6 +244,9 @@ var/global/list/vr_loaders = list()
 		//reset objs and mobs
 		if(loaded)
 			for(var/client/C in loaded.players)
+				if(C.mob.mind && C.mob.mind.virtual)
+					SendToVRHub(C.mob)
+			for(var/client/C in loaded.observers)
 				if(C.mob.mind && C.mob.mind.virtual)
 					SendToVRHub(C.mob)
 		qdel(loaded)
@@ -279,6 +303,8 @@ var/global/list/vr_loaders = list()
 					if(H.shoes)
 						shoes = H.shoes.type
 			var/mob/living/carbon/human/newbody = MakeBody(M:client, get_turf(entry_point), 1)
+			newbody.real_name = mind.name
+			newbody.name = mind.name
 			newbody.status_flags = GODMODE|CANPUSH
 			newbody.equip_to_slot_or_del(new uniform(newbody),slot_w_uniform)
 			newbody.equip_to_slot_or_del(new shoes(newbody),slot_shoes)
@@ -345,6 +371,8 @@ var/global/list/vr_loaders = list()
 		if(!C || ismob(C))
 			listclearnulls(loaded.alive)
 			listclearnulls(loaded.dead)
+			listclearnulls(loaded.players)
+			listclearnulls(loaded.observers)
 			loaded.CheckComplete()
 		else
 			loaded.LosePlayer(C)
@@ -456,6 +484,15 @@ var/global/list/vr_loaders = list()
 	var/datum/action/leave_vr/L = new
 	L.Grant(M)
 	return M
+
+/obj/machinery/virtual_reality_manipulator/proc/MakeMob(var/client/C, var/mobtype, var/turf/T)
+	var/mob/newmob = new mobtype(T)
+	newmob.name = C.mob.name
+	newmob.real_name = C.mob.real_name
+	C.mob.mind.transfer_to(newmob,1)
+	var/datum/action/leave_vr/L = new
+	L.Grant(newmob)
+	return newmob
 
 /obj/machinery/virtual_reality_manipulator/proc/VirtualDeath(var/mob/living/L)
 	if(loaded)

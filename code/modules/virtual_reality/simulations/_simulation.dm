@@ -13,8 +13,12 @@
 	var/list/players = list()
 	var/list/alive = list()
 	var/list/dead = list()
+	var/list/observers = list()
 	var/end_time = 6000 // 10 minutes
 	var/winners_text
+	var/highscore_name
+	var/highscore_key
+	var/highscore_score
 
 	New()
 		..()
@@ -32,7 +36,9 @@
 		alive.Remove(C)
 		dead.Remove(C)
 		players.Remove(C)
-		PlayerDeath(C)
+		observers.Remove(C)
+		if(!istype(C.mob,/mob/camera/virtual_observer))
+			PlayerDeath(C)
 
 	proc/Tick()
 		if(world.time >= end_time)
@@ -40,7 +46,10 @@
 		listclearnulls(alive)
 		listclearnulls(dead)
 		listclearnulls(players)
-		if(alive.len <= 1)
+		if(alive.len <= 1 && max_players > 1)
+			End()
+			return
+		if(!players.len)
 			End()
 
 	proc/CheckComplete()

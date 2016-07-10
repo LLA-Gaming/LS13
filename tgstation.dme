@@ -1896,6 +1896,7 @@
 #include "code\modules\virtual_reality\vr_goggles.dm"
 #include "code\modules\virtual_reality\vr_manipulator.dm"
 #include "code\modules\virtual_reality\vr_mobs.dm"
+#include "code\modules\virtual_reality\vr_observing.dm"
 #include "code\modules\virtual_reality\vr_procs.dm"
 #include "code\modules\virtual_reality\vr_turfs.dm"
 #include "code\modules\virtual_reality\simulations\_simulation.dm"
