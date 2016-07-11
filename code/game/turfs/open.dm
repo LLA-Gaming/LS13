@@ -24,6 +24,9 @@
 
 	current_cycle = times_fired
 
+	if(planetary_atmos)
+		return
+
 	//cache some vars
 	var/datum/gas_mixture/air = src.air
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs

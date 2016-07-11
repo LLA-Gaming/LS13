@@ -143,6 +143,10 @@
 
 	SSair.remove_from_active(src)
 
+	if(path == /turf/open/space)
+		if(IsPlanetZ(src.z))
+			path = /turf/open/floor/plating/asteroid/snow/surface
+
 	var/turf/W = new path(src)
 	if(!defer_change)
 		W.AfterChange()

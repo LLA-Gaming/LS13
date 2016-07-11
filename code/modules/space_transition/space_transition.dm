@@ -1,164 +1,151 @@
-//This is realisation of the working torus-looping randomized-per-round space map, this kills the cube
-
 #define Z_LEVEL_NORTH 		"1"
 #define Z_LEVEL_SOUTH 		"2"
 #define Z_LEVEL_EAST 		"4"
 #define Z_LEVEL_WEST 		"8"
 
+//helper proc for finding if the current Z level is on a planet, used in many places
+/proc/IsPlanetZ(var/Z_arg)
+	if(Z_arg in list(1,3,4,6))
+		return 1
 
-var/list/z_levels_list = list()
 
 /datum/space_level
 	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"
-	var/list/neigbours = list()
+	var/list/neighbors = list()
 	var/z_value = 1 //actual z placement
-	var/linked = 1
-	var/xi
-	var/yi   //imaginary placements on the grid
+	var/linked = SELFLOOPING
 
 /datum/space_level/New(transition_type)
 	linked = transition_type
-	if(linked == 1)
-		neigbours = list()
+	if(linked == SELFLOOPING)
+		neighbors = list()
 		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
 		for(var/A in L)
-			neigbours[A] = src
+			neighbors[A] = src
 
-/datum/space_level/proc/set_neigbours(list/L)
-	for(var/datum/point/P in L)
-		if(P.x == xi)
-			if(P.y == yi+1)
-				neigbours[Z_LEVEL_NORTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_SOUTH] = src
-			else if(P.y == yi-1)
-				neigbours[Z_LEVEL_SOUTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_NORTH] = src
-		else if(P.y == yi)
-			if(P.x == xi+1)
-				neigbours[Z_LEVEL_EAST] = P.spl
-				P.spl.neigbours[Z_LEVEL_WEST] = src
-			else if(P.x == xi-1)
-				neigbours[Z_LEVEL_WEST] = P.spl
-				P.spl.neigbours[Z_LEVEL_EAST] = src
 
-/datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
-	var/list/neigbours = list()
-	var/x
-	var/y
-	var/datum/space_level/spl
-
-/datum/point/New(nx, ny, list/point_grid)
-	if(!point_grid)
-		qdel(src)
-		return
-	var/list/L = point_grid[1]
-	if(nx > point_grid.len || ny > L.len)
-		qdel(src)
-		return
-	x = nx
-	y = ny
-	if(point_grid[x][y])
-		return
-	point_grid[x][y] = src
-
-/datum/point/proc/set_neigbours(list/grid)
-	var/max_X = grid.len
-	var/list/max_Y = grid[1]
-	max_Y = max_Y.len
-	neigbours.Cut()
-	if(x+1 <= max_X)
-		neigbours |= grid[x+1][y]
-	if(x-1 >= 1)
-		neigbours |= grid[x-1][y]
-	if(y+1 <= max_Y)
-		neigbours |= grid[x][y+1]
-	if(y-1 >= 1)
-		neigbours |= grid[x][y-1]
-
-/proc/setup_map_transitions() //listamania
-	var/list/SLS = list()
+/proc/setup_map_transitions()
+	var/list/planet_z_levels = list()
+	var/list/space_z_levels = list()
 	var/datum/space_level/D
-	var/conf_set_len = map_transition_config.len
 	var/k = 1
 	for(var/A in map_transition_config)
 		D = new(map_transition_config[A])
 		D.name = A
 		D.z_value = k
-		if(D.linked < 2)
-			z_levels_list["[D.z_value]"] = D
-		else
-			SLS.Add(D)
+		if(D.linked == PLANETLINKED)
+			planet_z_levels["[D.z_value]"] = D
+		else if(D.linked == SPACELINKED)
+			space_z_levels["[D.z_value]"] = D
 		k++
-	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
-	var/list/grid = list()
-	var/datum/point/P
-	for(var/i = 1, i<=conf_set_len*2+1, i++)
-		for(var/j = 1, j<=conf_set_len*2+1, j++)
-			P = new/datum/point(i,j, point_grid)
-			point_grid[i][j] = P
-			grid.Add(P)
-	for(var/datum/point/pnt in grid)
-		pnt.set_neigbours(point_grid)
-	P = point_grid[conf_set_len+1][conf_set_len+1]
-	var/list/possible_points = list()
-	var/list/used_points = list()
-	grid.Cut()
-	while(SLS.len)
-		D = pick(SLS)
-		SLS.Remove(D)
-		D.xi = P.x
-		D.yi = P.y
-		P.spl = D
-		possible_points |= P.neigbours
-		used_points |= P
-		possible_points.Remove(used_points)
-		D.set_neigbours(used_points)
-		P = pick(possible_points)
-		grid["[D.z_value]"] = D
 
-	for(var/A in z_levels_list)
-		grid[A] = z_levels_list[A]
+	SSmapping.z_levels["planet"] = planet_z_levels
+	SSmapping.z_levels["space"] = space_z_levels
 
-	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
-	//Its either this or madness with lotsa math
+	for(var/L in SSmapping.z_levels)
+		setup_map_grid(SSmapping.z_levels[L])
+		setup_turf_transitions(SSmapping.z_levels[L])
 
-	var/list/x_pos_beginning = list(1, 1, world.maxx - TRANSITIONEDGE, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
-	var/list/y_pos_beginning = list(world.maxy - TRANSITIONEDGE, 1, TRANSITIONEDGE, TRANSITIONEDGE)  //y values respectively
-	var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, TRANSITIONEDGE)	//x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
-	var/list/y_pos_ending = list(world.maxy, TRANSITIONEDGE, world.maxy - TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)	//y values respectively
-	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)		//values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
-	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2, 1, 1)		//values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
 
-	for(var/zlevelnumber = 1, zlevelnumber<=grid.len, zlevelnumber++)
-		D = grid["[zlevelnumber]"]
-		if(!D)
-			CRASH("[zlevelnumber] position has no space level datum.")
-		if(!(D.neigbours.len))
+/proc/setup_map_grid(var/list/z_levels)
+	var/datum/space_level/main_level
+	var/list/neighbor_levels = list()
+
+	var/count = 1
+	for(var/L in z_levels)
+		var/datum/space_level/level = z_levels[L]
+		if(count == 1)
+			main_level = level
+		else
+			neighbor_levels.Add(level)
+		count++
+
+	var/datum/space_level/northsouth_level = pick_n_take(neighbor_levels)
+	var/datum/space_level/eastwest_level = pick_n_take(neighbor_levels)
+
+	pair_z_level(main_level,northsouth_level,Z_LEVEL_NORTH)
+	pair_z_level(main_level,northsouth_level,Z_LEVEL_SOUTH)
+
+	pair_z_level(main_level,eastwest_level,Z_LEVEL_EAST)
+	pair_z_level(main_level,eastwest_level,Z_LEVEL_WEST)
+
+	if(!neighbor_levels.len) // Just 3 Z levels
+		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
+		for(var/A in L)
+			northsouth_level.neighbors[A] = main_level
+			eastwest_level.neighbors[A] = main_level
+
+	else //More than 3 z-levels, slightly more complicated. at this time only supports 4 total
+		var/datum/space_level/distant_level = pick_n_take(neighbor_levels)
+
+		pair_z_level(distant_level,northsouth_level,Z_LEVEL_EAST)
+		pair_z_level(distant_level,northsouth_level,Z_LEVEL_WEST)
+
+		pair_z_level(distant_level,eastwest_level,Z_LEVEL_NORTH)
+		pair_z_level(distant_level,eastwest_level,Z_LEVEL_SOUTH)
+
+
+
+/proc/pair_z_level(var/datum/space_level/level_a, var/datum/space_level/level_b, var/direction)
+	switch(direction)
+		if(Z_LEVEL_NORTH)
+			level_a.neighbors[Z_LEVEL_NORTH] = level_b
+			level_b.neighbors[Z_LEVEL_SOUTH] = level_a
+		if(Z_LEVEL_SOUTH)
+			level_a.neighbors[Z_LEVEL_SOUTH] = level_b
+			level_b.neighbors[Z_LEVEL_NORTH] = level_a
+		if(Z_LEVEL_EAST)
+			level_a.neighbors[Z_LEVEL_EAST] = level_b
+			level_b.neighbors[Z_LEVEL_WEST] = level_a
+		if(Z_LEVEL_WEST)
+			level_a.neighbors[Z_LEVEL_WEST] = level_b
+			level_b.neighbors[Z_LEVEL_EAST] = level_a
+
+
+/proc/setup_turf_transitions(var/list/z_levels)
+	for(var/L in z_levels)
+		var/datum/space_level/D = z_levels[L]
+
+		if(D.linked == SELFLOOPING || D.linked == UNAFFECTED)
 			continue
+
+		var/transition_edge = TRANSITIONEDGE
+
+		var/zlevelnumber = D.z_value
+
+		if(IsPlanetZ(zlevelnumber))
+			transition_edge = PLANET_TRANSITIONEDGE
+
+		var/list/x_pos_beginning = list(1, 1, world.maxx - transition_edge, 1)  //x values of the lowest-leftest turfs of the respective 4 blocks on each side of zlevel
+		var/list/y_pos_beginning = list(world.maxy - transition_edge, 1, transition_edge, transition_edge)  //y values respectively
+		var/list/x_pos_ending = list(world.maxx, world.maxx, world.maxx, transition_edge)	//x values of the highest-rightest turfs of the respective 4 blocks on each side of zlevel
+		var/list/y_pos_ending = list(world.maxy, transition_edge, world.maxy - transition_edge, world.maxy - transition_edge)	//y values respectively
+		var/list/x_pos_transition = list(1, 1, transition_edge + 2, world.maxx - transition_edge - 2)		//values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
+		var/list/y_pos_transition = list(transition_edge + 2, world.maxy - transition_edge - 2, 1, 1)		//values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
+
 		for(var/side = 1, side<5, side++)
 			var/turf/beginning = locate(x_pos_beginning[side], y_pos_beginning[side], zlevelnumber)
 			var/turf/ending = locate(x_pos_ending[side], y_pos_ending[side], zlevelnumber)
 			var/list/turfblock = block(beginning, ending)
 			var/dirside = 2**(side-1)
 			var/zdestination = zlevelnumber
-			if(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
-				D = D.neigbours["[dirside]"]
+			if(D.neighbors["[dirside]"] && D.neighbors["[dirside]"] != D)
+				D = D.neighbors["[dirside]"]
 				zdestination = D.z_value
 			else
 				dirside = turn(dirside, 180)
-				while(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
-					D = D.neigbours["[dirside]"]
+				while(D.neighbors["[dirside]"] && D.neighbors["[dirside]"] != D)
+					D = D.neighbors["[dirside]"]
 				zdestination = D.z_value
-			D = grid["[zlevelnumber]"]
-			for(var/turf/open/space/S in turfblock)
-				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
-				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
-				S.destination_z = zdestination
+			D = z_levels[L]
 
-	for(var/A in grid)
-		z_levels_list[A] = grid[A]
-
-#undef Z_LEVEL_NORTH
-#undef Z_LEVEL_SOUTH
-#undef Z_LEVEL_EAST
-#undef Z_LEVEL_WEST
+			if(IsPlanetZ(zlevelnumber))
+				for(var/turf/open/floor/plating/asteroid/snow/surface/S in turfblock)
+					S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
+					S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
+					S.destination_z = zdestination
+			else
+				for(var/turf/open/space/S in turfblock)
+					S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
+					S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
+					S.destination_z = zdestination

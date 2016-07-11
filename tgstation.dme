@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\icebox.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -1285,6 +1285,7 @@
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\shelters.dm"
+#include "code\modules\mining\iceplanet\snow.dm"
 #include "code\modules\mining\laborcamp\laborminerals.dm"
 #include "code\modules\mining\laborcamp\laborshuttle.dm"
 #include "code\modules\mining\laborcamp\laborstacker.dm"

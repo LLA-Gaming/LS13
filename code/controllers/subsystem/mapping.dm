@@ -5,6 +5,7 @@ var/datum/subsystem/mapping/SSmapping
 	init_order = -5
 	flags = SS_NO_FIRE
 	display_order = 50
+	var/list/z_levels = list()
 
 
 /datum/subsystem/mapping/New()

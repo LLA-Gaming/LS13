@@ -294,6 +294,9 @@
 
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
+	for(var/turf/open/floor/plating/asteroid/snow/surface/T in RANGE_TURFS(1,src))
+		T.update_starlight()
+
 
 /turf/proc/update_lumcount(amount)
 	lighting_lumcount += amount
@@ -317,6 +320,8 @@
 			lighting_object = new (src)
 		redraw_lighting(1)
 		for(var/turf/open/space/T in RANGE_TURFS(1,src))
+			T.update_starlight()
+		for(var/turf/open/floor/plating/asteroid/snow/surface/T in RANGE_TURFS(1,src))
 			T.update_starlight()
 
 

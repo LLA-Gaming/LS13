@@ -349,6 +349,8 @@
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)
 		T = get_turf(AT)
+	if(IsPlanetZ(T.z))
+		return 1
 	var/area/A = get_area(T)
 	if(istype(T, /turf/open/space)) // Turf never has gravity
 		return 0

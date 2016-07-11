@@ -124,6 +124,7 @@
 #define MANIFEST_ERROR_ITEM			4
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
+#define PLANET_TRANSITIONEDGE			1
 
 
 

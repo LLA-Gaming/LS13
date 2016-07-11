@@ -15,7 +15,7 @@
 	var/list/possible_transtitons = list()
 	var/k = 1
 	for(var/a in map_transition_config)
-		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+		if(map_transition_config[a] == SPACELINKED) // Only pick z-levels connected to station space
 			possible_transtitons += k
 		k++
 	var/_z = pick(possible_transtitons)

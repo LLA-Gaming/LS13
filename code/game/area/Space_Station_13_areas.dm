@@ -53,7 +53,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
+	var/has_gravity = 1
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -95,6 +95,21 @@ var/list/teleportlocs = list()
 	icon_state = "start"
 
 /area/space
+	icon_state = "space"
+	requires_power = 1
+	always_unpowered = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
+	valid_territory = 0
+	has_gravity = 0
+	outdoors = 1
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+
+/area/surface
+	name = "surface"
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
@@ -1053,6 +1068,7 @@ var/list/teleportlocs = list()
 	name = "Derelict Station"
 	icon_state = "storage"
 	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	has_gravity = 0
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
