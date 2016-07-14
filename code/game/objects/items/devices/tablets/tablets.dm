@@ -145,7 +145,7 @@ var/global/list/obj/item/device/tablet/tablets_list = list()
 								ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]</A>[id ? "<A href='?src=\ref[src];choice=UpdateInfo'>Update Tablet Info</A>" : ""]<br>
 								"}
 					dat += {"
-							[station_name]<br>[time2text(world.realtime, "MMM DD")] [year_integer+540]<br>[worldtime2text()]<br>
+							[station_name]<br>[SSdaynight.is_night ? "Night" : "Day"]: [SSdaynight.day_count] <br>[SSdaynight.current_name]<br>
 							"}
 					for(var/datum/program/P in apps_builtin)
 						dat += "<a href='byond://?src=\ref[src];choice=load;target=\ref[P]'>[P.name][P.notifications ? " \[[P.notifications]\]" : ""]</a>"
