@@ -93,6 +93,7 @@
 		img = image(button_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
+		img.plane = HUDPLANE
 		current_button.add_overlay(img)
 
 

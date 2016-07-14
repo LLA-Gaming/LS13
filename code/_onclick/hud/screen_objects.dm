@@ -12,6 +12,7 @@
 	layer = ABOVE_HUD_LAYER
 	unacidable = 1
 	appearance_flags = APPEARANCE_UI
+	plane = HUDPLANE
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/datum/hud/hud = null // A reference to the owner HUD, if any.
 

@@ -14,6 +14,9 @@ var/datum/subsystem/daynight/SSdaynight
 	var/current_alpha
 	var/current_color
 	var/list/times_of_day = list(
+		list("name" = "NIGHT TIME",    "alpha" = 25, "color" = "#9999FF"))
+	/*
+	var/list/times_of_day = list(
 		list("name" = "6 AM",     "alpha" = 125, "color" = "#9999FF"),
 		list("name" = "7 AM",     "alpha" = 185, "color" = "#9999FF"),
 		list("name" = "8 AM",     "alpha" = 210, "color" = "#FFFFFF"),
@@ -38,6 +41,7 @@ var/datum/subsystem/daynight/SSdaynight
 		list("name" = "3 AM",     "alpha" = 50, "color" = "#9999FF"),
 		list("name" = "4 AM",     "alpha" = 75, "color" = "#9999FF"),
 		list("name" = "5 AM",     "alpha" = 100, "color" = "#9999FF"))
+	*/
 
 /datum/subsystem/daynight/New()
 	NEW_SS_GLOBAL(SSdaynight)

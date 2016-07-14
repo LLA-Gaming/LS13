@@ -98,6 +98,7 @@
 	I.loc = src
 	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = HUDPLANE
 
 	switch(slot)
 		if(slot_head)

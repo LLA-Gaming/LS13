@@ -73,3 +73,5 @@
 
 	update_client_colour()
 	client.click_intercept = null
+	grant_plane(/image/master_plane)
+	grant_plane(/image/hud_plane)

@@ -408,10 +408,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					if(!alert_overlay)
 						var/old_layer = source.layer
 						source.layer = FLOAT_LAYER
+						source.plane = HUDPLANE
 						A.add_overlay(source)
 						source.layer = old_layer
+						source.plane = initial(source.plane)
 					else
 						alert_overlay.layer = FLOAT_LAYER
+						alert_overlay.plane = HUDPLANE
 						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
