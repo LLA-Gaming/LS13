@@ -234,7 +234,7 @@ var/list/admin_verbs_minimum = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin
