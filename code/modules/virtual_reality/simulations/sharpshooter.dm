@@ -4,7 +4,7 @@
 
 /datum/vr_simulation/shooting_range
 	name = "Sharpshooter"
-	desc = "Set your score as the universe's most quickest and accurate gun shooter"
+	desc = "Set your score as the universe's fastest sharpshooter"
 	template_path = /datum/map_template/virtual/shooting_range
 	min_players = 1
 	max_players = 1

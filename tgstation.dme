@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
+#include "_maps\virtualreality\medbay_sim.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -1902,6 +1903,7 @@
 #include "code\modules\virtual_reality\simulations\_simulation.dm"
 #include "code\modules\virtual_reality\simulations\bar_fight.dm"
 #include "code\modules\virtual_reality\simulations\lavaland_brawl.dm"
+#include "code\modules\virtual_reality\simulations\medbay_sim.dm"
 #include "code\modules\virtual_reality\simulations\sharpshooter.dm"
 #include "code\modules\virtual_reality\simulations\solidagent.dm"
 #include "code\modules\zombie\items.dm"

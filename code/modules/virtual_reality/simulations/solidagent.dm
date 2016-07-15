@@ -48,10 +48,6 @@
 				guard_outfit.equip(guard_2)
 				guard_2.shoes.flags |= NODROP
 				continue
-		var/obj/item/organ/cyberimp/eyes/shield/shield = new /obj/item/organ/cyberimp/eyes/shield()
-		shield.Insert(solid)
-		var/datum/martial_art/krav_maga/style = new
-		style.teach(solid,1)
 		qdel(solid_outfit)
 		qdel(guard_outfit)
 
@@ -258,6 +254,48 @@
 	icon_state = "sneaking"
 	item_state = "sneaking"
 	allowed = list(/obj/item/weapon/gun/syringe/syndicate)
+	slowdown = -1
+	actions_types = list(/datum/action/item_action/solidagent/active_camo,/datum/action/item_action/solidagent/toggle_smoke)
+	var/smoke_cooldown = -1
+	var/camo = 0
+
+	ui_action_click(mob/owner, action_type)
+		if(action_type == /datum/action/item_action/solidagent/toggle_smoke)
+			if(smoke_cooldown < 0 || smoke_cooldown <= world.time)
+				var/datum/effect_system/smoke_spread/bad/smoke = new
+				smoke.set_up(1, get_turf(src))
+				smoke.start()
+				smoke_cooldown = world.time + 100
+			else
+				owner.text2tab("[src] is currently recharging smoke tanks")
+		if(action_type == /datum/action/item_action/solidagent/active_camo)
+			if(camo)
+				owner.remove_alt_appearance("just_a_box")
+				slowdown = initial(slowdown)
+				camo = 0
+			else
+				var/image/I = image(icon = 'icons/obj/closet.dmi' , icon_state = "cardboard", loc = owner)
+				I.override = 1
+				owner.add_alt_appearance("just_a_box", I, player_list)
+				slowdown = 4
+				camo = 1
+
+	dropped(mob/living/user)
+		..()
+		user.remove_alt_appearance("just_a_box")
+		slowdown = initial(slowdown)
+		camo = 0
+
+/datum/action/item_action/solidagent/toggle_smoke
+	name = "Dispense Smoke"
+	button_icon_state = "smokewhite"
+	IsAvailable()
+		return 1
+
+/datum/action/item_action/solidagent/active_camo
+	name = "Active-Camo"
+	IsAvailable()
+		return 1
 
 /obj/item/clothing/shoes/space_ninja/sneaking
 	name = "sneaking shoes"
@@ -307,6 +345,13 @@
 	shoes = /obj/item/clothing/shoes/space_ninja/sneaking
 	belt = /obj/item/weapon/storage/belt/military/assault/sneaking
 	suit_store = /obj/item/weapon/gun/syringe/syndicate
+
+	post_equip(mob/living/carbon/human/H)
+		..()
+		var/obj/item/organ/cyberimp/eyes/shield/shield = new /obj/item/organ/cyberimp/eyes/shield()
+		shield.Insert(H)
+		var/datum/martial_art/krav_maga/style = new
+		style.teach(H,1)
 
 /datum/outfit/donkoperative
 	name = "Donk Co. Warehouse Guard"
