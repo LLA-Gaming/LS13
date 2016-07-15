@@ -134,8 +134,10 @@
 		var/obj/item/I = target
 		var/old = I.layer
 		I.layer = FLOAT_LAYER //AAAH
+		I.plane = HUDPLANE
 		current_button.add_overlay(I)
 		I.layer = old
+		I.plane = initial(I.plane)
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
