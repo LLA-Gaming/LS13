@@ -107,19 +107,13 @@
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V
-		N.layer = overlay_layer
-		N.icon = 'icons/effects/weather_effects.dmi'
-		N.invisibility = 0
 		switch(stage)
 			if(STARTUP_STAGE)
-				N.icon_state = telegraph_overlay
+				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = telegraph_overlay, layer = overlay_layer)
 			if(MAIN_STAGE)
-				N.icon_state = weather_overlay
+				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = weather_overlay, layer = overlay_layer)
 			if(WIND_DOWN_STAGE)
-				N.icon_state = end_overlay
+				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = end_overlay,layer = overlay_layer)
 			if(END_STAGE)
-				N.icon_state = initial(N.icon_state)
-				N.icon = 'icons/turf/areas.dmi'
-				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
-				N.invisibility = INVISIBILITY_MAXIMUM
-				N.opacity = 0
+				N.weather_overlay = null
+		N.updateicon()

@@ -954,6 +954,10 @@
 /mob/living/carbon/human/update_sight()
 	if(!client)
 		return
+
+	if(darkness_plane)
+		darkness_plane.alpha = 0
+
 	if(stat == DEAD)
 		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
@@ -961,6 +965,20 @@
 		return
 
 	dna.species.update_sight(src)
+
+	if(darkness_plane)
+		if(sight & SEE_TURFS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#00ff00"
+
+		if(sight & SEE_OBJS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#0000ff"
+
+		if(sight & SEE_MOBS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#ff0000"
+
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()

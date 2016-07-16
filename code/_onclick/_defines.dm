@@ -1,1 +1,4 @@
 #define CLICKCATCHER_PLANE -99
+#define DARKNESSPLANE -1
+#define MASTERPLANE 0
+#define HUDPLANE 1

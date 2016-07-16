@@ -73,3 +73,4 @@
 
 	update_client_colour()
 	client.click_intercept = null
+	grant_planes()

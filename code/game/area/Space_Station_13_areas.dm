@@ -21,7 +21,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "unknown"
 	layer = AREA_LAYER
 	mouse_opacity = 0
-	invisibility = INVISIBILITY_LIGHTING
 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
@@ -60,6 +59,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
+	var/image/weather_overlay
+	var/image/alarm_overlay
+	var/image/light_overlay
 //	var/list/lights				// list of all lights on this area
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
@@ -111,9 +113,9 @@ var/list/teleportlocs = list()
 /area/surface
 	name = "surface"
 	icon_state = "space"
+	surface_lighting = 1
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
 	power_environ = 0

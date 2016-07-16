@@ -238,13 +238,11 @@
 /atom/movable/light
 	icon = LIGHTING_ICON
 	icon_state = LIGHTING_ICON_STATE
-	layer = LIGHTING_LAYER
 	mouse_opacity = 0
-	blend_mode = BLEND_OVERLAY
-	invisibility = INVISIBILITY_LIGHTING
-	color = "#000"
-	luminosity = 0
-	infra_luminosity = 1
+	appearance_flags = KEEP_TOGETHER
+	blend_mode = BLEND_ADD
+	plane = DARKNESSPLANE
+	layer = LIGHTING_LAYER
 	anchored = 1
 
 /atom/movable/light/Destroy(force)
@@ -294,8 +292,6 @@
 
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
-	for(var/turf/open/floor/plating/asteroid/snow/surface/T in RANGE_TURFS(1,src))
-		T.update_starlight()
 
 
 /turf/proc/update_lumcount(amount)
@@ -306,6 +302,44 @@
 
 /turf/open/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
 	lighting_lumcount += amount
+
+/area/proc/updateicon()
+	overlays.Cut()
+	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
+		if(fire && !eject && !party)
+			alarm_overlay = image(icon = 'icons/turf/areas.dmi',icon_state = "blue", layer = AREA_LAYER)
+		else if(!fire && eject && !party)
+			alarm_overlay = image(icon = 'icons/turf/areas.dmi',icon_state = "red", layer = AREA_LAYER)
+		else if(party && !fire && !eject)
+			alarm_overlay = image(icon = 'icons/turf/areas.dmi',icon_state = "party", layer = AREA_LAYER)
+		else
+			alarm_overlay = image(icon = 'icons/turf/areas.dmi',icon_state = "blue-red", layer = AREA_LAYER)
+	else
+		alarm_overlay = null
+
+	if(!light_overlay)
+		light_overlay = image(icon = LIGHTING_ICON,icon_state = LIGHTING_ICON_STATE, layer = LIGHTING_LAYER)
+		light_overlay.plane = DARKNESSPLANE
+		light_overlay.blend_mode = BLEND_ADD
+
+	if(!IS_DYNAMIC_LIGHTING(src))
+		light_overlay.alpha = 255
+	else if(surface_lighting)
+		light_overlay.alpha = SSdaynight.current_alpha
+	else
+		light_overlay.alpha = 0
+
+	overlays += light_overlay
+
+	if(alarm_overlay)
+		alarm_overlay.blend_mode = BLEND_DEFAULT
+		alarm_overlay.plane = MASTERPLANE
+		overlays += alarm_overlay
+
+	if(weather_overlay)
+		weather_overlay.blend_mode = BLEND_DEFAULT
+		weather_overlay.plane = MASTERPLANE
+		overlays += weather_overlay
 
 /turf/proc/init_lighting()
 	var/area/A = loc
@@ -321,9 +355,6 @@
 		redraw_lighting(1)
 		for(var/turf/open/space/T in RANGE_TURFS(1,src))
 			T.update_starlight()
-		for(var/turf/open/floor/plating/asteroid/snow/surface/T in RANGE_TURFS(1,src))
-			T.update_starlight()
-
 
 /turf/open/space/init_lighting()
 	if(lighting_changed)
@@ -345,6 +376,9 @@
 				newalpha = 0
 		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 			newalpha = 255
+
+		newalpha = 255 - newalpha
+
 		if(lighting_object.alpha != newalpha)
 			if(instantly)
 				lighting_object.alpha = newalpha
@@ -367,6 +401,7 @@
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
+	var/surface_lighting = 0
 
 /area/New()
 	. = ..()

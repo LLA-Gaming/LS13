@@ -609,6 +609,20 @@
 	if(see_override)
 		see_invisible = see_override
 
+	if(darkness_plane)
+		darkness_plane.alpha = 0
+		if(sight & SEE_TURFS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#00ff00"
+
+		if(sight & SEE_OBJS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#0000ff"
+
+		if(sight & SEE_MOBS)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#ff0000"
+
 
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.
 /mob/living/carbon/proc/update_tint()

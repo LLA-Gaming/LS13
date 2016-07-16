@@ -377,7 +377,7 @@ var/datum/subsystem/ticker/ticker
 	end_state.count()
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
-	text2world("<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	text2world("<BR>[TAB]Shift Duration: <B>[SSdaynight.day_count] [SSdaynight.day_count == 1 ? "day" : "days"] [SSdaynight.is_night ? "and 1 night" : ""]</B>")
 	text2world("<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(joined_player_list.len)
 		text2world("<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")

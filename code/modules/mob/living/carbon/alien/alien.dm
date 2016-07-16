@@ -196,6 +196,10 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/update_sight()
 	if(!client)
 		return
+
+	if(darkness_plane)
+		darkness_plane.alpha = 0
+
 	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
@@ -227,3 +231,13 @@ Des: Removes all infected images from the alien.
 	if(see_override)
 		see_invisible = see_override
 
+
+	if(darkness_plane)
+		if(sight & SEE_TURFS)
+			darkness_plane.alpha = 50
+
+		if(sight & SEE_OBJS)
+			darkness_plane.alpha = 50
+
+		if(sight & SEE_MOBS)
+			darkness_plane.alpha = 50

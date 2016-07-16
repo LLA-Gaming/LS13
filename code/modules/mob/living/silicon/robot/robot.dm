@@ -1226,6 +1226,8 @@
 /mob/living/silicon/robot/update_sight()
 	if(!client)
 		return
+	if(darkness_plane)
+		darkness_plane.alpha = 0
 	if(stat == DEAD)
 		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
@@ -1245,21 +1247,32 @@
 		sight |= SEE_TURFS
 		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
 		see_in_dark = 1
+		if(darkness_plane)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#00ff00"
 
 	if(sight_mode & BORGMATERIAL)
 		sight |= SEE_OBJS
 		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
 		see_in_dark = 1
+		if(darkness_plane)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#0000ff"
 
 	if(sight_mode & BORGXRAY)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_invisible = SEE_INVISIBLE_LIVING
 		see_in_dark = 8
+		if(darkness_plane)
+			darkness_plane.alpha = 50
 
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
+		if(darkness_plane)
+			darkness_plane.alpha = 50
+			darkness_plane.color = "#ff0000"
 
 	if(see_override)
 		see_invisible = see_override
