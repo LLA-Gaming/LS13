@@ -22,7 +22,6 @@
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -31,6 +30,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"

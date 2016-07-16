@@ -597,6 +597,19 @@
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			if(darkness_plane)
+				darkness_plane.alpha = 0
+				if(sight & SEE_TURFS)
+					darkness_plane.alpha = 50
+					darkness_plane.color = "#00ff00"
+
+				if(sight & SEE_OBJS)
+					darkness_plane.alpha = 50
+					darkness_plane.color = "#0000ff"
+
+				if(sight & SEE_MOBS)
+					darkness_plane.alpha = 50
+					darkness_plane.color = "#ff0000"
 			return
 
 	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
@@ -622,6 +635,9 @@
 		if(sight & SEE_MOBS)
 			darkness_plane.alpha = 50
 			darkness_plane.color = "#ff0000"
+
+		if(see_invisible == SEE_INVISIBLE_MINIMUM)
+			darkness_plane.alpha = 255
 
 
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.

@@ -979,6 +979,9 @@
 			darkness_plane.alpha = 50
 			darkness_plane.color = "#ff0000"
 
+		if(see_invisible == SEE_INVISIBLE_MINIMUM)
+			darkness_plane.alpha = 255
+
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()

@@ -773,6 +773,19 @@
 	if(H.client.eye != H)
 		var/atom/A = H.client.eye
 		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
+			if(H.darkness_plane)
+				H.darkness_plane.alpha = 0
+				if(H.sight & SEE_TURFS)
+					H.darkness_plane.alpha = 50
+					H.darkness_plane.color = "#00ff00"
+
+				if(H.sight & SEE_OBJS)
+					H.darkness_plane.alpha = 50
+					H.darkness_plane.color = "#0000ff"
+
+				if(H.sight & SEE_MOBS)
+					H.darkness_plane.alpha = 50
+					H.darkness_plane.color = "#ff0000"
 			return
 
 	for(var/obj/item/organ/cyberimp/eyes/E in H.internal_organs)

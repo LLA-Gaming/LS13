@@ -18,13 +18,11 @@
 		SSobj.processing |= src
 		vision_flags = 0
 		darkness_view = 2
-		invis_view = SEE_INVISIBLE_LIVING
 		user.text2tab("<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
 	else
 		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
-		invis_view = SEE_INVISIBLE_MINIMUM
 		if(ismob(loc))
 			loc:text2tab("<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
 		invis_update()

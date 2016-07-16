@@ -219,6 +219,16 @@ Des: Removes all infected images from the alien.
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			if(darkness_plane)
+				darkness_plane.alpha = 0
+				if(sight & SEE_TURFS)
+					darkness_plane.alpha = 50
+
+				if(sight & SEE_OBJS)
+					darkness_plane.alpha = 50
+
+				if(sight & SEE_MOBS)
+					darkness_plane.alpha = 50
 			return
 
 	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
@@ -241,3 +251,6 @@ Des: Removes all infected images from the alien.
 
 		if(sight & SEE_MOBS)
 			darkness_plane.alpha = 50
+
+		if(see_invisible == SEE_INVISIBLE_MINIMUM)
+			darkness_plane.alpha = 255
