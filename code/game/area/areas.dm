@@ -222,26 +222,6 @@
 					D.open()
 	return
 
-/area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-		invisibility = INVISIBILITY_LIGHTING
-	else
-	//	new lighting behaviour with obj lights
-		icon_state = null
-		invisibility = INVISIBILITY_MAXIMUM
-
-/area/space/updateicon()
-	icon_state = null
-	invisibility = INVISIBILITY_MAXIMUM
-
 /*
 #define EQUIP 1
 #define LIGHT 2

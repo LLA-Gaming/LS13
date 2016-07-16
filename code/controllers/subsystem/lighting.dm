@@ -66,6 +66,7 @@ var/datum/subsystem/lighting/SSlighting
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	if (config.starlight)
 		for(var/area/A in world)
+			A.updateicon()
 			if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
 				A.luminosity = 0
 

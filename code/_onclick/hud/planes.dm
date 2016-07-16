@@ -3,6 +3,8 @@
 	appearance_flags = NO_CLIENT_COLOR | PLANE_MASTER | RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	mouse_opacity = 0
 	plane = MASTERPLANE
+	blend_mode = BLEND_MULTIPLY
+	color = list(null,null,null,"#0000","#000f")
 
 /image/hud_plane
 	name = "HUD Plane"
@@ -10,40 +12,38 @@
 	mouse_opacity = 0
 	plane = HUDPLANE
 
+/image/darkness_plane
+	plane = DARKNESSPLANE
+	blend_mode = BLEND_ADD
+	mouse_opacity = 0
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = "white"
+	New()
+		..()
+		var/matrix/m = matrix()
+		m.Scale(world.view*2.2)
+		transform = m
 
 /mob
-	var/list/planes = list()
+	var/image/darkness_plane/darkness_plane
+	var/image/master_plane/master_plane
+	var/image/hud_plane/hud_plane
 
-	proc/grant_plane(var/plane_type)
+	proc/grant_planes()
 		if(!client) return
 
-		var/add_to_planes = 1
-		var/add_to_client = 1
-		var/image/newplane
+		if(!master_plane)
+			master_plane = new(loc=src)
+		if(!hud_plane)
+			hud_plane = new/image/hud_plane(loc=src)
+		if(!darkness_plane)
+			darkness_plane = new/image/darkness_plane(loc=src)
 
-		for(var/image/plane in planes)
-			if(istype(plane,plane_type))
-				add_to_planes = 0
-				newplane = plane
+		src << master_plane
+		src << hud_plane
+		src << darkness_plane
 
-		if(add_to_planes)
-			newplane = new plane_type(src)
-			planes.Add(newplane)
-
-		for(var/image/plane in client.images)
-			if(istype(plane,plane_type))
-				add_to_client = 0
-
-		if(add_to_client)
-			client.images += newplane
-
-	proc/take_plane(var/plane_type)
-		if(!client) return
-
-		for(var/image/plane in client.images)
-			if(istype(plane,plane_type))
-				client.images -= plane
-
-		for(var/image/plane in planes)
-			if(istype(plane,plane_type))
-				planes.Remove(plane)
+		if(see_invisible == SEE_INVISIBLE_NOLIGHTING)
+			darkness_plane.alpha = 255
+		else
+			darkness_plane.alpha = 0

@@ -4,9 +4,6 @@
 	player_list -= src
 	log_access("Logout: [key_name(src)]")
 
-	take_plane(/image/master_plane)
-	take_plane(/image/hud_plane)
-
 	if(admin_datums[src.ckey])
 		if (ticker && ticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 			var/admins_number = admins.len

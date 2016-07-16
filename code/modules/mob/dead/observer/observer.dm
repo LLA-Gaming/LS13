@@ -480,8 +480,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		if (!ghostvision || ghost_others <= GHOST_OTHERS_DEFAULT_SPRITE)
 			see_invisible = SEE_INVISIBLE_LIVING
+			darkness_plane.alpha = 255
 	else
 		see_invisible = SEE_INVISIBLE_NOLIGHTING
+		darkness_plane.alpha = 0
 
 	updateghostimages()
 
