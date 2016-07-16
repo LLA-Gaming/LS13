@@ -241,6 +241,7 @@
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\space.dm"
 #include "code\datums\weather\weather.dm"
+#include "code\datums\weather\weather_ice.dm"
 #include "code\datums\weather\weather_types.dm"
 #include "code\datums\wires\airalarm.dm"
 #include "code\datums\wires\airlock.dm"

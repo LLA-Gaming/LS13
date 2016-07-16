@@ -16,7 +16,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_zs = list(ZLEVEL_STATION)
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	immunity_type = "lava"
@@ -47,7 +47,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_zs = list(ZLEVEL_STATION)
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
@@ -82,7 +82,7 @@
 	end_overlay = "light_ash"
 
 	area_type = /area/lavaland/surface/outdoors
-	target_z = ZLEVEL_LAVALAND
+	target_zs = list(ZLEVEL_LAVALAND)
 
 	immunity_type = "ash"
 

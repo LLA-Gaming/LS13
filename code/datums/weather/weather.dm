@@ -28,13 +28,15 @@
 
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
-	var/target_z = ZLEVEL_STATION //The z-level to affect
+	var/list/target_zs = list(ZLEVEL_STATION) //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
 	var/immunity_type = "storm" //Used by mobs to prevent them from being affected by the weather
 
 	var/stage = END_STAGE //The stage of the weather, from 1-4
+
+	var/telegraph_outdoors_only = 0
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
 
@@ -52,15 +54,19 @@
 	stage = STARTUP_STAGE
 	for(var/V in get_areas(area_type))
 		var/area/A = V
-		if(A.z == target_z)
+		if(A.z in target_zs)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	update_areas()
 	for(var/V in player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(M.z in target_zs)
+			if(telegraph_outdoors_only)
+				var/area/A = get_area(M)
+				if(!A.outdoors)
+					continue
 			if(telegraph_message)
-				M << telegraph_message
+				M.text2tab(telegraph_message)
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(src, "start", telegraph_duration)
@@ -72,9 +78,13 @@
 	update_areas()
 	for(var/V in player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(M.z in target_zs)
+			if(telegraph_outdoors_only)
+				var/area/A = get_area(M)
+				if(!A.outdoors)
+					continue
 			if(weather_message)
-				M << weather_message
+				M.text2tab(weather_message)
 			if(weather_sound)
 				M << sound(weather_sound)
 	SSweather.processing.Add(src)
@@ -87,9 +97,13 @@
 	update_areas()
 	for(var/V in player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(M.z in target_zs)
+			if(telegraph_outdoors_only)
+				var/area/A = get_area(M)
+				if(!A.outdoors)
+					continue
 			if(end_message)
-				M << end_message
+				M.text2tab(end_message)
 			if(end_sound)
 				M << sound(end_sound)
 	SSweather.processing.Remove(src)

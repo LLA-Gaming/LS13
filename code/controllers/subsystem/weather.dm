@@ -7,7 +7,7 @@ var/datum/subsystem/weather/SSweather
 	wait = 10
 	var/list/processing = list()
 	var/list/existing_weather = list()
-	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)
+	var/list/eligible_zlevels = list(ZLEVEL_STATION,ZLEVEL_LAVALAND)
 
 /datum/subsystem/weather/New()
 	NEW_SS_GLOBAL(SSweather)
@@ -19,18 +19,23 @@ var/datum/subsystem/weather/SSweather
 			continue
 		for(var/mob/living/L in mob_list)
 			var/area/A = get_area(L)
-			if(L.z == W.target_z && !W.immunity_type in L.weather_immunities && A in W.impacted_areas)
+			if(L.z in W.target_zs && !W.immunity_type in L.weather_immunities && A in W.impacted_areas)
 				W.impact(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
 			var/datum/weather/WE = V
-			if(WE.target_z == Z && WE.probability) //Another check so that it doesn't run extra weather
-				possible_weather_for_this_z[WE] = WE.probability
+			if(!(Z in WE.target_zs))
+				continue
+			if(!WE.probability) //Another check so that it doesn't run extra weather
+				continue
+			possible_weather_for_this_z[WE] = WE.probability
+
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
-		run_weather(W.name)
-		eligible_zlevels -= Z
-		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, Z) //Around 5-10 minutes between weathers
+		if(W)
+			run_weather(W.name)
+			eligible_zlevels -= Z
+			addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, Z) //Around 5-10 minutes between weathers
 
 /datum/subsystem/weather/Initialize(start_timeofday)
 	..()

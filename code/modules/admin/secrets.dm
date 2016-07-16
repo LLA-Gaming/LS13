@@ -43,6 +43,9 @@
 			<B>Fun Secrets</B><BR>
 			<BR>
 
+			<A href='?src=\ref[src];secrets=timeskipplus'>Skip ONE hour</A><BR>
+			<A href='?src=\ref[src];secrets=timeskipminus'>Go back ONE hour</A><BR>
+			<A href='?src=\ref[src];secrets=spawnweather'>Spawn Weather</A><BR>
 			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
@@ -442,6 +445,33 @@
 					E = new /datum/round_event/disease_outbreak{}()
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus
+
+		if("timeskipplus")
+			if(!check_rights(R_PRIMARYADMIN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","TSP")
+			message_admins("[key_name_admin(usr)] skipped forward an hour")
+			SSdaynight.nexthour()
+
+		if("timeskipminus")
+			if(!check_rights(R_PRIMARYADMIN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","TSS")
+			message_admins("[key_name_admin(usr)] skipped backward an hour")
+			SSdaynight.lasthour()
+
+		if("spawnweather")
+			if(!check_rights(R_PRIMARYADMIN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","FW")
+
+			var/datum/weather/WE = input("Choose the weather to spawn", "Adminbus of Storms") as null|anything in SSweather.existing_weather
+			message_admins("[key_name_admin(usr)] spawned [WE.name]")
+			SSweather.run_weather(WE.name)
+
 
 		if("retardify")
 			if(!check_rights(R_PRIMARYADMIN))
