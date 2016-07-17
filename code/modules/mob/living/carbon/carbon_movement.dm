@@ -1,9 +1,6 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
 	. += grab_state * 3
-	var/turf/open/T = get_turf(src)
-	if(istype(T))
-		. += T.slowdown
 	if(legcuffed)
 		. += legcuffed.slowdown
 
