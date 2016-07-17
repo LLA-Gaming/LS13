@@ -308,7 +308,7 @@ var/inerror = 0
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	station_name() //Generates a station name if there isnt one already
+	station_name() //generate station name if not done already
 
 //	s += "<b>[station_name()]</b>";
 	s += " ("
