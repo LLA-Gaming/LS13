@@ -1,32 +1,35 @@
-/obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
-	req_access = list(access_captain)
+/obj/structure/closet/secure_closet/managers
+	name = "\proper station manager's locker"
+	req_access = list(access_manager)
 	icon_state = "cap"
 
-/obj/structure/closet/secure_closet/captains/New()
+/obj/structure/closet/secure_closet/managers/New()
 	..()
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/manager(src)
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/captain(src)
+		new /obj/item/weapon/storage/backpack/manager(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_cap(src)
-	new /obj/item/clothing/suit/cloak/cap(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
-	new /obj/item/clothing/suit/captunic(src)
-	new /obj/item/clothing/under/captainparade(src)
-	new /obj/item/clothing/head/caphat/parade(src)
-	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
-	new /obj/item/weapon/cartridge/captain(src)
+		new /obj/item/weapon/storage/backpack/satchel_manager(src)
+	new /obj/item/clothing/suit/cloak/manager(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/manager(src)
+	new /obj/item/clothing/suit/managertunic(src)
+	new /obj/item/clothing/under/managerparade(src)
+	new /obj/item/clothing/head/managerhat(src)
+	new /obj/item/clothing/head/managerhat/parade(src)
+	new /obj/item/clothing/under/rank/manager(src)
+	new /obj/item/clothing/suit/armor/vest/managercarapace(src)
+	new /obj/item/clothing/suit/armor/vest/managercarapace/alt(src)
+	new /obj/item/weapon/cartridge/manager(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/weapon/storage/box/silver_ids(src)
-	new /obj/item/device/radio/headset/heads/captain/alt(src)
-	new /obj/item/device/radio/headset/heads/captain(src)
+	new /obj/item/device/radio/headset/heads/manager/alt(src)
+	new /obj/item/device/radio/headset/heads/manager(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
-	new /obj/item/clothing/gloves/color/captain(src)
+	new /obj/item/clothing/gloves/color/manager(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/weapon/door_remote/captain(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/door_remote/manager(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"

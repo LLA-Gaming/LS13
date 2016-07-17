@@ -169,7 +169,7 @@
 /mob/living/simple_animal/hostile/alien/maid/barmaid/New()
 	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
+	var/datum/job/manager/C = new /datum/job/manager
 	access_card.access = C.get_access()
 	access_card.access |= access_cent_bar
 	access_card.flags |= NODROP

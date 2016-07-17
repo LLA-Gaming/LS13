@@ -27,8 +27,8 @@
 	icon_state = "stamp-law"
 	item_color = "cargo"
 
-/obj/item/weapon/stamp/captain
-	name = "captain's rubber stamp"
+/obj/item/weapon/stamp/manager
+	name = "manager's rubber stamp"
 	icon_state = "stamp-cap"
 	item_color = "captain"
 

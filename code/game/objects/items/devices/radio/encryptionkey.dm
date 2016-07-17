@@ -67,8 +67,8 @@
 	icon_state = "com_cypherkey"
 	channels = list("Command" = 1)
 
-/obj/item/device/encryptionkey/heads/captain
-	name = "\proper the captain's encryption key"
+/obj/item/device/encryptionkey/heads/manager
+	name = "\proper the station manager's encryption key"
 	desc = "An encryption key for a radio headset.  Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "cap_cypherkey"
 	channels = list("Command" = 1, "Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0, "Service" = 0)

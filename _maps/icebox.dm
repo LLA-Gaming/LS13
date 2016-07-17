@@ -21,7 +21,7 @@ z9 = empty space
 
 		#define MINETYPE "lavaland"
 
-        #include "map_files\IceBox\icebox.dmm"
+        #include "map_files\IceBox\devcamp.dmm"
         #include "map_files\IceBox\z2.dmm"
         #include "map_files\IceBox\z3.dmm"
         #include "map_files\IceBox\z4.dmm"
@@ -32,7 +32,7 @@ z9 = empty space
 		#include "map_files\IceBox\z9.dmm"
 
 		#define MAP_PATH "map_files/IceBox"
-        #define MAP_FILE "icebox.dmm"
+        #define MAP_FILE "devcamp.dmm"
         #define MAP_NAME "IceBox Station"
 
         #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = PLANETLINKED, CENTCOMM = SELFLOOPING, PLANET_SECTION_A = PLANETLINKED, PLANET_SECTION_B = PLANETLINKED, MINING = SELFLOOPING, PLANET_SECTION_C = PLANETLINKED, ORBITAL_SATELLITE = SPACELINKED, OPEN_SPACE_A = SPACELINKED, OPEN_SPACE_B = SPACELINKED)

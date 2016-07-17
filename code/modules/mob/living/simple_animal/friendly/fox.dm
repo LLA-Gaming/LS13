@@ -22,5 +22,5 @@
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
-	desc = "Renault, the Captain's trustworthy fox."
+	desc = "Renault, the Manager's trustworthy fox."
 	gold_core_spawnable = 0

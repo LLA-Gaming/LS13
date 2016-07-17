@@ -136,8 +136,8 @@
 	icon_state = "securitypack"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/captain
-	name = "captain's backpack"
+/obj/item/weapon/storage/backpack/manager
+	name = "station manager's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
@@ -257,8 +257,8 @@
 	icon_state = "satchel-explorer"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel_cap
-	name = "captain's satchel"
+/obj/item/weapon/storage/backpack/satchel_manager
+	name = "station manager's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
@@ -296,9 +296,9 @@
 	slowdown = 1
 	max_combined_w_class = 30
 
-/obj/item/weapon/storage/backpack/dufflebag/captain
-	name = "captain's dufflebag"
-	desc = "A large dufflebag for holding extra captainly goods."
+/obj/item/weapon/storage/backpack/dufflebag/manager
+	name = "station manager's dufflebag"
+	desc = "A large dufflebag for holding extra managerly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
 	burn_state = FIRE_PROOF

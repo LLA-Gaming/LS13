@@ -104,7 +104,7 @@
 	w_class = 3
 	max_w_class = 2
 	storage_slots = 6
-	req_access = list(access_captain)
+	req_access = list(access_manager)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
@@ -115,4 +115,4 @@
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/gold/captain(src)
+	new /obj/item/clothing/tie/medal/gold/manager(src)

@@ -241,8 +241,8 @@
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/gold
-	name = "captain's flask"
-	desc = "A gold flask belonging to the captain."
+	name = "manager's flask"
+	desc = "A gold flask belonging to the station manager."
 	icon_state = "flask_gold"
 	materials = list(MAT_GOLD=500)
 

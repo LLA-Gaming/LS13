@@ -65,7 +65,7 @@
 	in higher priority incidents that happen on the station. They specialise in the capture and extermination of external and internal threats for colonies, \
 	ships, and space stations. Their notible experience include combat and capture of xenomorphic alien species, Counter corperation intellegence, and syndicate \
 	operatives. Also they utilise expirimental and potentially unethical human augmetation for everything from weapon implant locks to remote mental communications, \
-	but there should be no need for concern on your end. Although they do not directly fall under yours or the captains chain of command they have been instructed to work \
+	but there should be no need for concern on your end. Although they do not directly fall under yours or the manager's chain of command they have been instructed to work \
 	along side you. We ask that you please do your best to help each other, after all you are all on the same side. Keep up the good work and stay out of trouble.</br>              \
 	 -Thompson"
 

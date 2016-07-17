@@ -12,10 +12,10 @@
 	return 1
 
 /datum/objective_item/steal/caplaser
-	name = "the captain's antique laser gun"
-	targetitem = /obj/item/weapon/gun/energy/laser/captain
+	name = "the manager's antique laser gun"
+	targetitem = /obj/item/weapon/gun/energy/laser/manager
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Manager")
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
@@ -27,13 +27,13 @@
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Manager")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Manager")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -42,10 +42,10 @@
 	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/capmedal
-	name = "the medal of captaincy"
-	targetitem = /obj/item/clothing/tie/medal/gold/captain
+	name = "the medal of station management"
+	targetitem = /obj/item/clothing/tie/medal/gold/manager
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Manager")
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
@@ -57,7 +57,7 @@
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/weapon/disk/nuclear
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Manager")
 
 /datum/objective_item/steal/reflector
 	name = "a reflector vest"

@@ -269,7 +269,7 @@
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/weapon/card/id(src)
 
-	var/datum/job/captain/C = new/datum/job/captain
+	var/datum/job/manager/C = new/datum/job/manager
 	Path_ID.access = C.get_access()
 
 	MYID = new(src)
@@ -305,8 +305,8 @@
 	switch(myjob.title)
 		if("Assistant")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
-		if("Captain","Head of Personnel")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
+		if("Station Manager","Head of Personnel")
+			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/manager,/obj/item/weapon/disk/nuclear)
 		if("Cook")
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "souschef"
@@ -813,7 +813,7 @@
 	var/datum/job/T = target
 	if(T.title == "Assistant")
 		return /area/hallway/primary
-	if(T.title == "Captain" || T.title == "Head of Personnel")
+	if(T.title == "Station Manager" || T.title == "Head of Personnel")
 		return /area/bridge
 	if(T.title == "Bartender")
 		return /area/crew_quarters/bar

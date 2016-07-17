@@ -24,17 +24,17 @@
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/laser/captain
+/obj/item/weapon/gun/energy/laser/manager
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "caplaser"
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Ice Station Zebra. The station is exploding."
 	force = 10
 	origin_tech = null
 	ammo_x_offset = 3
 	selfcharge = 1
 
-/obj/item/weapon/gun/energy/laser/captain/scattershot
+/obj/item/weapon/gun/energy/laser/manager/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	item_state = "laser"

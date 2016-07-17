@@ -122,15 +122,15 @@
 /obj/item/device/radio/headset/heads
 	command = TRUE
 
-/obj/item/device/radio/headset/heads/captain
-	name = "\proper the captain's headset"
+/obj/item/device/radio/headset/heads/manager
+	name = "\proper the station manager's headset"
 	desc = "The headset of the king. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
-	keyslot = new /obj/item/device/encryptionkey/heads/captain
+	keyslot = new /obj/item/device/encryptionkey/heads/manager
 
-/obj/item/device/radio/headset/heads/captain/alt
-	name = "\proper the captain's bowman headset"
+/obj/item/device/radio/headset/heads/manager/alt
+	name = "\proper the station manager's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
@@ -201,7 +201,7 @@
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
 /obj/item/device/radio/headset/headset_cent/commander
-	keyslot = new /obj/item/device/encryptionkey/heads/captain
+	keyslot = new /obj/item/device/encryptionkey/heads/manager
 
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper Centcom bowman headset"

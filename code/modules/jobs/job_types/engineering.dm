@@ -4,7 +4,7 @@ Chief Engineer
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	flag = CHIEF
-	department_head = list("Captain")
+	department_head = list("Station Manager")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1

@@ -21,8 +21,8 @@
 	return(FIRELOSS)
 
 //Captain
-/obj/item/clothing/head/caphat
-	name = "captain's hat"
+/obj/item/clothing/head/managerhat
+	name = "station manager's hat"
 	desc = "It's good being the king."
 	icon_state = "captain"
 	item_state = "that"
@@ -33,9 +33,9 @@
 	dog_fashion = /datum/dog_fashion/head/captain
 
 //Captain: This is no longer space-worthy
-/obj/item/clothing/head/caphat/parade
-	name = "captain's parade cap"
-	desc = "Worn only by Captains with an abundance of class."
+/obj/item/clothing/head/managerhat/parade
+	name = "station manager's parade cap"
+	desc = "Worn only by managers with an abundance of class."
 	icon_state = "capcap"
 
 	dog_fashion = null

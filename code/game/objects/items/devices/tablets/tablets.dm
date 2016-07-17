@@ -755,10 +755,10 @@ obj/item/device/tablet/verb/verb_remove_pen()
 	icon_state = "tablet-security"
 	default_cartridge = /obj/item/weapon/cartridge/security
 
-/obj/item/device/tablet/captain
+/obj/item/device/tablet/manager
 	icon_state = "tablet-captain"
 	can_detonate = 0
-	default_cartridge = /obj/item/weapon/cartridge/captain
+	default_cartridge = /obj/item/weapon/cartridge/manager
 
 /obj/item/device/tablet/chaplain
 	icon_state = "tablet-chaplain"

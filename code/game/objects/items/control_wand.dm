@@ -64,8 +64,8 @@
 	icon_state = "gangtool-yellow"
 	region_access = 0
 
-/obj/item/weapon/door_remote/captain
-	name = "command door remote"
+/obj/item/weapon/door_remote/manager
+	name = "station manager door remote"
 	icon_state = "gangtool-yellow"
 	region_access = 7
 

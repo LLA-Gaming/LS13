@@ -246,9 +246,9 @@
 		return ..()
 
 
-/obj/structure/displaycase/captain
+/obj/structure/displaycase/manager
 	alert = 1
-	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
+	start_showpiece_type = /obj/item/weapon/gun/energy/laser/manager
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"

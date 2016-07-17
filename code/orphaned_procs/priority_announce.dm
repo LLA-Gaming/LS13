@@ -8,9 +8,9 @@
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
 		if (title && length(title) > 0)
 			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
-	else if(type == "Captain")
-		announcement += "<h1 class='alert'>Captain Announces</h1>"
-		news_network.SubmitArticle(text, "Captain's Announcement", "Station Announcements", null)
+	else if(type == "Station Manager")
+		announcement += "<h1 class='alert'>Station Manager Announces</h1>"
+		news_network.SubmitArticle(text, "Station Manager's Announcement", "Station Announcements", null)
 
 	else
 		announcement += "<h1 class='alert'>[command_name()] Update</h1>"

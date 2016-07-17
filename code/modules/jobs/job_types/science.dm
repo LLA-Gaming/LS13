@@ -4,7 +4,7 @@ Research Director
 /datum/job/rd
 	title = "Research Director"
 	flag = RD
-	department_head = list("Captain")
+	department_head = list("Station Manager")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1

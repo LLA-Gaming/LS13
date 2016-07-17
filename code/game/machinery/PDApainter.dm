@@ -31,10 +31,10 @@
 	..()
 	var/blocked = list(/obj/item/device/tablet/pai,
 						 /obj/item/device/tablet/ai,
-						 /obj/item/device/tablet/captain,
+						 /obj/item/device/tablet/manager,
 						 /obj/item/device/tablet/hop,
 						 /obj/item/device/tablet/hos,
-						 /obj/item/device/tablet/captain,
+						 /obj/item/device/tablet/manager,
 						 /obj/item/device/tablet/cmo,
 						 /obj/item/device/tablet/ce,
 						 /obj/item/device/tablet/rd,

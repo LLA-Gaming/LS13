@@ -10,7 +10,7 @@ Head of Security
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
-	department_head = list("Captain")
+	department_head = list("Station Manager")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1

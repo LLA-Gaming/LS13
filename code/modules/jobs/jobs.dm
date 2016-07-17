@@ -1,7 +1,7 @@
 
 var/const/ENGSEC			=(1<<0)
 
-var/const/CAPTAIN			=(1<<0)
+var/const/MANAGER			=(1<<0)
 var/const/HOS				=(1<<1)
 var/const/WARDEN			=(1<<2)
 var/const/DETECTIVE			=(1<<3)
@@ -55,7 +55,7 @@ var/list/assistant_occupations = list(
 
 
 var/list/command_positions = list(
-	"Captain",
+	"Station Manager",
 	"Head of Personnel",
 	"Head of Security",
 	"Chief Engineer",
@@ -138,3 +138,130 @@ var/list/nonhuman_positions = list(
 	for(var/datum/job/J in SSjob.occupations)
 		if(J.title == job_title)
 			return J.department_head //this is a list
+
+/*
+var/const/ENGSEC			=(1<<0)
+
+var/const/MANAGER			=(1<<0)
+var/const/HOS				=(1<<1)
+var/const/WARDEN			=(1<<2)
+var/const/DETECTIVE			=(1<<3)
+var/const/OFFICER			=(1<<4)
+var/const/LENGINEER			=(1<<5)
+var/const/MECHANIC			=(1<<6)
+var/const/ATMOSENGI			=(1<<7)
+var/const/AI				=(1<<8)
+var/const/CYBORG			=(1<<9)
+
+
+var/const/MEDSCI			=(1<<1)
+
+var/const/LSCIENTIST		=(1<<0)
+var/const/SCIENTIST			=(1<<1)
+var/const/AGRONOMIST		=(1<<2)
+var/const/CMO				=(1<<3)
+var/const/DOCTOR			=(1<<4)
+
+var/const/CIVILIAN			=(1<<2)
+
+var/const/HUMANRESOURCE		=(1<<0)
+var/const/BARTENDER			=(1<<1)
+var/const/COOK				=(1<<2)
+var/const/JANITOR			=(1<<3)
+var/const/LIBRARIAN			=(1<<4)
+var/const/CARGOTECH			=(1<<5)
+var/const/FIELDWORKER		=(1<<6)
+var/const/LAWYER			=(1<<7)
+var/const/THERAPIST			=(1<<8)
+var/const/CHAPLAIN			=(1<<9)
+var/const/CLOWN				=(1<<10)
+var/const/MIME				=(1<<11)
+var/const/ASSISTANT			=(1<<12)
+
+
+var/list/assistant_occupations = list(
+	"Assistant"
+)
+
+
+var/list/command_positions = list(
+	"Station Manager",
+	"Human Resources",
+	"Head of Security",
+	"Lead Engineer",
+	"Lead Scientist",
+	"Chief Medical Officer"
+)
+
+
+var/list/engineering_positions = list(
+	"Lead Engineer",
+	"Mechanic",
+	"Atmospheric Engineer",
+)
+
+
+var/list/medical_positions = list(
+	"Chief Medical Officer",
+	"Medical Doctor"
+)
+
+
+var/list/science_positions = list(
+	"Lead Scientist",
+	"Scientist",
+	"Agronomist"
+)
+
+
+var/list/supply_positions = list(
+	"Human Resources",
+	"Cargo Technician",
+	"Field Worker",
+)
+
+
+var/list/civilian_positions = list(
+	"Bartender",
+	"Botanist",
+	"Cook",
+	"Janitor",
+	"Librarian",
+	"Lawyer",
+	"Chaplain",
+	"Clown",
+	"Mime",
+	"Assistant"
+)
+
+
+var/list/security_positions = list(
+	"Head of Security",
+	"Warden",
+	"Detective",
+	"Security Officer"
+)
+
+
+var/list/nonhuman_positions = list(
+	"AI",
+	"Cyborg",
+	"pAI"
+)
+
+
+/proc/guest_jobbans(job)
+	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))
+
+
+
+//this is necessary because antags happen before job datums are handed out, but NOT before they come into existence
+//so I can't simply use job datum.department_head straight from the mind datum, laaaaame.
+/proc/get_department_heads(var/job_title)
+	if(!job_title)
+		return list()
+
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title == job_title)
+			return J.department_head //this is a list
+*/

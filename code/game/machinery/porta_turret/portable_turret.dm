@@ -128,7 +128,7 @@
 		if(/obj/item/weapon/gun/energy/laser/retro)
 			active_state = "Laser"
 
-		if(/obj/item/weapon/gun/energy/laser/captain)
+		if(/obj/item/weapon/gun/energy/laser/manager)
 			active_state = "Laser"
 
 		if(/obj/item/weapon/gun/energy/lasercannon)

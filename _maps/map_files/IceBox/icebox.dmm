@@ -25167,7 +25167,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bfs" = (
-/obj/structure/displaycase/captain,
+/obj/structure/displaycase/manager,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bft" = (
@@ -26629,7 +26629,7 @@
 "biR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/stamp/manager,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
@@ -27862,7 +27862,7 @@
 /area/crew_quarters/captain)
 "blP" = (
 /obj/machinery/computer/card,
-/obj/item/weapon/card/id/captains_spare,
+/obj/item/weapon/card/id/managers_spare,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
@@ -31246,7 +31246,7 @@
 	},
 /area/engine/gravity_generator)
 "bsR" = (
-/obj/structure/closet/secure_closet/captains,
+/obj/structure/closet/secure_closet/managers,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;

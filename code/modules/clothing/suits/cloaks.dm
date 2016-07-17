@@ -54,11 +54,11 @@
 	allowed = list(/obj/item/weapon/hand_tele, /obj/item/weapon/storage/part_replacer)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 
-/obj/item/clothing/suit/cloak/cap
-	name = "captain's cloak"
-	desc = "Worn by the commander of Space Station 13."
+/obj/item/clothing/suit/cloak/manager
+	name = "station manager's cloak"
+	desc = "Worn by the manager of Ice Station Zebra."
 	icon_state = "capcloak"
-	allowed = list(/obj/item/weapon/gun/energy/laser/captain)
+	allowed = list(/obj/item/weapon/gun/energy/laser/manager)
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
 
 /obj/item/clothing/suit/hooded/cloak/drake

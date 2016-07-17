@@ -132,9 +132,9 @@
 /obj/item/clothing/gloves/color/brown/cargo
 	item_color = "cargo"					//Exists for washing machines. Is not different from brown gloves in any way.
 
-/obj/item/clothing/gloves/color/captain
+/obj/item/clothing/gloves/color/manager
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
-	name = "captain's gloves"
+	name = "station manager's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
 	item_color = "captain"

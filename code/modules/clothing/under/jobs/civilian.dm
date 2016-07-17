@@ -9,9 +9,9 @@
 	alt_covers_chest = 1
 
 
-/obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
-	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
-	name = "captain's jumpsuit"
+/obj/item/clothing/under/rank/manager //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
+	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Station Manager\"."
+	name = "station manager's jumpsuit"
 	icon_state = "captain"
 	item_state = "b_suit"
 	item_color = "captain"

@@ -283,7 +283,7 @@
 			new /obj/item/weapon/storage/box/syndicate/(get_turf(src))
 		if(18)
 			//Captain ID
-			new /obj/item/weapon/card/id/captains_spare(get_turf(src))
+			new /obj/item/weapon/card/id/managers_spare(get_turf(src))
 		if(19)
 			//Instrinct Resistance
 			user.text2tab("<span class='notice'>You feel robust.</span>")

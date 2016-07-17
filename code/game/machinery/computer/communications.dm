@@ -93,7 +93,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/obj/item/device/tablet/T = I
 				I = T.id
 			if (I && istype(I))
-				if(access_captain in I.access)
+				if(access_manager in I.access)
 					var/old_level = security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
@@ -388,8 +388,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 				if (src.authenticated==2)
-					dat += "<BR><BR><B>Captain Functions</B>"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR><BR><B>Manager Functions</B>"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Manager's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -581,7 +581,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
 	else
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Station Manager")
 		message_cooldown = 1
 		spawn(600)//One minute cooldown
 			message_cooldown = 0

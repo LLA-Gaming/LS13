@@ -177,16 +177,16 @@ update_label("John Doe", "Clowny")
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
-/obj/item/weapon/card/id/captains_spare
-	name = "captain's spare ID"
+/obj/item/weapon/card/id/managers_spare
+	name = "station manager's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered_name = "Captain"
-	assignment = "Captain"
+	registered_name = "Station Manager"
+	assignment = "Station Manager"
 
-/obj/item/weapon/card/id/captains_spare/New()
-	var/datum/job/captain/J = new/datum/job/captain
+/obj/item/weapon/card/id/managers_spare/New()
+	var/datum/job/manager/J = new/datum/job/manager
 	access = J.get_access()
 	..()
 

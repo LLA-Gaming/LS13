@@ -112,7 +112,7 @@ var/list/teleportlocs = list()
 
 /area/surface
 	name = "surface"
-	icon_state = "space"
+	icon_state = "dark128"
 	surface_lighting = 1
 	requires_power = 1
 	always_unpowered = 1

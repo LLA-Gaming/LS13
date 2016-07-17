@@ -29,7 +29,7 @@
 	id = /obj/item/weapon/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	back = /obj/item/weapon/storage/backpack/captain
+	back = /obj/item/weapon/storage/backpack/manager
 	belt = /obj/item/weapon/storage/belt/security/full
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
@@ -44,7 +44,7 @@
 		return
 
 	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
+	R.keyslot = new /obj/item/device/encryptionkey/heads/manager
 	R.recalculateChannels()
 
 /datum/outfit/ert/commander/alert

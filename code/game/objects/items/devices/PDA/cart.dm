@@ -204,7 +204,7 @@
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
-/obj/item/weapon/cartridge/captain
+/obj/item/weapon/cartridge/manager
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
