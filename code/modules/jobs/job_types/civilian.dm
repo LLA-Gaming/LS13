@@ -4,7 +4,7 @@ Clown
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -64,7 +64,7 @@ Mime
 /datum/job/mime
 	title = "Mime"
 	flag = MIME
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -112,7 +112,7 @@ Librarian
 /datum/job/librarian
 	title = "Librarian"
 	flag = LIBRARIAN
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -140,7 +140,7 @@ Lawyer
 /datum/job/lawyer
 	title = "Lawyer"
 	flag = LAWYER
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2

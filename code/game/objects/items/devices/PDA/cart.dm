@@ -154,7 +154,7 @@
 	access_manifest = 1
 	access_status_display = 1
 
-/obj/item/weapon/cartridge/hop
+/obj/item/weapon/cartridge/hr
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
 	access_manifest = 1
@@ -221,7 +221,7 @@
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/captain/New()
+/obj/item/weapon/cartridge/manager/New()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 

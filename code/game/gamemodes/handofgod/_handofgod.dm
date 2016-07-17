@@ -27,7 +27,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	required_players = 18
 	required_enemies = 8
 	recommended_enemies = 8
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Station Manager", "Head of Personnel")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Station Manager", "Human Resources")
 
 
 /datum/game_mode/hand_of_god/announce()

@@ -59,48 +59,48 @@ Station Manager
 /*
 Head of Personnel
 */
-/datum/job/hop
-	title = "Head of Personnel"
-	flag = HOP
+/datum/job/human_resources
+	title = "Human Resources"
+	flag = HUMANRESOURCE
 	department_head = list("Station Manager")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = "the station manager"
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
 
-	outfit = /datum/outfit/job/hop
+	outfit = /datum/outfit/job/human_resources
 
 	access = list(access_security, access_sec_doors, access_court, access_weapons,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
+			            access_hr, access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
 	minimal_access = list(access_security, access_sec_doors, access_court, access_weapons,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
+			            access_hr, access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
 
 
-/datum/outfit/job/hop
-	name = "Head of Personnel"
+/datum/outfit/job/human_resources
+	name = "Human Resources"
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/tablet/hop
-	ears = /obj/item/device/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/head_of_personnel
+	belt = /obj/item/device/tablet/hr
+	ears = /obj/item/device/radio/headset/heads/hr
+	uniform = /obj/item/clothing/under/rank/human_resources
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hopcap
+	head = /obj/item/clothing/head/hrcap
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
 		/obj/item/weapon/melee/classic_baton/telescopic=1)
 
-/datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/human_resources/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)

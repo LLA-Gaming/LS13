@@ -42,8 +42,8 @@
 
 
 //Head of Personnel
-/obj/item/clothing/head/hopcap
-	name = "head of personnel's cap"
+/obj/item/clothing/head/hrcap
+	name = "human resources' cap"
 	icon_state = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)

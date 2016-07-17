@@ -797,9 +797,9 @@ obj/item/device/tablet/verb/verb_remove_pen()
 /obj/item/device/tablet/mime
 	icon_state = "tablet-mime"
 
-/obj/item/device/tablet/hop
+/obj/item/device/tablet/hr
 	icon_state = "tablet-hop"
-	default_cartridge = /obj/item/weapon/cartridge/hop
+	default_cartridge = /obj/item/weapon/cartridge/hr
 
 /obj/item/device/tablet/ce
 	icon_state = "tablet-ce"

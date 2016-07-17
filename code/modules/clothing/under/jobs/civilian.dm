@@ -63,9 +63,9 @@
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
 	return 0
 
-/obj/item/clothing/under/rank/head_of_personnel
-	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
-	name = "head of personnel's jumpsuit"
+/obj/item/clothing/under/rank/human_resources
+	desc = "It's a jumpsuit worn by someone who works in the position of \"Human Resources\"."
+	name = "human resources' jumpsuit"
 	icon_state = "hop"
 	item_state = "b_suit"
 	item_color = "hop"

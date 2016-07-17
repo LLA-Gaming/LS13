@@ -54,7 +54,7 @@
 /var/const/access_mining_station = 54
 /var/const/access_xenobiology = 55
 /var/const/access_ce = 56
-/var/const/access_hop = 57
+/var/const/access_hr = 57
 /var/const/access_hos = 58
 /var/const/access_RC_announce = 59 //Request console announcements
 /var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
@@ -231,7 +231,7 @@
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_therapy, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
-	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
+	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hr, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat)
 
 /proc/get_all_centcom_access()
@@ -268,7 +268,7 @@
 		if(6) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
 		if(7) //command
-			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_manager)
+			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hr, access_manager)
 
 /proc/get_region_accesses_name(code)
 	switch(code)
@@ -399,8 +399,8 @@
 			return "Mining EVA"
 		if(access_xenobiology)
 			return "Xenobiology Lab"
-		if(access_hop)
-			return "HoP Office"
+		if(access_hr)
+			return "Human Resources"
 		if(access_hos)
 			return "HoS Office"
 		if(access_ce)
@@ -444,7 +444,7 @@
 			return "Code Scotch"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Station Manager", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
+	return list("Assistant", "Station Manager", "Human Resources", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")

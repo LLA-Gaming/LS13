@@ -32,8 +32,8 @@
 	icon_state = "stamp-cap"
 	item_color = "captain"
 
-/obj/item/weapon/stamp/hop
-	name = "head of personnel's rubber stamp"
+/obj/item/weapon/stamp/hr
+	name = "human resources' rubber stamp"
 	icon_state = "stamp-hop"
 	item_color = "hop"
 

@@ -32,7 +32,7 @@
 	var/blocked = list(/obj/item/device/tablet/pai,
 						 /obj/item/device/tablet/ai,
 						 /obj/item/device/tablet/manager,
-						 /obj/item/device/tablet/hop,
+						 /obj/item/device/tablet/hr,
 						 /obj/item/device/tablet/hos,
 						 /obj/item/device/tablet/manager,
 						 /obj/item/device/tablet/cmo,

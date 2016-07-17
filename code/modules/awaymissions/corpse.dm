@@ -416,7 +416,7 @@
 
 /obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
-	radio = /obj/item/device/radio/headset/heads/hop
+	radio = /obj/item/device/radio/headset/heads/hr
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black

@@ -28,7 +28,7 @@ var/const/THERAPIST			=(1<<7)
 
 var/const/CIVILIAN			=(1<<2)
 
-var/const/HOP				=(1<<0)
+var/const/HUMANRESOURCE		=(1<<0)
 var/const/BARTENDER			=(1<<1)
 var/const/BOTANIST			=(1<<2)
 var/const/COOK				=(1<<3)
@@ -56,7 +56,7 @@ var/list/assistant_occupations = list(
 
 var/list/command_positions = list(
 	"Station Manager",
-	"Head of Personnel",
+	"Human Resources",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
@@ -88,7 +88,7 @@ var/list/science_positions = list(
 
 
 var/list/supply_positions = list(
-	"Head of Personnel",
+	"Human Resources",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",

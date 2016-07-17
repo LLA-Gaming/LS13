@@ -90,7 +90,7 @@
 
 /obj/item/device/pda/heads/hop
 	name = "head of personnel PDA"
-	default_cartridge = /obj/item/weapon/cartridge/hop
+	default_cartridge = /obj/item/weapon/cartridge/hr
 	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hos
@@ -115,7 +115,7 @@
 
 /obj/item/device/pda/captain
 	name = "captain PDA"
-	default_cartridge = /obj/item/weapon/cartridge/captain
+	default_cartridge = /obj/item/weapon/cartridge/manager
 	icon_state = "pda-captain"
 	detonate = 0
 
