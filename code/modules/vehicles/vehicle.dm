@@ -13,6 +13,11 @@
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/auto_door_open = TRUE
 	var/view_range = 7
+	var/hands_needed = "one"
+	var/key_noun = "keys"
+	var/drive_verb = "drive"
+	var/turf_slowdown_needed = list() //Turfs that have a slowdown variable must match one of the numbers in this list for it to work
+	var/canuse_normalturf = 1
 
 	//Pixels
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
@@ -98,6 +103,12 @@
 	if(keycheck(user))
 		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
 			return
+		var/turf/open/next = get_step(src, direction)
+		if(istype(next))
+			if(next.slowdown && !(next.slowdown in turf_slowdown_needed))
+				return
+			else if(!canuse_normalturf)
+				return
 		next_vehicle_move = world.time + vehicle_move_delay
 
 		step(src, direction)
@@ -105,7 +116,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		user.text2tab("<span class='notice'>You'll need the keys in one of your hands to drive \the [name].</span>")
+		user.text2tab("<span class='notice'>You'll need the [key_noun] in [hands_needed] of your hands to [drive_verb] \the [name].</span>")
 
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)

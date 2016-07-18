@@ -123,3 +123,85 @@
 			C.use(2)
 			new/obj/vehicle/scooter(get_turf(src))
 			qdel(src)
+
+
+//Skis
+
+/obj/vehicle/scooter/skateboard/ski
+	name = "ski board"
+	desc = "a yeti's second favorite meal"
+	icon_state = "skiboard"
+	vehicle_move_delay = 0//fast
+	density = 0
+	key_noun = "ski poles"
+	drive_verb = "ride"
+	hands_needed = "both"
+	turf_slowdown_needed = list(2) //snow only
+	canuse_normalturf = 0
+
+	keycheck(mob/user)
+		var/obj/item/weapon/twohanded/skipole/S
+		if(istype(user.l_hand, /obj/item/weapon/twohanded/skipole))
+			S = user.l_hand
+		if(istype(user.r_hand, /obj/item/weapon/twohanded/skipole))
+			S = user.r_hand
+		if(S && S.wielded)
+			return 1
+
+	MouseDrop(over_object, src_location, over_location)
+		. = ..()
+		if(over_object == usr && Adjacent(usr))
+			if(!ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
+				return
+			if(usr.incapacitated())
+				usr.text2tab("<span class='warning'>You can't do that right now!</span>")
+				return
+			usr.visible_message("<span class='notice'>[usr] picks up \the [src.name].</span>", "<span class='notice'>You pick up \the [src.name].</span>")
+			var/C = new /obj/item/weapon/ski(loc)
+			usr.put_in_hands(C)
+			qdel(src)
+
+
+/obj/item/weapon/ski
+	name = "ski board"
+	desc = "a yeti's second favorite meal"
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "skiitem"
+	w_class = 5
+	force = 8
+	throwforce = 10
+	throw_range = 3
+	hitsound = 'sound/items/trayhit1.ogg'
+
+	attack_self(mob/user)
+		for(var/obj/A in get_turf(loc))
+			if(A.density && !(A.flags & ON_BORDER))
+				user.text2tab("<span class='danger'>There is already something here.</span>")
+				return
+
+		user.visible_message("<span class='notice'>[user] places \the [src.name].</span>", "<span class='notice'>You place \the [name].</span>")
+		new /obj/vehicle/scooter/skateboard/ski(get_turf(loc))
+		qdel(src)
+
+/obj/item/weapon/twohanded/skipole
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "skipole0"
+	name = "ski poles"
+	desc = "use this to freely ski around on the snow"
+	force = 5
+	throwforce = 15
+	w_class = 3
+	var/w_class_on = 4
+	force_unwielded = 5
+	force_wielded = 5
+
+	wield(mob/living/carbon/M)
+		w_class = w_class_on
+		..()
+
+	unwield()
+		w_class = initial(w_class)
+		..()
+
+	update_icon()
+		icon_state = "skipole[wielded]"
