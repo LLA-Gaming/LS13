@@ -23,7 +23,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T, centered = FALSE, log = TRUE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
@@ -57,8 +57,8 @@
 	SSobj.setup_template_objects(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	if(log)
+		log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return 1
 
 /datum/map_template/proc/get_file()

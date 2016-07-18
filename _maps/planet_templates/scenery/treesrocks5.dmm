@@ -1,0 +1,21 @@
+"a" = (/obj/structure/flora/rock/icy,/turf/template_noop,/area/template_noop)
+"b" = (/turf/template_noop,/area/template_noop)
+"c" = (/obj/structure/flora/tree/dead,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+abbbbbbbbbbbabb
+bbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbb
+bbbbbbbbbbabbbb
+bbbbbbbbabbbabb
+bbbbbbbbbbbbbbb
+bbcbbbbbabbbabb
+bbbbbbbbbbabbbb
+bbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbb
+bcabbbbbbbbbbbb
+bbbbbbbbbbbbbbb
+bbbabbbbbbbbbbb
+"}

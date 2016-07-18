@@ -124,6 +124,13 @@ var/list/teleportlocs = list()
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
+/area/surface_caves //not a subtype so weather doesnt get in it
+	name = "caves"
+	icon_state = "space"
+	requires_power = 1
+	valid_territory = 0
+	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+
 /area/space/nearstation
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT

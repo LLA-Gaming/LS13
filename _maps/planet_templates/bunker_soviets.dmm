@@ -1,0 +1,58 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral,/area/template_noop)
+"c" = (/turf/closed/indestructible/riveted,/area/ruin/powered)
+"d" = (/turf/open/floor/plasteel/floorgrime,/area/ruin/powered)
+"e" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plasteel/floorgrime,/area/ruin/powered)
+"f" = (/turf/open/floor/noslip,/area/ruin/powered)
+"g" = (/obj/machinery/door/airlock/glass_large,/turf/open/floor/noslip,/area/ruin/powered)
+"h" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered)
+"i" = (/turf/open/floor/plating/snowed,/area/ruin/powered)
+"j" = (/obj/machinery/door/airlock/vault{icon_state = "door_locked"; locked = 1; req_access_txt = "109"},/turf/open/floor/plating/snowed,/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaabbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbaaaaaaaaaaaaa
+aaaaaaaaaaaaabbbbbbbbbcccccccbbbbbbaaaaaaaaaa
+aaaaaabbbbbbbbbbbbbbbbcdddddcbbbbbbbbaaaaaaaa
+aaaabbbbbbbccccccccccccdddddcbbbbbbbbbbbaaaaa
+aaabbbbbbbbcddddddddddedddddcbbbbbbbbbbbbbaaa
+aaabbbbbbbbcddddddddddedddddcbbbbbbbbbbbbbbaa
+aaabbbbbbbbcddcccccccccdddddcbbbbbbbbbbbbbbaa
+aaabbbbbbbbcddcbbbbbbbcdddddcbbbbbbbbbbbbbbaa
+aaabbbbbbbbcddcbbbbbbbcdddddcccccccccbbbbbbaa
+aaaabbbbbbbcddcbbbbbbbcdddddcdddddddcbbbbbbaa
+aaaabbbbbbcceeccccccbbcdddddcdddddddcbbbbbbaa
+aaaabbbbbbcddddddddccccccccccdddddddcbbbbbbaa
+aaaabbbbbbcddddddddeddddddddedddddddcbbbbbaaa
+aaaabbbbbbcddddddddeddddddddedddddddcbbbbbaaa
+aaaabbbbbbcddddddddccccceecccdddddddcbbbbaaaa
+aaaabbbbbbcceeccccccbbbcddcbcdddddddcbbbbaaaa
+aaaabbbbbbbcddcbbbbbbbbcddcbcccccccccbbbbaaaa
+aaaabbbbbbbcddcbbbbbbbbcddcbbbbbbbbbbbbbbaaaa
+aabbbbbbbbbcddcbbbbbbbbcddcbbbbbbbbbbbbbaaaaa
+abbbbbbbbbbcddcbbbbbbbbcddcbbbbbbbbbbbbbaaaaa
+abbbbbbbbbcceecccccbbbcceeccccccccccbbbbaaaaa
+abbbbbbbbbcfffffffcbbbcddddddddddddcbbbbaaaaa
+abbbbbbbbbcfffffffcbbbcddddddddddddcbbbbaaaaa
+abbbbbbbbbccgfhhhccbbbcddddddddddddcbbbbaaaaa
+abbbbbbbbbciiiiiiicbbbcddddddddddddcbbbbbaaaa
+aabbbbbbbbciiiiiiicbbbcddddddddddddcbbbbbaaaa
+aaaabbbbbbciiiiiiicbbbcddddddddddddcbbbbbaaaa
+aaaaabbbbbccccjccccbbbccccccccccccccbbbbbaaaa
+aaaaabbbbbaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbaaaa
+aaaaaabbaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbaaaa
+aaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
