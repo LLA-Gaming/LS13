@@ -21,6 +21,10 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/destination_z
+	var/destination_x
+	var/destination_y
+
 
 /turf/New()
 	..()
@@ -143,11 +147,20 @@
 
 	SSair.remove_from_active(src)
 
+	var/old_destination_z = destination_z
+	var/old_destination_x = destination_x
+	var/old_destination_y = destination_y
+
 	if(path == /turf/open/space)
 		if(IsPlanetZ(src.z))
-			path = /turf/open/floor/plating/asteroid/snow/surface
+			path = /turf/open/floor/plating/asteroid/snow/dug
 
 	var/turf/W = new path(src)
+
+	W.destination_z = old_destination_z
+	W.destination_x = old_destination_x
+	W.destination_y = old_destination_y
+
 	if(!defer_change)
 		W.AfterChange()
 	W.blueprint_data = old_blueprint_data

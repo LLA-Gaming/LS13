@@ -1795,6 +1795,7 @@
 #include "code\modules\space_exploration\pods\structures\induction_charger.dm"
 #include "code\modules\space_exploration\pods\types\pods.dm"
 #include "code\modules\space_transition\space_transition.dm"
+#include "code\modules\space_transition\transition.dm"
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\area_teleport.dm"
 #include "code\modules\spells\spell_types\barnyard.dm"

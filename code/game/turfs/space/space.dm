@@ -8,10 +8,6 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
-	var/destination_z
-	var/destination_x
-	var/destination_y
-
 	var/global/datum/gas_mixture/space/space_gas = new
 
 
@@ -91,26 +87,6 @@
 				user.text2tab("<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			user.text2tab("<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
-
-/turf/open/space/Entered(atom/movable/A)
-	..()
-	if ((!(A) || src != A.loc))
-		return
-
-	if(destination_z)
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
-
-		if(isliving(A))
-			var/mob/living/L = A
-			if(L.pulling)
-				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.loc = T
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		A.newtonian_move(A.inertia_dir)
 
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x

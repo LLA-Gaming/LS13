@@ -4,7 +4,7 @@
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturf = /turf/open/floor/plating/asteroid/snow/dug
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
@@ -14,9 +14,14 @@
 
 /turf/open/floor/plating/asteroid/snow/surface
 	planetary_atmos = TRUE
-	var/destination_z
-	var/destination_x
-	var/destination_y
+
+/turf/open/floor/plating/asteroid/snow/dug
+	New()
+		..()
+		dug = 1
+		icon_plating = "snow_dug"
+		icon_state = "snow_dug"
+		slowdown = 0
 
 //Ice
 /turf/open/floor/plating/ice
@@ -55,28 +60,6 @@
 
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
-
-//Transitions
-
-/turf/open/floor/plating/asteroid/snow/surface/Entered(atom/movable/A)
-	..()
-	if ((!(A) || src != A.loc))
-		return
-
-	if(destination_z)
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
-
-		if(isliving(A))
-			var/mob/living/L = A
-			if(L.pulling)
-				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.loc = T
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		A.newtonian_move(A.inertia_dir)
 
 //Surface specific
 /turf/open/floor/plating/asteroid/snow/surface/proc/update_starlight()
