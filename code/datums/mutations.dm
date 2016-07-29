@@ -318,7 +318,7 @@
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.paralysis <= 1))
-		owner.Stun(10)
+		owner.Stun(1)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
