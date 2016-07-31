@@ -1,20 +1,23 @@
-"a" = (/obj/structure/table/glass,/obj/item/weapon/surgicaldrill,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 9},/area/template_noop)
-"b" = (/obj/structure/table/glass,/obj/item/weapon/hemostat,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
-"c" = (/obj/structure/table/glass,/obj/item/weapon/scalpel{pixel_y = 10},/obj/item/weapon/circular_saw,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
-"d" = (/obj/structure/table/glass,/obj/item/weapon/retractor,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
-"e" = (/obj/structure/table/glass,/obj/item/weapon/cautery,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 5},/area/template_noop)
-"f" = (/obj/structure/table/glass,/obj/item/weapon/surgical_drapes,/obj/item/weapon/razor,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 8},/area/template_noop)
-"g" = (/turf/open/floor/holofloor{icon_state = "white"},/area/template_noop)
-"h" = (/obj/effect/landmark/vr_spawn{name = "Doctor"},/turf/open/floor/holofloor{icon_state = "white"},/area/template_noop)
-"i" = (/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 4},/area/template_noop)
-"j" = (/obj/effect/landmark/vr_spawn{name = "Bin"},/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 10},/area/template_noop)
-"k" = (/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
-"l" = (/obj/structure/table/optable,/obj/effect/mob_spawn/human/corpse/clown,/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
-"m" = (/obj/machinery/computer/operating,/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
-"n" = (/obj/structure/table/glass,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/suit/apron/surgical,/obj/item/clothing/mask/surgical,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 6},/area/template_noop)
+"a" = (/turf/closed/wall/shuttle/smooth,/area/template_noop)
+"b" = (/obj/structure/table/glass,/obj/item/weapon/surgicaldrill,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 9},/area/template_noop)
+"c" = (/obj/structure/table/glass,/obj/item/weapon/hemostat,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
+"d" = (/obj/structure/table/glass,/obj/item/weapon/scalpel{pixel_y = 10},/obj/item/weapon/circular_saw,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
+"e" = (/obj/structure/table/glass,/obj/item/weapon/retractor,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 1},/area/template_noop)
+"f" = (/obj/structure/table/glass,/obj/item/weapon/cautery,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 5},/area/template_noop)
+"g" = (/obj/structure/table/glass,/obj/item/weapon/surgical_drapes,/obj/item/weapon/razor,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 8},/area/template_noop)
+"h" = (/turf/open/floor/holofloor{icon_state = "white"},/area/template_noop)
+"i" = (/obj/effect/landmark/vr_spawn{name = "Doctor"},/turf/open/floor/holofloor{icon_state = "white"},/area/template_noop)
+"j" = (/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 4},/area/template_noop)
+"k" = (/obj/effect/landmark/vr_spawn{name = "Bin"},/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 10},/area/template_noop)
+"l" = (/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
+"m" = (/obj/structure/table/optable,/obj/effect/mob_spawn/human/corpse/clown,/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
+"n" = (/obj/machinery/computer/operating,/turf/open/floor/holofloor{icon_state = "warnwhite"},/area/template_noop)
+"o" = (/obj/structure/table/glass,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/suit/apron/surgical,/obj/item/clothing/mask/surgical,/turf/open/floor/holofloor{icon_state = "warnwhite"; dir = 6},/area/template_noop)
 
 (1,1,1) = {"
-abcde
-fghgi
-jklmn
+aaaaaaa
+abcdefa
+aghihja
+aklmnoa
+aaaaaaa
 "}
