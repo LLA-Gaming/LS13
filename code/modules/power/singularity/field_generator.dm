@@ -1,3 +1,4 @@
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 
@@ -63,8 +64,9 @@ field_generator power level display
 /obj/machinery/field/generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
-			if(active >= FG_CHARGING)
-				user.text2tab("<span class='warning'>You are unable to turn off the [name] once it is online!</span>")
+			if(active == FG_ONLINE)
+				user.text2tab("<span class='warning'>You restart the [name]!</span>")
+				start_fields()
 				return 1
 			else
 				user.visible_message("[user.name] turns on the [name].", \
@@ -95,7 +97,7 @@ field_generator power level display
 			if(FG_SECURED)
 				state = FG_UNSECURED
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
+				user.visible_message("[user.name] unsecures [name]'s reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
@@ -258,9 +260,9 @@ field_generator power level display
 
 		G = locate(/obj/machinery/field/generator) in T
 		if(G)
-			steps -= 1
 			if(!G.active)
 				return 0
+			steps -= 1
 			break
 
 		for(var/TC in T.contents)
