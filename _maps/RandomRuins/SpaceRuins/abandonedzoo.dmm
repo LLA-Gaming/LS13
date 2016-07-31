@@ -845,21 +845,13 @@
 /obj/item/weapon/shard,
 /turf/open/space,
 /area/space)
-"cb" = (
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"ca" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"bZ" = (
+"bX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
 	pixel_y = 0
 	},
 /turf/open/floor/plating/airless,
@@ -877,15 +869,23 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
-"bX" = (
+"bZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
 	pixel_y = 0
 	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"ca" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"cb" = (
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 

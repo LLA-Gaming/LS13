@@ -2811,7 +2811,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a4{
@@ -2859,7 +2859,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a4{
@@ -2872,7 +2872,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
@@ -9709,7 +9709,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a1{
@@ -10113,7 +10113,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a1{
@@ -10158,7 +10158,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
@@ -10206,7 +10206,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
+	= 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
