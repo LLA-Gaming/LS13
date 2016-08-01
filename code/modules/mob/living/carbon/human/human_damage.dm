@@ -157,5 +157,11 @@
 
 
 /mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+	if(mind && mind.InVRStorage()) //If the mind is in VR
+		for(var/client/C in clients)
+			if(C.key == mind.key)
+				C.text2tab("<span class='userdanger'>Your connection to virtual reality was lost due to immediate pain</span>")
+				virtual_reality.KickOut(C)
+
 	// depending on the species, it will run the corresponding apply_damage code there
 	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)

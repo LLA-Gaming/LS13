@@ -2,12 +2,34 @@
 * All clothing related stuff goes here.
 */
 
-
+var/global/list/perseus_items = list(
+									/obj/item/clothing/shoes/perc_combat,
+									/obj/item/clothing/under/space/skinsuit,
+									/obj/item/clothing/mask/chameleon/perseus,
+									/obj/item/clothing/under/space/skinsuit,
+									/obj/item/clothing/suit/armor/riot/riotvest,
+									/obj/item/clothing/suit/armor/lightarmor,
+									/obj/item/weapon/storage/backpack/blackpack,
+									/obj/item/clothing/gloves/specops,
+									/obj/item/clothing/suit/blackjacket,
+									/obj/item/clothing/under/perseus_uniform,
+									/obj/item/clothing/under/perseus_fatigues,
+									/obj/item/weapon/shield/riot/perc,
+									/obj/item/clothing/head/helmet/space/beret/perseus,
+									/obj/item/clothing/head/helmet/space/pershelmet,
+									/obj/item/clothing/suit/hooded/wintercoat/perseus,
+									/obj/item/clothing/head/winterhood/perseus,
+									/obj/item/weapon/gun/energy/ep90,
+									/obj/item/projectile/bullet/fiveseven,
+									/obj/item/weapon/stun_knife,
+									/obj/item/device/tablet/perseus,
+									/obj/item/device/tablet/laptop/perseus
+									)
 /*
 * Combat Boots
 */
 
-/obj/item/clothing/shoes/combat
+/obj/item/clothing/shoes/perc_combat
 	name = "combat boots"
 	icon_state = "swat"
 	flags = NOSLIP

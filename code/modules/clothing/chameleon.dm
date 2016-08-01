@@ -74,6 +74,7 @@
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
+	chameleon_blacklist = perseus_items.Copy()
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))

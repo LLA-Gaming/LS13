@@ -1,0 +1,162 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/closed/wall/shuttle/smooth,
+/area/template_noop)
+"b" = (
+/obj/structure/table/glass,
+/obj/item/weapon/surgicaldrill,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 9
+	},
+/area/template_noop)
+"c" = (
+/obj/structure/table/glass,
+/obj/item/weapon/hemostat,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 1
+	},
+/area/template_noop)
+"d" = (
+/obj/structure/table/glass,
+/obj/item/weapon/scalpel{
+	pixel_y = 10
+	},
+/obj/item/weapon/circular_saw,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 1
+	},
+/area/template_noop)
+"e" = (
+/obj/structure/table/glass,
+/obj/item/weapon/retractor,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 1
+	},
+/area/template_noop)
+"f" = (
+/obj/structure/table/glass,
+/obj/item/weapon/cautery,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 5
+	},
+/area/template_noop)
+"g" = (
+/obj/structure/table/glass,
+/obj/item/weapon/surgical_drapes,
+/obj/item/weapon/razor,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 8
+	},
+/area/template_noop)
+"h" = (
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
+"i" = (
+/obj/effect/landmark/vr_spawn{
+	name = "Doctor"
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
+"j" = (
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 4
+	},
+/area/template_noop)
+"k" = (
+/obj/effect/landmark/vr_spawn{
+	name = "Bin"
+	},
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 10
+	},
+/area/template_noop)
+"l" = (
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
+/area/template_noop)
+"m" = (
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/human/corpse/clown,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
+/area/template_noop)
+"n" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
+/area/template_noop)
+"o" = (
+/obj/structure/table/glass,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 6
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+g
+k
+a
+"}
+(3,1,1) = {"
+a
+c
+h
+l
+a
+"}
+(4,1,1) = {"
+a
+d
+i
+m
+a
+"}
+(5,1,1) = {"
+a
+e
+h
+n
+a
+"}
+(6,1,1) = {"
+a
+f
+j
+o
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+"}

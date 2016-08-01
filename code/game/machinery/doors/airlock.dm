@@ -67,11 +67,16 @@ var/list/airlock_overlays = list()
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
 
+	var/random = 0
+
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
 	..()
-	wires = new /datum/wires/airlock(src)
+	if(random)
+		wires = new /datum/wires/airlock/secure(src)
+	else
+		wires = new /datum/wires/airlock(src)
 	if(src.closeOtherId != null)
 		spawn (5)
 			for (var/obj/machinery/door/airlock/A in airlocks)

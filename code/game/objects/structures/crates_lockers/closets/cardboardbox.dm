@@ -13,6 +13,7 @@
 	material_drop = /obj/item/stack/sheet/cardboard
 	var/move_delay = 0
 	var/egged = 0
+	var/always_eggs = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
@@ -27,7 +28,7 @@
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
-	if(!egged)
+	if(!egged || always_eggs)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L

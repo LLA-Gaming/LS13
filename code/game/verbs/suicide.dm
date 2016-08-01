@@ -157,6 +157,9 @@
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
+		if(mind && mind.virtual) //If its a virtual body
+			src.text2tab("<span class='warning'>In this world, suicide is virtually impossible</span>")
+			return 0
 		if(mental_dominator)
 			src.text2tab("<span class='warning'>This body's force of will is too strong! You can't break it enough to murder them.</span>")
 			if(mind_control_holder)

@@ -1,6 +1,9 @@
 /datum/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
+	var/current_page = 0
+	var/current_page_max = 0
+	var/items_per_page = 14
 	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
@@ -250,9 +253,11 @@
 	data["category"] = categories[viewing_category]
 	data["next_cat"] = categories[next_cat()]
 	data["display_craftable_only"] = display_craftable_only
+	data["page"] = current_page + 1 //0 = 1, 1 = 2, 2 = 3
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/can_craft = list()
+	var/list/cant_craft_all = list()
 	var/list/cant_craft = list()
 	for(var/rec in crafting_recipes)
 		var/datum/crafting_recipe/R = rec
@@ -261,7 +266,22 @@
 		if(check_contents(R, surroundings))
 			can_craft += list(build_recipe_data(R))
 		else
-			cant_craft += list(build_recipe_data(R))
+			cant_craft_all += rec
+
+	current_page_max = Ceiling(cant_craft_all.len / items_per_page) - 1
+
+	var/pagei = current_page * items_per_page
+	var/i = 0
+	for(var/rec in cant_craft_all)
+		var/datum/crafting_recipe/R = rec
+		i++
+		if(i <= pagei)
+			continue
+		if(i > pagei + items_per_page)
+			continue
+		cant_craft += list(build_recipe_data(R))
+
+
 	data["can_craft"] = can_craft
 	data["cant_craft"] = cant_craft
 	return data
@@ -285,10 +305,18 @@
 		if("forwardCat") //Meow
 			viewing_category = next_cat()
 			usr.text2tab("<span class='notice'>Category is now [categories[viewing_category]].</span>")
+			current_page = 0
 			. = TRUE
 		if("backwardCat")
 			viewing_category = prev_cat()
 			usr.text2tab("<span class='notice'>Category is now [categories[viewing_category]].</span>")
+			current_page = 0
+			. = TRUE
+		if("forwardPage")
+			current_page = next_page()
+			. = TRUE
+		if("backwardPage")
+			current_page = prev_page()
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
@@ -309,6 +337,15 @@
 	if(. <= 0)
 		. = categories.len
 
+/datum/personal_crafting/proc/next_page()
+	. = current_page + 1
+	if(current_page >= current_page_max)
+		. = 0
+
+/datum/personal_crafting/proc/prev_page()
+	. = current_page - 1
+	if(current_page <= 0)
+		. = current_page_max
 
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()

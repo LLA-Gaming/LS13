@@ -260,8 +260,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
+		if(mind && mind.virtual)
+			src.text2tab("<span class='warning'>In this world, suicide is virtually impossible</span>")
+			return
 		ghostize(1)
 	else
+		if(mind && mind.virtual)
+			src.text2tab("<span class='warning'>In this world, suicide is virtually impossible</span>")
+			return
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
