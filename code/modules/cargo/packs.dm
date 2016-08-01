@@ -1183,6 +1183,13 @@
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	crate_name = "laser tag crate"
 
+/datum/supply_pack/misc/lasertag
+	name = "Virtual Reality Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/storage/box/vr_goggles)
+	crate_name = "virtual reality crate"
+
+
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
 	cost = 2000

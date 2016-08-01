@@ -48,7 +48,7 @@
 
 	New()
 		..()
-		new /obj/item/clothing/shoes/combat(src)
+		new /obj/item/clothing/shoes/perc_combat(src)
 		new /obj/item/clothing/suit/armor/lightarmor(src)
 		new /obj/item/clothing/head/helmet/space/pershelmet(src)
 		new /obj/item/clothing/mask/chameleon/perseus(src)
@@ -77,7 +77,7 @@
 		new /obj/item/clothing/under/perseus_fatigues(src)
 		new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
 		new /obj/item/clothing/head/helmet/space/beret/perseus(src)
-		new /obj/item/clothing/shoes/combat(src)
+		new /obj/item/clothing/shoes/perc_combat(src)
 		new /obj/item/clothing/under/space/skinsuit(src)
 		new /obj/item/clothing/suit/armor/lightarmor(src)
 		new /obj/item/clothing/mask/chameleon/perseus(src)

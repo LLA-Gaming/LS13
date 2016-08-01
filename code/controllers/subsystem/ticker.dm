@@ -355,6 +355,7 @@ var/datum/subsystem/ticker/ticker
 	var/num_escapees = 0
 
 	text2world("<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	ShutDownVR()
 
 	//Player status report
 	for(var/mob/Player in mob_list)

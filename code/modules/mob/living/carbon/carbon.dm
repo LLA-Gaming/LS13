@@ -728,6 +728,8 @@
 				resting = 0
 				adjust_blindness(-1)
 				update_canmove()
+	if(stat != DEAD && health <= config.health_threshold_crit && mind && mind.virtual)
+		mind.virtual.VirtualCrit(src)
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()

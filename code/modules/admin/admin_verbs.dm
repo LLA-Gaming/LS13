@@ -234,7 +234,7 @@ var/list/admin_verbs_minimum = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin
@@ -305,6 +305,9 @@ var/list/admin_verbs_minimum = list(
 		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
+		if(mob && mob.mind && mob.mind.virtual)
+			src << "<font color='red'>Leave VR before you aghost or you will break things!</font>"
+			return
 		log_admin("[key_name(usr)] admin ghosted.")
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
