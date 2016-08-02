@@ -1,7 +1,7 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space
-	area = /area/space
+	turf = /turf/open/floor/plating/asteroid/snow/surface
+	area = /area/surface
 	view = "15x15"
 	cache_lifespan = 7
 	fps = 20
