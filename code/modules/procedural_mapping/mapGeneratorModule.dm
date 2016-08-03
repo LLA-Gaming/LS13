@@ -63,7 +63,7 @@
 
 		//Success!
 		if(prob(spawnableTurfs[turfPath]))
-			T.ChangeTurf(turfPath)
+			T.ChangeTurf(turfPath,FALSE, FALSE)
 
 
 	//Atoms DO care whether atoms can be placed here

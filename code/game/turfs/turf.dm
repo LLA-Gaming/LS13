@@ -138,7 +138,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, retain_regular_state = TRUE)
 	if(!path)
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
