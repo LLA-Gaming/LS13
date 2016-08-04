@@ -28,15 +28,13 @@
 
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
-	var/list/target_zs = list(ZLEVEL_STATION) //The z-level to affect
+	var/list/target_zs = list() //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
 	var/immunity_type = "storm" //Used by mobs to prevent them from being affected by the weather
 
 	var/stage = END_STAGE //The stage of the weather, from 1-4
-
-	var/telegraph_outdoors_only = 0
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
 
@@ -61,12 +59,8 @@
 	for(var/V in player_list)
 		var/mob/M = V
 		if(M.z in target_zs)
-			if(telegraph_outdoors_only)
-				var/area/A = get_area(M)
-				if(!A.outdoors)
-					continue
 			if(telegraph_message)
-				M.text2tab(telegraph_message)
+				M << telegraph_message
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(src, "start", telegraph_duration)
@@ -79,12 +73,8 @@
 	for(var/V in player_list)
 		var/mob/M = V
 		if(M.z in target_zs)
-			if(telegraph_outdoors_only)
-				var/area/A = get_area(M)
-				if(!A.outdoors)
-					continue
 			if(weather_message)
-				M.text2tab(weather_message)
+				M << weather_message
 			if(weather_sound)
 				M << sound(weather_sound)
 	SSweather.processing.Add(src)
@@ -98,12 +88,8 @@
 	for(var/V in player_list)
 		var/mob/M = V
 		if(M.z in target_zs)
-			if(telegraph_outdoors_only)
-				var/area/A = get_area(M)
-				if(!A.outdoors)
-					continue
 			if(end_message)
-				M.text2tab(end_message)
+				M << end_message
 			if(end_sound)
 				M << sound(end_sound)
 	SSweather.processing.Remove(src)
@@ -116,7 +102,7 @@
 	update_areas()
 
 /datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
-	if(L.z != target_z)
+	if(!(L.z in target_zs))
 		return
 	if(immunity_type in L.weather_immunities)
 		return
@@ -130,13 +116,19 @@
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V
+		N.layer = overlay_layer
+		N.icon = 'icons/effects/weather_effects.dmi'
+		N.invisibility = 0
 		switch(stage)
 			if(STARTUP_STAGE)
-				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = telegraph_overlay, layer = overlay_layer)
+				N.icon_state = telegraph_overlay
 			if(MAIN_STAGE)
-				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = weather_overlay, layer = overlay_layer)
+				N.icon_state = weather_overlay
 			if(WIND_DOWN_STAGE)
-				N.weather_overlay = image(icon = 'icons/effects/weather_effects.dmi',icon_state = end_overlay,layer = overlay_layer)
+				N.icon_state = end_overlay
 			if(END_STAGE)
-				N.weather_overlay = null
-		N.updateicon()
+				N.icon_state = initial(N.icon_state)
+				N.icon = 'icons/turf/areas.dmi'
+				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
+				N.invisibility = INVISIBILITY_MAXIMUM
+				N.opacity = 0

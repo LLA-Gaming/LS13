@@ -4,7 +4,6 @@
 	area_type = /area/surface
 	target_zs = list(1,3,4,6) //all planet Zs
 	probability = 0
-	telegraph_outdoors_only = 1
 
 /datum/weather/planet/rain
 	name = "rain"

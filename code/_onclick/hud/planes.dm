@@ -21,7 +21,7 @@
 	New()
 		..()
 		var/matrix/m = matrix()
-		m.Scale(world.view*2.2)
+		m.Scale(world.view*5.5)
 		transform = m
 
 /mob

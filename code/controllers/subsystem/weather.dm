@@ -7,7 +7,7 @@ var/datum/subsystem/weather/SSweather
 	wait = 10
 	var/list/processing = list()
 	var/list/existing_weather = list()
-	var/list/eligible_zlevels = list(ZLEVEL_STATION,ZLEVEL_LAVALAND)
+	var/list/eligible_zlevels = list(ZLEVEL_STATION, ZLEVEL_LAVALAND)
 
 /datum/subsystem/weather/New()
 	NEW_SS_GLOBAL(SSweather)
@@ -18,8 +18,8 @@ var/datum/subsystem/weather/SSweather
 		if(W.aesthetic)
 			continue
 		for(var/mob/living/L in mob_list)
-			var/area/A = get_area(L)
-			if(L.z == W.target_z && !W.immunity_type in L.weather_immunities && A in W.impacted_areas)				W.impact(L)
+			if(W.can_impact(L))
+				W.impact(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
