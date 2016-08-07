@@ -89,6 +89,8 @@
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
+						if(istype(M, /atom/movable/light))
+							continue
 						if(!(istype(M,atomPath)))
 							skipLoopIteration = TRUE
 							break
