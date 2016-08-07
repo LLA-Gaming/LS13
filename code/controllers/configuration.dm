@@ -216,6 +216,8 @@
 
 	var/cross_name = "Other server"
 
+	var/idle_reboot = 0
+
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
 	for(var/T in L)
@@ -446,6 +448,8 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("idle_reboot")
+					config.idle_reboot = text2num(value)
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
