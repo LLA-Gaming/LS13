@@ -175,6 +175,9 @@ var/global/list/vr_loaders = list()
 			return
 		if(!user.mind.virtual)
 			return
+		if(busy)
+			return
+
 		if(href_list["observesim"])
 			if(loaded && loaded.players.len)
 				var/mob/M = pick(loaded.players)
@@ -182,8 +185,6 @@ var/global/list/vr_loaders = list()
 				MakeMob(user.client, /mob/camera/virtual_observer, get_turf(M))
 				qdel(user)
 
-		if(busy)
-			return
 		if(!loaded && !selected)
 			if(href_list["loadsim"])
 				selected = locate(href_list["loadsim"])
