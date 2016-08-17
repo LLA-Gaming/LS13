@@ -6,12 +6,6 @@
 /datum/job/qm/config_check()
 	return 0
 
-/datum/job/mining/config_check()
-	return 0
-
-/datum/job/mime/config_check()
-	return 0
-
 /datum/job/librarian/config_check()
 	return 0
 
@@ -49,7 +43,4 @@
 	return 0
 
 /datum/job/warden/config_check()
-	return 0
-
-/datum/job/cyborg/config_check()
 	return 0
