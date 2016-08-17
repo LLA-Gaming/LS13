@@ -5865,6 +5865,9 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "mI" = (
@@ -8780,6 +8783,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "tk" = (
@@ -9510,11 +9516,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "uV" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/stack/packageWrap,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
+/obj/machinery/door/window/brigdoor/eastright{
+	name = "Bar Access";
+	req_access_txt = "25"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
@@ -9751,7 +9755,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/carbon/monkey/thedon,
+/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/stack/packageWrap,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "vA" = (
@@ -15056,35 +15061,46 @@
 /obj/item/clothing/under/burial,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
-"JG" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_virology{
-	name = "Isolation A";
-	req_access_txt = "7"
+"IM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio3";
+	name = "containment blast door"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"JF" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_virology{
-	name = "Virology";
-	req_access_txt = "7"
+"IN" = (
+/obj/structure/window/reinforced,
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "xenobio4";
+	name = "Containment Blast Doors";
+	pixel_x = 0;
+	pixel_y = 4;
+	req_access_txt = "55"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/warning{
+	dir = 10
+	},
 /area/medical/research{
 	name = "Research Division"
 	})
-"JE" = (
-/obj/structure/chair/office/light{
-	dir = 1
+"IO" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio4";
+	name = "containment blast door"
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"JD" = (
+"IP" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
 	dir = 8;
@@ -15092,160 +15108,154 @@
 	name = "Containment Pen";
 	req_access_txt = "55"
 	},
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"JC" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/warning{
-	dir = 4
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio3";
+	name = "containment blast door"
 	},
+/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"JB" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/warning{
-	dir = 8
+"IQ" = (
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	name = "Containment Pen";
+	req_access_txt = "55"
 	},
-/area/medical/research{
-	name = "Research Division"
-	})
-"JA" = (
-/obj/effect/landmark/start{
-	name = "Shaft Miner"
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio4";
+	name = "containment blast door"
 	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"Jz" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"Jy" = (
-/obj/machinery/smartfridge/chemistry/virology,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jx" = (
-/obj/machinery/computer/pandemic,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jw" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+"IR" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "xenobio3";
+	name = "Containment Blast Doors";
+	pixel_x = 0;
+	pixel_y = 4;
+	req_access_txt = "55"
 	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/weapon/book/manual/wiki/infections{
-	pixel_y = 7
-	},
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jv" = (
-/obj/structure/closet/secure_closet/medical1,
-/obj/machinery/light{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Ju" = (
-/obj/machinery/computer/scan_consolenew,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jt" = (
-/obj/machinery/dna_scannernew,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	freerange = 0;
-	listening = 1;
-	name = "Common Channel";
-	pixel_y = 25
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Js" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jr" = (
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/airalarm{
-	frequency = 1447;
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jp" = (
-/turf/open/floor/plasteel/warning{
-	dir = 4
-	},
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jo" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel,
-/area/medical/research{
-	name = "Research Division"
-	})
-"Jn" = (
-/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
 /area/medical/research{
 	name = "Research Division"
 	})
-"Jm" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/warning{
-	dir = 9
+"IS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio4";
+	name = "containment blast door"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"Jl" = (
-/obj/structure/reagent_dispensers/watertank,
+"IT" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f6";
+	dir = 2
+	},
+/area/shuttle/labor)
+"IU" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle/labor)
+"IV" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"IW" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/shuttle/labor)
+"IX" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
 	})
+"IY" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/shuttle/labor)
+"IZ" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/labor)
+"Ja" = (
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/labor)
+"Jb" = (
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/labor)
+"Jc" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/labor)
+"Jd" = (
+/turf/open/floor/plasteel/warning{
+	dir = 8
+	},
+/area/quartermaster/storage)
+"Je" = (
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/quartermaster/storage)
+"Jf" = (
+/obj/machinery/computer/security/mining,
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/quartermaster/storage)
+"Jg" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"Jh" = (
+/obj/structure/ore_box,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/labor)
+"Ji" = (
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/quartermaster/storage)
+"Jj" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
+	},
+/area/shuttle/labor)
 "Jk" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/monkeycubes,
@@ -15272,198 +15282,177 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"Jj" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/shuttle/labor)
-"Ji" = (
-/turf/open/floor/plasteel/warning{
-	dir = 4
-	},
-/area/quartermaster/storage)
-"Jh" = (
-/obj/structure/ore_box,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
-"Jg" = (
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating,
-/area/shuttle/labor)
-"Jf" = (
-/obj/machinery/computer/security/mining,
-/turf/open/floor/plasteel/warning{
-	dir = 4
-	},
-/area/quartermaster/storage)
-"Je" = (
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel/warning{
-	dir = 4
-	},
-/area/quartermaster/storage)
-"Jd" = (
-/turf/open/floor/plasteel/warning{
-	dir = 8
-	},
-/area/quartermaster/storage)
-"Jc" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
-"Jb" = (
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
-"Ja" = (
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
-"IZ" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
-"IY" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/shuttle/labor)
-"IX" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
+"Jl" = (
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
 	})
-"IW" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
+"Jm" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/warning{
+	dir = 9
 	},
-/area/shuttle/labor)
-"IV" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/labor)
-"IU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/labor)
-"IT" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
-/area/shuttle/labor)
-"IS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio4";
-	name = "containment blast door"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/engine,
 /area/medical/research{
 	name = "Research Division"
 	})
-"IR" = (
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "xenobio3";
-	name = "Containment Blast Doors";
-	pixel_x = 0;
-	pixel_y = 4;
-	req_access_txt = "55"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+"Jn" = (
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
 /area/medical/research{
 	name = "Research Division"
 	})
-"IQ" = (
-/obj/machinery/door/window/northleft{
-	dir = 4;
-	name = "Containment Pen";
-	req_access_txt = "55"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio4";
-	name = "containment blast door"
-	},
-/turf/open/floor/engine,
+"Jo" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel,
 /area/medical/research{
 	name = "Research Division"
 	})
-"IP" = (
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Containment Pen";
-	req_access_txt = "55"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio3";
-	name = "containment blast door"
-	},
-/turf/open/floor/engine,
-/area/medical/research{
-	name = "Research Division"
-	})
-"IO" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio4";
-	name = "containment blast door"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/engine,
-/area/medical/research{
-	name = "Research Division"
-	})
-"IN" = (
-/obj/structure/window/reinforced,
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "xenobio4";
-	name = "Containment Blast Doors";
-	pixel_x = 0;
-	pixel_y = 4;
-	req_access_txt = "55"
-	},
+"Jp" = (
 /turf/open/floor/plasteel/warning{
-	dir = 10
-	},
-/area/medical/research{
-	name = "Research Division"
-	})
-"IM" = (
-/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio3";
-	name = "containment blast door"
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jq" = (
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/engine,
+/obj/machinery/airalarm{
+	frequency = 1447;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jr" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Js" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jt" = (
+/obj/machinery/dna_scannernew,
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 0;
+	listening = 1;
+	name = "Common Channel";
+	pixel_y = 25
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Ju" = (
+/obj/machinery/computer/scan_consolenew,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jv" = (
+/obj/structure/closet/secure_closet/medical1,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jw" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/weapon/book/manual/wiki/infections{
+	pixel_y = 7
+	},
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jx" = (
+/obj/machinery/computer/pandemic,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jy" = (
+/obj/machinery/smartfridge/chemistry/virology,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"Jz" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
+"JA" = (
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"JB" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/warning{
+	dir = 8
+	},
+/area/medical/research{
+	name = "Research Division"
+	})
+"JC" = (
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/medical/research{
+	name = "Research Division"
+	})
+"JD" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/fyellow,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"JE" = (
+/mob/living/carbon/monkey/thedon,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/bar)
+"JF" = (
+/turf/open/floor/carpet,
+/area/crew_quarters/bar)
+"JG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_virology{
+	name = "Isolation A";
+	req_access_txt = "7"
+	},
+/turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
 	})
@@ -50316,7 +50305,7 @@ tW
 tW
 tW
 vA
-tW
+JF
 su
 vH
 xC
@@ -51069,8 +51058,8 @@ fX
 ks
 bx
 cU
-bN
-mG
+JD
+dq
 ne
 nM
 on
@@ -51086,7 +51075,7 @@ sA
 tY
 uA
 va
-vC
+JE
 vC
 tC
 uH
@@ -51583,7 +51572,7 @@ fX
 ks
 bx
 lu
-bN
+kZ
 cU
 bN
 cU
@@ -51840,7 +51829,7 @@ fX
 ks
 bx
 lv
-bN
+dP
 mI
 ng
 nO
