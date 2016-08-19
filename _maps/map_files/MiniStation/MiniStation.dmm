@@ -3053,7 +3053,8 @@
 	})
 "gY" = (
 /obj/machinery/door/window/westleft{
-	name = "Monkey Pen"
+	name = "Monkey Pen";
+	req_access_txt = "7"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -3073,7 +3074,8 @@
 	})
 "hb" = (
 /obj/machinery/door/airlock/virology{
-	name = "Virology"
+	name = "Virology";
+	req_access_txt = "7"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -14727,8 +14729,8 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "HW" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/announcement_system,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "HX" = (
@@ -15599,6 +15601,12 @@
 	},
 /turf/open/space,
 /area/space)
+"Kb" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
 
 (1,1,1) = {"
 aa
@@ -56847,7 +56855,7 @@ bH
 iE
 jn
 bI
-bW
+Kb
 bW
 bW
 me
@@ -65399,7 +65407,7 @@ aa
 dy
 aa
 aa
-dy
+aa
 aa
 aa
 aa
