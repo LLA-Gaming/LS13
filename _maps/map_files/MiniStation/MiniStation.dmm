@@ -4669,7 +4669,7 @@
 	pixel_x = 5;
 	pixel_y = -32
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_advanced,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "kx" = (
@@ -11376,7 +11376,7 @@
 /area/crew_quarters/bar)
 "zH" = (
 /obj/machinery/vending/boozeomat,
-/turf/open/floor/wood,
+/turf/closed/wall,
 /area/crew_quarters/bar)
 "zI" = (
 /obj/machinery/door/firedoor,
