@@ -268,6 +268,8 @@ var/next_external_rsc = 0
 
 	directory -= ckey
 	clients -= src
+	if(!clients.len && ticker)
+		ticker.idle_reboot_schedule()
 	return ..()
 
 
