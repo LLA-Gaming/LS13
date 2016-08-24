@@ -62,8 +62,8 @@
 
 /datum/job/scientist/New()
 	..()
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 6
+	spawn_positions = 6
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_robotics)
 
