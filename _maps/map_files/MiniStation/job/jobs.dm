@@ -81,3 +81,15 @@
 	spawn_positions = 4
 	access = list(access_security, access_sec_doors, access_brig, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court)
+
+// Perseus
+
+/datum/job/penforcer/New()
+	..()
+	total_positions = 2
+	spawn_positions = 2
+
+/datum/job/pcommander/New()
+	..()
+	total_positions = 0
+	spawn_positions = 0
