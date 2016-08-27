@@ -376,7 +376,6 @@
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
 		adjustBruteLoss(damage)
-		updatehealth()
 
 /mob/living/simple_animal/movement_delay()
 	. = ..()
