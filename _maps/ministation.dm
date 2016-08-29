@@ -78,6 +78,8 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		        #include "map_files\MiniStation\job\removed.dm"
 		#endif
 
+		#define MAP_RESTRICTED_OBJECTIVES list(/datum/objective_item/steal/hoslaser,/datum/objective_item/steal/magboots,/datum/objective_item/steal/hypo,/datum/objective_item/steal/nuke_core,/datum/objective_item/steal/documents)
+
 #elif !defined(MAP_OVERRIDE)
 
 	#warn a map has already been included, ignoring ministation.
