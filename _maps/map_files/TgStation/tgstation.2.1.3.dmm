@@ -5503,7 +5503,7 @@
 "cbQ" = (/obj/structure/table,/obj/item/weapon/folder/white,/obj/item/weapon/folder/white,/obj/item/weapon/pen,/obj/item/device/taperecorder{pixel_y = 0},/turf/open/floor/plasteel/floorgrime,/area/toxins/misc_lab)
 "cbR" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = 0; pixel_y = 6},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/open/floor/plasteel/floorgrime,/area/toxins/misc_lab)
 "cbS" = (/obj/structure/rack,/obj/item/weapon/wrench,/obj/item/weapon/crowbar,/obj/machinery/computer/security/telescreen{name = "Test Chamber Moniter"; network = list("Test"); pixel_x = 0; pixel_y = -30},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/turf/open/floor/plasteel/floorgrime,/area/toxins/misc_lab)
-"cbT" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/droneDispenser,/turf/open/floor/plasteel,/area/toxins/misc_lab)
+"cbT" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/item/drone_shell,/turf/open/floor/plasteel,/area/toxins/misc_lab)
 "cbU" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel,/area/toxins/misc_lab)
 "cbV" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel/floorgrime,/area/toxins/misc_lab)
 "cbW" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/open/floor/plasteel/warning{dir = 4},/area/toxins/misc_lab)
