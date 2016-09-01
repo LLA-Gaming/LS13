@@ -454,6 +454,9 @@ var/global/list/possible_items = list()
 	..()
 	if(!possible_items.len)//Only need to fill the list when it's needed.
 		init_subtypes(/datum/objective_item/steal,possible_items)
+		#ifdef MAP_RESTRICTED_OBJECTIVES
+		possible_items = possible_items - MAP_RESTRICTED_OBJECTIVES
+		#endif
 
 /datum/objective/steal/find_target()
 	var/approved_targets = list()

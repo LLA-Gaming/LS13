@@ -2,6 +2,7 @@
 	name = "Clogged Vents"
 	typepath = /datum/round_event/vent_clog
 	weight = 35
+	max_occurrences = 0 //disabled for now per DZ
 
 /datum/round_event/vent_clog
 	announceWhen	= 1
