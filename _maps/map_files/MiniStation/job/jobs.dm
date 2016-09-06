@@ -62,8 +62,8 @@
 
 /datum/job/scientist/New()
 	..()
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 6
+	spawn_positions = 6
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_robotics)
 
@@ -81,3 +81,15 @@
 	spawn_positions = 4
 	access = list(access_security, access_sec_doors, access_brig, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court)
+
+// Perseus
+
+/datum/job/penforcer/New()
+	..()
+	total_positions = 2
+	spawn_positions = 2
+
+/datum/job/pcommander/New()
+	..()
+	total_positions = 0
+	spawn_positions = 0

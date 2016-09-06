@@ -79,6 +79,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/paicard
 	category = list("Electronics")
 
+/datum/design/drone
+	name = "Drone Shell"
+	desc = "Allows for the construction of a Drone SHell."
+	id = "droneshell"
+	req_tech = list("programming" = 3,"engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 1500)
+	build_path = /obj/item/drone_shell
+	category = list("Electronics")
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

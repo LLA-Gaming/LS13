@@ -50,13 +50,13 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-		#define MINETYPE "mining"
+		#define MINETYPE "lavaland"
 
 		#include "map_files\MiniStation\MiniStation.dmm"
 		#include "map_files\generic\z2.dmm"
 		#include "map_files\generic\z3.dmm"
 		#include "map_files\generic\z4.dmm"
-		#include "map_files\MiniStation\z5.dmm"
+		#include "map_files\generic\lavaland.dmm"
 		#include "map_files\generic\z6.dmm"
 		#include "map_files\generic\z7.dmm"
 		#include "map_files\generic\z8.dmm"
@@ -77,6 +77,8 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		        #include "map_files\MiniStation\job\jobs.dm"
 		        #include "map_files\MiniStation\job\removed.dm"
 		#endif
+
+		#define MAP_RESTRICTED_OBJECTIVES list(/datum/objective_item/steal/hoslaser,/datum/objective_item/steal/magboots,/datum/objective_item/steal/hypo,/datum/objective_item/steal/nuke_core,/datum/objective_item/steal/documents)
 
 #elif !defined(MAP_OVERRIDE)
 

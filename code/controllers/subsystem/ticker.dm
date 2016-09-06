@@ -49,6 +49,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
+	var/idle_reboot_at
+
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -103,6 +105,7 @@ var/datum/subsystem/ticker/ticker
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
+			idle_reboot_check()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -173,6 +176,8 @@ var/datum/subsystem/ticker/ticker
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
+
+	world.sleep_offline = 0
 
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
@@ -536,3 +541,24 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+
+/datum/subsystem/ticker/proc/idle_reboot_schedule()
+	if(!config.idle_reboot)
+		return
+	if(idle_reboot_at)
+		return
+	if(current_state != GAME_STATE_PLAYING)
+		return
+	idle_reboot_at = world.time + config.idle_reboot
+
+/datum/subsystem/ticker/proc/idle_reboot_check()
+	if(!config.idle_reboot)
+		return
+	if(!idle_reboot_at)
+		return
+	if(clients.len)
+		idle_reboot_at = 0
+		return
+	if(world.time > idle_reboot_at)
+		world.Reboot("Server reboot due to inactivity.", "end_error", "reboot", 10)

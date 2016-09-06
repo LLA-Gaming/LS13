@@ -6,6 +6,9 @@
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/aiModule))
+		if(isdrone(user))
+			user.text2tab("<span class='caution'>You are not able to interact with this.</span>")
+			return
 		var/obj/item/weapon/aiModule/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
 			return
@@ -37,6 +40,10 @@
 
 /obj/machinery/computer/upload/ai/attack_hand(mob/user)
 	if(..())
+		return
+
+	if(isdrone(user))
+		user.text2tab("<span class='caution'>You are not able to interact with this.</span>")
 		return
 
 	src.current = select_active_ai(user)
