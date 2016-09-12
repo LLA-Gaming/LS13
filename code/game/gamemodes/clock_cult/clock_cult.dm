@@ -44,7 +44,7 @@ This file's folder contains:
 		return 0
 	if(!M.mind)
 		return 0
-	if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+	if(ishuman(M) && (M.mind.assigned_role in list("Station Chief", "Chaplain")))
 		return 0
 	if(iscultist(M))
 		return 0
@@ -173,8 +173,8 @@ This file's folder contains:
 	required_enemies = 2
 	recommended_enemies = 4
 	enemy_minimum_age = 14
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
-	restricted_jobs = list("Chaplain", "Captain")
+	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Station Chief") //Silicons can eventually be converted
+	restricted_jobs = list("Chaplain", "Station Chief")
 	var/servants_to_serve = list()
 
 /datum/game_mode/clockwork_cult/announce()

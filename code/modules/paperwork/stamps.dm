@@ -28,7 +28,7 @@
 	item_color = "cargo"
 
 /obj/item/weapon/stamp/captain
-	name = "captain's rubber stamp"
+	name = "station chief's rubber stamp"
 	icon_state = "stamp-cap"
 	item_color = "captain"
 

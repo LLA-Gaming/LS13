@@ -178,12 +178,12 @@ update_label("John Doe", "Clowny")
 	access = list(access_syndicate)
 
 /obj/item/weapon/card/id/captains_spare
-	name = "captain's spare ID"
+	name = "station chief's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered_name = "Captain"
-	assignment = "Captain"
+	registered_name = "Station Chief"
+	assignment = "Station Chief"
 
 /obj/item/weapon/card/id/captains_spare/New()
 	var/datum/job/captain/J = new/datum/job/captain

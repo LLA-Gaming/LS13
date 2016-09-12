@@ -22,7 +22,7 @@
 
 //Captain
 /obj/item/clothing/head/caphat
-	name = "captain's hat"
+	name = "station chief's hat"
 	desc = "It's good being the king."
 	icon_state = "captain"
 	item_state = "that"
@@ -34,8 +34,8 @@
 
 //Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade
-	name = "captain's parade cap"
-	desc = "Worn only by Captains with an abundance of class."
+	name = "station chief's parade cap"
+	desc = "Worn only by Station Chief with an abundance of class."
 	icon_state = "capcap"
 
 	dog_fashion = null

@@ -111,7 +111,7 @@
 	var/back = null
 	var/has_id = 0     //Just set to 1 if you want them to have an ID
 	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Station Chief" if you want it to be all access.
 	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
 	var/husk = null
 	var/outfit_type = null // Will start with this if exists then apply specific slots
@@ -423,7 +423,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access = "Captain"
+	id_access = "Station Chief"
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -438,7 +438,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access = "Captain"
+	id_access = "Station Chief"
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"

@@ -17,7 +17,7 @@
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
 		return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))
+	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Station Chief", "Chaplain")))
 		return 0
 	if(isloyal(mind.current))
 		return 0
@@ -39,7 +39,7 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Station Chief", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 24
 	required_enemies = 4

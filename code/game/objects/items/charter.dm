@@ -2,7 +2,7 @@
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
-	desc = "An official document entrusting the governance of the station and surrounding space to the Captain. "
+	desc = "An official document entrusting the governance of the station and surrounding land to the Station Chief. "
 	var/used = FALSE
 
 /obj/item/station_charter/attack_self(mob/living/user)
@@ -18,7 +18,7 @@
 	if(new_name)
 		station_name = new_name
 		world.name = station_name
-		minor_announce("[user.real_name] has designated your station as [station_name]", "Captain's Charter", 0)
+		minor_announce("[user.real_name] has designated your station as [station_name]", "Station Chief's Charter", 0)
 
 	else
 		used = FALSE

@@ -146,8 +146,8 @@
 	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
-	name = "medal of captaincy"
-	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
+	name = "medal of station chief"
+	desc = "A golden medal awarded exclusively to those promoted to the rank of station chief. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"

@@ -9,7 +9,7 @@ Quartermaster
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the station chief"
 	selection_color = "#d7b088"
 
 	outfit = /datum/outfit/job/quartermaster

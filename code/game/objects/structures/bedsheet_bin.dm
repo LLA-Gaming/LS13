@@ -95,8 +95,8 @@ LINEN BINS
 	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
-	name = "captain's bedsheet"
-	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
+	name = "station chief's bedsheet"
+	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern station chiefs."
 	icon_state = "sheetcaptain"
 	item_color = "captain"
 

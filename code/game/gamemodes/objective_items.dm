@@ -12,10 +12,10 @@
 	return 1
 
 /datum/objective_item/steal/caplaser
-	name = "the captain's antique laser gun"
+	name = "the station chief's antique laser gun"
 	targetitem = /obj/item/weapon/gun/energy/laser/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
@@ -27,13 +27,13 @@
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/jetpack
-	name = "the Captain's jetpack"
+	name = "the station chief's jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -42,10 +42,10 @@
 	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/capmedal
-	name = "the medal of captaincy"
+	name = "the medal of station chief"
 	targetitem = /obj/item/clothing/tie/medal/gold/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
@@ -57,7 +57,7 @@
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/weapon/disk/nuclear
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/reflector
 	name = "a reflector vest"
@@ -149,7 +149,7 @@
 
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
-	name = "the captain's pinpointer"
+	name = "the station chief's pinpointer"
 	targetitem = /obj/item/weapon/pinpointer
 	difficulty = 10
 

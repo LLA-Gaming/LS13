@@ -388,8 +388,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 				if (src.authenticated==2)
-					dat += "<BR><BR><B>Captain Functions</B>"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR><BR><B>Station Chief Functions</B>"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Station Chief's Announcement</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -581,7 +581,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
 	else
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Station Chief")
 		message_cooldown = 1
 		spawn(600)//One minute cooldown
 			message_cooldown = 0

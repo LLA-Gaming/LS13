@@ -4,12 +4,12 @@ Research Director
 /datum/job/rd
 	title = "Research Director"
 	flag = RD
-	department_head = list("Captain")
+	department_head = list("Station Chief")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = "the station chief"
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7

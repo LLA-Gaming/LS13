@@ -1222,7 +1222,7 @@
 	toysay = "Dude, I see colors..."
 
 /obj/item/toy/figure/captain
-	name = "Captain action figure"
+	name = "Station Chief action figure"
 	icon_state = "captain"
 	toysay = "Any heads of staff?"
 

@@ -70,7 +70,7 @@
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace
-	name = "captain's carapace"
+	name = "station chief's carapace"
 	desc = "An armored vest reinforced with ceramic plates and pauldrons to provide additional protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest, although it does chafe your nipples."
 	icon_state = "capcarapace"
 	item_state = "armor"
@@ -79,7 +79,7 @@
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
-	name = "captain's parade jacket"
+	name = "station chief's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	item_state = "capspacesuit"

@@ -29,7 +29,7 @@ var/time_last_changed_position = 0
 		"AI",
 		"Assistant",
 		"Cyborg",
-		"Captain",
+		"Station Chief",
 		"Head of Personnel",
 		"Head of Security",
 		"Chief Engineer",

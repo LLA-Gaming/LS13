@@ -35,7 +35,7 @@
 			speed = 45
 			correctness = 100
 			willpower = 100
-		if(U.job in list("Captain", "Security Officer", "Head of Security", "Detective", "Warden"))
+		if(U.job in list("Station Chief", "Security Officer", "Head of Security", "Detective", "Warden"))
 			willpower = 99
 		if(U.job in list("Clown")) // WHO GAVE THE CLOWN A DEMONOMICON?  BAD THINGS WILL HAPPEN!
 			willpower = 25
