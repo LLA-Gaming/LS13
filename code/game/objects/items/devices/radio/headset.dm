@@ -172,8 +172,8 @@
 	keyslot = new /obj/item/device/encryptionkey/heads/cmo
 
 /obj/item/device/radio/headset/heads/hop
-	name = "\proper the head of personnel's headset"
-	desc = "The headset of the guy who will one day be captain. \nChannels are as follows: :u - supply, :v - service, :c - command."
+	name = "\proper the human resources' headset"
+	desc = "The headset of the guy who will one day be station chief. \nChannels are as follows: :u - supply, :v - service, :c - command."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/hop

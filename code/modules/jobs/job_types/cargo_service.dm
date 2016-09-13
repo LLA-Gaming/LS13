@@ -4,7 +4,7 @@ Quartermaster
 /datum/job/qm
 	title = "Quartermaster"
 	flag = QUARTERMASTER
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -33,7 +33,7 @@ Cargo Technician
 /datum/job/cargo_tech
 	title = "Cargo Technician"
 	flag = CARGOTECH
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
@@ -60,7 +60,7 @@ Shaft Miner
 /datum/job/mining
 	title = "Shaft Miner"
 	flag = MINER
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
@@ -99,7 +99,7 @@ Bartender
 /datum/job/bartender
 	title = "Bartender"
 	flag = BARTENDER
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
@@ -130,7 +130,7 @@ Cook
 /datum/job/cook
 	title = "Cook"
 	flag = COOK
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
@@ -175,7 +175,7 @@ Botanist
 /datum/job/hydro
 	title = "Botanist"
 	flag = BOTANIST
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
@@ -208,7 +208,7 @@ Janitor
 /datum/job/janitor
 	title = "Janitor"
 	flag = JANITOR
-	department_head = list("Head of Personnel")
+	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2

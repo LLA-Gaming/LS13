@@ -89,7 +89,7 @@
 	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hop
-	name = "head of personnel PDA"
+	name = "human resources PDA"
 	default_cartridge = /obj/item/weapon/cartridge/hop
 	icon_state = "pda-hop"
 

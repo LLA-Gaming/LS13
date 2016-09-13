@@ -29,7 +29,7 @@
 	new /obj/item/weapon/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "\proper human resources' locker"
 	req_access = list(access_hop)
 	icon_state = "hop"
 

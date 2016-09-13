@@ -61,7 +61,7 @@ Captain
 Head of Personnel
 */
 /datum/job/hop
-	title = "Head of Personnel"
+	title = "Human Resources"
 	flag = HOP
 	department_head = list("Station Chief")
 	department_flag = CIVILIAN
@@ -90,7 +90,7 @@ Head of Personnel
 
 
 /datum/outfit/job/hop
-	name = "Head of Personnel"
+	name = "Human Resources"
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/device/tablet/hop

@@ -30,7 +30,7 @@ var/time_last_changed_position = 0
 		"Assistant",
 		"Cyborg",
 		"Station Chief",
-		"Head of Personnel",
+		"Human Resources",
 		"Head of Security",
 		"Chief Engineer",
 		"Research Director",
@@ -353,7 +353,7 @@ var/time_last_changed_position = 0
 						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
 							region_access |= 6
-							get_subordinates("Head of Personnel")
+							get_subordinates("Human Resources")
 						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
 							get_subordinates("Head of Security")

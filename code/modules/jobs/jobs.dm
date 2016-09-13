@@ -56,7 +56,7 @@ var/list/assistant_occupations = list(
 
 var/list/command_positions = list(
 	"Station Chief",
-	"Head of Personnel",
+	"Human Resources",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
@@ -88,7 +88,7 @@ var/list/science_positions = list(
 
 
 var/list/supply_positions = list(
-	"Head of Personnel",
+	"Human Resources",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",

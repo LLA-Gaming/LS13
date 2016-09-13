@@ -249,7 +249,7 @@
 	icon_state = "hos"
 
 /obj/structure/statue/gold/hop
-	name = "Statue of the Head of Personnel"
+	name = "Statue of the Human Resources"
 	icon_state = "hop"
 
 /obj/structure/statue/gold/cmo
