@@ -128,14 +128,14 @@ Bartender
 Cook
 */
 /datum/job/cook
-	title = "Cook"
+	title = "Chef"
 	flag = COOK
 	department_head = list("Human Resources")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
 
@@ -145,7 +145,7 @@ Cook
 	minimal_access = list(access_kitchen, access_morgue)
 
 /datum/outfit/job/cook
-	name = "Cook"
+	name = "Chef"
 
 	belt = /obj/item/device/tablet/cook
 	ears = /obj/item/device/radio/headset/headset_srv

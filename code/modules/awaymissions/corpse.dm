@@ -273,7 +273,7 @@
 ///////////Civilians//////////////////////
 
 /obj/effect/mob_spawn/human/cook
-	name = "Cook"
+	name = "Chef"
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/apron/chef
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -281,8 +281,8 @@
 	back = /obj/item/weapon/storage/backpack
 	radio = /obj/item/device/radio/headset
 	has_id = 1
-	id_job = "Cook"
-	id_access = "Cook"
+	id_job = "Chef"
+	id_access = "Chef"
 
 
 /obj/effect/mob_spawn/human/doctor

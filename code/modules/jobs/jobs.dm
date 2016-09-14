@@ -98,7 +98,7 @@ var/list/supply_positions = list(
 var/list/civilian_positions = list(
 	"Bartender",
 	"Botanist",
-	"Cook",
+	"Chef",
 	"Janitor",
 	"Librarian",
 	"Lawyer",
