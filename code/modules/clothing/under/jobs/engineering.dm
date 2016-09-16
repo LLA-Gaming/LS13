@@ -26,7 +26,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
-	name = "roboticist's jumpsuit"
+	name = "mechanics's jumpsuit"
 	icon_state = "robotics"
 	item_state = "robotics"
 	item_color = "robotics"

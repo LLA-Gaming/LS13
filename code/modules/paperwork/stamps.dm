@@ -48,12 +48,12 @@
 	item_color = "chief"
 
 /obj/item/weapon/stamp/rd
-	name = "research director's rubber stamp"
+	name = "lead scientist's rubber stamp"
 	icon_state = "stamp-rd"
 	item_color = "director"
 
 /obj/item/weapon/stamp/cmo
-	name = "chief medical officer's rubber stamp"
+	name = "medical director's rubber stamp"
 	icon_state = "stamp-cmo"
 	item_color = "cmo"
 

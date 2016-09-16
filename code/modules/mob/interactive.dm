@@ -315,12 +315,12 @@
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "bartend"
 			restrictedJob = 1
-		if("Station Engineer","Chief Engineer","Atmospheric Technician")
+		if("Mechanic","Head Atmospheric Engineer","Atmospheric Engineer")
 			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
 			functions += "healpeople"
-		if("Research Director","Scientist","Roboticist")
+		if("Research Director","Scientist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
@@ -819,11 +819,11 @@
 		return /area/crew_quarters/bar
 	if(T.title == "Chef")
 		return /area/crew_quarters/kitchen
-	if(T.title == "Station Engineer" || T.title == "Chief Engineer" || T.title == "Atmospheric Technician")
+	if(T.title == "Mechanic" || T.title == "Head Atmospheric Engineer" || T.title == "Atmospheric Engineer")
 		return /area/engine
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
-	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
+	if(T.title == "Research Director" || T.title == "Scientist")
 		return /area/toxins
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security

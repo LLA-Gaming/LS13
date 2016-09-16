@@ -1191,7 +1191,7 @@
 		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo
-	name = "Chief Medical Officer action figure"
+	name = "Medical Director action figure"
 	icon_state = "cmo"
 	toysay = "Suit sensors!"
 
@@ -1201,7 +1201,7 @@
 	toysay = "Grey tide world wide!"
 
 /obj/item/toy/figure/atmos
-	name = "Atmospheric Technician action figure"
+	name = "Atmospheric Engineer action figure"
 	icon_state = "atmos"
 	toysay = "Glory to Atmosia!"
 
@@ -1217,7 +1217,7 @@
 	toysound = 'sound/voice/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
-	name = "Botanist action figure"
+	name = "Agronomist action figure"
 	icon_state = "botanist"
 	toysay = "Dude, I see colors..."
 
@@ -1232,7 +1232,7 @@
 	toysay = "For Cargonia!"
 
 /obj/item/toy/figure/ce
-	name = "Chief Engineer action figure"
+	name = "Head Atmospheric Engineer action figure"
 	icon_state = "ce"
 	toysay = "Wire the solars!"
 
@@ -1283,7 +1283,7 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personel action figure"
+	name = "Human Resources action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 
@@ -1340,12 +1340,12 @@
 	toysound = 'sound/magic/Disintegrate.ogg'
 
 /obj/item/toy/figure/rd
-	name = "Research Director action figure"
+	name = "Lead Scientist action figure"
 	icon_state = "rd"
 	toysay = "Blowing all of the borgs!"
 
 /obj/item/toy/figure/roboticist
-	name = "Roboticist action figure"
+	name = "Mechanic action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
 	toysound = 'sound/mecha/mechstep.ogg'

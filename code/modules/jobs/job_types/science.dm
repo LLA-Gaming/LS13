@@ -81,36 +81,3 @@ Scientist
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel_tox
-
-/*
-Roboticist
-*/
-/datum/job/roboticist
-	title = "Roboticist"
-	flag = ROBOTICIST
-	department_head = list("Research Director")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "research director"
-	selection_color = "#ffeeff"
-
-	outfit = /datum/outfit/job/roboticist
-
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_mineral_storeroom, access_xenobiology, access_genetics)
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_mineral_storeroom)
-
-/datum/outfit/job/roboticist
-	name = "Roboticist"
-
-	belt = /obj/item/weapon/storage/belt/utility/full
-	l_pocket = /obj/item/device/tablet/roboticist
-	ears = /obj/item/device/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/roboticist
-	suit = /obj/item/clothing/suit/toggle/labcoat
-
-	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
-
-	tablet_slot = slot_l_store

@@ -101,7 +101,7 @@ LINEN BINS
 	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
-	name = "research director's bedsheet"
+	name = "lead scientist's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_color = "director"
@@ -113,7 +113,7 @@ LINEN BINS
 	item_color = "medical"
 
 /obj/item/weapon/bedsheet/cmo
-	name = "chief medical officer's bedsheet"
+	name = "medical director's bedsheet"
 	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
 	icon_state = "sheetcmo"
 	item_color = "cmo"
@@ -131,7 +131,7 @@ LINEN BINS
 	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
-	name = "chief engineer's bedsheet"
+	name = "head atmospheric engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_color = "chief"

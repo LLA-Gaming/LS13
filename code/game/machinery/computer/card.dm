@@ -32,7 +32,7 @@ var/time_last_changed_position = 0
 		"Station Chief",
 		"Human Resources",
 		"Head of Security",
-		"Chief Engineer",
+		"Head Atmospheric Engineer",
 		"Research Director",
 		"Chief Medical Officer",
 		"Chaplain")
@@ -365,7 +365,7 @@ var/time_last_changed_position = 0
 							get_subordinates("Research Director")
 						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
-							get_subordinates("Chief Engineer")
+							get_subordinates("Head Atmospheric Engineer")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))

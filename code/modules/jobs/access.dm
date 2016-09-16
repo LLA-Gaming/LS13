@@ -445,9 +445,9 @@
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Chief", "Human Resources", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Head Atmospheric Engineer", "Mechanic",
+				"Atmospheric Engineer", "Chief Medical Officer", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
+				"Research Director", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner", "Perseus Security Enforcer", "Perseus Security Commander")

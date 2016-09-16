@@ -39,7 +39,7 @@
 	name = "the chief engineer's advanced magnetic boots"
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Head Atmospheric Engineer")
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of station chief"
@@ -89,7 +89,7 @@
 	name = "28 moles of plasma (full tank)"
 	targetitem = /obj/item/weapon/tank
 	difficulty = 3
-	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
+	excludefromjob = list("Head Atmospheric Engineer","Research Director","Scientist","Atmospheric Engineer")
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
@@ -113,7 +113,7 @@
 	name = "the station blueprints"
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Head Atmospheric Engineer")
 	altitems = list(/obj/item/weapon/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)

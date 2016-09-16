@@ -253,15 +253,15 @@
 	icon_state = "hop"
 
 /obj/structure/statue/gold/cmo
-	name = "Statue of the Chief Medical Officer"
+	name = "Statue of the Medical Director"
 	icon_state = "cmo"
 
 /obj/structure/statue/gold/ce
-	name = "Statue of the Chief Engineer"
+	name = "Statue of the Head Atmospheric Engineer"
 	icon_state = "ce"
 
 /obj/structure/statue/gold/rd
-	name = "Statue of the Research Director"
+	name = "Statue of the Lead Scientist"
 	icon_state = "rd"
 
 //////////////////////////silver///////////////////////////////////////
@@ -272,7 +272,7 @@
 	desc = "This is a valuable statue made from silver."
 
 /obj/structure/statue/silver/md
-	name = "Statue of a Medical Officer"
+	name = "Statue of a Station Doctor"
 	icon_state = "md"
 
 /obj/structure/statue/silver/janitor

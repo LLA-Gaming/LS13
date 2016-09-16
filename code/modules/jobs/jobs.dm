@@ -46,7 +46,7 @@ var/const/ASSISTANT			=(1<<13)
 
 var/list/assistant_occupations = list(
 	"Assistant",
-	"Atmospheric Technician",
+	"Atmospheric Engineer",
 	"Cargo Technician",
 	"Chaplain",
 	"Lawyer",
@@ -58,16 +58,16 @@ var/list/command_positions = list(
 	"Station Chief",
 	"Human Resources",
 	"Head of Security",
-	"Chief Engineer",
+	"Head Atmospheric Engineer",
 	"Research Director",
 	"Chief Medical Officer"
 )
 
 
 var/list/engineering_positions = list(
-	"Chief Engineer",
-	"Station Engineer",
-	"Atmospheric Technician",
+	"Head Atmospheric Engineer",
+	"Mechanic",
+	"Atmospheric Engineer"
 )
 
 
@@ -82,8 +82,7 @@ var/list/medical_positions = list(
 
 var/list/science_positions = list(
 	"Research Director",
-	"Scientist",
-	"Roboticist"
+	"Scientist"
 )
 
 

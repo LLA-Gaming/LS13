@@ -309,23 +309,6 @@
 	flavour_text = "You are a space doctor!"
 
 
-/obj/effect/mob_spawn/human/engineer
-	name = "Engineer"
-	radio = /obj/item/device/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/engineer
-	back = /obj/item/weapon/storage/backpack/industrial
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	belt = /obj/item/weapon/storage/belt/utility/full
-	gloves = /obj/item/clothing/gloves/color/yellow
-	helmet = /obj/item/clothing/head/hardhat
-	has_id = 1
-	id_job = "Station Engineer"
-	id_access = "Station Engineer"
-
-/obj/effect/mob_spawn/human/engineer/rig
-	suit = /obj/item/clothing/suit/space/hardsuit/engine
-	mask = /obj/item/clothing/mask/breath
-
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
 	uniform = /obj/item/clothing/under/rank/clown

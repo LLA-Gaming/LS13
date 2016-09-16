@@ -2,7 +2,7 @@
 Chief Engineer
 */
 /datum/job/chief_engineer
-	title = "Chief Engineer"
+	title = "Head Atmospheric Engineer"
 	flag = CHIEF
 	department_head = list("Station Chief")
 	department_flag = ENGSEC
@@ -26,7 +26,7 @@ Chief Engineer
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
 
 /datum/outfit/job/ce
-	name = "Chief Engineer"
+	name = "Head Atmospheric Engineer"
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/weapon/storage/belt/utility/full
@@ -53,55 +53,17 @@ Chief Engineer
 	announce_head(H, list("Engineering"))
 
 /*
-Station Engineer
-*/
-/datum/job/engineer
-	title = "Station Engineer"
-	flag = ENGINEER
-	department_head = list("Chief Engineer")
-	department_flag = ENGSEC
-	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
-	supervisors = "the chief engineer"
-	selection_color = "#fff5cc"
-
-	outfit = /datum/outfit/job/engineer
-
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
-	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_tcomsat)
-
-/datum/outfit/job/engineer
-	name = "Station Engineer"
-
-	belt = /obj/item/weapon/storage/belt/utility/full
-	l_pocket = /obj/item/device/tablet/engineer
-	ears = /obj/item/device/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/engineer
-	shoes = /obj/item/clothing/shoes/workboots
-	head = /obj/item/clothing/head/hardhat
-	r_pocket = /obj/item/device/t_scanner
-
-	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
-	box = /obj/item/weapon/storage/box/engineer
-	tablet_slot = slot_l_store
-
-/*
 Atmospheric Technician
 */
 /datum/job/atmos
-	title = "Atmospheric Technician"
+	title = "Atmospheric Engineer"
 	flag = ATMOSTECH
-	department_head = list("Chief Engineer")
+	department_head = list("Head Atmospheric Engineer")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the chief engineer"
+	supervisors = "the head atmospheric engineer"
 	selection_color = "#fff5cc"
 
 	outfit = /datum/outfit/job/atmos
@@ -111,7 +73,7 @@ Atmospheric Technician
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 
 /datum/outfit/job/atmos
-	name = "Atmospheric Technician"
+	name = "Atmospheric Engineer"
 
 	belt = /obj/item/weapon/storage/belt/utility/atmostech
 	l_pocket = /obj/item/device/tablet/atmos
@@ -123,4 +85,38 @@ Atmospheric Technician
 	satchel = /obj/item/weapon/storage/backpack/satchel_eng
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
+	tablet_slot = slot_l_store
+
+
+/*
+Mechanic
+*/
+/datum/job/roboticist
+	title = "Mechanic"
+	flag = ROBOTICIST
+	department_head = list("Head Atmospheric Engineer")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the head atmospheric engineer"
+	selection_color = "#fff5cc"
+
+	outfit = /datum/outfit/job/roboticist
+	access = list(access_engine, access_engine_equip, access_atmospherics, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_robotics, access_morgue, access_research, access_mineral_storeroom)
+	minimal_access = list(access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_robotics, access_morgue, access_research, access_mineral_storeroom)
+
+/datum/outfit/job/roboticist
+	name = "Mechanic"
+
+	belt = /obj/item/weapon/storage/belt/utility/full
+	l_pocket = /obj/item/device/tablet/roboticist
+	ears = /obj/item/device/radio/headset/headset_eng
+	uniform = /obj/item/clothing/under/rank/roboticist
+	suit = /obj/item/clothing/suit/toggle/labcoat
+
+	backpack = /obj/item/weapon/storage/backpack/industrial
+	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+
 	tablet_slot = slot_l_store
