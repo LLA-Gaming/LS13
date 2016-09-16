@@ -10,7 +10,7 @@ Chaplain
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/chaplain

@@ -9,7 +9,7 @@ Clown
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
@@ -69,7 +69,7 @@ Mime
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/mime
@@ -117,7 +117,7 @@ Librarian
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/librarian
@@ -145,7 +145,7 @@ Lawyer
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the head of personnel"
+	supervisors = "human resources"
 	selection_color = "#dddddd"
 	var/lawyers = 0 //Counts lawyer amount
 
