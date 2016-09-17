@@ -342,7 +342,7 @@
 		if(access_heads)
 			return "Bridge"
 		if(access_captain)
-			return "Captain"
+			return "Station Chief"
 		if(access_all_personal_lockers)
 			return "Personal Lockers"
 		if(access_chapel_office)
@@ -400,7 +400,7 @@
 		if(access_xenobiology)
 			return "Xenobiology Lab"
 		if(access_hop)
-			return "HoP Office"
+			return "HR Office"
 		if(access_hos)
 			return "HoS Office"
 		if(access_ce)
@@ -444,10 +444,10 @@
 			return "Code Scotch"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
+	return list("Assistant", "Station Chief", "Human Resources", "Bartender", "Chef", "Agronomist", "Quartermaster", "Supply Technician",
+				"Mining Technician", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Head Atmospheric Engineer", "Mechanic",
+				"Atmospheric Engineer", "Medical Director", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
+				"Lead Scientist", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner", "Perseus Security Enforcer", "Perseus Security Commander")

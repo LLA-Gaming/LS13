@@ -29,12 +29,12 @@ var/time_last_changed_position = 0
 		"AI",
 		"Assistant",
 		"Cyborg",
-		"Captain",
-		"Head of Personnel",
+		"Station Chief",
+		"Human Resources",
 		"Head of Security",
-		"Chief Engineer",
-		"Research Director",
-		"Chief Medical Officer",
+		"Head Atmospheric Engineer",
+		"Lead Scientist",
+		"Medical Director",
 		"Chaplain")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
@@ -353,19 +353,19 @@ var/time_last_changed_position = 0
 						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
 							region_access |= 6
-							get_subordinates("Head of Personnel")
+							get_subordinates("Human Resources")
 						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
 							get_subordinates("Head of Security")
 						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
 							region_access |= 3
-							get_subordinates("Chief Medical Officer")
+							get_subordinates("Medical Director")
 						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
 							region_access |= 4
-							get_subordinates("Research Director")
+							get_subordinates("Lead Scientist")
 						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
-							get_subordinates("Chief Engineer")
+							get_subordinates("Head Atmospheric Engineer")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))

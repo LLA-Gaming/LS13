@@ -95,13 +95,13 @@ LINEN BINS
 	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
-	name = "captain's bedsheet"
-	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
+	name = "station chief's bedsheet"
+	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern station chiefs."
 	icon_state = "sheetcaptain"
 	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
-	name = "research director's bedsheet"
+	name = "lead scientist's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_color = "director"
@@ -113,7 +113,7 @@ LINEN BINS
 	item_color = "medical"
 
 /obj/item/weapon/bedsheet/cmo
-	name = "chief medical officer's bedsheet"
+	name = "medical director's bedsheet"
 	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
 	icon_state = "sheetcmo"
 	item_color = "cmo"
@@ -125,13 +125,13 @@ LINEN BINS
 	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
-	name = "head of personnel's bedsheet"
+	name = "human resources' bedsheet"
 	desc = "It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
 	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
-	name = "chief engineer's bedsheet"
+	name = "head atmospheric engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_color = "chief"

@@ -2,7 +2,7 @@
 Captain
 */
 /datum/job/captain
-	title = "Captain"
+	title = "Station Chief"
 	flag = CAPTAIN
 	department_head = list("Centcom")
 	department_flag = ENGSEC
@@ -24,7 +24,7 @@ Captain
 
 
 /datum/outfit/job/captain
-	name = "Captain"
+	name = "Station Chief"
 
 	id = /obj/item/weapon/card/id/gold
 	belt = /obj/item/device/tablet/captain
@@ -55,20 +55,20 @@ Captain
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
-	minor_announce("Captain [H.real_name] on deck!")
+	minor_announce("Station Chief [H.real_name] on duty!")
 
 /*
 Head of Personnel
 */
 /datum/job/hop
-	title = "Head of Personnel"
+	title = "Human Resources"
 	flag = HOP
-	department_head = list("Captain")
+	department_head = list("Station Chief")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = "the station chief"
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
@@ -90,7 +90,7 @@ Head of Personnel
 
 
 /datum/outfit/job/hop
-	name = "Head of Personnel"
+	name = "Human Resources"
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/device/tablet/hop

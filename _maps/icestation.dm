@@ -3,12 +3,12 @@ The coldsauce codebase currently requires you to have 9 z-levels of the same siz
 z-level order is important, the order you put them in inside this file will determine what z level number they are assigned ingame.
 Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
 
-current as of 2016/3/27
+current as of 9/12/2016 (dd/mm/yyyy)
 z1 = station
 z2 = centcomm
 z3 = planet
 z4 = planet
-z5 = lavaland
+z5 = mining
 z6 = planet
 z7 = empty space
 z8 = empty space
@@ -25,7 +25,7 @@ z9 = empty space
         #include "map_files\IceStation\z2.dmm"
         #include "map_files\IceStation\z3.dmm"
         #include "map_files\IceStation\z4.dmm"
-        #include "map_files\IceBox\lavaland.dmm"
+        #include "map_files\IceStation\lavaland.dmm"
         #include "map_files\IceStation\z6.dmm"
         #include "map_files\IceStation\z7.dmm"
         #include "map_files\IceStation\z8.dmm"
@@ -39,6 +39,6 @@ z9 = empty space
 
 #elif !defined(MAP_OVERRIDE)
 
-	#warn a map has already been included, ignoring icestation.
+	#warn a map has already been included, ignoring ice station zebra.
 
 #endif

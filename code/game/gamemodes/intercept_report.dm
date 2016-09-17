@@ -164,7 +164,7 @@
 				traitor_job = correct_person:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "Chaplain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer")
+		job_tmp.Remove("Station Chief", "Chaplain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Human Resources", "Head Atmospheric Engineer", "Lead Scientist", "Medical Director")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode == "cult")
 		if(correct_person:assigned_role=="MODE")

@@ -379,8 +379,8 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/captainparade
-	name = "captain's parade uniform"
-	desc = "A captain's luxury-wear, for special occasions."
+	name = "station chief's parade uniform"
+	desc = "A station chief's luxury-wear, for special occasions."
 	icon_state = "captain_parade"
 	item_state = "by_suit"
 	item_color = "captain_parade"

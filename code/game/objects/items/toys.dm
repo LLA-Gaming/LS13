@@ -1191,7 +1191,7 @@
 		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo
-	name = "Chief Medical Officer action figure"
+	name = "Medical Director action figure"
 	icon_state = "cmo"
 	toysay = "Suit sensors!"
 
@@ -1201,7 +1201,7 @@
 	toysay = "Grey tide world wide!"
 
 /obj/item/toy/figure/atmos
-	name = "Atmospheric Technician action figure"
+	name = "Atmospheric Engineer action figure"
 	icon_state = "atmos"
 	toysay = "Glory to Atmosia!"
 
@@ -1217,22 +1217,22 @@
 	toysound = 'sound/voice/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
-	name = "Botanist action figure"
+	name = "Agronomist action figure"
 	icon_state = "botanist"
 	toysay = "Dude, I see colors..."
 
 /obj/item/toy/figure/captain
-	name = "Captain action figure"
+	name = "Station Chief action figure"
 	icon_state = "captain"
 	toysay = "Any heads of staff?"
 
 /obj/item/toy/figure/cargotech
-	name = "Cargo Technician action figure"
+	name = "Supply Technician action figure"
 	icon_state = "cargotech"
 	toysay = "For Cargonia!"
 
 /obj/item/toy/figure/ce
-	name = "Chief Engineer action figure"
+	name = "Head Atmospheric Engineer action figure"
 	icon_state = "ce"
 	toysay = "Wire the solars!"
 
@@ -1283,7 +1283,7 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personel action figure"
+	name = "Human Resources action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 
@@ -1317,14 +1317,24 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/emt
+	name = "EMT action figure"
+	icon_state = "md"
+	toysay = "The patient is dying!"
+
 /obj/item/toy/figure/mime
 	name = "Mime action figure"
 	icon_state = "mime"
 	toysay = "..."
 	toysound = null
 
+/obj/item/toy/figure/salvage
+	name = "Salvage Technician action figure"
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
 /obj/item/toy/figure/miner
-	name = "Shaft Miner action figure"
+	name = "Mining Technician action figure"
 	icon_state = "miner"
 	toysay = "Oh god it's eating my intestines!"
 
@@ -1340,12 +1350,12 @@
 	toysound = 'sound/magic/Disintegrate.ogg'
 
 /obj/item/toy/figure/rd
-	name = "Research Director action figure"
+	name = "Lead Scientist action figure"
 	icon_state = "rd"
 	toysay = "Blowing all of the borgs!"
 
 /obj/item/toy/figure/roboticist
-	name = "Roboticist action figure"
+	name = "Mechanic action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
 	toysound = 'sound/mecha/mechstep.ogg'

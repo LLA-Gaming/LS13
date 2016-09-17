@@ -123,14 +123,14 @@
 	command = TRUE
 
 /obj/item/device/radio/headset/heads/captain
-	name = "\proper the captain's headset"
+	name = "\proper the station chief's headset"
 	desc = "The headset of the king. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/heads/captain/alt
-	name = "\proper the captain's bowman headset"
+	name = "\proper the station chief's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
@@ -172,8 +172,8 @@
 	keyslot = new /obj/item/device/encryptionkey/heads/cmo
 
 /obj/item/device/radio/headset/heads/hop
-	name = "\proper the head of personnel's headset"
-	desc = "The headset of the guy who will one day be captain. \nChannels are as follows: :u - supply, :v - service, :c - command."
+	name = "\proper the human resources' headset"
+	desc = "The headset of the guy who will one day be station chief. \nChannels are as follows: :u - supply, :v - service, :c - command."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/hop

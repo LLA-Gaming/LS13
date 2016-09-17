@@ -10,7 +10,7 @@ env:
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true
-    - DM_MAPFILE="icebox"
+    - DM_MAPFILE="icestation"
 
 
 cache:

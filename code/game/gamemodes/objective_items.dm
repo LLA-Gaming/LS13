@@ -12,10 +12,10 @@
 	return 1
 
 /datum/objective_item/steal/caplaser
-	name = "the captain's antique laser gun"
+	name = "the station chief's antique laser gun"
 	targetitem = /obj/item/weapon/gun/energy/laser/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
@@ -27,37 +27,37 @@
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/jetpack
-	name = "the Captain's jetpack"
+	name = "the station chief's jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Head Atmospheric Engineer")
 
 /datum/objective_item/steal/capmedal
-	name = "the medal of captaincy"
+	name = "the medal of station chief"
 	targetitem = /obj/item/clothing/tie/medal/gold/captain
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
 	targetitem = /obj/item/weapon/reagent_containers/hypospray/CMO
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer")
+	excludefromjob = list("Medical Director")
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/weapon/disk/nuclear
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Station Chief")
 
 /datum/objective_item/steal/reflector
 	name = "a reflector vest"
@@ -69,7 +69,7 @@
 	name = "the reactive teleport armor"
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
-	excludefromjob = list("Research Director")
+	excludefromjob = list("Lead Scientist")
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
@@ -89,7 +89,7 @@
 	name = "28 moles of plasma (full tank)"
 	targetitem = /obj/item/weapon/tank
 	difficulty = 3
-	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
+	excludefromjob = list("Head Atmospheric Engineer","Lead Scientist","Scientist","Atmospheric Engineer")
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
@@ -113,7 +113,7 @@
 	name = "the station blueprints"
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
-	excludefromjob = list("Chief Engineer")
+	excludefromjob = list("Head Atmospheric Engineer")
 	altitems = list(/obj/item/weapon/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
@@ -129,7 +129,7 @@
 	name = "an unused sample of slime extract"
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
-	excludefromjob = list("Research Director","Scientist")
+	excludefromjob = list("Lead Scientist","Scientist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
@@ -149,7 +149,7 @@
 
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
-	name = "the captain's pinpointer"
+	name = "the station chief's pinpointer"
 	targetitem = /obj/item/weapon/pinpointer
 	difficulty = 10
 

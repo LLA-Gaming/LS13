@@ -193,7 +193,7 @@
 		var/choice = input("Customization Choices") as null|anything in list("Service NPC","Security NPC","Random","Custom")
 		if(choice)
 			if(choice == "Service NPC" || choice == "Security NPC")
-				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
+				var/job = choice == "Service NPC" ? pick("Bartender","Chef","Agronomist","Janitor") : pick("Warden","Detective","Security Officer")
 				for(var/j in SSjob.occupations)
 					var/datum/job/J = j
 					if(J.title == job)
@@ -305,9 +305,9 @@
 	switch(myjob.title)
 		if("Assistant")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
-		if("Captain","Head of Personnel")
+		if("Station Chief","Human Resources")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
-		if("Cook")
+		if("Chef")
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "souschef"
 			restrictedJob = 1
@@ -315,12 +315,12 @@
 			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "bartend"
 			restrictedJob = 1
-		if("Station Engineer","Chief Engineer","Atmospheric Technician")
+		if("Mechanic","Head Atmospheric Engineer","Atmospheric Engineer")
 			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
-		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
+		if("Medical Director","Medical Doctor","Chemist","Virologist","Geneticist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
 			functions += "healpeople"
-		if("Research Director","Scientist","Roboticist")
+		if("Lead Scientist","Scientist")
 			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
 			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
@@ -330,7 +330,7 @@
 		if("Clown")
 			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
-		if("Botanist")
+		if("Agronomist")
 			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
 			restrictedJob = 1
@@ -813,21 +813,21 @@
 	var/datum/job/T = target
 	if(T.title == "Assistant")
 		return /area/hallway/primary
-	if(T.title == "Captain" || T.title == "Head of Personnel")
+	if(T.title == "Station Chief" || T.title == "Human Resources")
 		return /area/bridge
 	if(T.title == "Bartender")
 		return /area/crew_quarters/bar
-	if(T.title == "Cook")
+	if(T.title == "Chef")
 		return /area/crew_quarters/kitchen
-	if(T.title == "Station Engineer" || T.title == "Chief Engineer" || T.title == "Atmospheric Technician")
+	if(T.title == "Mechanic" || T.title == "Head Atmospheric Engineer" || T.title == "Atmospheric Engineer")
 		return /area/engine
-	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
+	if(T.title == "Medical Director" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
-	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
+	if(T.title == "Lead Scientist" || T.title == "Scientist")
 		return /area/toxins
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security
-	if(T.title == "Botanist")
+	if(T.title == "Agronomist")
 		return /area/hydroponics
 	else
 		return pick(/area/hallway,/area/crew_quarters)

@@ -111,7 +111,7 @@
 	var/back = null
 	var/has_id = 0     //Just set to 1 if you want them to have an ID
 	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Station Chief" if you want it to be all access.
 	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
 	var/husk = null
 	var/outfit_type = null // Will start with this if exists then apply specific slots
@@ -273,7 +273,7 @@
 ///////////Civilians//////////////////////
 
 /obj/effect/mob_spawn/human/cook
-	name = "Cook"
+	name = "Chef"
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/apron/chef
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -281,8 +281,8 @@
 	back = /obj/item/weapon/storage/backpack
 	radio = /obj/item/device/radio/headset
 	has_id = 1
-	id_job = "Cook"
-	id_access = "Cook"
+	id_job = "Chef"
+	id_access = "Chef"
 
 
 /obj/effect/mob_spawn/human/doctor
@@ -308,23 +308,6 @@
 	icon_state = "sleeper"
 	flavour_text = "You are a space doctor!"
 
-
-/obj/effect/mob_spawn/human/engineer
-	name = "Engineer"
-	radio = /obj/item/device/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/engineer
-	back = /obj/item/weapon/storage/backpack/industrial
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	belt = /obj/item/weapon/storage/belt/utility/full
-	gloves = /obj/item/clothing/gloves/color/yellow
-	helmet = /obj/item/clothing/head/hardhat
-	has_id = 1
-	id_job = "Station Engineer"
-	id_access = "Station Engineer"
-
-/obj/effect/mob_spawn/human/engineer/rig
-	suit = /obj/item/clothing/suit/space/hardsuit/engine
-	mask = /obj/item/clothing/mask/breath
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
@@ -356,8 +339,8 @@
 	back = /obj/item/weapon/storage/backpack/industrial
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	has_id = 1
-	id_job = "Shaft Miner"
-	id_access = "Shaft Miner"
+	id_job = "Mining Technician"
+	id_access = "Mining Technician"
 
 /obj/effect/mob_spawn/human/miner/rig
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
@@ -423,7 +406,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access = "Captain"
+	id_access = "Station Chief"
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -438,7 +421,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access = "Captain"
+	id_access = "Station Chief"
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"

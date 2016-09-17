@@ -28,12 +28,12 @@
 	item_color = "cargo"
 
 /obj/item/weapon/stamp/captain
-	name = "captain's rubber stamp"
+	name = "station chief's rubber stamp"
 	icon_state = "stamp-cap"
 	item_color = "captain"
 
 /obj/item/weapon/stamp/hop
-	name = "head of personnel's rubber stamp"
+	name = "human resources' rubber stamp"
 	icon_state = "stamp-hop"
 	item_color = "hop"
 
@@ -48,12 +48,12 @@
 	item_color = "chief"
 
 /obj/item/weapon/stamp/rd
-	name = "research director's rubber stamp"
+	name = "lead scientist's rubber stamp"
 	icon_state = "stamp-rd"
 	item_color = "director"
 
 /obj/item/weapon/stamp/cmo
-	name = "chief medical officer's rubber stamp"
+	name = "medical director's rubber stamp"
 	icon_state = "stamp-cmo"
 	item_color = "cmo"
 

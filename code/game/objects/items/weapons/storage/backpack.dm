@@ -137,7 +137,7 @@
 	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/captain
-	name = "captain's backpack"
+	name = "station chief's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
@@ -258,7 +258,7 @@
 	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/satchel_cap
-	name = "captain's satchel"
+	name = "station chief's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
@@ -297,8 +297,8 @@
 	max_combined_w_class = 30
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
-	name = "captain's dufflebag"
-	desc = "A large dufflebag for holding extra captainly goods."
+	name = "station chief's dufflebag"
+	desc = "A large dufflebag for holding extra chiefly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
 	burn_state = FIRE_PROOF

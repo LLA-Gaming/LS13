@@ -95,7 +95,7 @@
 	w_class = 3
 
 /obj/item/weapon/tank/jetpack/oxygen/captain
-	name = "\improper Captain's jetpack"
+	name = "\improper station chief's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
 	item_state = "jetpack-captain"

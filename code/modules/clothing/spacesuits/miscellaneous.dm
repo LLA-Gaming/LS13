@@ -16,7 +16,7 @@ Contains:
 
 	//Captain's space suit, not hardsuits because no flashlight!
 /obj/item/clothing/head/helmet/space/captain
-	name = "captain's space helmet"
+	name = "station chief's space helmet"
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for only the most fashionable of military figureheads."
@@ -25,7 +25,7 @@ Contains:
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/captain
-	name = "captain's space suit"
+	name = "station chief's space suit"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"

@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
+	name = "\proper station chief's locker"
 	req_access = list(access_captain)
 	icon_state = "cap"
 
@@ -29,7 +29,7 @@
 	new /obj/item/weapon/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "\proper human resources' locker"
 	req_access = list(access_hop)
 	icon_state = "hop"
 
