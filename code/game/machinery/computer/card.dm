@@ -33,8 +33,8 @@ var/time_last_changed_position = 0
 		"Human Resources",
 		"Head of Security",
 		"Head Atmospheric Engineer",
-		"Research Director",
-		"Chief Medical Officer",
+		"Lead Scientist",
+		"Medical Director",
 		"Chaplain")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
@@ -359,10 +359,10 @@ var/time_last_changed_position = 0
 							get_subordinates("Head of Security")
 						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
 							region_access |= 3
-							get_subordinates("Chief Medical Officer")
+							get_subordinates("Medical Director")
 						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
 							region_access |= 4
-							get_subordinates("Research Director")
+							get_subordinates("Lead Scientist")
 						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Head Atmospheric Engineer")

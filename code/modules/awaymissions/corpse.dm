@@ -339,8 +339,8 @@
 	back = /obj/item/weapon/storage/backpack/industrial
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	has_id = 1
-	id_job = "Shaft Miner"
-	id_access = "Shaft Miner"
+	id_job = "Mining Technician"
+	id_access = "Mining Technician"
 
 /obj/effect/mob_spawn/human/miner/rig
 	suit = /obj/item/clothing/suit/space/hardsuit/mining

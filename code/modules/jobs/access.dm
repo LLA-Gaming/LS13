@@ -444,10 +444,10 @@
 			return "Code Scotch"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Station Chief", "Human Resources", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Head Atmospheric Engineer", "Mechanic",
-				"Atmospheric Engineer", "Chief Medical Officer", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
+	return list("Assistant", "Station Chief", "Human Resources", "Bartender", "Chef", "Agronomist", "Quartermaster", "Supply Technician",
+				"Mining Technician", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Head Atmospheric Engineer", "Mechanic",
+				"Atmospheric Engineer", "Medical Director", "Medical Doctor", "Therapist", "Chemist", "Geneticist", "Virologist",
+				"Lead Scientist", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner", "Perseus Security Enforcer", "Perseus Security Commander")

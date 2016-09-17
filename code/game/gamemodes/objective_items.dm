@@ -51,7 +51,7 @@
 	name = "the hypospray"
 	targetitem = /obj/item/weapon/reagent_containers/hypospray/CMO
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer")
+	excludefromjob = list("Medical Director")
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
@@ -69,7 +69,7 @@
 	name = "the reactive teleport armor"
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
-	excludefromjob = list("Research Director")
+	excludefromjob = list("Lead Scientist")
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
@@ -89,7 +89,7 @@
 	name = "28 moles of plasma (full tank)"
 	targetitem = /obj/item/weapon/tank
 	difficulty = 3
-	excludefromjob = list("Head Atmospheric Engineer","Research Director","Scientist","Atmospheric Engineer")
+	excludefromjob = list("Head Atmospheric Engineer","Lead Scientist","Scientist","Atmospheric Engineer")
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
@@ -129,7 +129,7 @@
 	name = "an unused sample of slime extract"
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
-	excludefromjob = list("Research Director","Scientist")
+	excludefromjob = list("Lead Scientist","Scientist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)

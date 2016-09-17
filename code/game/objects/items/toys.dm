@@ -1227,7 +1227,7 @@
 	toysay = "Any heads of staff?"
 
 /obj/item/toy/figure/cargotech
-	name = "Cargo Technician action figure"
+	name = "Supply Technician action figure"
 	icon_state = "cargotech"
 	toysay = "For Cargonia!"
 
@@ -1317,14 +1317,24 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/emt
+	name = "EMT action figure"
+	icon_state = "md"
+	toysay = "The patient is dying!"
+
 /obj/item/toy/figure/mime
 	name = "Mime action figure"
 	icon_state = "mime"
 	toysay = "..."
 	toysound = null
 
+/obj/item/toy/figure/salvage
+	name = "Salvage Technician action figure"
+	icon_state = "miner"
+	toysay = "Oh god it's eating my intestines!"
+
 /obj/item/toy/figure/miner
-	name = "Shaft Miner action figure"
+	name = "Mining Technician action figure"
 	icon_state = "miner"
 	toysay = "Oh god it's eating my intestines!"
 

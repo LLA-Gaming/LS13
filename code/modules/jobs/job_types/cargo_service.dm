@@ -31,9 +31,9 @@ Quartermaster
 Cargo Technician
 */
 /datum/job/cargo_tech
-	title = "Cargo Technician"
+	title = "Supply Technician"
 	flag = CARGOTECH
-	department_head = list("Human Resources")
+	department_head = list("Quartermaster")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
@@ -47,7 +47,7 @@ Cargo Technician
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/cargo_tech
-	name = "Cargo Technician"
+	name = "Supply Technician"
 
 	belt = /obj/item/device/tablet/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
@@ -55,12 +55,12 @@ Cargo Technician
 
 
 /*
-Shaft Miner
+Mining Tech
 */
 /datum/job/mining
-	title = "Shaft Miner"
+	title = "Mining Technician"
 	flag = MINER
-	department_head = list("Human Resources")
+	department_head = list("Quartermaster")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
@@ -74,7 +74,7 @@ Shaft Miner
 	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/miner
-	name = "Shaft Miner"
+	name = "Mining Technician"
 
 	belt = /obj/item/device/tablet/miner
 	ears = /obj/item/device/radio/headset/headset_cargo
@@ -92,6 +92,46 @@ Shaft Miner
 	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	box = /obj/item/weapon/storage/box/engineer
+
+/*
+Salvage Tech
+*/
+/datum/job/salvage
+	title = "Salvage Technician"
+	flag = MINER
+	department_head = list("Quartermaster")
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "the quartermaster"
+	selection_color = "#dcba97"
+
+	outfit = /datum/outfit/job/miner
+
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+
+/datum/outfit/job/salvage
+	name = "Salvage Technician"
+
+	belt = /obj/item/device/tablet/miner
+	ears = /obj/item/device/radio/headset/headset_cargo
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	gloves = /obj/item/clothing/gloves/color/black
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
+	backpack_contents = list(/obj/item/weapon/crowbar=1,\
+		/obj/item/weapon/storage/bag/ore=1,\
+		/obj/item/device/flashlight/seclite=1,\
+		/obj/item/weapon/kitchen/knife/combat/survival=1,\
+		/obj/item/weapon/mining_voucher=1)
+
+	backpack = /obj/item/weapon/storage/backpack/explorer
+	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	box = /obj/item/weapon/storage/box/engineer
+
 
 /*
 Bartender
@@ -168,39 +208,6 @@ Cook
     var/chosen_box = pick(possible_boxes)
     var/obj/item/weapon/storage/box/I = new chosen_box(src)
     H.equip_to_slot_or_del(I,slot_in_backpack)
-
-/*
-Botanist
-*/
-/datum/job/hydro
-	title = "Botanist"
-	flag = BOTANIST
-	department_head = list("Human Resources")
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 3
-	spawn_positions = 2
-	supervisors = "human resources"
-	selection_color = "#bbe291"
-
-	outfit = /datum/outfit/job/botanist
-
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-
-/datum/outfit/job/botanist
-	name = "Botanist"
-
-	belt = /obj/item/device/tablet/hydro
-	ears = /obj/item/device/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/hydroponics
-	suit = /obj/item/clothing/suit/apron
-	gloves  =/obj/item/clothing/gloves/botanic_leather
-	suit_store = /obj/item/device/plant_analyzer
-
-	backpack = /obj/item/weapon/storage/backpack/botany
-	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
-
 
 /*
 Janitor
