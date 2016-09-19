@@ -125,7 +125,7 @@
 	density = 0
 	product_slogans = "Get yourself a few toys to spice up that boring prisoner life!"
 	products = list(/obj/item/toy/balloon = 4, /obj/item/toy/spinningtoy = 4, /obj/item/toy/gun = 4,
-					/obj/item/toy/ammo/gun = 6, /obj/item/weapon/gun/projectile/shotgun/toy/crossbow = 4, /obj/item/ammo_box/magazine/internal/shot/toy/crossbow = 20, /obj/item/toy/sword = 4,
+					/obj/item/toy/ammo/gun = 6, /obj/item/weapon/gun/projectile/shotgun/toy/crossbow = 4, /obj/item/ammo_box/foambox = 20, /obj/item/toy/sword = 4,
 					/obj/item/toy/katana = 4, /obj/item/toy/crayon = 4, /obj/item/toy/snappop = 15)
 
 	contraband = list(/obj/item/toy/prize/ripley = 1, /obj/item/toy/prize/fireripley = 1, /obj/item/toy/prize/deathripley = 1,

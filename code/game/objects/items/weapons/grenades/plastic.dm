@@ -11,6 +11,7 @@
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/explosion_size = list(0,0,3,0)
+	var/gib_people = 0
 
 /obj/item/weapon/grenade/plastic/New()
 	image_overlay = image('icons/obj/grenade.dmi', "[item_state]2")
@@ -69,7 +70,7 @@
 /obj/item/weapon/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (istype(AM, /mob/living/carbon))
+	if (istype(AM, /mob/living/carbon) && !gib_people)
 		return
 	user.text2tab("<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
 
