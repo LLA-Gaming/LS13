@@ -350,7 +350,7 @@
 	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!announcement_systems.len) || (!character.mind))
 		return
-	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role) || character.mind.IsPerseus())
 		return
 
 	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)

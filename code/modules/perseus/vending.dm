@@ -115,7 +115,8 @@
 		load(new /obj/item/clothing/suit/straight_jacket(src))
 		load(new /obj/item/clothing/glasses/sunglasses/blindfold(src))
 
-
+/obj/machinery/smartfridge/prisoner/update_icon()
+	return
 
 /obj/machinery/vending/percleisure
 	name = "PercTech Leisure Vendor"

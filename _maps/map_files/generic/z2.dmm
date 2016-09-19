@@ -1895,9 +1895,7 @@
 	},
 /area/security/perseus/mycenae_centcom)
 "fT" = (
-/obj/machinery/telecomms/relay/preset{
-	id = "Perseus Relay"
-	},
+/obj/machinery/telecomms/relay/preset/mycenae,
 /turf/open/floor{
 	tag = "icon-warning";
 	icon_state = "warning"
@@ -2585,7 +2583,7 @@
 "hG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/southright{
-	req_access_txt = "66"
+	req_access_txt = "69"
 	},
 /turf/open/floor{
 	tag = "icon-floor";
@@ -2595,7 +2593,7 @@
 "hH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/southleft{
-	req_access_txt = "66"
+	req_access_txt = "69"
 	},
 /turf/open/floor{
 	tag = "icon-floor";
@@ -3328,7 +3326,7 @@
 "jD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/northright{
-	req_access_txt = "66"
+	req_access_txt = "69"
 	},
 /turf/open/floor{
 	tag = "icon-floor";
@@ -3338,7 +3336,7 @@
 "jE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/northleft{
-	req_access_txt = "66"
+	req_access_txt = "69"
 	},
 /turf/open/floor{
 	tag = "icon-floor";
@@ -25311,7 +25309,7 @@ pZ
 pZ
 qp
 pZ
-st
+sq
 qp
 sC
 sF
