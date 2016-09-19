@@ -1895,7 +1895,10 @@
 	},
 /area/security/perseus/mycenae_centcom)
 "fT" = (
-/obj/machinery/telecomms/relay/preset/mycenae,
+/obj/machinery/telecomms/relay/preset{
+	autolinkers = list("hub");
+	id = "Perseus Relay"
+	},
 /turf/open/floor{
 	tag = "icon-warning";
 	icon_state = "warning"
