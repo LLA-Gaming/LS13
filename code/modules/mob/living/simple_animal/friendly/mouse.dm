@@ -60,6 +60,8 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
+	return //Wire chewing disabled for now per DZ
+	/*
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
@@ -73,6 +75,7 @@
 				else
 					C.Deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+	*/
 
 /*
  * Mouse types
