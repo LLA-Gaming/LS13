@@ -199,7 +199,7 @@ var/perseus_shuttle_locked = 1
 			start_location.move_contents_to(normal_location)
 			spawn(5)
 				for(var/obj/machinery/telecomms/relay/preset/M in world)
-					if(M.id == "Perseus Relay")
+					if(M.id == "Mycenae Relay")
 						M.listening_level = 3
 
 
