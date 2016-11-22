@@ -468,6 +468,9 @@ var/global/list/vr_loaders = list()
 
 /obj/machinery/virtual_reality_manipulator/proc/MakeBody(var/client/C, var/turf/T, var/duplicate) //duplicating a VR body for minigames, set duplicate to 1
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	var/perseus
+	if(C.mob.mind && C.mob.mind.IsPerseus())
+		perseus = C.mob.mind.GetPerseusName()
 	C.prefs.copy_to(M, icon_updates=0)
 	if(!duplicate)
 		M.key = C.key
@@ -475,8 +478,16 @@ var/global/list/vr_loaders = list()
 		vr_minds.Add(M.mind)
 		M.mind.name = C.mob.real_name
 		M.status_flags = GODMODE|CANPUSH
-	M.real_name = C.mob.real_name
-	M.name = C.mob.real_name
+	if(perseus)
+		M.real_name = perseus
+		M.name = perseus
+		M.hair_style = "Bald"
+		M.facial_hair_style = "Shaved"
+		M.skin_tone = "Albino"
+		M.gender = PLURAL
+	else
+		M.real_name = C.mob.real_name
+		M.name = C.mob.real_name
 	M.update_body()
 	M.update_hair()
 	M.update_body_parts()

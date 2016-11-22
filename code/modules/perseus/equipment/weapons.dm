@@ -72,12 +72,9 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 		var/mob/living/L = target
 
 		if(blocked >= 2)
-			var/datum/effect_system/spark_spread/sparks = new /obj/effect/particle_effect/sparks()
-			sparks.set_up(1, 1, src)
-			sparks.start()
+			new /obj/effect/particle_effect/sparks(get_turf(src))
 
 		if(IS_EP_SINGLE_STACKING)
-			if(blocked >= 100)	return 0
 			if(issilicon(L))	return 0
 
 			var/max = EP_MAX_SINGLE_STACK ? EP_MAX_SINGLE_STACK : INFINITY
@@ -95,7 +92,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 			L.update_canmove()
 
 		else
-			L.apply_effects(stun, weaken, 0, 0, stutter)
+			L.SetWeakened(EP_STUNTIME_SINGLE)
 
 /obj/item/projectile/energy/ep90_aoe
 	name = "energy"

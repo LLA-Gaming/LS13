@@ -84,3 +84,8 @@
 	hide = 1
 	toggled = 0
 	autolinkers = list("r_relay")
+
+/obj/machinery/telecomms/relay/preset/mycenae
+	id = "Mycenae Relay"
+	hide = 1
+	autolinkers = list("p_relay")

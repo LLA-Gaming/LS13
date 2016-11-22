@@ -345,12 +345,19 @@
 			src.text2tab("Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn")
 
 		if ("pdoor")
+			var/sync = 0 //Syncing blast doors
 			if(src.check_contents_for(/obj/item/weapon/implant/enforcer))
 				for(var/obj/machinery/door/poddoor/M in world)
 					if(M.id == "prisonship")
-						if(M.density)
+						if(sync == 1)
+							spawn(0)	M.open()
+						else if(sync == 2)
+							spawn(0)	M.close()
+						else if(M.density)
+							if(!sync) sync = 1
 							spawn(0)	M.open()
 						else
+							if(!sync) sync = 2
 							spawn(0)	M.close()
 
 		else
