@@ -170,6 +170,10 @@
 
 
 /atom/proc/examine(mob/user)
+	if(!user)
+		//idk how this happens but it happens
+		return
+
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(src.blood_DNA && !istype(src, /obj/effect/decal))
