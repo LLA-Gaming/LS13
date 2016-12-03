@@ -42,6 +42,8 @@ var/global/list/vr_loaders = list()
 	var/list/simulations = list()
 	//
 	var/can_enter = 1
+	//
+	var/busy = 0
 
 	New()
 		..()
@@ -109,7 +111,9 @@ var/global/list/vr_loaders = list()
 		var/dat
 
 		dat += "<h3>Virtual Reality Manipulator</h3>"
-		if(loaded)
+		if(busy)
+			dat += "Recalibrating..."
+		else if(loaded)
 			dat += "In Progress:"
 			dat += "<div class='statusDisplay'>"
 			dat += "<u>[loaded.name]</u><br>"
@@ -171,6 +175,9 @@ var/global/list/vr_loaders = list()
 			return
 		if(!user.mind.virtual)
 			return
+		if(busy)
+			return
+
 		if(href_list["observesim"])
 			if(loaded && loaded.players.len)
 				var/mob/M = pick(loaded.players)
@@ -251,6 +258,7 @@ var/global/list/vr_loaders = list()
 					SendToVRHub(C.mob)
 		qdel(loaded)
 		loaded = null
+		busy = 1
 		for(var/atom/movable/X in all_atoms)
 			if(istype(X, /obj/effect/landmark/vr_import))
 				continue
@@ -262,6 +270,7 @@ var/global/list/vr_loaders = list()
 				if(isobserver(X))
 					continue
 			qdel(X)
+			CHECK_TICK
 		//reset turfs
 		for(var/turf/T in get_area_turfs(vr_area))
 			T.ChangeTurf(/turf/closed/indestructible/void)
@@ -271,6 +280,7 @@ var/global/list/vr_loaders = list()
 		newarea.contents += get_area_turfs(vr_area)
 
 		update_icon()
+		busy = 0
 
 	proc/GetSimulationAtoms()
 		var/list/all_atoms = get_area_all_atoms(vr_area)

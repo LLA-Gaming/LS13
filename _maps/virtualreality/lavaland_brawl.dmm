@@ -6,7 +6,8 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
 	},
 /area/template_noop)
 "c" = (
@@ -14,7 +15,8 @@
 	name = "FFA"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
 	},
 /area/template_noop)
 "d" = (
@@ -28,7 +30,8 @@
 	name = "Team 2"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
 	},
 /area/template_noop)
 "g" = (
@@ -36,7 +39,8 @@
 	name = "Team 1"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
 	},
 /area/template_noop)
 
