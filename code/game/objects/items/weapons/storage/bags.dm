@@ -381,3 +381,43 @@
 	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
 	burn_state = FLAMMABLE
+
+
+
+/*
+ITS TIME TO D-D-D-D-D-DUEL
+*/
+
+/obj/item/weapon/storage/bag/duelmaster
+	name = "Duel Master 2500"
+	desc = "flashy device for holding up to 6 cards."
+	icon = 'icons/obj/duelmaster.dmi'
+	icon_state = "duelmaster_"
+	item_state = "duelmaster_"
+	slot_flags = 0
+	storage_slots = 6
+	allow_quick_gather = 0
+	allow_quick_empty = 1
+	display_contents_with_number = 0
+	use_to_pickup = 0
+	can_hold = list(
+		/obj/item/toy/cards
+		)
+	cant_hold = list(
+		/obj/item/toy/cards/deck
+		)
+
+/obj/item/weapon/storage/bag/duelmaster/update_icon()
+	if(contents.len == 0)
+		icon_state = "[initial(icon_state)]0"
+	else if(contents.len < 3)
+		icon_state = "[initial(icon_state)]1"
+	else if(contents.len < 5)
+		icon_state = "[initial(icon_state)]2"
+	else icon_state = "[initial(icon_state)]3"
+
+	item_state = icon_state
+	var/mob/living/user = loc
+	if(istype(loc))
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
