@@ -27,7 +27,7 @@
 			if(!D.active) continue
 			if(get_turf(D) == D.disk_spawn) continue
 			if(D.loc == solid) continue
-			qdel(D)
+			D.recycle()
 
 
 	EquipCharacters()
@@ -179,7 +179,7 @@
 			sim.lock_down()
 			active = 1
 
-	Destroy()
+	proc/recycle()
 		if(sim && !qdeleted(sim) && !dontcheck)
 			sim.disks.Remove(src)
 			sim.intruder_alert("<span class='userdanger'>[src] has returned to its starting point</span>")
@@ -187,7 +187,7 @@
 			sim.disks.Add(S)
 			S.sim = sim
 			S.disk_spawn = S.disk_spawn
-		..()
+			qdel(src)
 
 	proc/check_disk()
 		if(istype(src,sim.target_type))

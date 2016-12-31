@@ -24,7 +24,7 @@ Bonus
 	transmittable = -4
 	level = 6
 
-/datum/symptom/heal/Activate(datum/disease/advance/A)
+/datum/symptom/heal/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
@@ -33,8 +33,9 @@ Bonus
 				Heal(M, A)
 	return
 
-/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())*(1+rand()))
+/datum/symptom/heal/proc/Heal(var/mob/living/M, var/datum/disease/advance/A)
+
+	var/get_damage = rand(8, 14)
 	M.adjustToxLoss(-get_damage)
 	return 1
 
@@ -57,7 +58,7 @@ Bonus
 
 /datum/symptom/heal/metabolism
 
-	name = "Anti-Bodies Metabolism"
+	name = "Anti-Bodies Metabolism "
 	stealth = -1
 	resistance = -1
 	stage_speed = -1
@@ -65,7 +66,7 @@ Bonus
 	level = 3
 	var/list/cured_diseases = list()
 
-/datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/metabolism/Heal(var/mob/living/M, var/datum/disease/advance/A)
 	var/cured = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D != A)
@@ -73,9 +74,9 @@ Bonus
 			cured_diseases += D.GetDiseaseID()
 			D.cure()
 	if(cured)
-		M.text2tab("<span class='notice'>You feel much better.</span>")
+		M << "<span class='notice'>You feel much better.</span>"
 
-/datum/symptom/heal/metabolism/End(datum/disease/advance/A)
+/datum/symptom/heal/metabolism/End(var/datum/disease/advance/A)
 	// Remove all the diseases we cured.
 	var/mob/living/M = A.affected_mob
 	if(istype(M))
@@ -83,7 +84,7 @@ Bonus
 			for(var/res in M.resistances)
 				if(res in cured_diseases)
 					M.resistances -= res
-		M.text2tab("<span class='warning'>You feel weaker.</span>")
+		M << "<span class='notice'>You feel weaker.</span>"
 
 /*
 //////////////////////////////////////
@@ -112,13 +113,47 @@ Bonus
 	level = 3
 	var/longevity = 30
 
-/datum/symptom/heal/longevity/Heal(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/longevity/Heal(var/mob/living/M, var/datum/disease/advance/A)
 	longevity -= 1
 	if(!longevity)
 		A.cure()
 
-/datum/symptom/heal/longevity/Start(datum/disease/advance/A)
+/datum/symptom/heal/longevity/Start(var/datum/disease/advance/A)
 	longevity = rand(initial(longevity) - 5, initial(longevity) + 5)
+
+/*
+//////////////////////////////////////
+
+Ocular Restoration
+
+	Noticable.
+	Lowers resistance.
+	Decreases stage speed..
+	Decreases transmittablity.
+	Moderate Level.
+
+Bonus
+	The body generates Imidazonline.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/eyeregen
+
+	name = "Ocular Restoration"
+	stealth = -1
+	resistance = -2
+	stage_speed = -1
+	transmittable = -2
+	level = 3
+
+/datum/symptom/heal/eyeregen/Heal(var/mob/living/M, var/datum/disease/advance/A)
+	..()
+	switch(A.stage)
+		if(4,5)
+			if (M.reagents.get_reagent_amount("oculine") < 5)
+				M.reagents.add_reagent("oculine", 1)
+	return
 
 /*
 //////////////////////////////////////
@@ -156,3 +191,40 @@ Bonus
 	M.dna.remove_mutation_group(unclean_mutations)
 	M.radiation = max(M.radiation - 3, 0)
 	return 1
+
+/*
+//////////////////////////////////////
+
+Hemoglobic Acceleration
+
+	Low hidden boost.
+	Medium resistance penalty.
+	Low stage speed penalty.
+	Low transmittablity penalty.
+	Medium Level.
+
+Bonus
+	Heals bloodloss.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/bloodregen
+
+	name = "Hemoglobic Acceleration"
+	stealth = 1
+	resistance = -2
+	stage_speed = -1
+	transmittable = -1
+	level = 3
+
+/datum/symptom/heal/bloodregen/Heal(var/mob/living/carbon/human/M, var/datum/disease/advance/A)
+	switch(A.stage)
+		if(4,5)
+			if (M.blood_volume < BLOOD_VOLUME_NORMAL)
+				M.blood_volume += 5
+		else
+			if (M.blood_volume < BLOOD_VOLUME_NORMAL)
+				M.blood_volume += 2.5
+
+	return
