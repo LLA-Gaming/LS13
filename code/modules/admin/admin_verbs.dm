@@ -30,7 +30,6 @@ var/list/admin_verbs_trial = list(
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/check_antagonists		/*shows all antags*/
 	)
 
 var/list/admin_verbs_secondary = list(
@@ -49,7 +48,8 @@ var/list/admin_verbs_secondary = list(
 	/client/proc/unban_panel,
 	/client/proc/DB_ban_panel,
 	/client/proc/stickybanpanel,
-	/client/proc/cmd_mentor_say
+	/client/proc/cmd_mentor_say,
+	/client/proc/check_antagonists		/*shows all antags*/
 	)
 
 var/list/admin_verbs_admin = list(
