@@ -53,8 +53,8 @@ var/global/list/vr_goggles = list()
 	..()
 
 /obj/item/clothing/glasses/virtual/dropped(mob/living/carbon/human/user)
-	..()
 	virtual_reality.KickOut(user.mind.key)
+	..()
 
 
 //box of 4 VR headsets
