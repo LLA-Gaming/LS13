@@ -335,6 +335,11 @@
 				if(player.assigned_role == job)
 					drafted -= player
 
+	for(var/datum/mind/player in drafted) //remove perc for good
+		for(var/job in list("Perseus Security Enforcer", "Perseus Security Commander"))
+			if(player.assigned_role == job)
+				drafted -= player
+
 	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
